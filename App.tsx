@@ -4,23 +4,43 @@
  *
  * @format
  */
+import { I18nextProvider } from 'react-i18next';
+import { StyleSheet } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import RootNavigator from '@/navigation/RootNavigator';
+import Toast from 'react-native-toast-message';
+import { createNavigationContainerRef, NavigationContainer } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import i18n from '@/core/configs/i18n.ts';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
+// TODO: separate to another directory
+export type RootStackParamList = {
+  Test: undefined;
+};
+
+export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <View style={styles.container}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <NewAppScreen templateFileName="App.tsx" />
-    </View>
+    <I18nextProvider i18n={i18n}>
+      <GestureHandlerRootView style={styles.flex1}>
+        <BottomSheetModalProvider>
+          <SafeAreaProvider>
+            <NavigationContainer ref={navigationRef}>
+              <RootNavigator />
+            </NavigationContainer>
+
+            <Toast />
+          </SafeAreaProvider>
+        </BottomSheetModalProvider>
+      </GestureHandlerRootView>
+    </I18nextProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  flex1: {
     flex: 1,
   },
 });
