@@ -13,29 +13,32 @@ import Toast from 'react-native-toast-message';
 import { createNavigationContainerRef, NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import i18n from '@/core/configs/i18n.ts';
-
-// TODO: separate to another directory
-export type RootStackParamList = {
-  Test: undefined;
-};
+import { RootStackParamList } from '@/navigation/types.ts';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from '@/store';
 
 export const navigationRef = createNavigationContainerRef<RootStackParamList>();
 
 function App() {
   return (
-    <I18nextProvider i18n={i18n}>
-      <GestureHandlerRootView style={styles.flex1}>
-        <BottomSheetModalProvider>
-          <SafeAreaProvider>
-            <NavigationContainer ref={navigationRef}>
-              <RootNavigator />
-            </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <I18nextProvider i18n={i18n}>
+          <GestureHandlerRootView style={styles.flex1}>
+            <BottomSheetModalProvider>
+              <SafeAreaProvider>
+                <NavigationContainer ref={navigationRef}>
+                  <RootNavigator />
+                </NavigationContainer>
 
-            <Toast />
-          </SafeAreaProvider>
-        </BottomSheetModalProvider>
-      </GestureHandlerRootView>
-    </I18nextProvider>
+                <Toast />
+              </SafeAreaProvider>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
+        </I18nextProvider>
+      </PersistGate>
+    </Provider>
   );
 }
 
