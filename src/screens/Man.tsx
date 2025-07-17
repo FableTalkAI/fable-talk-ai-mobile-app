@@ -17,7 +17,7 @@ const Man = () => {
 
   const computedStyles = StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: '',
     },
   });
 

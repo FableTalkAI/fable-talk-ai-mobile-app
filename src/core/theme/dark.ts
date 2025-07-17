@@ -1,6 +1,9 @@
 export const dark = {
-  background: '#000000',
-  text: '#FFFFFF',
-  primary: '#bb86fc',
-  card: '#1f1f1f',
+  textPrimary: '#212122',
+  textSecondary: '#555656',
+  textLight: '#FFFFFF',
+
+  backgroundBase: '#FFFFFF',
+  backgroundAlt: '#FAF9F9',
+  backgroundHover: '#744BA026',
 };
