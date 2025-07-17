@@ -1,10 +1,12 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AppleIcon } from '@/assets/icons';
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
 import { amountSelector } from '@/store/agents/selectors.ts';
 import { setAmount } from '@/store/agents';
 import useTheme from '@/hooks/useTheme.ts';
+import Text from '@/components/atoms/Text';
+import Button from '@/components/atoms/Button';
 
 const Man = () => {
   const { colors } = useTheme();
@@ -24,8 +26,8 @@ const Man = () => {
   return (
     <View style={[styles.container, computedStyles.container]}>
       <AppleIcon />
-      <Text>{amount}</Text>
-      <Button title={'res'} onPress={amountHandler} />
+      <Text text="asdsa" mode="title" />
+      <Button title={'res'} onPress={() => console.log('rety')} isLoading />
     </View>
   );
 };
