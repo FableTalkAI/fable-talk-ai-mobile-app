@@ -1,6 +1,9 @@
 export const light = {
-  background: '#FFFFFF',
-  text: '#000000',
-  primary: '#6200ee',
-  card: '#f2f2f2',
+  textPrimary: '#212122',
+  textSecondary: '#555656',
+  textLight: '#FFFFFF',
+
+  backgroundBase: '#FFFFFF',
+  backgroundAlt: '#FAF9F9',
+  backgroundHover: '#744BA026',
 };
