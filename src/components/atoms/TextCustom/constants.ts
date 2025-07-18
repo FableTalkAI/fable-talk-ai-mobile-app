@@ -1,5 +1,5 @@
 import { TextStyle } from 'react-native';
-import { TextModes } from '@/components/atoms/Text/types.ts';
+import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 
 const TEXT_STYLES: Record<TextModes, TextStyle> = {
   base: {
