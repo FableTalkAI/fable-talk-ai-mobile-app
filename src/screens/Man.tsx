@@ -5,8 +5,11 @@ import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
 import { amountSelector } from '@/store/agents/selectors.ts';
 import { setAmount } from '@/store/agents';
 import useTheme from '@/hooks/useTheme.ts';
-import Text from '@/components/atoms/Text';
+import TextCustom from '@/components/atoms/TextCustom';
 import Button from '@/components/atoms/Button';
+import ShadowCustom from '@/components/atoms/ShadowCustom';
+import AutoImage from '@/components/atoms/AutoImage';
+import { AvatarImage } from '@/assets/images';
 
 const Man = () => {
   const { colors } = useTheme();
@@ -26,8 +29,12 @@ const Man = () => {
   return (
     <View style={[styles.container, computedStyles.container]}>
       <AppleIcon />
-      <Text text="asdsa" mode="title" />
-      <Button title={'res'} onPress={() => console.log('rety')} isLoading />
+      <TextCustom text="asdsa" mode="title" />
+      <Button title={'res'} onPress={() => console.log('rety')} />
+      <ShadowCustom mode="medium">
+        <TextCustom text="asdsa" mode="title" />
+      </ShadowCustom>
+      <AutoImage source={AvatarImage} paddingHorizontal={30} />
     </View>
   );
 };
