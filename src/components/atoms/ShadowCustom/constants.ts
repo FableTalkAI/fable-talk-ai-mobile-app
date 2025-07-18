@@ -6,19 +6,19 @@ const SHADOW_STYLES: Record<ShadowCustomModes, ShadowProps> = {
     disabled: true,
   },
   light: {
-    distance: 3,
-    startColor: 'rgba(0,0,0,0.10)',
-    endColor: 'rgba(0,0,0,0)',
+    distance: 4,
+    startColor: '#00000019',
+    endColor: '#00000000',
   },
   medium: {
     distance: 8,
-    startColor: 'rgba(0,0,0,0.15)',
-    endColor: 'rgba(0,0,0,0)',
+    startColor: '#00000026',
+    endColor: '#00000000',
   },
   strong: {
     distance: 16,
-    startColor: 'rgba(0,0,0,0.20)',
-    endColor: 'rgba(0,0,0,0)',
+    startColor: '#00000033',
+    endColor: '#00000000',
   },
 };
 
