@@ -1,4 +1,4 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { AppleIcon } from '@/assets/icons';
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
@@ -10,6 +10,8 @@ import Button from '@/components/atoms/Button';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
 import AutoImage from '@/components/atoms/AutoImage';
 import { AvatarImage } from '@/assets/images';
+import TextInputCustom from '@/components/atoms/TextInputCustom';
+import { RADIUS } from '@/core/constants/sizes.ts';
 
 const Man = () => {
   const { colors } = useTheme();
@@ -31,9 +33,17 @@ const Man = () => {
       <AppleIcon />
       <TextCustom text="asdsa" mode="title" />
       <Button title={'res'} onPress={() => console.log('rety')} />
+      <TouchableOpacity>
+        <TextCustom text="asdsa" mode="title" />
+      </TouchableOpacity>
       <ShadowCustom mode="medium">
         <TextCustom text="asdsa" mode="title" />
       </ShadowCustom>
+      <TextInputCustom
+        placeholder="textsss ssssss ssss sssssssssss ыыыыыыыы ыыыыыыыыы ыыыыыыыыыы ыыыыыыыы"
+        leftIcon={<AppleIcon />}
+        shadowMode="medium"
+      />
       <AutoImage source={AvatarImage} paddingHorizontal={30} />
     </View>
   );

@@ -4,6 +4,7 @@ import Text from '../TextCustom';
 import { ActivityIndicator, StyleSheet } from 'react-native';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
+import PressableCustom from '@/components/atoms/PressableCustom';
 
 const Button = ({
   title,
@@ -12,6 +13,7 @@ const Button = ({
   isLoading,
   isDisable,
   style,
+  onPress,
   ...pressableProps
 }: ButtonProps) => {
   const { colors, setColorOpacity } = useTheme();
@@ -49,7 +51,8 @@ const Button = ({
   });
 
   return (
-    <Pressable
+    <PressableCustom
+      onPress={onPress}
       disabled={isDisable || isLoading}
       style={[computedStyles.container, styles.container, style]}
       {...pressableProps}
@@ -59,7 +62,7 @@ const Button = ({
       ) : (
         <Text text={title} mode="subtitle" style={computedStyles.text} />
       )}
-    </Pressable>
+    </PressableCustom>
   );
 };
 
