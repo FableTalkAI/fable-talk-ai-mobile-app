@@ -10,5 +10,6 @@ export type AutoImageProps = {
   width?: number;
   paddingHorizontal?: number;
   style?: StyleProp<ImageStyle>;
+  withSafeAreaInsets?: boolean;
   resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
 } & UniqueImageProps;

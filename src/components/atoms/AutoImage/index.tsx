@@ -2,16 +2,19 @@ import { useMemo } from 'react';
 import { Image, StyleSheet } from 'react-native';
 import { WINDOW_WIDTH } from '@/core/constants/device.ts';
 import { AutoImageProps } from '@/components/atoms/AutoImage/types.ts';
+import { SPACING } from '@/core/constants/sizes.ts';
 
 const AutoImage = ({
   source,
   width,
   paddingHorizontal = 0,
   style,
+  withSafeAreaInsets = true,
   resizeMode = 'contain',
   ...imageProps
 }: AutoImageProps) => {
-  const imageWidth = width ?? WINDOW_WIDTH - paddingHorizontal;
+  const localPaddingHorizontal = paddingHorizontal + (withSafeAreaInsets ? SPACING.xl * 2 : 0);
+  const imageWidth = width ?? WINDOW_WIDTH - localPaddingHorizontal;
   const { width: originalWidth, height: originalHeight } = Image.resolveAssetSource(source);
 
   const calculatedHeight = useMemo(() => {
