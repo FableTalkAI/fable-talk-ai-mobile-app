@@ -3,14 +3,7 @@ import { Pressable } from 'react-native-gesture-handler';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { PressableEvent } from 'react-native-gesture-handler/lib/typescript/components/Pressable/PressableProps';
 
-const PressableCustom = ({
-  children,
-  onPress,
-  onPressIn,
-  onPressOut,
-  style,
-  ...pressableProps
-}: PressableCustomProps) => {
+const PressableCustom = ({ children, onPressIn, onPressOut, style, ...pressableProps }: PressableCustomProps) => {
   const opacity = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -19,24 +12,18 @@ const PressableCustom = ({
   });
 
   const handlePressIn = (event: PressableEvent) => {
-    opacity.value = withTiming(0.6, { duration: 200 });
+    opacity.value = withTiming(0.6, { duration: 100 });
     onPressIn?.(event);
   };
 
   const handlePressOut = (event: PressableEvent) => {
-    opacity.value = withTiming(1, { duration: 200 });
+    opacity.value = withTiming(1, { duration: 300 });
     onPressOut?.(event);
   };
 
   return (
     <Animated.View style={animatedStyle}>
-      <Pressable
-        onPress={onPress}
-        onPressIn={handlePressIn}
-        onPressOut={handlePressOut}
-        style={style}
-        {...pressableProps}
-      >
+      <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} style={style} {...pressableProps}>
         {children}
       </Pressable>
     </Animated.View>

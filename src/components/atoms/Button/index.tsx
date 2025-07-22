@@ -13,7 +13,6 @@ const Button = ({
   isLoading,
   isDisable,
   style,
-  onPress,
   ...pressableProps
 }: ButtonProps) => {
   const { colors, setColorOpacity } = useTheme();
@@ -52,7 +51,6 @@ const Button = ({
 
   return (
     <PressableCustom
-      onPress={onPress}
       disabled={isDisable || isLoading}
       style={[computedStyles.container, styles.container, style]}
       {...pressableProps}

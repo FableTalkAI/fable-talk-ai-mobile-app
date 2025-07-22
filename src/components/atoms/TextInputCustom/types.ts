@@ -4,16 +4,17 @@ import { ReactElement } from 'react';
 import { SvgProps } from 'react-native-svg';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 
-type ExcludeTextInputCustomProps = 'style' | 'placeholder' | 'placeholderTextColor';
+type ExcludeTextInputCustomProps = 'style' | 'placeholder' | 'placeholderTextColor' | 'numberOfLines';
 
 type UniqueTextInputCustomProps = Omit<TextInputProps, ExcludeTextInputCustomProps>;
 
 export type TextInputCustomProps = {
-  placeholder: string;
+  placeholder?: string;
   placeholderTextColor?: string;
   shadowMode?: ShadowCustomModes;
   textMode?: TextModes;
   leftIcon?: ReactElement<SvgProps>;
-  viewStyleExtra?: StyleProp<ViewStyle>;
-  textStyleExtra?: StyleProp<TextStyle>;
+  wrapperStyle?: StyleProp<ViewStyle>;
+  style?: StyleProp<TextStyle>;
+  numberOfLines?: number;
 } & UniqueTextInputCustomProps;

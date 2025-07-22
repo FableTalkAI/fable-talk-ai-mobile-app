@@ -1,10 +1,11 @@
 import { Shadow } from 'react-native-shadow-2';
 import { SHADOW_STYLES } from '@/components/atoms/ShadowCustom/constants.ts';
 import { ShadowCustomProps } from '@/components/atoms/ShadowCustom/types.ts';
+import { View } from 'react-native';
 
-const ShadowCustom = ({ mode = 'none', style, children }: ShadowCustomProps) => {
+const ShadowCustom = ({ mode = 'none', style, containerStyle, children }: ShadowCustomProps) => {
   return (
-    <Shadow {...SHADOW_STYLES[mode]} style={style}>
+    <Shadow {...SHADOW_STYLES[mode]} style={style} containerStyle={containerStyle}>
       {children}
     </Shadow>
   );
