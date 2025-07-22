@@ -266,10 +266,3 @@ yarn run ios:dev
 
 > **Note**: Additional information about the installation can be found in the official documentation [React Native](https://reactnative.dev/docs/environment-setup?os=macos&platform=ios)
 
-## License
-
-ShuttleX Inc. license
-
----
-
-Made with [create-react-native-library](https://github.com/callstack/react-native-builder-bob)
