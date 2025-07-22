@@ -2,15 +2,18 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { SafeAreaViewCustomProps } from './types.ts';
 import { StyleSheet } from 'react-native';
 import { SPACING } from '@/core/constants/sizes.ts';
+import useTheme from '@/hooks/useTheme.ts';
 
 const SafeAreaViewCustom = ({ children }: SafeAreaViewCustomProps) => {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
 
   const computedStyles = StyleSheet.create({
     container: {
       paddingHorizontal: SPACING.xl,
-      marginTop: insets.top ? 0 : SPACING.lg,
-      marginBottom: insets.bottom ? 0 : SPACING.lg,
+      paddingTop: insets.top ? 0 : SPACING.lg,
+      paddingBottom: insets.bottom ? 0 : SPACING.lg,
+      backgroundColor: colors.backgroundBase,
     },
   });
 

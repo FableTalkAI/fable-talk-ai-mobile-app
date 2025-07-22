@@ -5,20 +5,20 @@ const SHADOW_STYLES: Record<ShadowCustomModes, ShadowProps> = {
   none: {
     disabled: true,
   },
-  light: {
-    distance: 4,
-    startColor: '#00000019',
-    endColor: '#00000000',
+  base: {
+    distance: 3,
+    startColor: '#00000005',
+    offset: [2, 2],
   },
   medium: {
-    distance: 8,
-    startColor: '#00000026',
-    endColor: '#00000000',
+    distance: 12,
+    startColor: '#00000005',
+    offset: [2, 2],
   },
-  strong: {
-    distance: 16,
-    startColor: '#00000033',
-    endColor: '#00000000',
+  alt: {
+    distance: 24,
+    startColor: '#00000005',
+    offset: [2, 2],
   },
 };
 
