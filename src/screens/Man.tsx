@@ -8,13 +8,10 @@ import useTheme from '@/hooks/useTheme.ts';
 import TextCustom from '@/components/atoms/TextCustom';
 import Button from '@/components/atoms/Button';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
+import TextInputCustom from '@/components/atoms/TextInputCustom';
+import SafeAreaViewCustom from '@/components/atoms/SafeAreaViewCustom';
 import AutoImage from '@/components/atoms/AutoImage';
 import { AvatarImage } from '@/assets/images';
-import TextInputCustom from '@/components/atoms/TextInputCustom';
-import { RADIUS } from '@/core/constants/sizes.ts';
-import SafeAreaViewCustom from '@/components/atoms/SafeAreaViewCustom';
-import KeyboardAvoidingViewCustom from '@/components/atoms/KeyboardAvoidingViewCustom';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const Man = () => {
   const { colors } = useTheme();

@@ -5,7 +5,6 @@ import { cloneElement, useMemo } from 'react';
 import { TEXT_STYLES } from '@/components/atoms/TextCustom/constants.ts';
 import useTheme from '@/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
-import { base } from '@/core/theme/base';
 
 const TextInputCustom = ({
   placeholder,
