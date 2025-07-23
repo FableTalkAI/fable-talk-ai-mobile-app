@@ -1,27 +1,16 @@
-import { Animated, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { useTranslation } from 'react-i18next';
+import { StyleSheet, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 import { AppleIcon } from '@/assets/icons';
-import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
-import { amountSelector } from '@/store/agents/selectors.ts';
-import { setAmount } from '@/store/agents';
-import useTheme from '@/hooks/useTheme.ts';
-import TextCustom from '@/components/atoms/TextCustom';
-import Button from '@/components/atoms/Button';
-import ShadowCustom from '@/components/atoms/ShadowCustom';
-import TextInputCustom from '@/components/atoms/TextInputCustom';
-import SafeAreaViewCustom from '@/components/atoms/SafeAreaViewCustom';
-import AutoImage from '@/components/atoms/AutoImage';
 import { AvatarImage } from '@/assets/images';
+import AutoImage from '@/components/atoms/AutoImage';
+import Button from '@/components/atoms/Button';
+import SafeAreaViewCustom from '@/components/atoms/SafeAreaViewCustom';
+import ShadowCustom from '@/components/atoms/ShadowCustom';
+import TextCustom from '@/components/atoms/TextCustom';
+import TextInputCustom from '@/components/atoms/TextInputCustom';
 
 const Man = () => {
-  const { colors } = useTheme();
-  const { t } = useTranslation();
-
-  const dispatch = useAppDispatch();
-  const amount = useAppSelector(amountSelector);
-
-  const amountHandler = () => dispatch(setAmount(5));
-
   const computedStyles = StyleSheet.create({
     container: {
       backgroundColor: '',

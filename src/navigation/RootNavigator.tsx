@@ -1,4 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
+
 import Man from '@/screens/Man.tsx';
 
 const Stack = createStackNavigator();

@@ -1,8 +1,10 @@
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
-import { SafeAreaViewCustomProps } from './types.ts';
 import { StyleSheet } from 'react-native';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+
 import { SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
+
+import { SafeAreaViewCustomProps } from './types.ts';
 
 const SafeAreaViewCustom = ({ children }: SafeAreaViewCustomProps) => {
   const insets = useSafeAreaInsets();

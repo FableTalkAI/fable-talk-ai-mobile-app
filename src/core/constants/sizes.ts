@@ -13,4 +13,4 @@ const RADIUS = {
   large: 24,
 };
 
-export { SPACING, RADIUS };
+export { RADIUS, SPACING };

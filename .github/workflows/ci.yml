@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  checks:
+    name: 'Checks'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_KEY }}
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install dependencies
+        run: yarn install
+      - name: Run typescript check
+        run: yarn typecheck
+      - name: Run eslint check
+        run: yarn lint
+      - name: Run prettier check
+        run: yarn prettier

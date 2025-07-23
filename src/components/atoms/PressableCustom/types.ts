@@ -1,5 +1,5 @@
-import { StyleProp, ViewStyle } from 'react-native';
 import { ReactNode } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import { PressableProps } from 'react-native-gesture-handler';
 import { PressableEvent } from 'react-native-gesture-handler/lib/typescript/components/Pressable/PressableProps';
 

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { AgentsState } from '@/store/agents/types.ts';
+
 import { getAmount } from '@/store/agents/thunks.ts';
+import { AgentsState } from '@/store/agents/types.ts';
 
 export const agentsSliceName = 'agents';
 
@@ -18,13 +19,13 @@ const agentsSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(getAmount.pending, (state, action) => {
+      .addCase(getAmount.pending, state => {
         state.amount = 0;
       })
       .addCase(getAmount.fulfilled, (state, action) => {
         state.amount = action.payload;
       })
-      .addCase(getAmount.rejected, (state, action) => {
+      .addCase(getAmount.rejected, state => {
         state.amount = 0;
       });
   },
