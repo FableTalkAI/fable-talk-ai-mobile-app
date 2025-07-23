@@ -1,5 +1,5 @@
 import { AsyncThunkPayloadCreator, createAsyncThunk } from '@reduxjs/toolkit';
-import type { AxiosError } from 'axios';
+import { type AxiosError } from 'axios';
 
 import { AppDispatch, AppState } from '../../store';
 

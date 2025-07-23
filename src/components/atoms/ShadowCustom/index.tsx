@@ -1,4 +1,5 @@
 import { Shadow } from 'react-native-shadow-2';
+
 import { SHADOW_STYLES } from './constants.ts';
 import { ShadowCustomProps } from './types.ts';
 

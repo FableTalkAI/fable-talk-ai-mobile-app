@@ -1,5 +1,4 @@
-import { ImageSourcePropType, ImageStyle, StyleProp } from 'react-native';
-import { ImageProps } from 'react-native';
+import { ImageProps, ImageSourcePropType, ImageStyle, StyleProp } from 'react-native';
 
 type ExcludeImageProps = 'style' | 'width' | 'resizeMode' | 'source';
 

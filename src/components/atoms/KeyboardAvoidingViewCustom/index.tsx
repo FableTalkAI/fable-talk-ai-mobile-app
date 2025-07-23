@@ -1,6 +1,7 @@
 import { KeyboardAvoidingView, StyleSheet } from 'react-native';
-import { KeyboardAvoidingViewCustomProps } from './types.ts';
+
 import { OPTIONS } from './constants.ts';
+import { KeyboardAvoidingViewCustomProps } from './types.ts';
 
 const KeyboardAvoidingViewCustom = ({ children, style }: KeyboardAvoidingViewCustomProps) => {
   return (

@@ -265,4 +265,3 @@ yarn run ios:dev
 ### Congratulations!
 
 > **Note**: Additional information about the installation can be found in the official documentation [React Native](https://reactnative.dev/docs/environment-setup?os=macos&platform=ios)
-

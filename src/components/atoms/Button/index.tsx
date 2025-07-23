@@ -1,10 +1,11 @@
-import { ButtonModes, ButtonModesObject, ButtonProps } from '@/components/atoms/Button/types.ts';
-import { Pressable } from 'react-native-gesture-handler';
-import Text from '../TextCustom';
 import { ActivityIndicator, StyleSheet } from 'react-native';
+
+import { ButtonModes, ButtonModesObject, ButtonProps } from '@/components/atoms/Button/types.ts';
+import PressableCustom from '@/components/atoms/PressableCustom';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
-import PressableCustom from '@/components/atoms/PressableCustom';
+
+import Text from '../TextCustom';
 
 const Button = ({
   title,

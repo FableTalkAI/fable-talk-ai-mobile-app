@@ -1,10 +1,10 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import { getDeviceLanguage } from '@/core/utils/device.ts';
 
+import en from '@/core/locales/en.json';
 // Language imports
 import uk from '@/core/locales/uk.json';
-import en from '@/core/locales/en.json';
+import { getDeviceLanguage } from '@/core/utils/device.ts';
 
 const resources = {
   en: { translation: en },

@@ -1,10 +1,11 @@
-import { StyleSheet, TextInput, View } from 'react-native';
-import { TextInputCustomProps } from '@/components/atoms/TextInputCustom/types.ts';
-import ShadowCustom from '@/components/atoms/ShadowCustom';
 import { cloneElement, useMemo } from 'react';
+import { StyleSheet, TextInput, View } from 'react-native';
+
+import ShadowCustom from '@/components/atoms/ShadowCustom';
 import { TEXT_STYLES } from '@/components/atoms/TextCustom/constants.ts';
-import useTheme from '@/hooks/useTheme.ts';
+import { TextInputCustomProps } from '@/components/atoms/TextInputCustom/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import useTheme from '@/hooks/useTheme.ts';
 
 const TextInputCustom = ({
   placeholder,
