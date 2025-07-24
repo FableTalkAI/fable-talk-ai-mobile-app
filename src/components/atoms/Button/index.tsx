@@ -1,11 +1,11 @@
 import { ActivityIndicator, StyleSheet } from 'react-native';
 
-import { ButtonModes, ButtonModesObject, ButtonProps } from '@/components/atoms/Button/types.ts';
 import PressableCustom from '@/components/atoms/PressableCustom';
+import TextCustom from '@/components/atoms/TextCustom';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
-import Text from '../TextCustom';
+import { ButtonModes, ButtonModesObject, ButtonProps } from './types.ts';
 
 const Button = ({
   title,
@@ -59,7 +59,7 @@ const Button = ({
       {isLoading ? (
         <ActivityIndicator color={colors.textSecondary} />
       ) : (
-        <Text text={title} mode="subtitle" style={computedStyles.text} />
+        <TextCustom text={title} mode="subtitle" style={computedStyles.text} />
       )}
     </PressableCustom>
   );

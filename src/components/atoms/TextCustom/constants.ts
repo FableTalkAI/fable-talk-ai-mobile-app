@@ -4,7 +4,7 @@ import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 
 const TEXT_STYLES: Record<TextModes, TextStyle> = {
   base: {
-    fontSize: 12,
+    fontSize: 16,
     lineHeight: 24,
     fontWeight: 400,
   },

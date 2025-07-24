@@ -1,9 +1,10 @@
 import { useMemo } from 'react';
 import { Image, StyleSheet } from 'react-native';
 
-import { AutoImageProps } from '@/components/atoms/AutoImage/types.ts';
 import { WINDOW_WIDTH } from '@/core/constants/device.ts';
 import { SPACING } from '@/core/constants/sizes.ts';
+
+import { AutoImageProps } from './types.ts';
 
 const AutoImage = ({
   source,
