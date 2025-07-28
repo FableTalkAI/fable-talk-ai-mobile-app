@@ -2,7 +2,7 @@ import { Pressable } from 'react-native-gesture-handler';
 import { PressableEvent } from 'react-native-gesture-handler/lib/typescript/components/Pressable/PressableProps';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
-import { PressableCustomProps } from '@/components/atoms/PressableCustom/types.ts';
+import { PressableCustomProps } from './types.ts';
 
 const PressableCustom = ({ children, onPressIn, onPressOut, style, ...pressableProps }: PressableCustomProps) => {
   const opacity = useSharedValue(1);

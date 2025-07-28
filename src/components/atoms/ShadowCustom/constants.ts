@@ -18,7 +18,7 @@ const SHADOW_STYLES: Record<ShadowCustomModes, ShadowProps> = {
   },
   alt: {
     distance: 24,
-    startColor: '#00000005',
+    startColor: '#0000000A',
     offset: [2, 2],
   },
 };

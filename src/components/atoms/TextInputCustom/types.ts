@@ -3,7 +3,6 @@ import { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 import { SvgProps } from 'react-native-svg';
 
 import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
-import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 
 type ExcludeTextInputCustomProps = 'style' | 'placeholder' | 'placeholderTextColor' | 'numberOfLines';
 
@@ -13,7 +12,6 @@ export type TextInputCustomProps = {
   placeholder?: string;
   placeholderTextColor?: string;
   shadowMode?: ShadowCustomModes;
-  textMode?: TextModes;
   leftIcon?: ReactElement<SvgProps>;
   wrapperStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
