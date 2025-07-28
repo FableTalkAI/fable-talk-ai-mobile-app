@@ -1,6 +1,9 @@
 {
-  "test": "test",
   "common": {
-    "test": "test"
+  },
+  "auth": {
+    "splashText": "Choose\nYour Agent",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
   }
 }
