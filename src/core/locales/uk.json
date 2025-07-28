@@ -1,6 +1,5 @@
 {
-  "common": {
-  },
+  "common": {},
   "auth": {
     "splashText": "Оберіть\nВашого Агента",
     "signIn": "Вхід",
