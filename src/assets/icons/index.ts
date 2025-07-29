@@ -1,3 +1,5 @@
-import AppleIcon from '@/assets/icons/apple.svg';
+import AppleIcon from './apple.svg';
+import PinIcon from './pinIcon.svg';
+import PinIconPinned from './pinIconPinned.svg';
 
-export { AppleIcon };
+export { AppleIcon, PinIcon, PinIconPinned };

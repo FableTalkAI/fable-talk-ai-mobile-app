@@ -1,3 +1,4 @@
-import AvatarImage from '@/assets/images/avatar-png.png';
+import AvatarImage from './avatar-png.png';
+import ChatGPTLogo from './chatgpt-logo.jpg';
 
-export { AvatarImage };
+export { AvatarImage, ChatGPTLogo };

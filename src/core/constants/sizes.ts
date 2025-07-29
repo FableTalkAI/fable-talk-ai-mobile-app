@@ -11,6 +11,7 @@ const RADIUS = {
   small: 12,
   medium: 16,
   large: 24,
+  circle: 10000,
 };
 
 export { RADIUS, SPACING };

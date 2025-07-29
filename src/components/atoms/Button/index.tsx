@@ -37,6 +37,10 @@ const Button = ({
       backgroundColor: colors.primary30,
       color: colors.textLight,
     },
+    tag: {
+      backgroundColor: colors.backgroundHover,
+      color: colors.primary30,
+    },
   };
 
   const computedStyles = StyleSheet.create({

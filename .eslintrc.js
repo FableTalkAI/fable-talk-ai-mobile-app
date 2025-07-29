@@ -29,13 +29,5 @@ module.exports = {
       },
     ],
     '@typescript-eslint/switch-exhaustiveness-check': 'error',
-    // overrides: [
-    //   {
-    //     files: ['src/core/redux/hooks.ts'],
-    //     rules: {
-    //       '@typescript-eslint/no-restricted-imports': 'off',
-    //     },
-    //   },
-    // ],
   },
 };
