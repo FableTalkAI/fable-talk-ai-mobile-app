@@ -1,14 +1,18 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import { AppleIcon } from '@/assets/icons';
+import { AppleIcon, NotificationBellIcon } from '@/assets/icons';
 import { AvatarImage } from '@/assets/images';
 import AutoImage from '@/components/atoms/AutoImage';
 import Button from '@/components/atoms/Button';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
+import Avatar from '@/components/molecules/Avatar';
+import Header from '@/components/molecules/Header';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
+import OptionBar from '@/components/molecules/OptionBar';
+import { OptionBarColorModes, OptionBarModes } from '@/components/molecules/OptionBar/types.ts';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import Skeleton from '@/components/molecules/Skeleton';
 
@@ -23,10 +27,23 @@ const Man = () => {
     <SafeAreaViewCustom>
       <KeyboardAvoidingViewCustom>
         <ScrollView>
+          <Header header="Man" />
+
+          <OptionBar title="Settings" mode={OptionBarModes.Simple} />
+          <OptionBar
+            title="Settings"
+            subtitle="Enable"
+            mode={OptionBarModes.Complex}
+            colorMode={OptionBarColorModes.Red}
+            leftIcon={<NotificationBellIcon />}
+          />
+
+          <Avatar />
+
           <View style={[styles.container, computedStyles.container]}>
             <AppleIcon />
             <TextCustom text="asdsa" mode="title" />
-            <Button title={'res'} onPress={() => console.log('rety')} />
+            <Button title={'res'} onPress={() => console.log('rety')} isDisable />
             <TouchableOpacity>
               <TextCustom text="asdsa" mode="title" />
             </TouchableOpacity>
