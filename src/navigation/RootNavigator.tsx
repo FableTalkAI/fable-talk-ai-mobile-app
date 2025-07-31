@@ -1,13 +1,13 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Man from '@/screens/Man.tsx';
+import SplashScreen from '@/screens/auth/SplashScreen';
 
 const Stack = createStackNavigator();
 
 const RootNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Test" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Test" component={Man} />
+    <Stack.Navigator initialRouteName="SplashScreen" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="SplashScreen" component={SplashScreen} />
     </Stack.Navigator>
   );
 };
