@@ -11,7 +11,7 @@ import { ChatListBarProps } from '@/components/molecules/ChatListBar/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
-const ChatListBar = ({ agentName, lastMessage, avatarSource }: ChatListBarProps) => {
+const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatListBarProps) => {
   const { colors } = useTheme();
   const [isPinned, setIsPinned] = useState(false);
 
@@ -20,6 +20,7 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource }: ChatListBarProps)
       paddingHorizontal: SPACING.m,
       paddingVertical: SPACING.m,
       borderRadius: RADIUS.medium,
+      backgroundColor: colors.backgroundBase,
     },
     avatar: {
       borderRadius: RADIUS.circle,
@@ -33,30 +34,35 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource }: ChatListBarProps)
   });
 
   return (
-    <ShadowCustom mode="medium" style={[styles.shadowStyle, computedStyles.shadowStyle]}>
-      <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
+    <PressableCustom onPress={onPress}>
+      <ShadowCustom mode="medium" style={[styles.shadowStyle, computedStyles.shadowStyle]}>
+        <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
 
-      <View style={[styles.messageContainer, computedStyles.messageContainer]}>
-        <View style={styles.nameAndPinContainer}>
-          <TextCustom text={agentName} style={computedStyles.agentName} />
+        <View style={[styles.messageContainer, computedStyles.messageContainer]}>
+          <View style={styles.nameAndPinContainer}>
+            <TextCustom text={agentName} style={computedStyles.agentName} />
 
-          <PressableCustom style={styles.pinContainer} onPress={() => setIsPinned(!isPinned)}>
-            <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>
-              {isPinned ? <PinIconPinned /> : <PinIcon />}
-            </Animated.View>
-          </PressableCustom>
+            <PressableCustom
+              style={styles.pinContainer}
+              onPress={() => setIsPinned(prevState => !prevState)}
+              hitSlop={10}
+            >
+              <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>
+                {isPinned ? <PinIconPinned /> : <PinIcon />}
+              </Animated.View>
+            </PressableCustom>
+          </View>
+
+          <TextCustom text={lastMessage} numberOfLines={2} />
         </View>
-
-        <TextCustom text={lastMessage} numberOfLines={2} />
-      </View>
-    </ShadowCustom>
+      </ShadowCustom>
+    </PressableCustom>
   );
 };
 
 const styles = StyleSheet.create({
   shadowStyle: {
     flexDirection: 'row',
-    backgroundColor: 'red',
   },
   avatar: {
     width: 30,

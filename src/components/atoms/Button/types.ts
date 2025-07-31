@@ -14,7 +14,7 @@ export type ButtonProps = {
   style?: StyleProp<ViewStyle>;
 } & UniquePressableProps;
 
-export type ButtonModes = 'primary' | 'disabled' | 'transparent' | 'light' | 'tag';
+export type ButtonModes = 'primary' | 'disabled' | 'transparent' | 'light';
 
 export type ButtonModesObject = {
   backgroundColor: string;

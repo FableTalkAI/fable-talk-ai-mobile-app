@@ -9,31 +9,30 @@ import { AgentBarProps } from '@/components/molecules/AgentBar/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
-const AgentBar = ({ agentName, agentDescription, tags, avatarSource, style }: AgentBarProps) => {
+const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: AgentBarProps) => {
   const { colors } = useTheme();
 
   const computedStyles = StyleSheet.create({
-    shadowStyle: {
+    pressableContainer: {
       backgroundColor: colors.backgroundBase,
       borderRadius: RADIUS.medium,
       paddingVertical: SPACING.m,
       gap: SPACING.xs,
-      width: 150,
     },
     avatar: {
       borderRadius: RADIUS.circle,
     },
-    agentName: {
+    name: {
       color: colors.textPrimary,
     },
-    agentDescription: {
+    description: {
       color: colors.textSecondary,
       paddingHorizontal: SPACING.s,
     },
     flatList: {
       paddingVertical: SPACING.xxs,
     },
-    tagsContainer: {
+    flatListContainer: {
       paddingHorizontal: SPACING.m,
       gap: SPACING.xxs,
     },
@@ -49,39 +48,51 @@ const AgentBar = ({ agentName, agentDescription, tags, avatarSource, style }: Ag
   });
 
   return (
-    <ShadowCustom style={[computedStyles.shadowStyle, styles.shadowStyle, style]} mode="medium">
-      <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
+    <ShadowCustom containerStyle={styles.shadowContainer} mode="medium">
+      <PressableCustom style={[computedStyles.pressableContainer, styles.pressableContainer, style]} onPress={onPress}>
+        <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
 
-      <TextCustom text={agentName} mode="secondary" style={computedStyles.agentName} />
-      <TextCustom
-        text={agentDescription}
-        mode="extra-small"
-        style={computedStyles.agentDescription}
-        numberOfLines={2}
-      />
+        <TextCustom text={name} mode="secondary" style={computedStyles.name} />
+        <TextCustom
+          text={description}
+          mode="extra-small"
+          style={[computedStyles.description, styles.description]}
+          numberOfLines={2}
+        />
 
-      <FlatList
-        horizontal
-        data={tags}
-        style={computedStyles.flatList}
-        contentContainerStyle={computedStyles.tagsContainer}
-        renderItem={({ item }) => (
-          <PressableCustom style={[styles.tags, computedStyles.tags]}>
-            <TextCustom text={item} mode="tag" style={computedStyles.tagsText} />
-          </PressableCustom>
-        )}
-      />
+        <FlatList
+          horizontal
+          data={tags}
+          style={[computedStyles.flatList, styles.flatList]}
+          contentContainerStyle={computedStyles.flatListContainer}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({ item }) => (
+            <PressableCustom style={[styles.tags, computedStyles.tags]} hitSlop={5}>
+              <TextCustom text={item} mode="tag" style={computedStyles.tagsText} />
+            </PressableCustom>
+          )}
+        />
+      </PressableCustom>
     </ShadowCustom>
   );
 };
 
 const styles = StyleSheet.create({
-  shadowStyle: {
+  shadowContainer: {
+    flexBasis: '45%',
+  },
+  pressableContainer: {
     alignItems: 'center',
   },
   avatar: {
     width: 44,
     height: 44,
+  },
+  description: {
+    textAlign: 'center',
+  },
+  flatList: {
+    maxHeight: 40,
   },
   tags: {
     borderWidth: 2,

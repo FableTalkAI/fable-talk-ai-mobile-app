@@ -4,4 +4,5 @@ export type ChatListBarProps = {
   agentName: string;
   lastMessage: string;
   avatarSource: ImageSourcePropType;
+  onPress?: () => void;
 };

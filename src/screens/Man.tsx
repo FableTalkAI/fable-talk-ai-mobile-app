@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-import AppleIcon from '@/assets/icons/apple.svg';
+import { PinIcon } from '@/assets/icons';
 import { AvatarImage, ChatGPTLogo } from '@/assets/images';
 import AutoImage from '@/components/atoms/AutoImage';
 import Button from '@/components/atoms/Button';
@@ -26,7 +26,6 @@ const Man = () => {
       <KeyboardAvoidingViewCustom>
         <ScrollView>
           <View style={[styles.container, computedStyles.container]}>
-            <AppleIcon />
             <TextCustom text="asdsa" mode="title" />
             <Button title={'res'} onPress={() => console.log('rety')} />
             <TouchableOpacity>
@@ -40,31 +39,31 @@ const Man = () => {
             <Skeleton />
 
             <TextInputCustom placeholder="textsss" />
-            <TextInputCustom placeholder="textsss" leftIcon={<AppleIcon />} shadowMode="medium" />
-            <TextInputCustom placeholder="textsss" leftIcon={<AppleIcon />} shadowMode="alt" />
+            <TextInputCustom placeholder="textsss" leftIcon={<PinIcon />} shadowMode="medium" />
+            <TextInputCustom placeholder="textsss" leftIcon={<PinIcon />} shadowMode="alt" />
 
             <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 24 }}>
               <AgentBar
-                agentName="ChatGPT"
-                agentDescription="Advanced conversational AI"
+                name="ChatGPT"
+                description="Advanced conversational AI"
                 tags={['Home', 'AI', 'Home1', 'AI1', 'Home2', 'AI2']}
                 avatarSource={ChatGPTLogo}
               />
               <AgentBar
-                agentName="ChatGPT"
-                agentDescription="Advanced conversational AI"
+                name="ChatGPT"
+                description="Advanced conversational AI"
                 tags={['Home', 'AI']}
                 avatarSource={ChatGPTLogo}
               />
               <AgentBar
-                agentName="ChatGPT"
-                agentDescription="Advanced conversational AI"
+                name="ChatGPT"
+                description="Advanced conversational AI"
                 tags={['Home', 'AI']}
                 avatarSource={ChatGPTLogo}
               />
               <AgentBar
-                agentName="ChatGPT"
-                agentDescription="Advanced conversational AI"
+                name="ChatGPT"
+                description="Advanced conversational AI"
                 tags={['Home', 'AI']}
                 avatarSource={ChatGPTLogo}
               />
