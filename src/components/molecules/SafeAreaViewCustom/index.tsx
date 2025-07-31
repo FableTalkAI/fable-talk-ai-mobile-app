@@ -6,7 +6,7 @@ import useTheme from '@/hooks/useTheme.ts';
 
 import { SafeAreaViewCustomProps } from './types.ts';
 
-const SafeAreaViewCustom = ({ children }: SafeAreaViewCustomProps) => {
+const SafeAreaViewCustom = ({ children, isTransparent = false, style }: SafeAreaViewCustomProps) => {
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
 
@@ -15,11 +15,11 @@ const SafeAreaViewCustom = ({ children }: SafeAreaViewCustomProps) => {
       paddingHorizontal: SPACING.xl,
       paddingTop: insets.top ? 0 : SPACING.lg,
       paddingBottom: insets.bottom ? 0 : SPACING.lg,
-      backgroundColor: colors.backgroundBase,
+      backgroundColor: isTransparent ? 'transparent' : colors.backgroundBase,
     },
   });
 
-  return <SafeAreaView style={[styles.flex1, computedStyles.container]}>{children}</SafeAreaView>;
+  return <SafeAreaView style={[styles.flex1, computedStyles.container, style]}>{children}</SafeAreaView>;
 };
 
 const styles = StyleSheet.create({
