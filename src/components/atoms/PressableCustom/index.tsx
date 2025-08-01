@@ -5,7 +5,14 @@ import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-na
 
 import { PressableCustomProps } from './types.ts';
 
-const PressableCustom = ({ children, onPressIn, onPressOut, style, ...pressableProps }: PressableCustomProps) => {
+const PressableCustom = ({
+  children,
+  onPressIn,
+  onPressOut,
+  style,
+  containerStyle,
+  ...pressableProps
+}: PressableCustomProps) => {
   const opacity = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -24,7 +31,7 @@ const PressableCustom = ({ children, onPressIn, onPressOut, style, ...pressableP
   };
 
   return (
-    <Animated.View style={[animatedStyle, styles.wrapper]}>
+    <Animated.View style={[animatedStyle, containerStyle, styles.wrapper]}>
       <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} style={style} {...pressableProps}>
         {children}
       </Pressable>

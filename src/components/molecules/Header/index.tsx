@@ -1,10 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 
-import { ArrowBackIcon, SearchIcon } from '@/assets/icons';
+import { ArrowBackIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
-import TextInputCustom from '@/components/atoms/TextInputCustom';
 import { HeaderProps } from '@/components/molecules/Header/types.ts';
 import { SPACING } from '@/core/constants/sizes.ts';
 
@@ -19,7 +18,7 @@ const Header = ({ header = '' }: HeaderProps) => {
 
   return (
     <View style={[styles.container, computedStyles.container]}>
-      <PressableCustom containerStyle={styles.side} onPress={() => navigation.goBack()} hitSlop={10}>
+      <PressableCustom containerStyle={styles.side} onPress={navigation.goBack} hitSlop={10}>
         <ArrowBackIcon />
       </PressableCustom>
 
