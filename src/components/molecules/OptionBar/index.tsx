@@ -1,7 +1,7 @@
 import { cloneElement, useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { ArrowForwardIcon, ToggleFalseIcon } from '@/assets/icons';
+import { ArrowForwardIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import { OptionBarColorModes, OptionBarModes, OptionBarProps } from '@/components/molecules/OptionBar/types.ts';
@@ -61,7 +61,7 @@ const OptionBar = ({
           {cloneElement(leftIcon, { width: 18, fill: localColors.icon })}
         </View>
       ) : null,
-    [leftIcon],
+    [leftIcon, localColors, computedStyles],
   );
 
   if (mode === OptionBarModes.Simple) {
