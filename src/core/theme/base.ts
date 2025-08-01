@@ -23,4 +23,7 @@ export const base = {
   gray40: '#A19F9E',
   gray50: '#8A8B8A',
   grayDisabled: '#c2c6c8',
+
+  accentLight: '#FFFDF3',
+  accentCream: '#FED6AD',
 };

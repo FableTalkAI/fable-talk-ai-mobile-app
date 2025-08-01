@@ -10,7 +10,6 @@ type UniquePressableProps = Omit<PressableProps, ExcludePressableCustomProps>;
 export type PressableCustomProps = {
   children?: ReactNode;
   style?: StyleProp<ViewStyle>;
-  containerStyle?: StyleProp<ViewStyle>;
   onPressIn?: ((event: PressableEvent) => void) | null;
   onPressOut?: ((event: PressableEvent) => void) | null;
 } & UniquePressableProps;
