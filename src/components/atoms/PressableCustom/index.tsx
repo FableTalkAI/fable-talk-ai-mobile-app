@@ -34,7 +34,7 @@ const PressableCustom = ({ children, onPressIn, onPressOut, style, ...pressableP
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1,
+    flexShrink: 1,
   },
 });
 
