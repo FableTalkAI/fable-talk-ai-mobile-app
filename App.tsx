@@ -2,17 +2,15 @@ import { I18nextProvider } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import RootNavigator from '@/navigation/RootNavigator';
 import Toast from 'react-native-toast-message';
-import { createNavigationContainerRef, NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import i18n from '@/core/configs/i18n.ts';
-import { RootStackParamList } from '@/navigation/types.ts';
+
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from '@/store';
-
-export const navigationRef = createNavigationContainerRef<RootStackParamList>();
+import RootNavigator from '@/navigation/RootNavigator';
 
 function App() {
   return (
@@ -22,7 +20,7 @@ function App() {
           <GestureHandlerRootView style={styles.flex1}>
             <BottomSheetModalProvider>
               <SafeAreaProvider>
-                <NavigationContainer ref={navigationRef}>
+                <NavigationContainer>
                   <RootNavigator />
                 </NavigationContainer>
 

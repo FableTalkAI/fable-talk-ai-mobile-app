@@ -8,6 +8,7 @@ import Button from '@/components/atoms/Button';
 import TextCustom from '@/components/atoms/TextCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
+import { navigationRef } from '@/core/utils/navigation.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 const SplashScreen = () => {
@@ -43,9 +44,18 @@ const SplashScreen = () => {
           <TextCustom text={t('auth.splashText')} mode="xxl" style={computedStyles.text} />
 
           <View style={[styles.buttonContainer, computedStyles.buttonContainer]}>
-            {/*TODO: add onPress navigation to SignInUpScreen*/}
-            <Button title={t('auth.signIn')} mode="light" radius="small" />
-            <Button title={t('auth.signUp')} mode="transparent" radius="small" />
+            <Button
+              title={t('auth.signIn')}
+              mode="light"
+              radius="small"
+              onPress={() => navigationRef.navigate('SearchScreen')}
+            />
+            <Button
+              title={t('auth.signUp')}
+              mode="transparent"
+              radius="small"
+              onPress={() => navigationRef.navigate('SearchScreen')}
+            />
           </View>
         </View>
       </SafeAreaViewCustom>
