@@ -42,11 +42,7 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
           <View style={styles.nameAndPinContainer}>
             <TextCustom text={agentName} style={computedStyles.agentName} />
 
-            <PressableCustom
-              style={styles.pinContainer}
-              onPress={() => setIsPinned(prevState => !prevState)}
-              hitSlop={10}
-            >
+            <PressableCustom onPress={() => setIsPinned(prevState => !prevState)} hitSlop={10}>
               <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>
                 {isPinned ? <PinIconPinned /> : <PinIcon />}
               </Animated.View>
@@ -74,9 +70,6 @@ const styles = StyleSheet.create({
   nameAndPinContainer: {
     justifyContent: 'space-between',
     flexDirection: 'row',
-  },
-  pinContainer: {
-    width: 16,
   },
 });
 export default ChatListBar;
