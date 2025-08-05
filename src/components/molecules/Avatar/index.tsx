@@ -1,65 +1,47 @@
 import { useState } from 'react';
-import { Platform, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 
 import { EditAvatarIcon, UserIcon } from '@/assets/icons';
 import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
-import { IS_ANDROID, IS_IOS } from '@/core/constants/device.ts';
-import { RADIUS } from '@/core/constants/sizes.ts';
+import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import { usePermissions } from '@/hooks/usePermissions.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 const Avatar = () => {
   const { colors } = useTheme();
+  const { handleAccessGallery } = usePermissions();
 
   const [avatarUri, setAvatarUri] = useState<string | null>(null);
 
-  const requestGalleryPermission = async (): Promise<boolean> => {
-    if (IS_ANDROID) {
-      const permission =
-        Number(Platform.Version) >= 33
-          ? PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
-          : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE;
-
-      const result = await request(permission);
-      return result === RESULTS.GRANTED;
-    }
-
-    if (IS_IOS) {
-      const result = await request(PERMISSIONS.IOS.PHOTO_LIBRARY);
-      return result === RESULTS.GRANTED || result === RESULTS.LIMITED;
-    }
-
-    return false;
-  };
-
   const pickImage = async () => {
-    const hasPermission = await requestGalleryPermission();
+    const hasPermission = await handleAccessGallery();
     if (!hasPermission) {
       console.warn('Permission to access gallery denied');
       return;
     }
 
-    launchImageLibrary(
-      {
+    try {
+      const response = await launchImageLibrary({
         mediaType: 'photo',
         selectionLimit: 1,
-      },
-      response => {
-        if (response.didCancel) return;
-        if (response.errorCode) {
-          console.warn('ImagePicker Error: ', response.errorMessage);
-          return;
-        }
+      });
 
-        const uri = response.assets?.[0]?.uri;
-        if (uri) {
-          setAvatarUri(uri);
-        }
-      },
-    );
+      if (response.didCancel) return;
+      if (response.errorCode) {
+        console.warn('ImagePicker Error: ', response.errorMessage);
+        return;
+      }
+
+      const uri = response.assets?.[0]?.uri;
+      if (uri) {
+        setAvatarUri(uri);
+      }
+    } catch (error) {
+      console.warn('ImagePicker failed: ', error);
+    }
   };
 
   const computedStyles = StyleSheet.create({
@@ -69,6 +51,9 @@ const Avatar = () => {
     },
     editContainer: {
       borderRadius: RADIUS.circle,
+      backgroundColor: colors.backgroundBase,
+      paddingVertical: SPACING.xs,
+      paddingLeft: SPACING.xs,
     },
     image: {
       borderRadius: RADIUS.circle,
@@ -100,12 +85,9 @@ const styles = StyleSheet.create({
     height: 144,
   },
   editContainer: {
-    width: 32,
-    height: 32,
+    width: 30,
+    height: 30,
     position: 'absolute',
-    backgroundColor: 'white',
-    paddingVertical: 9,
-    paddingLeft: 9,
     bottom: 0,
     right: 10,
   },

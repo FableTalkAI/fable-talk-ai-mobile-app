@@ -1,13 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 
-import { ArrowBackIcon } from '@/assets/icons';
+import { ArrowForwardIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import { HeaderProps } from '@/components/molecules/Header/types.ts';
 import { SPACING } from '@/core/constants/sizes.ts';
 
-const Header = ({ header = '' }: HeaderProps) => {
+const Header = ({ title }: HeaderProps) => {
   const navigation = useNavigation();
 
   const computedStyles = StyleSheet.create({
@@ -19,11 +19,11 @@ const Header = ({ header = '' }: HeaderProps) => {
   return (
     <View style={[styles.container, computedStyles.container]}>
       <PressableCustom containerStyle={styles.side} onPress={navigation.goBack} hitSlop={10}>
-        <ArrowBackIcon />
+        <ArrowForwardIcon />
       </PressableCustom>
 
       <View style={styles.center}>
-        <TextCustom text={header} mode="title" />
+        <TextCustom text={title} mode="title" />
       </View>
 
       <View style={styles.side} />
@@ -34,16 +34,17 @@ const Header = ({ header = '' }: HeaderProps) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   center: {
-    flex: 8,
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   side: {
-    flex: 1,
-    alignItems: 'flex-start',
+    width: 12,
     justifyContent: 'center',
+    transform: [{ rotate: '180deg' }],
   },
 });
 

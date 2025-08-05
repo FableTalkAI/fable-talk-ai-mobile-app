@@ -1,8 +1,9 @@
-import { cloneElement, useMemo } from 'react';
+import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ArrowForwardIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
+import ResizeIcon from '@/components/atoms/ResizeIcon';
 import TextCustom from '@/components/atoms/TextCustom';
 import { OptionBarColorModes, OptionBarModes, OptionBarProps } from '@/components/molecules/OptionBar/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
@@ -42,7 +43,6 @@ const OptionBar = ({
       backgroundColor: localColors.iconBackground,
       borderRadius: RADIUS.small,
     },
-    icon: {},
     textContainer: {
       paddingLeft: SPACING.xs,
     },
@@ -54,15 +54,10 @@ const OptionBar = ({
     },
   });
 
-  const resizeLeftIcon = useMemo(
-    () =>
-      leftIcon ? (
-        <View style={[styles.iconContainer, computedStyles.iconContainer]}>
-          {cloneElement(leftIcon, { width: 18, fill: localColors.icon })}
-        </View>
-      ) : null,
-    [leftIcon, localColors, computedStyles],
-  );
+  const resizeIconOption = {
+    width: 18,
+    fill: localColors.icon,
+  };
 
   if (mode === OptionBarModes.Simple) {
     return (
@@ -70,7 +65,7 @@ const OptionBar = ({
         <TextCustom text={title} />
 
         <PressableCustom>
-          <ArrowForwardIcon />
+          <ArrowForwardIcon width={8} />
         </PressableCustom>
       </View>
     );
@@ -79,17 +74,22 @@ const OptionBar = ({
   if (mode === OptionBarModes.Complex) {
     return (
       <PressableCustom style={styles.complexContainer}>
-        {resizeLeftIcon}
+        <ResizeIcon
+          icon={leftIcon}
+          containerStyle={computedStyles.iconContainer}
+          cloneElementProps={resizeIconOption}
+        />
 
         <View style={[computedStyles.textContainer, styles.textContainer]}>
           <TextCustom text={title} mode="secondary" style={computedStyles.title} />
           <TextCustom text={subtitle} mode="extra-small" style={computedStyles.subtitle} />
         </View>
 
-        {rightComponent ?? <ArrowForwardIcon fill={localColors.icon} />}
+        {rightComponent ?? <ArrowForwardIcon fill={localColors.icon} width={8} />}
       </PressableCustom>
     );
   }
+
   return null;
 };
 
@@ -101,12 +101,6 @@ const styles = StyleSheet.create({
   },
   complexContainer: {
     flexDirection: 'row',
-    alignItems: 'center',
-  },
-  iconContainer: {
-    width: 32,
-    height: 32,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   textContainer: {

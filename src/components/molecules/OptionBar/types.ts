@@ -3,7 +3,7 @@ import { SvgProps } from 'react-native-svg';
 
 export type OptionBarProps = {
   title: string;
-  subtitle?: string;
+  subtitle: string;
   mode?: OptionBarModes;
   leftIcon?: ReactElement<SvgProps>;
   rightComponent?: ReactNode;

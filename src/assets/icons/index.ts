@@ -1,4 +1,3 @@
-import ArrowBackIcon from './arrow-back.svg';
 import ArrowForwardIcon from './arrow-forward.svg';
 import NotificationBellIcon from './bell.svg';
 import EditAvatarIcon from './edit-avatar.svg';
@@ -10,7 +9,6 @@ import ToggleTrueIcon from './toggle-true.svg';
 import UserIcon from './user.svg';
 
 export {
-  ArrowBackIcon,
   ArrowForwardIcon,
   EditAvatarIcon,
   LogoIcon,

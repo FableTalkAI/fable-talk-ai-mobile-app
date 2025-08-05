@@ -1,4 +1,3 @@
-import { StyleSheet } from 'react-native';
 import { Pressable } from 'react-native-gesture-handler';
 import { PressableEvent } from 'react-native-gesture-handler/lib/typescript/components/Pressable/PressableProps';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
@@ -31,18 +30,12 @@ const PressableCustom = ({
   };
 
   return (
-    <Animated.View style={[animatedStyle, containerStyle, styles.wrapper]}>
+    <Animated.View style={[animatedStyle, containerStyle]}>
       <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} style={style} {...pressableProps}>
         {children}
       </Pressable>
     </Animated.View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-  },
-});
 
 export default PressableCustom;
