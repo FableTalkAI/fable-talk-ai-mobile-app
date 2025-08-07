@@ -23,7 +23,7 @@ export const base = {
   gray10: '#F2F2F2',
   gray40: '#A19F9E',
   gray50: '#8A8B8A',
-  grayDisabled: '#B9BEC0',
+  grayDisabled: '#c2c6c8',
 
   accentLight: '#FFFDF3',
   accentCream: '#FED6AD',
