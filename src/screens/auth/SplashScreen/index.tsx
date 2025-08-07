@@ -8,11 +8,14 @@ import Button from '@/components/atoms/Button';
 import TextCustom from '@/components/atoms/TextCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
+import useNavigationRoutes from '@/hooks/useNavigationRoutes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 const SplashScreen = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
+
+  const { authNavigation } = useNavigationRoutes();
 
   const computedStyles = StyleSheet.create({
     logoContainer: {
@@ -43,9 +46,18 @@ const SplashScreen = () => {
           <TextCustom text={t('auth.splashText')} mode="xxl" style={computedStyles.text} />
 
           <View style={[styles.buttonContainer, computedStyles.buttonContainer]}>
-            {/*TODO: add onPress navigation to SignInUpScreen*/}
-            <Button title={t('auth.signIn')} mode="light" radius="small" />
-            <Button title={t('auth.signUp')} mode="transparent" radius="small" />
+            <Button
+              title={t('auth.signIn')}
+              mode="light"
+              radius="small"
+              onPress={() => authNavigation.navigate('SingInUp')}
+            />
+            <Button
+              title={t('auth.signUp')}
+              mode="transparent"
+              radius="small"
+              onPress={() => authNavigation.navigate('SingInUp')}
+            />
           </View>
         </View>
       </SafeAreaViewCustom>

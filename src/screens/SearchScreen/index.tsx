@@ -2,12 +2,12 @@ import { View } from 'react-native';
 
 import TextCustom from '@/components/atoms/TextCustom';
 
-const ProfileScreen = () => {
+const SearchScreen = () => {
   return (
     <View>
-      <TextCustom text="ProfileScreen" />
+      <TextCustom text="sdasda" />
     </View>
   );
 };
 
-export default ProfileScreen;
+export default SearchScreen;
