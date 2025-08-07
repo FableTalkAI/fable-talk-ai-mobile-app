@@ -47,6 +47,7 @@ export const usePermissions = () => {
       return true;
     }
 
+    // 'TODO: translation and bottomWindow instead of Alert '
     if (status === 'blocked') {
       Alert.alert('Разрешение заблокировано', 'Чтобы использовать эту функцию, включите доступ к фото в настройках.', [
         { text: 'Отмена', style: 'cancel' },

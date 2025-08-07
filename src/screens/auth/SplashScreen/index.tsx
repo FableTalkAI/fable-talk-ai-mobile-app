@@ -7,14 +7,16 @@ import { LogoIcon, SplashRobotIcon } from '@/assets/icons';
 import Button from '@/components/atoms/Button';
 import TextCustom from '@/components/atoms/TextCustom';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
-import OptionBar from '@/components/molecules/OptionBar';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
+import useNavigationRoutes from '@/hooks/useNavigationRoutes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 const SplashScreen = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
+
+  const { authNavigation } = useNavigationRoutes();
 
   const computedStyles = StyleSheet.create({
     logoContainer: {
@@ -32,7 +34,7 @@ const SplashScreen = () => {
   return (
     <>
       <LinearGradient colors={[colors.accentLight, colors.primary100]} locations={[0.2, 0.9]} style={styles.gradient} />
-      <OptionBar title="sadasd" subtitle="sdsad" />
+
       <SafeAreaViewCustom isTransparent style={styles.safeAreaView}>
         <View style={[styles.logoContainer, computedStyles.logoContainer]}>
           <LogoIcon />
@@ -45,9 +47,18 @@ const SplashScreen = () => {
           <TextCustom text={t('auth.splashText')} mode="xxl" style={computedStyles.text} />
 
           <View style={[styles.buttonContainer, computedStyles.buttonContainer]}>
-            {/*TODO: add onPress navigation to SignInUpScreen*/}
-            <Button title={t('auth.signIn')} mode="light" radius="small" />
-            <Button title={t('auth.signUp')} mode="transparent" radius="small" />
+            <Button
+              title={t('auth.signIn')}
+              mode="light"
+              radius="small"
+              onPress={() => authNavigation.navigate('SingInUp')}
+            />
+            <Button
+              title={t('auth.signUp')}
+              mode="transparent"
+              radius="small"
+              onPress={() => authNavigation.navigate('SingInUp')}
+            />
           </View>
         </View>
       </SafeAreaViewCustom>

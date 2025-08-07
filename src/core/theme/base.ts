@@ -1,6 +1,7 @@
 export const base = {
   primary10: '#C4AAE1',
   primary30: '#A37EC4',
+  primary40: '#724B99',
   primary60: '#62398C',
   primary80: '#412668',
   primary100: '#1D083A',
