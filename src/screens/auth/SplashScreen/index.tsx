@@ -6,7 +6,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import { LogoIcon, SplashRobotIcon } from '@/assets/icons';
 import Button from '@/components/atoms/Button';
 import TextCustom from '@/components/atoms/TextCustom';
-import TextInputCustom from '@/components/atoms/TextInputCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes.ts';
@@ -40,7 +39,7 @@ const SplashScreen = () => {
           <LogoIcon />
           <TextCustom text="FableTalkAI" mode="subtitle" />
         </View>
-        <TextInputCustom withBackArrow placeholder="asdasdsad" shadowMode="medium" />
+
         <SplashRobotIcon width={SCREEN_WIDTH} />
 
         <View style={styles.bottomContainer}>
