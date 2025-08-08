@@ -6,6 +6,7 @@ import { EditAvatarIcon, UserIcon } from '@/assets/icons';
 import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
+import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import { usePermissions } from '@/hooks/usePermissions.ts';
 import useTheme from '@/hooks/useTheme.ts';
@@ -68,7 +69,7 @@ const Avatar = () => {
         <UserIcon />
       )}
 
-      <ShadowCustom containerStyle={[computedStyles.editContainer, styles.editContainer]} mode="alt">
+      <ShadowCustom containerStyle={[computedStyles.editContainer, styles.editContainer]} mode={ShadowCustomModes.Alt}>
         <PressableCustom hitSlop={10} onPress={pickImage}>
           <EditAvatarIcon />
         </PressableCustom>

@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import { Text } from 'react-native';
 
 import { TEXT_STYLES } from './constants.ts';
-import { TextCustomProps } from './types.ts';
+import { TextCustomProps, TextModes } from './types.ts';
 
-const TextCustom = ({ text, mode = 'base', style, numberOfLines }: TextCustomProps) => {
+const TextCustom = ({ text, mode = TextModes.Base, style, numberOfLines }: TextCustomProps) => {
   const textStyle = useMemo(() => TEXT_STYLES[mode], [mode]);
 
   return (

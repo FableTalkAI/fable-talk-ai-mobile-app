@@ -1,0 +1,5 @@
+const ROW_HEIGHT = 32;
+const VSPACE = 4;
+const MAX_DROPDOWN_HEIGHT = 100;
+
+export { MAX_DROPDOWN_HEIGHT, ROW_HEIGHT, VSPACE };

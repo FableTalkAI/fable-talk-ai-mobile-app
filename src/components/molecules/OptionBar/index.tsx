@@ -5,9 +5,11 @@ import { ArrowForwardIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import ResizeIcon from '@/components/atoms/ResizeIcon';
 import TextCustom from '@/components/atoms/TextCustom';
-import { OptionBarColorModes, OptionBarModes, OptionBarProps } from '@/components/molecules/OptionBar/types.ts';
+import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
+
+import { OptionBarColorModes, OptionBarModes, OptionBarProps } from './types.ts';
 
 const OptionBar = ({
   title,
@@ -81,8 +83,8 @@ const OptionBar = ({
         />
 
         <View style={[computedStyles.textContainer, styles.textContainer]}>
-          <TextCustom text={title} mode="secondary" style={computedStyles.title} />
-          <TextCustom text={subtitle} mode="extra-small" style={computedStyles.subtitle} />
+          <TextCustom text={title} mode={TextModes.Secondary} style={computedStyles.title} />
+          <TextCustom text={subtitle} mode={TextModes.ExtraSmall} style={computedStyles.subtitle} />
         </View>
 
         {rightComponent ?? <ArrowForwardIcon fill={localColors.icon} width={8} />}

@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, TextInput, View } from 'react-native';
 
 import { ArrowForwardIcon } from '@/assets/icons';
@@ -6,6 +5,7 @@ import PressableCustom from '@/components/atoms/PressableCustom';
 import ResizeIcon from '@/components/atoms/ResizeIcon';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 import useTheme from '@/hooks/useTheme.ts';
 
 import { TextInputCustomProps } from './types.ts';
@@ -23,7 +23,7 @@ const TextInputCustom = ({
   numberOfLines = 1,
 }: TextInputCustomProps) => {
   const { colors } = useTheme();
-  const navigation = useNavigation();
+  const { navigation } = useNavigationRoutes();
 
   const computedStyles = StyleSheet.create({
     wrapper: {

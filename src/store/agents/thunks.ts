@@ -1,6 +1,7 @@
 import defaultAxiosInstance from '@/api/defaultAxiosInstance.ts';
 import { createAxiosAsyncThunk } from '@/core/redux/typedCreateAsyncThunk.ts';
-import { agentsSliceName } from '@/store/agents/index.ts';
+
+import { agentsSliceName } from './index.ts';
 
 type Test = number;
 
