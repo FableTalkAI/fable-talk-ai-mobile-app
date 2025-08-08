@@ -1,41 +1,21 @@
-import { StyleSheet, TextInput, View } from 'react-native';
+import { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import { ArrowForwardIcon, FilterIcon, SearchIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import { SearchInputProps } from '@/components/atoms/SearchInput/types.ts';
-import ShadowCustom from '@/components/atoms/ShadowCustom';
-import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import TextInputCustom from '@/components/atoms/TextInputCustom';
+import { SPACING } from '@/core/constants/sizes.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes.ts';
-import useTheme from '@/hooks/useTheme.ts';
 
-const SearchInput = ({
-  placeholder,
-  placeholderTextColor,
-  shadowMode,
-  withBackArrow,
-  withFilter,
-  shadowStyle,
-  style,
-  value,
-  onChangeText,
-}: SearchInputProps) => {
-  const { colors } = useTheme();
-
+const SearchInput = ({ placeholder, withBackArrow, withFilter }: SearchInputProps) => {
   const { rootNavigation } = useNavigationRoutes();
+
+  const [text, setText] = useState<string>('');
 
   const computedStyles = StyleSheet.create({
     wrapper: {
       gap: SPACING.m,
-    },
-    container: {
-      borderRadius: RADIUS.large,
-      paddingHorizontal: SPACING.m,
-      backgroundColor: colors.backgroundAlt,
-      gap: SPACING.xs,
-      paddingVertical: SPACING.s,
-    },
-    textInput: {
-      color: colors.textPrimary,
     },
   });
 
@@ -47,22 +27,14 @@ const SearchInput = ({
         </PressableCustom>
       )}
 
-      <ShadowCustom
-        mode={shadowMode}
-        style={[computedStyles.container, styles.container, shadowStyle]}
-        containerStyle={styles.shadowContainer}
-      >
-        <SearchIcon />
+      <TextInputCustom
+        placeholder={placeholder}
+        value={text}
+        onChangeText={setText}
+        leftIcon={<SearchIcon />}
+        wrapperStyle={styles.textInputWrapper}
+      />
 
-        <TextInput
-          value={value}
-          onChangeText={onChangeText}
-          placeholder={placeholder}
-          placeholderTextColor={placeholderTextColor ?? colors.gray50}
-          style={[computedStyles.textInput, styles.textInput, style]}
-          numberOfLines={1}
-        />
-      </ShadowCustom>
       {withFilter && (
         <PressableCustom>
           <FilterIcon />
@@ -76,22 +48,13 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  shadowContainer: {
+  textInputWrapper: {
     flex: 1,
   },
   backIcon: {
     transform: [{ rotate: '180deg' }],
-  },
-  textInput: {
-    flex: 1,
-    paddingVertical: 0,
-    fontSize: 16,
-    minHeight: 24,
   },
 });
 
