@@ -1,27 +1,27 @@
 import { StyleSheet, TextInput, View } from 'react-native';
 
-import ResizeIcon from '@/components/atoms/ResizeIcon';
+import { ArrowForwardIcon, FilterIcon, SearchIcon } from '@/assets/icons';
+import PressableCustom from '@/components/atoms/PressableCustom';
+import { SearchInputProps } from '@/components/atoms/SearchInput/types.ts';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
-import TextCustom from '@/components/atoms/TextCustom';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import useNavigationRoutes from '@/hooks/useNavigationRoutes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
-import { TextInputCustomProps } from './types.ts';
-
-const TextInputCustom = ({
+const SearchInput = ({
   placeholder,
   placeholderTextColor,
   shadowMode,
-  leftIcon,
-  containerStyle,
+  withBackArrow,
+  withFilter,
+  shadowStyle,
   style,
   value,
   onChangeText,
-  numberOfLines = 1,
-  showCharCount,
-  maxLength,
-}: TextInputCustomProps) => {
+}: SearchInputProps) => {
   const { colors } = useTheme();
+
+  const { rootNavigation } = useNavigationRoutes();
 
   const computedStyles = StyleSheet.create({
     wrapper: {
@@ -36,37 +36,37 @@ const TextInputCustom = ({
     },
     textInput: {
       color: colors.textPrimary,
-      minHeight: showCharCount ? 200 : 24,
-      textAlignVertical: 'top',
     },
   });
 
-  const resizeIconOption = {
-    width: 24,
-  };
-
   return (
     <View style={[styles.wrapper, computedStyles.wrapper]}>
+      {withBackArrow && (
+        <PressableCustom onPress={rootNavigation.goBack} style={styles.backIcon}>
+          <ArrowForwardIcon />
+        </PressableCustom>
+      )}
+
       <ShadowCustom
         mode={shadowMode}
-        style={[computedStyles.container, styles.container, containerStyle]}
+        style={[computedStyles.container, styles.container, shadowStyle]}
         containerStyle={styles.shadowContainer}
       >
-        <ResizeIcon icon={leftIcon} containerStyle={styles.iconContainer} cloneElementProps={resizeIconOption} />
+        <SearchIcon />
 
         <TextInput
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
-          placeholderTextColor={placeholderTextColor ?? 'black'}
+          placeholderTextColor={placeholderTextColor ?? colors.gray50}
           style={[computedStyles.textInput, styles.textInput, style]}
-          numberOfLines={numberOfLines}
-          maxLength={maxLength}
+          numberOfLines={1}
         />
       </ShadowCustom>
-
-      {showCharCount && maxLength !== undefined && (
-        <TextCustom text={`${(value ?? '').length}/${maxLength}`} style={styles.charCount} />
+      {withFilter && (
+        <PressableCustom>
+          <FilterIcon />
+        </PressableCustom>
       )}
     </View>
   );
@@ -84,22 +84,15 @@ const styles = StyleSheet.create({
   shadowContainer: {
     flex: 1,
   },
-  iconContainer: {
-    width: 24,
-    height: 24,
+  backIcon: {
+    transform: [{ rotate: '180deg' }],
   },
   textInput: {
     flex: 1,
     paddingVertical: 0,
     fontSize: 16,
-  },
-  charCount: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    paddingRight: 12,
-    paddingBottom: 12,
+    minHeight: 24,
   },
 });
 
-export default TextInputCustom;
+export default SearchInput;

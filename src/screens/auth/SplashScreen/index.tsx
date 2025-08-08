@@ -1,12 +1,17 @@
 import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import { LogoIcon, SplashRobotIcon } from '@/assets/icons';
+import { ChatGPTLogo } from '@/assets/images';
 import Button from '@/components/atoms/Button';
 import TextCustom from '@/components/atoms/TextCustom';
+import TextInputCustom from '@/components/atoms/TextInputCustom';
+import AgentBar from '@/components/molecules/AgentBar';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
+import Tag from '@/components/molecules/Tag';
 import { SPACING } from '@/core/constants/sizes.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes.ts';
 import useTheme from '@/hooks/useTheme.ts';
@@ -14,6 +19,8 @@ import useTheme from '@/hooks/useTheme.ts';
 const SplashScreen = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
+
+  const [text, setText] = useState<string>('');
 
   const { authNavigation } = useNavigationRoutes();
 
@@ -29,6 +36,16 @@ const SplashScreen = () => {
       marginTop: SPACING.lg,
     },
   });
+
+  return (
+    <SafeAreaViewCustom>
+      <View style={{ flexDirection: 'row', gap: 8 }}>
+        <Tag title="Home" />
+        <Tag title="Home" />
+      </View>
+      <AgentBar name="ChatGpt" description="Abdula" tags={['Home', 'Text']} avatarSource={ChatGPTLogo} />
+    </SafeAreaViewCustom>
+  );
 
   return (
     <>

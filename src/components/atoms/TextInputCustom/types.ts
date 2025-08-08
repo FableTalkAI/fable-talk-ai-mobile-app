@@ -13,8 +13,9 @@ export type TextInputCustomProps = {
   placeholderTextColor?: string;
   shadowMode?: ShadowCustomModes;
   leftIcon?: ReactElement<SvgProps>;
-  withBackArrow?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
   numberOfLines?: number;
+  showCharCount?: boolean;
+  maxLength?: number;
 } & UniqueTextInputCustomProps;

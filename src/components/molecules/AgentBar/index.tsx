@@ -6,6 +6,7 @@ import PressableCustom from '@/components/atoms/PressableCustom';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import { AgentBarProps } from '@/components/molecules/AgentBar/types.ts';
+import Tag from '@/components/molecules/Tag';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
@@ -38,6 +39,7 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
     },
     tags: {
       borderColor: colors.primary40,
+      backgroundColor: colors.backgroundHover,
       borderRadius: RADIUS.medium,
       paddingVertical: SPACING.xxs,
       paddingHorizontal: SPACING.xs,
@@ -66,11 +68,7 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
           style={[computedStyles.flatList, styles.flatList]}
           contentContainerStyle={computedStyles.flatListContainer}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <PressableCustom style={[styles.tags, computedStyles.tags]} hitSlop={5}>
-              <TextCustom text={item} mode="tag" style={computedStyles.tagsText} />
-            </PressableCustom>
-          )}
+          renderItem={({ item }) => <Tag title={item} forceActive />}
         />
       </PressableCustom>
     </ShadowCustom>
