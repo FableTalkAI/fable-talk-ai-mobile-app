@@ -1,6 +1,7 @@
 export const base = {
   primary10: '#C4AAE1',
   primary30: '#A37EC4',
+  primary40: '#724B99',
   primary60: '#62398C',
   primary80: '#412668',
   primary100: '#1D083A',
@@ -22,7 +23,7 @@ export const base = {
   gray10: '#F2F2F2',
   gray40: '#A19F9E',
   gray50: '#8A8B8A',
-  grayDisabled: '#B9BEC0',
+  grayDisabled: '#c2c6c8',
 
   accentLight: '#FFFDF3',
   accentCream: '#FED6AD',
