@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getAmount } from '@/store/agents/thunks.ts';
-import { AgentsState } from '@/store/agents/types.ts';
+import { getAmount } from './thunks.ts';
+import { AgentsState } from './types.ts';
 
 export const agentsSliceName = 'agents';
 

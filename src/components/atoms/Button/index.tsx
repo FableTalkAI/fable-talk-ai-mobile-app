@@ -2,23 +2,25 @@ import { ActivityIndicator, StyleSheet } from 'react-native';
 
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
+import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
-import { ButtonModes, ButtonModesObject, ButtonProps } from './types.ts';
+import { ButtonModes, ButtonModesObject, ButtonProps, ButtonRadius } from './types.ts';
 
 const Button = ({
   title,
-  mode = 'primary',
-  radius = 'medium',
+  mode = ButtonModes.Primary,
+  radius = ButtonRadius.Medium,
   isLoading,
   isDisable,
   style,
+  containerStyle,
   ...pressableProps
 }: ButtonProps) => {
   const { colors, setColorOpacity } = useTheme();
 
-  const localeMode: ButtonModes = isDisable || isLoading ? 'disabled' : mode;
+  const localeMode: ButtonModes = isDisable || isLoading ? ButtonModes.Disabled : mode;
 
   const buttonModes: Record<ButtonModes, ButtonModesObject> = {
     primary: {
@@ -53,13 +55,14 @@ const Button = ({
   return (
     <PressableCustom
       disabled={isDisable || isLoading}
+      containerStyle={containerStyle}
       style={[computedStyles.container, styles.container, style]}
       {...pressableProps}
     >
       {isLoading ? (
         <ActivityIndicator color={colors.textSecondary} />
       ) : (
-        <TextCustom text={title} mode="subtitle" style={computedStyles.text} />
+        <TextCustom text={title} mode={TextModes.Subtitle} style={computedStyles.text} />
       )}
     </PressableCustom>
   );

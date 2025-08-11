@@ -8,4 +8,9 @@ export type ShadowCustomProps = {
   containerStyle?: StyleProp<ViewStyle>;
 };
 
-export type ShadowCustomModes = 'none' | 'base' | 'medium' | 'alt';
+export enum ShadowCustomModes {
+  None = 'none',
+  Base = 'base',
+  Medium = 'medium',
+  Alt = 'alt',
+}

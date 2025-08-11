@@ -1,14 +1,16 @@
-import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View } from 'react-native';
 
 import { ArrowForwardIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
-import { HeaderProps } from '@/components/molecules/Header/types.ts';
+import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import { SPACING } from '@/core/constants/sizes.ts';
+import useNavigationRoutes from '@/hooks/useNavigationRoutes';
+
+import { HeaderProps } from './types.ts';
 
 const Header = ({ title }: HeaderProps) => {
-  const navigation = useNavigation();
+  const { navigation } = useNavigationRoutes();
 
   const computedStyles = StyleSheet.create({
     container: {
@@ -23,7 +25,7 @@ const Header = ({ title }: HeaderProps) => {
       </PressableCustom>
 
       <View style={styles.center}>
-        <TextCustom text={title} mode="title" />
+        <TextCustom text={title} mode={TextModes.Title} />
       </View>
 
       <View style={styles.side} />

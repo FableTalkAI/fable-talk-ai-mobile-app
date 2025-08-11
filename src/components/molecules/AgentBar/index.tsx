@@ -4,10 +4,13 @@ import { FlatList } from 'react-native-gesture-handler';
 import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
+import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
 import TextCustom from '@/components/atoms/TextCustom';
-import { AgentBarProps } from '@/components/molecules/AgentBar/types.ts';
+import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
+
+import { AgentBarProps } from './types.ts';
 
 const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: AgentBarProps) => {
   const { colors } = useTheme();
@@ -48,14 +51,14 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
   });
 
   return (
-    <ShadowCustom containerStyle={styles.shadowContainer} mode="medium">
+    <ShadowCustom containerStyle={styles.shadowContainer} mode={ShadowCustomModes.Medium}>
       <PressableCustom style={[computedStyles.pressableContainer, styles.pressableContainer, style]} onPress={onPress}>
         <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
 
-        <TextCustom text={name} mode="secondary" style={computedStyles.name} />
+        <TextCustom text={name} mode={TextModes.Secondary} style={computedStyles.name} />
         <TextCustom
           text={description}
-          mode="extra-small"
+          mode={TextModes.ExtraSmall}
           style={[computedStyles.description, styles.description]}
           numberOfLines={2}
         />
@@ -68,7 +71,7 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
           showsHorizontalScrollIndicator={false}
           renderItem={({ item }) => (
             <PressableCustom style={[styles.tags, computedStyles.tags]} hitSlop={5}>
-              <TextCustom text={item} mode="tag" style={computedStyles.tagsText} />
+              <TextCustom text={item} mode={TextModes.Tag} style={computedStyles.tagsText} />
             </PressableCustom>
           )}
         />
