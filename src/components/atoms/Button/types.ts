@@ -12,13 +12,22 @@ export type ButtonProps = {
   isLoading?: boolean;
   isDisable?: boolean;
   style?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 } & UniquePressableProps;
 
-export type ButtonModes = 'primary' | 'disabled' | 'transparent' | 'light';
+export enum ButtonModes {
+  Primary = 'primary',
+  Disabled = 'disabled',
+  Transparent = 'transparent',
+  Light = 'light',
+}
+
+export enum ButtonRadius {
+  Small = 'small',
+  Medium = 'medium',
+}
 
 export type ButtonModesObject = {
   backgroundColor: string;
   color: string;
 };
-
-type ButtonRadius = 'small' | 'medium';

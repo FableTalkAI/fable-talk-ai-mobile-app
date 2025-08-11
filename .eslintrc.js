@@ -1,9 +1,21 @@
+const path = require('path');
+const rulesdirPlugin = require('eslint-plugin-rulesdir');
+rulesdirPlugin.RULES_DIR = path.join(__dirname, 'eslint-local-rules');
+
 module.exports = {
   root: true,
   extends: '@react-native',
   parserOptions: { project: 'tsconfig.json' },
   ignorePatterns: ['/*', '!/src', '!node_modules'],
-  plugins: ['simple-import-sort', 'import'],
+
+  plugins: ['simple-import-sort', 'import', 'rulesdir'],
+
+  settings: {
+    'import/resolver': {
+      alias: { map: [['@', './src']], extensions: ['.ts', '.tsx', '.js', '.jsx'] },
+    },
+  },
+
   rules: {
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
@@ -29,5 +41,6 @@ module.exports = {
       },
     ],
     '@typescript-eslint/switch-exhaustiveness-check': 'error',
+    'rulesdir/alias-to-relative': ['error', { aliasPrefix: '@/', srcRoot: 'src' }],
   },
 };

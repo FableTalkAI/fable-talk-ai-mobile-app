@@ -1,15 +1,15 @@
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
-import useNavigationRoutes from '@/hooks/useNavigationRoutes.ts';
+import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 
 const ChatListScreen = () => {
-  const { chatNavigation } = useNavigationRoutes();
+  const { navigation } = useNavigationRoutes();
 
   return (
     <>
       <SafeAreaViewCustom>
-        <PressableCustom onPress={chatNavigation.goBack}>
+        <PressableCustom onPress={navigation.goBack}>
           <TextCustom text="sdasda" />
         </PressableCustom>
       </SafeAreaViewCustom>
