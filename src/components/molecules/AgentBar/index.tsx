@@ -5,10 +5,11 @@ import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
 import TextCustom from '@/components/atoms/TextCustom';
-import { AgentBarProps } from '@/components/molecules/AgentBar/types.ts';
 import Tag from '@/components/molecules/Tag';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
+
+import { AgentBarProps } from './types.ts';
 
 const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: AgentBarProps) => {
   const { colors } = useTheme();
@@ -36,16 +37,6 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
     flatListContainer: {
       paddingHorizontal: SPACING.m,
       gap: SPACING.xxs,
-    },
-    tags: {
-      borderColor: colors.primary40,
-      backgroundColor: colors.backgroundHover,
-      borderRadius: RADIUS.medium,
-      paddingVertical: SPACING.xxs,
-      paddingHorizontal: SPACING.xs,
-    },
-    tagsText: {
-      color: colors.primary40,
     },
   });
 
@@ -91,9 +82,6 @@ const styles = StyleSheet.create({
   },
   flatList: {
     maxHeight: 40,
-  },
-  tags: {
-    borderWidth: 2,
   },
 });
 

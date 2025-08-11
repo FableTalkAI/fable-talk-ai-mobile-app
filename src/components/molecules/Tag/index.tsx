@@ -3,16 +3,17 @@ import { StyleSheet } from 'react-native';
 
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
-import { TagColorModes, TagProps } from '@/components/molecules/Tag/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
+
+import { TagColorModes, TagProps } from './types.ts';
 
 const Tag = ({ title, forceActive = false }: TagProps) => {
   const { colors } = useTheme();
 
   const [isSelected, setIsSelected] = useState(false);
 
-  const currentMode = forceActive ? TagColorModes.Active : isSelected ? TagColorModes.Active : TagColorModes.Inactive;
+  const currentMode = forceActive || isSelected ? TagColorModes.Active : TagColorModes.Inactive;
 
   const localColors = useMemo(
     () =>
@@ -48,9 +49,7 @@ const Tag = ({ title, forceActive = false }: TagProps) => {
     <PressableCustom
       style={[styles.tags, computedStyles.tags]}
       hitSlop={5}
-      onPress={() => {
-        !forceActive && setIsSelected(prev => !prev);
-      }}
+      onPress={() => !forceActive && setIsSelected(prev => !prev)}
     >
       <TextCustom text={title} mode="tag" style={computedStyles.tagsText} />
     </PressableCustom>

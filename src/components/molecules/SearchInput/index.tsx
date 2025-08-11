@@ -3,10 +3,11 @@ import { StyleSheet, View } from 'react-native';
 
 import { ArrowForwardIcon, FilterIcon, SearchIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
-import { SearchInputProps } from '@/components/atoms/SearchInput/types.ts';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes.ts';
+
+import { SearchInputProps } from './types.ts';
 
 const SearchInput = ({ placeholder, withBackArrow, withFilter }: SearchInputProps) => {
   const { rootNavigation } = useNavigationRoutes();
