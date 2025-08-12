@@ -5,6 +5,7 @@ import EditAvatarIcon from './edit-avatar.svg';
 import FilterIcon from './filter.svg';
 import HomeIcon from './home-icon.svg';
 import LogoIcon from './logo.svg';
+import PencilIcon from './pencil.svg';
 import PinIcon from './pin-icon.svg';
 import PinIconPinned from './pin-icon-pinned.svg';
 import ProfileIcon from './profile.svg';
@@ -23,6 +24,7 @@ export {
   HomeIcon,
   LogoIcon,
   NotificationBellIcon,
+  PencilIcon,
   PinIcon,
   PinIconPinned,
   ProfileIcon,
