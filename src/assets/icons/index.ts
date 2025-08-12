@@ -2,6 +2,7 @@ import ArrowForwardIcon from './arrow-forward.svg';
 import NotificationBellIcon from './bell.svg';
 import ChatIcon from './chat.svg';
 import EditAvatarIcon from './edit-avatar.svg';
+import FilterIcon from './filter.svg';
 import HomeIcon from './home-icon.svg';
 import LogoIcon from './logo.svg';
 import PinIcon from './pin-icon.svg';
@@ -18,6 +19,7 @@ export {
   ArrowForwardIcon,
   ChatIcon,
   EditAvatarIcon,
+  FilterIcon,
   HomeIcon,
   LogoIcon,
   NotificationBellIcon,

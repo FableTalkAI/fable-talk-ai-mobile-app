@@ -7,6 +7,7 @@ import ShadowCustom from '@/components/atoms/ShadowCustom';
 import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
+import Tag from '@/components/molecules/Tag';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
@@ -39,15 +40,6 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
       paddingHorizontal: SPACING.m,
       gap: SPACING.xxs,
     },
-    tags: {
-      borderColor: colors.primary40,
-      borderRadius: RADIUS.medium,
-      paddingVertical: SPACING.xxs,
-      paddingHorizontal: SPACING.xs,
-    },
-    tagsText: {
-      color: colors.primary40,
-    },
   });
 
   return (
@@ -69,11 +61,7 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
           style={[computedStyles.flatList, styles.flatList]}
           contentContainerStyle={computedStyles.flatListContainer}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => (
-            <PressableCustom style={[styles.tags, computedStyles.tags]} hitSlop={5}>
-              <TextCustom text={item} mode={TextModes.Tag} style={computedStyles.tagsText} />
-            </PressableCustom>
-          )}
+          renderItem={({ item }) => <Tag title={item} forceActive />}
         />
       </PressableCustom>
     </ShadowCustom>
@@ -96,9 +84,6 @@ const styles = StyleSheet.create({
   },
   flatList: {
     maxHeight: 40,
-  },
-  tags: {
-    borderWidth: 2,
   },
 });
 
