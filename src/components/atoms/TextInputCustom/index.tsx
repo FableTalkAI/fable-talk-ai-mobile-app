@@ -1,35 +1,26 @@
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 
-import { ArrowForwardIcon } from '@/assets/icons';
-import PressableCustom from '@/components/atoms/PressableCustom';
 import ResizeIcon from '@/components/atoms/ResizeIcon';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
+import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
+import TextCustom from '@/components/atoms/TextCustom';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
-import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 import useTheme from '@/hooks/useTheme.ts';
 
 import { TextInputCustomProps } from './types.ts';
 
 const TextInputCustom = ({
-  placeholder,
-  placeholderTextColor,
-  shadowMode,
   leftIcon,
-  withBackArrow,
-  containerStyle,
+  shadowStyle,
+  wrapperStyle,
   style,
-  value,
-  onChangeText,
-  numberOfLines = 1,
+  withCharCount,
+  ...textInputProps
 }: TextInputCustomProps) => {
   const { colors } = useTheme();
-  const { navigation } = useNavigationRoutes();
 
   const computedStyles = StyleSheet.create({
-    wrapper: {
-      gap: SPACING.m,
-    },
-    container: {
+    shadow: {
       borderRadius: RADIUS.large,
       paddingHorizontal: SPACING.m,
       backgroundColor: colors.backgroundAlt,
@@ -38,6 +29,7 @@ const TextInputCustom = ({
     },
     textInput: {
       color: colors.textPrimary,
+      minHeight: withCharCount ? 200 : 24,
     },
   });
 
@@ -46,47 +38,34 @@ const TextInputCustom = ({
   };
 
   return (
-    <View style={[styles.wrapper, computedStyles.wrapper]}>
-      {withBackArrow && (
-        <PressableCustom onPress={navigation.goBack} style={styles.backIcon}>
-          <ArrowForwardIcon />
-        </PressableCustom>
-      )}
+    <ShadowCustom
+      mode={ShadowCustomModes.Base}
+      style={[computedStyles.shadow, styles.shadow, shadowStyle]}
+      containerStyle={wrapperStyle}
+    >
+      <ResizeIcon icon={leftIcon} containerStyle={styles.iconContainer} cloneElementProps={resizeIconOption} />
 
-      <ShadowCustom
-        mode={shadowMode}
-        style={[computedStyles.container, styles.container, containerStyle]}
-        containerStyle={styles.shadowContainer}
-      >
-        <ResizeIcon icon={leftIcon} containerStyle={styles.iconContainer} cloneElementProps={resizeIconOption} />
+      <TextInput
+        placeholderTextColor={colors.gray50}
+        style={[computedStyles.textInput, styles.textInput, style]}
+        textAlignVertical="top"
+        {...textInputProps}
+      />
 
-        <TextInput
-          value={value}
-          onChangeText={onChangeText}
-          placeholder={placeholder}
-          placeholderTextColor={placeholderTextColor ?? 'black'}
-          style={[computedStyles.textInput, styles.textInput, style]}
-          numberOfLines={numberOfLines}
+      {withCharCount && textInputProps.maxLength && (
+        <TextCustom
+          text={`${(textInputProps.value ?? '').length}/${textInputProps.maxLength}`}
+          style={styles.charCount}
         />
-      </ShadowCustom>
-    </View>
+      )}
+    </ShadowCustom>
   );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
+  shadow: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  shadowContainer: {
-    flex: 1,
-  },
-  backIcon: {
-    transform: [{ rotate: '180deg' }],
   },
   iconContainer: {
     width: 24,
@@ -96,7 +75,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingVertical: 0,
     fontSize: 16,
-    minHeight: 24,
+  },
+  charCount: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    paddingRight: 12,
+    paddingBottom: 12,
   },
 });
 

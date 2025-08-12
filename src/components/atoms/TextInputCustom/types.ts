@@ -2,19 +2,15 @@ import { ReactElement } from 'react';
 import { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
 import { SvgProps } from 'react-native-svg';
 
-import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
-
-type ExcludeTextInputCustomProps = 'style' | 'placeholder' | 'placeholderTextColor' | 'numberOfLines';
+type ExcludeTextInputCustomProps = 'style' | 'placeholderTextColor' | 'value' | 'textAlignVertical';
 
 type UniqueTextInputCustomProps = Omit<TextInputProps, ExcludeTextInputCustomProps>;
 
 export type TextInputCustomProps = {
-  placeholder?: string;
-  placeholderTextColor?: string;
-  shadowMode?: ShadowCustomModes;
+  value: string;
   leftIcon?: ReactElement<SvgProps>;
-  withBackArrow?: boolean;
-  containerStyle?: StyleProp<ViewStyle>;
+  wrapperStyle?: StyleProp<ViewStyle>;
+  shadowStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
-  numberOfLines?: number;
+  withCharCount?: boolean;
 } & UniqueTextInputCustomProps;

@@ -1,6 +1,7 @@
 import ArrowForwardIcon from './arrow-forward.svg';
 import NotificationBellIcon from './bell.svg';
 import EditAvatarIcon from './edit-avatar.svg';
+import FilterIcon from './filter.svg';
 import LogoIcon from './logo.svg';
 import PinIcon from './pin-icon.svg';
 import PinIconPinned from './pin-icon-pinned.svg';
@@ -14,6 +15,7 @@ import UserIcon from './user.svg';
 export {
   ArrowForwardIcon,
   EditAvatarIcon,
+  FilterIcon,
   LogoIcon,
   NotificationBellIcon,
   PinIcon,
