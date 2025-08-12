@@ -2,6 +2,7 @@ import { StyleSheet, TextInput } from 'react-native';
 
 import ResizeIcon from '@/components/atoms/ResizeIcon';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
+import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
 import TextCustom from '@/components/atoms/TextCustom';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
@@ -37,7 +38,11 @@ const TextInputCustom = ({
   };
 
   return (
-    <ShadowCustom mode="base" style={[computedStyles.shadow, styles.shadow, shadowStyle]} containerStyle={wrapperStyle}>
+    <ShadowCustom
+      mode={ShadowCustomModes.Base}
+      style={[computedStyles.shadow, styles.shadow, shadowStyle]}
+      containerStyle={wrapperStyle}
+    >
       <ResizeIcon icon={leftIcon} containerStyle={styles.iconContainer} cloneElementProps={resizeIconOption} />
 
       <TextInput

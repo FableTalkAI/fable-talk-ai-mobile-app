@@ -6,10 +6,12 @@ import { PinIcon, PinIconPinned } from '@/assets/icons';
 import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
+import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
 import TextCustom from '@/components/atoms/TextCustom';
-import { ChatListBarProps } from '@/components/molecules/ChatListBar/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
+
+import { ChatListBarProps } from './types.ts';
 
 const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatListBarProps) => {
   const { colors } = useTheme();
@@ -35,7 +37,7 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
 
   return (
     <PressableCustom onPress={onPress}>
-      <ShadowCustom mode="medium" style={[styles.shadowStyle, computedStyles.shadowStyle]}>
+      <ShadowCustom mode={ShadowCustomModes.Medium} style={[styles.shadowStyle, computedStyles.shadowStyle]}>
         <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
 
         <View style={[styles.messageContainer, computedStyles.messageContainer]}>

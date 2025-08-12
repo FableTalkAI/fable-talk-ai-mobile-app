@@ -9,6 +9,7 @@ import SearchIcon from './search.svg';
 import SplashRobotIcon from './splash-robot.svg';
 import ToggleFalseIcon from './toggle-false.svg';
 import ToggleTrueIcon from './toggle-true.svg';
+import TriangleIcon from './triangle.svg';
 import UserIcon from './user.svg';
 
 export {
@@ -23,5 +24,6 @@ export {
   SplashRobotIcon,
   ToggleFalseIcon,
   ToggleTrueIcon,
+  TriangleIcon,
   UserIcon,
 };

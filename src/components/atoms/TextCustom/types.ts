@@ -7,4 +7,13 @@ export type TextCustomProps = {
   numberOfLines?: number;
 };
 
-export type TextModes = 'base' | 'title' | 'subtitle' | 'secondary' | 'caption' | 'extra-small' | 'tag' | 'xxl';
+export enum TextModes {
+  Base = 'base',
+  Title = 'title',
+  Subtitle = 'subtitle',
+  Secondary = 'secondary',
+  Caption = 'caption',
+  'ExtraSmall' = 'extra-small',
+  Tag = 'tag',
+  Xxl = 'xxl',
+}
