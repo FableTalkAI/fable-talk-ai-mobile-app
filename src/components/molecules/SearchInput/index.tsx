@@ -5,12 +5,12 @@ import { ArrowForwardIcon, FilterIcon, SearchIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
-import useNavigationRoutes from '@/hooks/useNavigationRoutes.ts';
+import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 
 import { SearchInputProps } from './types.ts';
 
 const SearchInput = ({ placeholder, withBackArrow, withFilter }: SearchInputProps) => {
-  const { rootNavigation } = useNavigationRoutes();
+  const { navigation } = useNavigationRoutes();
 
   const [text, setText] = useState<string>('');
 
@@ -23,7 +23,7 @@ const SearchInput = ({ placeholder, withBackArrow, withFilter }: SearchInputProp
   return (
     <View style={[styles.wrapper, computedStyles.wrapper]}>
       {withBackArrow && (
-        <PressableCustom onPress={rootNavigation.goBack} style={styles.backIcon}>
+        <PressableCustom onPress={navigation.goBack} style={styles.backIcon}>
           <ArrowForwardIcon />
         </PressableCustom>
       )}

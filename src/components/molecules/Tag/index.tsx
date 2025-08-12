@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
+import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
@@ -51,7 +52,7 @@ const Tag = ({ title, forceActive = false }: TagProps) => {
       hitSlop={5}
       onPress={() => !forceActive && setIsSelected(prev => !prev)}
     >
-      <TextCustom text={title} mode="tag" style={computedStyles.tagsText} />
+      <TextCustom text={title} mode={TextModes.Tag} style={computedStyles.tagsText} />
     </PressableCustom>
   );
 };
