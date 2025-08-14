@@ -5,17 +5,19 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { LogoIcon, SplashRobotIcon } from '@/assets/icons';
 import Button from '@/components/atoms/Button';
+import { ButtonModes, ButtonRadius } from '@/components/atoms/Button/types.ts';
 import TextCustom from '@/components/atoms/TextCustom';
+import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
-import useNavigationRoutes from '@/hooks/useNavigationRoutes.ts';
+import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 import useTheme from '@/hooks/useTheme.ts';
 
 const SplashScreen = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
 
-  const { authNavigation } = useNavigationRoutes();
+  const { navigation } = useNavigationRoutes();
 
   const computedStyles = StyleSheet.create({
     logoContainer: {
@@ -24,7 +26,7 @@ const SplashScreen = () => {
     text: {
       color: colors.textLight,
     },
-    buttonContainer: {
+    buttonWrapper: {
       gap: SPACING.xs,
       marginTop: SPACING.lg,
     },
@@ -37,26 +39,28 @@ const SplashScreen = () => {
       <SafeAreaViewCustom isTransparent style={styles.safeAreaView}>
         <View style={[styles.logoContainer, computedStyles.logoContainer]}>
           <LogoIcon />
-          <TextCustom text="FableTalkAI" mode="subtitle" />
+          <TextCustom text="FableTalkAI" mode={TextModes.Subtitle} />
         </View>
 
         <SplashRobotIcon width={SCREEN_WIDTH} />
 
         <View style={styles.bottomContainer}>
-          <TextCustom text={t('auth.splashText')} mode="xxl" style={computedStyles.text} />
+          <TextCustom text={t('auth.splashText')} mode={TextModes.Xxl} style={computedStyles.text} />
 
-          <View style={[styles.buttonContainer, computedStyles.buttonContainer]}>
+          <View style={[styles.buttonWrapper, computedStyles.buttonWrapper]}>
             <Button
+              containerStyle={styles.button}
               title={t('auth.signIn')}
-              mode="light"
-              radius="small"
-              onPress={() => authNavigation.navigate('SingInUp')}
+              mode={ButtonModes.Light}
+              radius={ButtonRadius.Small}
+              onPress={() => navigation.navigate('SingInUp')}
             />
             <Button
+              containerStyle={styles.button}
               title={t('auth.signUp')}
-              mode="transparent"
-              radius="small"
-              onPress={() => authNavigation.navigate('SingInUp')}
+              mode={ButtonModes.Transparent}
+              radius={ButtonRadius.Small}
+              onPress={() => navigation.navigate('SingInUp')}
             />
           </View>
         </View>
@@ -81,8 +85,11 @@ const styles = StyleSheet.create({
   bottomContainer: {
     alignSelf: 'stretch',
   },
-  buttonContainer: {
+  buttonWrapper: {
     flexDirection: 'row',
+  },
+  button: {
+    flex: 1,
   },
 });
 

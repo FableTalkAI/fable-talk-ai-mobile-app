@@ -1,6 +1,6 @@
 import { ShadowProps } from 'react-native-shadow-2';
 
-import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
+import { ShadowCustomModes } from './types.ts';
 
 const SHADOW_STYLES: Record<ShadowCustomModes, ShadowProps> = {
   none: {

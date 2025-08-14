@@ -1,7 +1,7 @@
 import { cloneElement } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { ResizeIconProps } from '@/components/atoms/ResizeIcon/types.ts';
+import { ResizeIconProps } from './types.ts';
 
 const ResizeIcon = ({ icon, containerStyle, cloneElementProps }: ResizeIconProps) => {
   if (!icon) return null;
