@@ -3,7 +3,10 @@
     "continue": "Continue",
     "dateOfBirth": "Date of Birth",
     "avatar": "Avatar",
-    "interests": "Interests"
+    "interests": "Interests",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year"
   },
   "auth": {
     "splashText": "Choose\nYour Agent",

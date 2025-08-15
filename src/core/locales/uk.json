@@ -3,7 +3,10 @@
     "continue": "Продовжити",
     "dateOfBirth": "Дата народження",
     "avatar": "Аватар",
-    "interests": "Інтереси"
+    "interests": "Інтереси",
+    "day": "День",
+    "month": "Місяць",
+    "year": "Рік"
   },
   "auth": {
     "splashText": "Оберіть\nВашого Агента",

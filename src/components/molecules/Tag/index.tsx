@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
 
 import PressableCustom from '@/components/atoms/PressableCustom';
@@ -9,10 +9,8 @@ import useTheme from '@/hooks/useTheme.ts';
 
 import { TagColorModes, TagProps } from './types.ts';
 
-const Tag = ({ title, forceActive = false }: TagProps) => {
+const Tag = ({ title, forceActive = false, onToggle, isSelected }: TagProps) => {
   const { colors } = useTheme();
-
-  const [isSelected, setIsSelected] = useState(false);
 
   const currentMode = forceActive || isSelected ? TagColorModes.Active : TagColorModes.Inactive;
 
@@ -50,7 +48,7 @@ const Tag = ({ title, forceActive = false }: TagProps) => {
     <PressableCustom
       style={[styles.tags, computedStyles.tags]}
       hitSlop={5}
-      onPress={() => !forceActive && setIsSelected(prev => !prev)}
+      onPress={() => !forceActive && onToggle?.(title)}
     >
       <TextCustom text={title} mode={TextModes.Tag} style={computedStyles.tagsText} />
     </PressableCustom>

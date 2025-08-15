@@ -2,6 +2,7 @@ import ArrowForwardIcon from './arrow-forward.svg';
 import NotificationBellIcon from './bell.svg';
 import EditAvatarIcon from './edit-avatar.svg';
 import FilterIcon from './filter.svg';
+import ImagePlusIcon from './image-plus.svg';
 import LogoIcon from './logo.svg';
 import OnboardingRobotIcon from './onboarding-robot.svg';
 import PinIcon from './pin-icon.svg';
@@ -17,6 +18,7 @@ export {
   ArrowForwardIcon,
   EditAvatarIcon,
   FilterIcon,
+  ImagePlusIcon,
   LogoIcon,
   NotificationBellIcon,
   OnboardingRobotIcon,
