@@ -4,6 +4,7 @@ import { StyleSheet, View } from 'react-native';
 
 import { OnboardingRobotIcon } from '@/assets/icons';
 import TextCustom from '@/components/atoms/TextCustom';
+import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import { SPACING } from '@/core/constants/sizes.ts';
 
 const InitialStep = () => {
@@ -19,7 +20,7 @@ const InitialStep = () => {
     <View style={[styles.container, computedStyles.container]}>
       <OnboardingRobotIcon width={SCREEN_WIDTH} />
 
-      <TextCustom text={t('onboarding.initialText')} mode="title" style={styles.text} />
+      <TextCustom text={t('onboarding.initialText')} mode={TextModes.Title} style={styles.text} />
     </View>
   );
 };
