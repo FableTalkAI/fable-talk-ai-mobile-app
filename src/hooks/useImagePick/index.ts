@@ -1,10 +1,13 @@
 import { useCallback } from 'react';
 import { Alert, Platform } from 'react-native';
+import { launchImageLibrary } from 'react-native-image-picker';
 import { check, openSettings, PERMISSIONS, PermissionStatus, request, RESULTS } from 'react-native-permissions';
 
 import { IS_ANDROID, IS_IOS } from '@/core/constants/device.ts';
 
-export const usePermissions = () => {
+import { UseImagePickProps } from './types.ts';
+
+export const useImagePick = ({ setAvatarUri }: UseImagePickProps) => {
   const requestGalleryPermission = useCallback(async (): Promise<PermissionStatus> => {
     let permission;
 
@@ -59,5 +62,33 @@ export const usePermissions = () => {
     return false;
   }, [requestGalleryPermission, openAppSettings]);
 
-  return { handleAccessGallery };
+  const pickImage = async () => {
+    const hasPermission = await handleAccessGallery();
+    if (!hasPermission) {
+      console.warn('Permission to access gallery denied');
+      return;
+    }
+
+    try {
+      const response = await launchImageLibrary({
+        mediaType: 'photo',
+        selectionLimit: 1,
+      });
+
+      if (response.didCancel) return;
+      if (response.errorCode) {
+        console.warn('ImagePicker Error: ', response.errorMessage);
+        return;
+      }
+
+      const uri = response.assets?.[0]?.uri;
+      if (uri) {
+        setAvatarUri?.(uri);
+      }
+    } catch (error) {
+      console.warn('ImagePicker failed: ', error);
+    }
+  };
+
+  return { pickImage };
 };
