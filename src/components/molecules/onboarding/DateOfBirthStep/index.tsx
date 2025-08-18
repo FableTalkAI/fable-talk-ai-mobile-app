@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 import { TriangleIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
+import DatePicker from '@/components/molecules/DatePicker';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import { formatDateSeparated } from '@/core/utils/date.ts';
 import useTheme from '@/hooks/useTheme.ts';
@@ -44,7 +44,8 @@ const DateOfBirthStep = () => {
   }, [profile, t]);
 
   const handleConfirm = (date: Date) => {
-    setProfileHandler({ ...profile, dateOfBirth: date.toDateString() });
+    setProfileHandler({ ...profile, dateOfBirth: date.toISOString() });
+    setDatePickerVisibility(false);
   };
 
   return (
@@ -61,12 +62,11 @@ const DateOfBirthStep = () => {
         </PressableCustom>
       ))}
 
-      <DateTimePickerModal
+      <DatePicker
         isVisible={isDatePickerVisible}
-        mode="date"
-        display="calendar"
-        onConfirm={handleConfirm}
+        handleConfirm={handleConfirm}
         onCancel={() => setDatePickerVisibility(false)}
+        defaultDate={profile.dateOfBirth}
       />
     </View>
   );

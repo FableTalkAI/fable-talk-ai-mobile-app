@@ -1,4 +1,4 @@
-export const formatDateSeparated = (dateString: string) => {
+export const formatDateSeparated = (dateString: string | Date) => {
   const date = new Date(dateString);
   return {
     day: String(date.getDate()).padStart(2, '0'),
@@ -7,7 +7,7 @@ export const formatDateSeparated = (dateString: string) => {
   };
 };
 
-export const formatDateCombined = (dateString: string) => {
-  const { day, month, year } = formatDateSeparated(dateString);
-  return `${day}/${month}/${year}`;
+export const formatDateCombined = (dateString: string | Date) => {
+  const date = new Date(dateString);
+  return date.toLocaleDateString('en-GB');
 };
