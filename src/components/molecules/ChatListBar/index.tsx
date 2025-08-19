@@ -46,7 +46,7 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
 
         <View style={[styles.messageContainer, computedStyles.messageContainer]}>
           <View style={styles.nameAndPinContainer}>
-            <TextCustom text={agentName} mode={TextModes.Base} style={computedStyles.agentName} />
+            <TextCustom text={agentName} style={computedStyles.agentName} />
 
             <PressableCustom onPress={() => setIsPinned(prevState => !prevState)} hitSlop={10}>
               <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>

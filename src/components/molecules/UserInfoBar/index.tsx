@@ -14,13 +14,14 @@ import useTheme from '@/hooks/useTheme.ts';
 
 import { UserInfoBarProps } from './types.ts';
 
-const UserInfoBar = ({ title = 'Alex', value = 'Kek', onChange, isDate = false }: UserInfoBarProps) => {
+const UserInfoBar = ({ title = '', value = '', onChange, isDate = false }: UserInfoBarProps) => {
+  const { colors } = useTheme();
+
+  const inputRef = useRef<TextInput>(null);
+
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(value);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  const inputRef = useRef<TextInput>(null);
-
-  const { colors } = useTheme();
 
   const startEditing = () => {
     if (isDate) {
@@ -42,6 +43,11 @@ const UserInfoBar = ({ title = 'Alex', value = 'Kek', onChange, isDate = false }
     setText(date.toLocaleDateString('en-GB'));
     onChange?.(date.toLocaleDateString('en-GB'));
     setDatePickerVisibility(false);
+  };
+
+  const handleSubmit = () => {
+    saveAndClose();
+    Keyboard.dismiss();
   };
 
   const computedStyles = StyleSheet.create({
@@ -75,10 +81,7 @@ const UserInfoBar = ({ title = 'Alex', value = 'Kek', onChange, isDate = false }
               value={text}
               onChangeText={setText}
               onBlur={saveAndClose}
-              onSubmitEditing={() => {
-                saveAndClose();
-                Keyboard.dismiss();
-              }}
+              onSubmitEditing={handleSubmit}
               returnKeyType="done"
             />
           ) : (
@@ -86,6 +89,7 @@ const UserInfoBar = ({ title = 'Alex', value = 'Kek', onChange, isDate = false }
           )}
         </View>
       </ShadowCustom>
+
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
@@ -108,7 +112,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderColor: 'yellow',
   },
 });
 
