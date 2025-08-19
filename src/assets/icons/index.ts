@@ -26,8 +26,6 @@ export {
   HomeIcon,
   ImagePlusIcon,
   LogoIcon,
-  LogoIcon,
-  NotificationBellIcon,
   NotificationBellIcon,
   OnboardingRobotIcon,
   PencilIcon,
