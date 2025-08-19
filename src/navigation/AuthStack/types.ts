@@ -1,5 +1,5 @@
 export type AuthStackParamList = {
   Splash: undefined;
-  SingInUp: undefined;
+  SignInUp: { mode: 'signIn' | 'signUp' };
   CodeVerification: undefined;
 };
