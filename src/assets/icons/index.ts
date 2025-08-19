@@ -4,7 +4,9 @@ import ChatIcon from './chat.svg';
 import EditAvatarIcon from './edit-avatar.svg';
 import FilterIcon from './filter.svg';
 import HomeIcon from './home-icon.svg';
+import ImagePlusIcon from './image-plus.svg';
 import LogoIcon from './logo.svg';
+import OnboardingRobotIcon from './onboarding-robot.svg';
 import PencilIcon from './pencil.svg';
 import PinIcon from './pin-icon.svg';
 import PinIconPinned from './pin-icon-pinned.svg';
@@ -22,8 +24,12 @@ export {
   EditAvatarIcon,
   FilterIcon,
   HomeIcon,
+  ImagePlusIcon,
+  LogoIcon,
   LogoIcon,
   NotificationBellIcon,
+  NotificationBellIcon,
+  OnboardingRobotIcon,
   PencilIcon,
   PinIcon,
   PinIconPinned,

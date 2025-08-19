@@ -1,19 +1,101 @@
+import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
+import Button from '@/components/atoms/Button';
+import TextCustom from '@/components/atoms/TextCustom';
+import Header from '@/components/molecules/Header';
+import { AvatarStep, DateOfBirthStep, InitialStep, InterestsStep } from '@/components/molecules/onboarding';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
+import { SPACING } from '@/core/constants/sizes.ts';
+import useNavigationRoutes from '@/hooks/useNavigationRoutes';
+import useUserStore from '@/hooks/useUserStore.ts';
+
+import { STEPS_TEXT_DATA } from './constants.ts';
+import { RenderStep } from './types.ts';
 
 const OnboardingScreen = () => {
+  const { t } = useTranslation();
+  const { navigation } = useNavigationRoutes();
+
+  const { tags, profile, setOnboardingStepHandler, onboardingStep } = useUserStore();
+
+  const computedStyles = StyleSheet.create({
+    container: {
+      marginVertical: SPACING.m,
+    },
+    subtitle: {
+      marginBottom: SPACING.xl,
+    },
+  });
+
+  const renderStep = useMemo(() => {
+    const stepsData: Record<string, RenderStep> = {
+      0: {
+        component: <InitialStep />,
+      },
+      1: {
+        component: <DateOfBirthStep />,
+        isDisabled: !profile.dateOfBirth?.length,
+      },
+      2: {
+        component: <AvatarStep />,
+      },
+      3: {
+        component: <InterestsStep />,
+        isDisabled: tags.length !== 2,
+      },
+    };
+
+    return stepsData[onboardingStep];
+  }, [onboardingStep, tags, profile]);
+
+  const onContinuePress = () => {
+    if (onboardingStep === 3) {
+      return navigation.reset({
+        index: 0,
+        routes: [{ name: 'TabBarNavigator', params: { screen: 'Home' } }],
+      });
+    }
+    setOnboardingStepHandler(onboardingStep + 1);
+  };
+
   return (
-    <SafeAreaViewCustom isTransparent style={styles.safeAreaView}>
-      <></>
+    <SafeAreaViewCustom>
+      <Animated.View
+        style={[styles.container, computedStyles.container]}
+        entering={FadeIn}
+        exiting={FadeOut}
+        key={`header-${onboardingStep}`}
+      >
+        {onboardingStep !== 0 && (
+          <>
+            <Header
+              title={t(STEPS_TEXT_DATA[onboardingStep].title)}
+              onPress={() => setOnboardingStepHandler(onboardingStep - 1)}
+            />
+            <TextCustom style={computedStyles.subtitle} text={t(STEPS_TEXT_DATA[onboardingStep].description)} />
+          </>
+        )}
+
+        <ScrollView bounces={false} contentContainerStyle={styles.scrollViewContainer}>
+          {renderStep.component}
+        </ScrollView>
+      </Animated.View>
+
+      <Button title={t('common.continue')} isDisable={renderStep?.isDisabled} onPress={onContinuePress} />
     </SafeAreaViewCustom>
   );
 };
 
 const styles = StyleSheet.create({
-  safeAreaView: {
-    alignItems: 'center',
-    justifyContent: 'space-between',
+  scrollViewContainer: {
+    flexGrow: 1,
+  },
+  container: {
+    flex: 1,
   },
 });
 

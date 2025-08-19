@@ -1,8 +1,24 @@
 {
-  "common": {},
+  "common": {
+    "continue": "Continue",
+    "dateOfBirth": "Date of Birth",
+    "avatar": "Avatar",
+    "interests": "Interests",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year"
+  },
   "auth": {
     "splashText": "Choose\nYour Agent",
     "signIn": "Sign In",
     "signUp": "Sign Up"
+  },
+  "onboarding": {
+    "initialText": "Start your communication with different agents",
+    "description": {
+      "dateOfBirth": "Please, select your date of birth",
+      "avatar": "Uploading an avatar, it's optional*",
+      "interests": "Please, select 2 tags"
+    }
   }
 }
