@@ -14,7 +14,7 @@ import { AvatarProps } from './types.ts';
 const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri }: AvatarProps) => {
   const { colors } = useTheme();
 
-  const { pickImage } = useImagePick({ setAvatarUri });
+  const { pickImage, BottomWindowPermissionDenied } = useImagePick({ setAvatarUri });
 
   const computedStyles = StyleSheet.create({
     container: {
@@ -35,24 +35,28 @@ const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri }: AvatarPr
   });
 
   return (
-    <View style={[computedStyles.container, styles.container]}>
-      {avatarUri ? (
-        <AutoImage source={{ uri: avatarUri }} resizeMode="cover" style={[computedStyles.image, styles.image]} />
-      ) : (
-        <UserIcon />
-      )}
+    <>
+      <View style={[computedStyles.container, styles.container]}>
+        {avatarUri ? (
+          <AutoImage source={{ uri: avatarUri }} resizeMode="cover" style={[computedStyles.image, styles.image]} />
+        ) : (
+          <UserIcon />
+        )}
 
-      {isChangeable && (
-        <ShadowCustom
-          containerStyle={[computedStyles.editContainer, styles.editContainer]}
-          mode={ShadowCustomModes.Alt}
-        >
-          <PressableCustom hitSlop={10} onPress={pickImage}>
-            <EditAvatarIcon />
-          </PressableCustom>
-        </ShadowCustom>
-      )}
-    </View>
+        {isChangeable && (
+          <ShadowCustom
+            containerStyle={[computedStyles.editContainer, styles.editContainer]}
+            mode={ShadowCustomModes.Alt}
+          >
+            <PressableCustom hitSlop={10} onPress={pickImage}>
+              <EditAvatarIcon />
+            </PressableCustom>
+          </ShadowCustom>
+        )}
+      </View>
+
+      <BottomWindowPermissionDenied />
+    </>
   );
 };
 

@@ -1,13 +1,17 @@
 import { useCallback } from 'react';
-import { Alert, Platform } from 'react-native';
+import { Platform } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { check, openSettings, PERMISSIONS, PermissionStatus, request, RESULTS } from 'react-native-permissions';
+import { check, PERMISSIONS, PermissionStatus, request, RESULTS } from 'react-native-permissions';
 
 import { IS_ANDROID, IS_IOS } from '@/core/constants/device.ts';
+import useBottomWindow from '@/hooks/useBottomWindow';
+import { BottomWindowModes } from '@/hooks/useBottomWindow/types.ts';
 
 import { UseImagePickProps } from './types.ts';
 
 export const useImagePick = ({ setAvatarUri }: UseImagePickProps) => {
+  const { BottomWindow, open } = useBottomWindow({ mode: BottomWindowModes.PermissionDenied });
+
   const requestGalleryPermission = useCallback(async (): Promise<PermissionStatus> => {
     let permission;
 
@@ -37,12 +41,6 @@ export const useImagePick = ({ setAvatarUri }: UseImagePickProps) => {
     return 'denied';
   }, []);
 
-  const openAppSettings = useCallback(() => {
-    openSettings().catch(() => {
-      console.warn('Cannot open settings');
-    });
-  }, []);
-
   const handleAccessGallery = useCallback(async (): Promise<boolean> => {
     const status = await requestGalleryPermission();
 
@@ -50,17 +48,13 @@ export const useImagePick = ({ setAvatarUri }: UseImagePickProps) => {
       return true;
     }
 
-    // 'TODO: translation and bottomWindow instead of Alert '
     if (status === 'blocked') {
-      Alert.alert('Разрешение заблокировано', 'Чтобы использовать эту функцию, включите доступ к фото в настройках.', [
-        { text: 'Отмена', style: 'cancel' },
-        { text: 'Открыть настройки', onPress: openAppSettings },
-      ]);
+      open();
       return false;
     }
 
     return false;
-  }, [requestGalleryPermission, openAppSettings]);
+  }, [requestGalleryPermission, open]);
 
   const pickImage = async () => {
     const hasPermission = await handleAccessGallery();
@@ -90,5 +84,5 @@ export const useImagePick = ({ setAvatarUri }: UseImagePickProps) => {
     }
   };
 
-  return { pickImage };
+  return { pickImage, BottomWindowPermissionDenied: BottomWindow };
 };
