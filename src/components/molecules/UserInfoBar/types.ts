@@ -1,6 +1,7 @@
+import { UserProfile } from '@/store/user/types.ts';
+
 export type UserInfoBarProps = {
   title: string;
-  value: string;
-  onChange?: (newValue: string) => void;
-  isDate?: boolean;
+  field: keyof UserProfile;
+  value?: string;
 };
