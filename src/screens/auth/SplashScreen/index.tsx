@@ -50,17 +50,17 @@ const SplashScreen = () => {
           <View style={[styles.buttonWrapper, computedStyles.buttonWrapper]}>
             <Button
               containerStyle={styles.button}
-              title={t('auth.signIn')}
+              title={t('auth.signInButton')}
               mode={ButtonModes.Light}
               radius={ButtonRadius.Small}
-              onPress={() => navigation.navigate('SingInUp')}
+              onPress={() => navigation.navigate('SignInUp', { mode: 'signIn' })}
             />
             <Button
               containerStyle={styles.button}
-              title={t('auth.signUp')}
+              title={t('auth.signUpButton')}
               mode={ButtonModes.Transparent}
               radius={ButtonRadius.Small}
-              onPress={() => navigation.navigate('SingInUp')}
+              onPress={() => navigation.navigate('SignInUp', { mode: 'signUp' })}
             />
           </View>
         </View>

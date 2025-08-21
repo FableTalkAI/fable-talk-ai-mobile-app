@@ -12,7 +12,7 @@ const AuthStack = () => {
   return (
     <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Splash" component={SplashScreen} />
-      <Stack.Screen name="SingInUp" component={SignInUpScreen} />
+      <Stack.Screen name="SignInUp" component={SignInUpScreen} />
       <Stack.Screen name="CodeVerification" component={CodeVerificationScreen} />
     </Stack.Navigator>
   );
