@@ -6,7 +6,9 @@
     "interests": "Interests",
     "day": "Day",
     "month": "Month",
-    "year": "Year"
+    "year": "Year",
+    "email": "Email",
+    "name": "Name"
   },
   "auth": {
     "splashText": "Choose\nYour Agent",
@@ -22,8 +24,6 @@
       "subheader": "Please register to login",
       "belowButton": "Already have account? "
     },
-    "email": "Email",
-    "name": "Name",
     "continueWith": "Or continue with"
   },
   "onboarding": {

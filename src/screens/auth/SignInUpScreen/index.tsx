@@ -1,4 +1,5 @@
 import { useRoute } from '@react-navigation/native';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
@@ -22,6 +23,7 @@ const SignInUpScreen = () => {
   const route = useRoute<SignInUpRouteProp>();
   const { navigation } = useNavigationRoutes();
   const { mode } = route.params;
+  const [screenMode, setScreenMode] = useState<'signIn' | 'signUp'>(mode);
 
   const computedStyles = StyleSheet.create({
     iconContainer: {
@@ -54,108 +56,65 @@ const SignInUpScreen = () => {
     },
   });
 
-  if (mode === 'signIn') {
-    return (
-      <SafeAreaViewCustom isTransparent style={styles.safeArea}>
-        <View style={styles.wrapper}>
-          <View>
-            {/*Figma 32px, SafeArea 24, should I add 12 px more, or 24 enough*/}
-            <View style={[computedStyles.iconContainer, styles.iconContainer]}>
-              <SignInIcon />
-            </View>
-
-            <View>
-              <TextCustom text={t('auth.signIn.header')} mode={TextModes.Title} />
-              <TextCustom text={t('auth.signIn.subheader')} mode={TextModes.Caption} style={computedStyles.subheader} />
-              <TextInputCustom value="" placeholder={t('auth.email')} leftIcon={<MailIcon />} />
-            </View>
-
-            <View style={[computedStyles.continueWithContainer, styles.continueWithContainer]}>
-              <TextCustom
-                text={t('auth.continueWith')}
-                mode={TextModes.Caption}
-                style={computedStyles.continueWithText}
-              />
-              <PressableCustom>
-                <GoogleLogoIcon />
-              </PressableCustom>
-            </View>
+  return (
+    <SafeAreaViewCustom isTransparent style={styles.safeArea}>
+      <View style={styles.wrapper}>
+        <View>
+          <View style={[computedStyles.iconContainer, styles.iconContainer]}>
+            {screenMode === 'signIn' ? <SignInIcon /> : <SignUpIcon />}
           </View>
 
-          <View style={computedStyles.buttonAndTextContainer}>
-            <Button title={t('auth.signInButton')} onPress={() => navigation.navigate('CodeVerification')} />
+          <View>
+            <TextCustom text={t(`auth.${screenMode}.header`)} mode={TextModes.Title} />
+            <TextCustom
+              text={t(`auth.${screenMode}.subheader`)}
+              mode={TextModes.Caption}
+              style={computedStyles.subheader}
+            />
+            {screenMode === 'signUp' && (
+              <TextInputCustom value="" placeholder={t('common.name')} leftIcon={<UserIcon />} />
+            )}
+            <TextInputCustom
+              value=""
+              placeholder={t('common.email')}
+              leftIcon={<MailIcon />}
+              wrapperStyle={screenMode === 'signUp' ? computedStyles.secondTextInput : undefined}
+            />
+          </View>
 
-            <View style={[computedStyles.belowButtonContainer, styles.belowButtonContainer]}>
-              <TextCustom
-                text={t('auth.signIn.belowButton')}
-                mode={TextModes.Caption}
-                style={computedStyles.belowButtonText}
-              />
-              <PressableCustom onPress={() => navigation.navigate('SignInUp', { mode: 'signUp' })}>
-                <TextCustom text={t('auth.signUpButton')} mode={TextModes.Caption} style={computedStyles.textLink} />
-              </PressableCustom>
-            </View>
+          <View style={[computedStyles.continueWithContainer, styles.continueWithContainer]}>
+            <TextCustom
+              text={t('auth.continueWith')}
+              mode={TextModes.Caption}
+              style={computedStyles.continueWithText}
+            />
+            <PressableCustom>
+              <GoogleLogoIcon />
+            </PressableCustom>
           </View>
         </View>
-      </SafeAreaViewCustom>
-    );
-  }
 
-  if (mode === 'signUp') {
-    return (
-      <SafeAreaViewCustom isTransparent style={styles.safeArea}>
-        <View style={styles.wrapper}>
-          <View>
-            {/*Figma 32px, SafeArea 24, should I add 12 px more, or 24 enough*/}
-            <View style={[computedStyles.iconContainer, styles.iconContainer]}>
-              <SignUpIcon />
-            </View>
+        <View style={computedStyles.buttonAndTextContainer}>
+          <Button title={t(`auth.${screenMode}Button`)} onPress={() => navigation.navigate('CodeVerification')} />
 
-            <View>
-              <TextCustom text={t('auth.signUp.header')} mode={TextModes.Title} />
-              <TextCustom text={t('auth.signUp.subheader')} mode={TextModes.Caption} style={computedStyles.subheader} />
-              {/*UserIcon Height too large? discuss*/}
-              <TextInputCustom value="" placeholder={t('auth.name')} leftIcon={<UserIcon />} />
-              <TextInputCustom
-                value=""
-                placeholder={t('auth.email')}
-                leftIcon={<MailIcon />}
-                wrapperStyle={computedStyles.secondTextInput}
-              />
-            </View>
-
-            <View style={[computedStyles.continueWithContainer, styles.continueWithContainer]}>
+          <View style={[computedStyles.belowButtonContainer, styles.belowButtonContainer]}>
+            <TextCustom
+              text={t(`auth.${screenMode}.belowButton`)}
+              mode={TextModes.Caption}
+              style={computedStyles.belowButtonText}
+            />
+            <PressableCustom onPress={() => setScreenMode(screenMode === 'signIn' ? 'signUp' : 'signIn')}>
               <TextCustom
-                text={t('auth.continueWith')}
+                text={screenMode === 'signIn' ? t('auth.signUpButton') : t('auth.signInButton')}
                 mode={TextModes.Caption}
-                style={computedStyles.continueWithText}
+                style={computedStyles.textLink}
               />
-              <PressableCustom>
-                <GoogleLogoIcon />
-              </PressableCustom>
-            </View>
-          </View>
-
-          <View style={computedStyles.buttonAndTextContainer}>
-            <Button title={t('auth.signUpButton')} onPress={() => navigation.navigate('CodeVerification')} />
-
-            <View style={[computedStyles.belowButtonContainer, styles.belowButtonContainer]}>
-              <TextCustom
-                text={t('auth.signIn.belowButton')}
-                mode={TextModes.Caption}
-                style={computedStyles.belowButtonText}
-              />
-              <PressableCustom onPress={() => navigation.navigate('SignInUp', { mode: 'signIn' })}>
-                <TextCustom text={t('auth.signInButton')} mode={TextModes.Caption} style={computedStyles.textLink} />
-              </PressableCustom>
-            </View>
+            </PressableCustom>
           </View>
         </View>
-      </SafeAreaViewCustom>
-    );
-  }
-
-  return null;
+      </View>
+    </SafeAreaViewCustom>
+  );
 };
 
 const styles = StyleSheet.create({
