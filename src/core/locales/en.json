@@ -6,12 +6,25 @@
     "interests": "Interests",
     "day": "Day",
     "month": "Month",
-    "year": "Year"
+    "year": "Year",
+    "email": "Email",
+    "name": "Name"
   },
   "auth": {
     "splashText": "Choose\nYour Agent",
-    "signIn": "Sign In",
-    "signUp": "Sign Up"
+    "signInButton": "Sign In",
+    "signUpButton": "Sign Up",
+    "signIn": {
+      "header": "Login",
+      "subheader": "Please login to continue",
+      "belowButton": "Don't have an account? "
+    },
+    "signUp": {
+      "header": "Register",
+      "subheader": "Please register to login",
+      "belowButton": "Already have account? "
+    },
+    "continueWith": "Or continue with"
   },
   "onboarding": {
     "initialText": "Start your communication with different agents",
