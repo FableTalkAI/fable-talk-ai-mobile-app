@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 import { Keyboard, StyleSheet, TextInput, View } from 'react-native';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { PencilIcon } from '@/assets/icons';
@@ -10,6 +9,7 @@ import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
+import DatePicker from '@/components/molecules/DatePicker';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import { formatDateCombined } from '@/core/utils/date.ts';
 import useTheme from '@/hooks/useTheme.ts';
@@ -39,10 +39,6 @@ const UserInfoBar = ({ title, field }: UserInfoBarProps) => {
     }
   };
 
-  const saveAndClose = () => {
-    setIsEditing(false);
-  };
-
   const handleConfirm = (date: Date) => {
     setProfileHandler({ ...profile, dateOfBirth: date.toISOString() });
     setDatePickerVisibility(false);
@@ -53,7 +49,7 @@ const UserInfoBar = ({ title, field }: UserInfoBarProps) => {
   };
 
   const handleSubmit = () => {
-    saveAndClose();
+    setIsEditing(false);
     Keyboard.dismiss();
   };
 
@@ -91,7 +87,7 @@ const UserInfoBar = ({ title, field }: UserInfoBarProps) => {
               ref={inputRef}
               value={profile[field] || ''}
               onChangeText={handleOnChangeText}
-              onBlur={saveAndClose}
+              onBlur={() => setIsEditing(false)}
               onSubmitEditing={handleSubmit}
               returnKeyType="done"
             />
@@ -101,11 +97,9 @@ const UserInfoBar = ({ title, field }: UserInfoBarProps) => {
         </View>
       </ShadowCustom>
 
-      <DateTimePickerModal
+      <DatePicker
         isVisible={isDatePickerVisible}
-        mode="date"
-        display="calendar"
-        onConfirm={handleConfirm}
+        handleConfirm={handleConfirm}
         onCancel={() => setDatePickerVisibility(false)}
       />
     </PressableCustom>
