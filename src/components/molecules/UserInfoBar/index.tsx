@@ -17,15 +17,16 @@ import useUserStore from '@/hooks/useUserStore.ts';
 
 import { UserInfoBarProps } from './types.ts';
 
-const UserInfoBar = ({ title = '', value = '', field }: UserInfoBarProps) => {
-  const { colors } = useTheme();
-
+const UserInfoBar = ({ title, field }: UserInfoBarProps) => {
   const inputRef = useRef<TextInput>(null);
 
+  const { colors } = useTheme();
+
   const [isEditing, setIsEditing] = useState(false);
-  const [text, setText] = useState(field === 'dateOfBirth' && value ? formatDateCombined(value) : value || '');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const { profile, setProfileHandler } = useUserStore();
+
+  const displayValue = field === 'dateOfBirth' ? formatDateCombined(profile[field] || '') : profile[field] || '';
 
   const startEditing = () => {
     if (field === 'dateOfBirth') {
@@ -44,13 +45,11 @@ const UserInfoBar = ({ title = '', value = '', field }: UserInfoBarProps) => {
 
   const handleConfirm = (date: Date) => {
     setProfileHandler({ ...profile, dateOfBirth: date.toISOString() });
-    setText(date.toLocaleDateString('en-GB'));
     setDatePickerVisibility(false);
   };
 
   const handleOnChangeText = (result: string) => {
     setProfileHandler({ ...profile, [field]: result.trim() });
-    setText(result);
   };
 
   const handleSubmit = () => {
@@ -90,14 +89,14 @@ const UserInfoBar = ({ title = '', value = '', field }: UserInfoBarProps) => {
           {isEditing ? (
             <TextInputCustom
               ref={inputRef}
-              value={text}
+              value={profile[field] || ''}
               onChangeText={handleOnChangeText}
               onBlur={saveAndClose}
               onSubmitEditing={handleSubmit}
               returnKeyType="done"
             />
           ) : (
-            <TextCustom text={text} mode={TextModes.Base} style={computedStyles.content} />
+            <TextCustom text={displayValue} mode={TextModes.Base} style={computedStyles.content} />
           )}
         </View>
       </ShadowCustom>
