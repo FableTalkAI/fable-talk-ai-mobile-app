@@ -2,6 +2,7 @@ import { useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { GoogleLogoIcon, MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/assets/icons';
 import Button from '@/components/atoms/Button';
@@ -23,6 +24,7 @@ const SignInUpScreen = () => {
   const route = useRoute<SignInUpRouteProp>();
   const { navigation } = useNavigationRoutes();
   const { mode } = route.params;
+
   const [screenMode, setScreenMode] = useState<'signIn' | 'signUp'>(mode);
 
   const computedStyles = StyleSheet.create({
@@ -58,7 +60,7 @@ const SignInUpScreen = () => {
 
   return (
     <SafeAreaViewCustom isTransparent style={styles.safeArea}>
-      <View style={styles.wrapper}>
+      <Animated.View style={styles.wrapper} exiting={FadeOut} entering={FadeIn} key={screenMode}>
         <View>
           <View style={[computedStyles.iconContainer, styles.iconContainer]}>
             {screenMode === 'signIn' ? <SignInIcon /> : <SignUpIcon />}
@@ -112,7 +114,7 @@ const SignInUpScreen = () => {
             </PressableCustom>
           </View>
         </View>
-      </View>
+      </Animated.View>
     </SafeAreaViewCustom>
   );
 };
