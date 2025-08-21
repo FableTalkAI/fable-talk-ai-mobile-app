@@ -8,6 +8,7 @@ import PressableCustom from '@/components/atoms/PressableCustom';
 import ShadowCustom from '@/components/atoms/ShadowCustom';
 import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
 import TextCustom from '@/components/atoms/TextCustom';
+import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
@@ -33,6 +34,9 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
     agentName: {
       color: colors.textPrimary,
     },
+    lastMessage: {
+      color: colors.textSecondary,
+    },
   });
 
   return (
@@ -51,7 +55,12 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
             </PressableCustom>
           </View>
 
-          <TextCustom text={lastMessage} numberOfLines={2} />
+          <TextCustom
+            text={lastMessage}
+            numberOfLines={2}
+            mode={TextModes.Secondary}
+            style={computedStyles.lastMessage}
+          />
         </View>
       </ShadowCustom>
     </PressableCustom>
