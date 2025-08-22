@@ -1,4 +1,3 @@
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';

@@ -2,7 +2,6 @@ import { useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { GoogleLogoIcon, MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/assets/icons';
