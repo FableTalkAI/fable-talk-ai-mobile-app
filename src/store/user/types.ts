@@ -8,4 +8,5 @@ export type UserProfile = {
   avatarUri?: string;
   name?: string;
   dateOfBirth?: string;
+  email?: string;
 };

@@ -22,7 +22,12 @@
     "signUp": {
       "header": "Register",
       "subheader": "Please register to login",
-      "belowButton": "Already have account? "
+      "belowButton": "Already have account?"
+    },
+    "verify": {
+      "header": "Verification",
+      "subheader": "Please enter the code from your email",
+      "resendCode": "Resend code"
     },
     "continueWith": "Or continue with"
   },

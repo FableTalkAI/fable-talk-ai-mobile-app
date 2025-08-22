@@ -30,6 +30,7 @@ const TextInputCustom = forwardRef<TextInput, TextInputCustomProps>(
 
     const resizeIconOption = {
       width: 24,
+      maxHeight: 24,
     };
 
     return (

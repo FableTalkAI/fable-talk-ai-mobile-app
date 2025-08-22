@@ -42,7 +42,7 @@ const SplashScreen = () => {
           <TextCustom text="FableTalkAI" mode={TextModes.Subtitle} />
         </View>
 
-        <SplashRobotIcon width={SCREEN_WIDTH} />
+        <SplashRobotIcon />
 
         <View style={styles.bottomContainer}>
           <TextCustom text={t('auth.splashText')} mode={TextModes.Xxl} style={computedStyles.text} />
