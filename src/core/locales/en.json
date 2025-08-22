@@ -7,8 +7,16 @@
     "day": "Day",
     "month": "Month",
     "year": "Year",
+    "cancel": "Cancel",
+    "settings": "Settings",
     "email": "Email",
     "name": "Name"
+  },
+  "bottomWindows": {
+    "permissionDenied": {
+      "title": "Permission denied",
+      "subtitle": "To use this feature, please enable photo access in settings"
+    }
   },
   "auth": {
     "splashText": "Choose\nYour Agent",

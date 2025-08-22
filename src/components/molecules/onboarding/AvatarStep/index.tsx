@@ -14,7 +14,8 @@ const AvatarStep = () => {
   const setAvatarUri = (uri: string) => {
     setProfileHandler({ ...profile, avatarUri: uri });
   };
-  const { pickImage } = useImagePick({ setAvatarUri });
+
+  const { pickImage, BottomWindowPermissionDenied } = useImagePick({ setAvatarUri });
 
   const computedStyles = StyleSheet.create({
     container: {
@@ -23,15 +24,19 @@ const AvatarStep = () => {
   });
 
   return (
-    <View style={[styles.container, computedStyles.container]}>
-      {profile?.avatarUri ? (
-        <Avatar size={WINDOW_WIDTH * 0.7} isChangeable={false} avatarUri={profile?.avatarUri} />
-      ) : (
-        <PressableCustom onPress={pickImage}>
-          <ImagePlusIcon width={WINDOW_WIDTH} height={WINDOW_WIDTH * 0.7} />
-        </PressableCustom>
-      )}
-    </View>
+    <>
+      <View style={[styles.container, computedStyles.container]}>
+        {profile?.avatarUri ? (
+          <Avatar size={WINDOW_WIDTH * 0.7} isChangeable={false} avatarUri={profile?.avatarUri} />
+        ) : (
+          <PressableCustom onPress={pickImage}>
+            <ImagePlusIcon width={WINDOW_WIDTH} height={WINDOW_WIDTH * 0.7} />
+          </PressableCustom>
+        )}
+      </View>
+
+      <BottomWindowPermissionDenied />
+    </>
   );
 };
 
