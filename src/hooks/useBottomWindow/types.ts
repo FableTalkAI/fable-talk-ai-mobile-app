@@ -1,5 +1,5 @@
 export type UseBottomWindowProps = {
-  mode?: BottomWindowModes;
+  mode: BottomWindowModes;
 };
 
 export enum BottomWindowModes {

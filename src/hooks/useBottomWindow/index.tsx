@@ -8,9 +8,7 @@ import Alert from '@/components/molecules/bottomWindows/templates/Alert';
 
 import { BottomWindowModes, UseBottomWindowProps } from './types.ts';
 
-const useBottomWindow = (props?: UseBottomWindowProps) => {
-  const { mode = BottomWindowModes.PermissionDenied } = props || {};
-
+const useBottomWindow = ({ mode }: UseBottomWindowProps) => {
   const bottomWindowRef = useRef<BottomSheetModalMethods>(null);
 
   const { t } = useTranslation();

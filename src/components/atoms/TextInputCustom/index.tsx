@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { StyleSheet, TextInput } from 'react-native';
 
 import ResizeIcon from '@/components/atoms/ResizeIcon';
@@ -9,58 +10,54 @@ import useTheme from '@/hooks/useTheme.ts';
 
 import { TextInputCustomProps } from './types.ts';
 
-const TextInputCustom = ({
-  leftIcon,
-  shadowStyle,
-  wrapperStyle,
-  style,
-  withCharCount,
-  ...textInputProps
-}: TextInputCustomProps) => {
-  const { colors } = useTheme();
+const TextInputCustom = forwardRef<TextInput, TextInputCustomProps>(
+  ({ leftIcon, shadowStyle, wrapperStyle, style, withCharCount, ...textInputProps }, ref) => {
+    const { colors } = useTheme();
 
-  const computedStyles = StyleSheet.create({
-    shadow: {
-      borderRadius: RADIUS.large,
-      paddingHorizontal: SPACING.m,
-      backgroundColor: colors.backgroundAlt,
-      gap: SPACING.xs,
-      paddingVertical: SPACING.s,
-    },
-    textInput: {
-      color: colors.textPrimary,
-      minHeight: withCharCount ? 200 : 24,
-    },
-  });
+    const computedStyles = StyleSheet.create({
+      shadow: {
+        borderRadius: RADIUS.large,
+        paddingHorizontal: SPACING.m,
+        backgroundColor: colors.backgroundAlt,
+        gap: SPACING.xs,
+        paddingVertical: SPACING.s,
+      },
+      textInput: {
+        color: colors.textPrimary,
+        minHeight: withCharCount ? 200 : 24,
+      },
+    });
 
-  const resizeIconOption = {
-    width: 24,
-  };
+    const resizeIconOption = {
+      width: 24,
+    };
 
-  return (
-    <ShadowCustom
-      mode={ShadowCustomModes.Base}
-      style={[computedStyles.shadow, styles.shadow, shadowStyle]}
-      containerStyle={wrapperStyle}
-    >
-      <ResizeIcon icon={leftIcon} containerStyle={styles.iconContainer} cloneElementProps={resizeIconOption} />
+    return (
+      <ShadowCustom
+        mode={ShadowCustomModes.Base}
+        style={[computedStyles.shadow, styles.shadow, shadowStyle]}
+        containerStyle={wrapperStyle}
+      >
+        <ResizeIcon icon={leftIcon} containerStyle={styles.iconContainer} cloneElementProps={resizeIconOption} />
 
-      <TextInput
-        placeholderTextColor={colors.gray50}
-        style={[computedStyles.textInput, styles.textInput, style]}
-        textAlignVertical="top"
-        {...textInputProps}
-      />
-
-      {withCharCount && textInputProps.maxLength && (
-        <TextCustom
-          text={`${(textInputProps.value ?? '').length}/${textInputProps.maxLength}`}
-          style={styles.charCount}
+        <TextInput
+          ref={ref}
+          placeholderTextColor={colors.gray50}
+          style={[computedStyles.textInput, styles.textInput, style]}
+          textAlignVertical="top"
+          {...textInputProps}
         />
-      )}
-    </ShadowCustom>
-  );
-};
+
+        {withCharCount && textInputProps.maxLength && (
+          <TextCustom
+            text={`${(textInputProps.value ?? '').length}/${textInputProps.maxLength}`}
+            style={styles.charCount}
+          />
+        )}
+      </ShadowCustom>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   shadow: {
