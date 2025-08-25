@@ -1,19 +1,21 @@
-import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ArrowForwardIcon, FilterIcon, SearchIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
-import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 
 import { SearchInputProps } from './types.ts';
 
-const SearchInput = ({ placeholder, withBackArrow, withFilter }: SearchInputProps) => {
-  const { navigation } = useNavigationRoutes();
-
-  const [text, setText] = useState<string>('');
-
+const SearchInput = ({
+  value,
+  placeholder = '',
+  withBackArrow,
+  withFilter,
+  navigation,
+  wrapperStyle,
+  onChangeText,
+}: SearchInputProps) => {
   const computedStyles = StyleSheet.create({
     wrapper: {
       gap: SPACING.m,
@@ -21,17 +23,17 @@ const SearchInput = ({ placeholder, withBackArrow, withFilter }: SearchInputProp
   });
 
   return (
-    <View style={[styles.wrapper, computedStyles.wrapper]}>
-      {withBackArrow && (
-        <PressableCustom onPress={navigation.goBack} style={styles.backIcon}>
+    <View style={[styles.wrapper, computedStyles.wrapper, wrapperStyle]}>
+      {withBackArrow && navigation && (
+        <PressableCustom onPress={navigation?.goBack} style={styles.backIcon}>
           <ArrowForwardIcon />
         </PressableCustom>
       )}
 
       <TextInputCustom
         placeholder={placeholder}
-        value={text}
-        onChangeText={setText}
+        value={value}
+        onChangeText={onChangeText}
         leftIcon={<SearchIcon />}
         wrapperStyle={styles.textInputWrapper}
       />

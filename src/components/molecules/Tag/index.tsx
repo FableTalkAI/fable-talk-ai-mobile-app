@@ -9,7 +9,7 @@ import useTheme from '@/hooks/useTheme.ts';
 
 import { TagColorModes, TagProps } from './types.ts';
 
-const Tag = ({ title, forceActive = false, onToggle, isSelected }: TagProps) => {
+const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle }: TagProps) => {
   const { colors } = useTheme();
 
   const currentMode = forceActive || isSelected ? TagColorModes.Active : TagColorModes.Inactive;
@@ -47,10 +47,16 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected }: TagProps) => 
   return (
     <PressableCustom
       style={[styles.tags, computedStyles.tags]}
+      containerStyle={containerStyle}
       hitSlop={5}
       onPress={() => !forceActive && onToggle?.(title)}
     >
-      <TextCustom text={title} mode={TextModes.Tag} style={computedStyles.tagsText} />
+      <TextCustom
+        text={title}
+        mode={TextModes.Tag}
+        style={[computedStyles.tagsText, styles.tagsText]}
+        numberOfLines={1}
+      />
     </PressableCustom>
   );
 };
@@ -58,6 +64,9 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected }: TagProps) => 
 const styles = StyleSheet.create({
   tags: {
     borderWidth: 2,
+  },
+  tagsText: {
+    textAlign: 'center',
   },
 });
 

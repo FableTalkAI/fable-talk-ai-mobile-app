@@ -5,10 +5,11 @@ import { openSettings } from 'react-native-permissions';
 
 import BottomWindowBase from '@/components/molecules/bottomWindows/BottomWindowBase';
 import Alert from '@/components/molecules/bottomWindows/templates/Alert';
+import SearchFilter from '@/components/molecules/bottomWindows/templates/SearchFilter';
 
 import { BottomWindowModes, UseBottomWindowProps } from './types.ts';
 
-const useBottomWindow = ({ mode }: UseBottomWindowProps) => {
+const useBottomWindow = ({ mode, tags = [''] }: UseBottomWindowProps) => {
   const bottomWindowRef = useRef<BottomSheetModalMethods>(null);
 
   const { t } = useTranslation();
@@ -36,10 +37,12 @@ const useBottomWindow = ({ mode }: UseBottomWindowProps) => {
             onCancel={close}
           />
         );
+      case BottomWindowModes.SearchFilter:
+        return <SearchFilter tags={tags} onApply={close} />;
       default:
         return null;
     }
-  }, [close, t, mode]);
+  }, [close, t, mode, tags]);
 
   const BottomWindow = () => <BottomWindowBase ref={bottomWindowRef}>{templateComponent}</BottomWindowBase>;
 

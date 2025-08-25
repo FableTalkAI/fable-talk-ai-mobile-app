@@ -20,6 +20,7 @@ export enum ButtonModes {
   Disabled = 'disabled',
   Transparent = 'transparent',
   Light = 'light',
+  SearchFilter = 'searchFilter',
 }
 
 export enum ButtonRadius {

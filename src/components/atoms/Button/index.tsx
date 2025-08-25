@@ -39,6 +39,10 @@ const Button = ({
       backgroundColor: colors.primary30,
       color: colors.textLight,
     },
+    searchFilter: {
+      backgroundColor: colors.successBase,
+      color: colors.textLight,
+    },
   };
 
   const computedStyles = StyleSheet.create({
