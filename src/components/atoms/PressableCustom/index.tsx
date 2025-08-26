@@ -30,11 +30,9 @@ const PressableCustom = ({
   };
 
   return (
-    <Animated.View style={[animatedStyle, containerStyle]}>
-      <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} style={style} {...pressableProps}>
-        {children}
-      </Pressable>
-    </Animated.View>
+    <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} style={containerStyle} {...pressableProps}>
+      <Animated.View style={[animatedStyle, style]}>{children}</Animated.View>
+    </Pressable>
   );
 };
 

@@ -1,4 +1,5 @@
 import { KeyboardAvoidingView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 import { OPTIONS } from './constants.ts';
 import { KeyboardAvoidingViewCustomProps } from './types.ts';
@@ -10,7 +11,9 @@ const KeyboardAvoidingViewCustom = ({ children, style }: KeyboardAvoidingViewCus
       style={[styles.flex1, style]}
       keyboardVerticalOffset={OPTIONS.keyboardVerticalOffset}
     >
-      {children}
+      <ScrollView style={styles.flex1} bounces={false} showsVerticalScrollIndicator={false}>
+        {children}
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 };

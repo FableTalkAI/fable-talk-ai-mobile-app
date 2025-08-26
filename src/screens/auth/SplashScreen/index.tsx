@@ -1,4 +1,3 @@
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -42,7 +41,7 @@ const SplashScreen = () => {
           <TextCustom text="FableTalkAI" mode={TextModes.Subtitle} />
         </View>
 
-        <SplashRobotIcon width={SCREEN_WIDTH} />
+        <SplashRobotIcon />
 
         <View style={styles.bottomContainer}>
           <TextCustom text={t('auth.splashText')} mode={TextModes.Xxl} style={computedStyles.text} />

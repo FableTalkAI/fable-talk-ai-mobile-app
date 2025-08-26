@@ -10,6 +10,7 @@ import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
+import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
@@ -42,10 +43,8 @@ const SignInUpScreen = () => {
       color: colors.gray40,
     },
     buttonAndTextContainer: {
-      paddingBottom: SPACING.s,
-    },
-    belowButtonContainer: {
-      paddingTop: SPACING.xs,
+      paddingTop: SPACING.s,
+      gap: SPACING.xs,
     },
     belowButtonText: {
       color: colors.textSecondary,
@@ -59,9 +58,9 @@ const SignInUpScreen = () => {
   });
 
   return (
-    <SafeAreaViewCustom isTransparent style={styles.safeArea}>
+    <SafeAreaViewCustom>
       <Animated.View style={styles.wrapper} exiting={FadeOut} entering={FadeIn} key={screenMode}>
-        <View>
+        <KeyboardAvoidingViewCustom>
           <View style={[computedStyles.iconContainer, styles.iconContainer]}>
             {screenMode === 'signIn' ? <SignInIcon /> : <SignUpIcon />}
           </View>
@@ -73,6 +72,7 @@ const SignInUpScreen = () => {
               mode={TextModes.Caption}
               style={computedStyles.subheader}
             />
+
             {screenMode === 'signUp' && (
               <TextInputCustom value="" placeholder={t('common.name')} leftIcon={<UserIcon />} />
             )}
@@ -94,12 +94,12 @@ const SignInUpScreen = () => {
               <GoogleLogoIcon />
             </PressableCustom>
           </View>
-        </View>
+        </KeyboardAvoidingViewCustom>
 
         <View style={computedStyles.buttonAndTextContainer}>
           <Button title={t(`auth.${screenMode}Button`)} onPress={() => navigation.navigate('CodeVerification')} />
 
-          <View style={[computedStyles.belowButtonContainer, styles.belowButtonContainer]}>
+          <View style={styles.belowButtonContainer}>
             <TextCustom
               text={t(`auth.${screenMode}.belowButton`)}
               mode={TextModes.Caption}
@@ -120,9 +120,6 @@ const SignInUpScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-  },
   wrapper: {
     flex: 1,
     justifyContent: 'space-between',

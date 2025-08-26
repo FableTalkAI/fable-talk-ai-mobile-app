@@ -21,6 +21,7 @@ import ToggleFalseIcon from './toggle-false.svg';
 import ToggleTrueIcon from './toggle-true.svg';
 import TriangleIcon from './triangle.svg';
 import UserIcon from './user.svg';
+import VerifyCodeIcon from './verify-code.svg';
 
 export {
   ArrowForwardIcon,
@@ -46,4 +47,5 @@ export {
   ToggleTrueIcon,
   TriangleIcon,
   UserIcon,
+  VerifyCodeIcon,
 };
