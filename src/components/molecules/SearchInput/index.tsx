@@ -34,6 +34,7 @@ const SearchInput = ({ placeholder, withBackArrow, withFilter }: SearchInputProp
         onChangeText={setText}
         leftIcon={<SearchIcon />}
         wrapperStyle={styles.textInputWrapper}
+        numberOfLines={1}
       />
 
       {withFilter && (

@@ -46,5 +46,8 @@
       "avatar": "Uploading an avatar, it's optional*",
       "interests": "Please, select 2 tags"
     }
+  },
+  "home": {
+    "searchInput": "Search agents by name or tag"
   }
 }

@@ -61,6 +61,7 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
           style={[computedStyles.flatList, styles.flatList]}
           contentContainerStyle={computedStyles.flatListContainer}
           showsHorizontalScrollIndicator={false}
+          keyExtractor={item => item}
           renderItem={({ item }) => <Tag title={item} forceActive />}
         />
       </PressableCustom>
@@ -70,10 +71,15 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
 
 const styles = StyleSheet.create({
   shadowContainer: {
-    flexBasis: '45%',
+    width: '45%',
+    borderColor: 'red',
+    borderWidth: 1,
   },
   pressableContainer: {
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'yellow',
+    flex: 1,
   },
   avatar: {
     width: 44,
