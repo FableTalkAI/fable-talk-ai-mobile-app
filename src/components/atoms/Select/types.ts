@@ -1,7 +1,8 @@
-export type SelectProps = {
-  options: string[];
+export type SelectProps<T extends string> = {
+  options: T[];
   width?: number;
-  defaultOption?: string;
+  defaultOption?: T;
+  onChange?: (value: T) => void;
 };
 
 export type SelectRef = {

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
@@ -13,29 +14,31 @@ import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import SearchInput from '@/components/molecules/SearchInput';
 import Tag from '@/components/molecules/Tag';
 import { SPACING } from '@/core/constants/sizes.ts';
+import useAgentsStore from '@/hooks/useAgentsStore.ts';
+import { OrderFilter, SortFilter } from '@/store/agents/types.ts';
 
-import { SearchFilterProps } from './types.ts';
+const SearchFilter = () => {
+  const { t } = useTranslation();
 
-const SearchFilter = ({ tags, onApply }: SearchFilterProps) => {
-  const [isAscending, setIsAscending] = useState(false);
-  const [numberOfTags, setNumberOfTags] = useState(String(tags.length));
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const { filter, setFilterOrderHandler, setFilterSortHandler, tags, setFilterTagsHandler } = useAgentsStore();
+
   const [searchQuery, setSearchQuery] = useState('');
-  const [filteredTags, setFilteredTags] = useState(tags);
 
-  useEffect(() => {
-    const newFilteredTags = tags.filter(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-    setFilteredTags(newFilteredTags);
-    setNumberOfTags(String(newFilteredTags.length));
-  }, [searchQuery, tags]);
+  const selectOptions = useMemo(() => Object.values(SortFilter).map(option => t(option)), [t]);
+  const filteredTags = useMemo(
+    () => tags.filter(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())),
+    [searchQuery, tags],
+  );
 
-  const onToggle = (title: string) => {
-    if (selectedTags.includes(title)) {
-      setSelectedTags(selectedTags.filter(tag => tag !== title));
+  const onToggle = (tag: string) => {
+    if (filter.tags.includes(tag)) {
+      setFilterTagsHandler(filter.tags.filter(selectedTag => selectedTag !== tag));
     } else {
-      setSelectedTags([...selectedTags, title]);
+      setFilterTagsHandler([...filter.tags, tag]);
     }
   };
+
+  console.log(filter.tags);
 
   const computedStyles = StyleSheet.create({
     searchAndTagsNumberContainer: {
@@ -61,11 +64,14 @@ const SearchFilter = ({ tags, onApply }: SearchFilterProps) => {
 
         <View style={styles.sortContainer}>
           {/*Тут width считать как-то?*/}
-          <Select options={['Alphabetical', 'Popularity']} width={150} />
+          <Select options={selectOptions} width={150} defaultOption={filter.sort} onChange={setFilterSortHandler} />
 
-          <PressableCustom onPress={() => setIsAscending(prevState => !prevState)} hitSlop={5}>
-            <Animated.View exiting={FadeOut} entering={FadeIn} key={`sort-ascending-${isAscending}`}>
-              {isAscending ? <SortAscendingIcon /> : <SortDescendingIcon />}
+          <PressableCustom
+            onPress={() => setFilterOrderHandler(filter.order === OrderFilter.ASC ? OrderFilter.DESC : OrderFilter.ASC)}
+            hitSlop={5}
+          >
+            <Animated.View exiting={FadeOut} entering={FadeIn} key={`sort-ascending-${filter.order}`}>
+              {filter.order === OrderFilter.ASC ? <SortAscendingIcon /> : <SortDescendingIcon />}
             </Animated.View>
           </PressableCustom>
         </View>
@@ -81,7 +87,7 @@ const SearchFilter = ({ tags, onApply }: SearchFilterProps) => {
             onChangeText={setSearchQuery}
           />
           {/*Вид*/}
-          <TextCustom text={numberOfTags} mode={TextModes.Title} />
+          <TextCustom text={String(filteredTags.length)} mode={TextModes.Title} />
         </View>
 
         <FlatList
@@ -89,12 +95,7 @@ const SearchFilter = ({ tags, onApply }: SearchFilterProps) => {
           columnWrapperStyle={computedStyles.tagsContainer}
           numColumns={2}
           renderItem={({ item }) => (
-            <Tag
-              title={item}
-              containerStyle={styles.tag}
-              onToggle={title => onToggle(title)}
-              isSelected={selectedTags.includes(item)}
-            />
+            <Tag title={item} containerStyle={styles.tag} onToggle={onToggle} isSelected={filter.tags.includes(item)} />
           )}
         />
       </View>
@@ -106,11 +107,11 @@ const SearchFilter = ({ tags, onApply }: SearchFilterProps) => {
         </View>
 
         <FlatList
-          data={selectedTags}
+          data={filter.tags}
           contentContainerStyle={computedStyles.tagsContainer}
           horizontal
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <Tag title={item} forceActive />}
+          renderItem={({ item }) => <Tag title={item} forceActive onToggle={onToggle} />}
         />
       </View>
 
@@ -118,7 +119,8 @@ const SearchFilter = ({ tags, onApply }: SearchFilterProps) => {
         title="Apply"
         mode={ButtonModes.SearchFilter}
         containerStyle={computedStyles.buttonContainer}
-        onPress={onApply}
+        //TODO: Server agents handling
+        onPress={() => console.log('Home')}
       />
     </View>
   );

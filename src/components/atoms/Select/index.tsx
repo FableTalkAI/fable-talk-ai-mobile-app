@@ -16,7 +16,7 @@ import useTheme from '@/hooks/useTheme.ts';
 import { MAX_DROPDOWN_HEIGHT, ROW_HEIGHT, VSPACE } from './constants.ts';
 import { SelectProps, SelectRef } from './types.ts';
 
-const Select = forwardRef<SelectRef, SelectProps>(({ defaultOption, options, width = 90 }, ref) => {
+const Select = forwardRef<SelectRef, SelectProps>(({ defaultOption, options, width = 90, onChange }, ref) => {
   const { colors } = useTheme();
 
   const triggerRef = useRef<View>(null);
@@ -70,6 +70,7 @@ const Select = forwardRef<SelectRef, SelectProps>(({ defaultOption, options, wid
 
   const selectOptionHandler = (index: number) => () => {
     setSelectedIndex(index);
+    onChange?.(options[index]);
     setIsOpen(false);
   };
 

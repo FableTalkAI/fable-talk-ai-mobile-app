@@ -49,7 +49,7 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle 
       style={[styles.tags, computedStyles.tags]}
       containerStyle={containerStyle}
       hitSlop={5}
-      onPress={() => !forceActive && onToggle?.(title)}
+      onPress={() => onToggle?.(title)}
     >
       <TextCustom
         text={title}

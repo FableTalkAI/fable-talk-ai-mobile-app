@@ -10,7 +10,9 @@
     "cancel": "Cancel",
     "settings": "Settings",
     "email": "Email",
-    "name": "Name"
+    "name": "Name",
+    "alphabetically": "Alphabetically",
+    "popularity": "Popularity"
   },
   "bottomWindows": {
     "permissionDenied": {

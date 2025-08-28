@@ -10,7 +10,9 @@
     "cancel": "Скасувати",
     "settings": "Налаштування",
     "email": "Пошта",
-    "Name": "Ім'я"
+    "Name": "Ім'я",
+    "alphabetically": "За алфавітом",
+    "popularity": "За популярністю"
   },
   "bottomWindows": {
     "permissionDenied": {

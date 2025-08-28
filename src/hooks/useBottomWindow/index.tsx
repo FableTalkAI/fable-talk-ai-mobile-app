@@ -9,7 +9,7 @@ import SearchFilter from '@/components/molecules/bottomWindows/templates/SearchF
 
 import { BottomWindowModes, UseBottomWindowProps } from './types.ts';
 
-const useBottomWindow = ({ mode, tags = [''] }: UseBottomWindowProps) => {
+const useBottomWindow = ({ mode }: UseBottomWindowProps) => {
   const bottomWindowRef = useRef<BottomSheetModalMethods>(null);
 
   const { t } = useTranslation();
@@ -38,11 +38,11 @@ const useBottomWindow = ({ mode, tags = [''] }: UseBottomWindowProps) => {
           />
         );
       case BottomWindowModes.SearchFilter:
-        return <SearchFilter tags={tags} onApply={close} />;
+        return <SearchFilter />;
       default:
         return null;
     }
-  }, [close, t, mode, tags]);
+  }, [close, t, mode]);
 
   const BottomWindow = () => <BottomWindowBase ref={bottomWindowRef}>{templateComponent}</BottomWindowBase>;
 
