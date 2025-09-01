@@ -10,7 +10,6 @@ export type TextInputCustomProps = {
   value: string;
   leftIcon?: ReactElement<SvgProps>;
   wrapperStyle?: StyleProp<ViewStyle>;
-  shadowStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
   withCharCount?: boolean;
 } & UniqueTextInputCustomProps;

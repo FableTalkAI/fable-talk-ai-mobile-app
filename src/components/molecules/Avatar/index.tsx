@@ -3,9 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import { EditAvatarIcon, UserIcon } from '@/assets/icons';
 import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
-import ShadowCustom from '@/components/atoms/ShadowCustom';
-import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import { BOX_SHADOW } from '@/core/constants/styles.ts';
 import { useImagePick } from '@/hooks/useImagePick';
 import useTheme from '@/hooks/useTheme.ts';
 
@@ -28,6 +27,7 @@ const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri }: AvatarPr
       backgroundColor: colors.backgroundBase,
       paddingVertical: SPACING.xs,
       paddingLeft: SPACING.xs,
+      boxShadow: BOX_SHADOW.alt,
     },
     image: {
       borderRadius: RADIUS.circle,
@@ -44,14 +44,13 @@ const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri }: AvatarPr
         )}
 
         {isChangeable && (
-          <ShadowCustom
+          <PressableCustom
             containerStyle={[computedStyles.editContainer, styles.editContainer]}
-            mode={ShadowCustomModes.Alt}
+            hitSlop={10}
+            onPress={pickImage}
           >
-            <PressableCustom hitSlop={10} onPress={pickImage}>
-              <EditAvatarIcon />
-            </PressableCustom>
-          </ShadowCustom>
+            <EditAvatarIcon />
+          </PressableCustom>
         )}
       </View>
 

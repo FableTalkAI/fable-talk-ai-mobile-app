@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import CodeVerificationScreen from '@/screens/auth/CodeVerificationScreen';
 import SignInUpScreen from '@/screens/auth/SignInUpScreen';
-import SplashScreen from '@/screens/auth/SplashScreen';
+import SplashScreen from '@/screens/auth/SplashScreen.tsx';
 
 import { AuthStackParamList } from './types.ts';
 

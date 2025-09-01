@@ -10,7 +10,8 @@
     "cancel": "Скасувати",
     "settings": "Налаштування",
     "email": "Пошта",
-    "Name": "Ім'я"
+    "Name": "Ім'я",
+    "noResults": "Нічого не знайдено"
   },
   "bottomWindows": {
     "permissionDenied": {
