@@ -80,12 +80,7 @@ const SearchFilter = () => {
         <TextCustom text="Filter" mode={TextModes.Subtitle} />
 
         <View style={[computedStyles.searchAndTagsNumberContainer, styles.searchAndTagsNumberContainer]}>
-          <SearchInput
-            placeholder="Tags"
-            wrapperStyle={styles.searchInput}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-          />
+          <SearchInput placeholder="Tags" value={searchQuery} onChangeText={setSearchQuery} />
           {/*Вид*/}
           <TextCustom text={String(filteredTags.length)} mode={TextModes.Title} />
         </View>
@@ -148,8 +143,5 @@ const styles = StyleSheet.create({
   selectedTextContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  searchInput: {
-    flex: 1,
   },
 });
