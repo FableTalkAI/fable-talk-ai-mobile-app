@@ -1,26 +1,26 @@
 import { forwardRef } from 'react';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 import ResizeIcon from '@/components/atoms/ResizeIcon';
-import ShadowCustom from '@/components/atoms/ShadowCustom';
-import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
 import TextCustom from '@/components/atoms/TextCustom';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import { BOX_SHADOW } from '@/core/constants/styles.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 import { TextInputCustomProps } from './types.ts';
 
 const TextInputCustom = forwardRef<TextInput, TextInputCustomProps>(
-  ({ leftIcon, shadowStyle, wrapperStyle, style, withCharCount, ...textInputProps }, ref) => {
+  ({ leftIcon, wrapperStyle, style, withCharCount, ...textInputProps }, ref) => {
     const { colors } = useTheme();
 
     const computedStyles = StyleSheet.create({
-      shadow: {
+      wrapper: {
         borderRadius: RADIUS.large,
         paddingHorizontal: SPACING.m,
         backgroundColor: colors.backgroundAlt,
         gap: SPACING.xs,
         paddingVertical: SPACING.s,
+        boxShadow: BOX_SHADOW.base,
       },
       textInput: {
         color: colors.textPrimary,
@@ -34,11 +34,7 @@ const TextInputCustom = forwardRef<TextInput, TextInputCustomProps>(
     };
 
     return (
-      <ShadowCustom
-        mode={ShadowCustomModes.Base}
-        style={[computedStyles.shadow, styles.shadow, shadowStyle]}
-        containerStyle={wrapperStyle}
-      >
+      <View style={[computedStyles.wrapper, styles.wrapper, wrapperStyle]}>
         <ResizeIcon icon={leftIcon} containerStyle={styles.iconContainer} cloneElementProps={resizeIconOption} />
 
         <TextInput
@@ -55,13 +51,13 @@ const TextInputCustom = forwardRef<TextInput, TextInputCustomProps>(
             style={styles.charCount}
           />
         )}
-      </ShadowCustom>
+      </View>
     );
   },
 );
 
 const styles = StyleSheet.create({
-  shadow: {
+  wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
   },

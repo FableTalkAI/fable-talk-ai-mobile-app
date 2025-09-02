@@ -14,7 +14,6 @@ import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 import useUserStore from '@/hooks/useUserStore.ts';
 
 import { STEPS_TEXT_DATA } from './constants.ts';
-import { RenderStep } from './types.ts';
 
 const OnboardingScreen = () => {
   const { t } = useTranslation();
@@ -31,29 +30,32 @@ const OnboardingScreen = () => {
     },
   });
 
-  const renderStep = useMemo(() => {
-    const stepsData: Record<string, RenderStep> = {
-      0: {
+  const { renderStep, lastStep } = useMemo(() => {
+    const stepsData = [
+      {
         component: <InitialStep />,
       },
-      1: {
+      {
         component: <DateOfBirthStep />,
         isDisabled: !profile.dateOfBirth?.length,
       },
-      2: {
+      {
         component: <AvatarStep />,
       },
-      3: {
+      {
         component: <InterestsStep />,
         isDisabled: tags.length !== 2,
       },
-    };
+    ];
 
-    return stepsData[onboardingStep];
+    return {
+      renderStep: stepsData[onboardingStep],
+      lastStep: stepsData.length - 1,
+    };
   }, [onboardingStep, tags, profile]);
 
   const onContinuePress = () => {
-    if (onboardingStep === 3) {
+    if (onboardingStep === lastStep) {
       return navigation.reset({
         index: 0,
         routes: [{ name: 'TabBarNavigator', params: { screen: 'Home' } }],
