@@ -5,7 +5,3 @@ export type SelectProps = {
   // TODO: any
   onChange?: (value: any) => void;
 };
-
-export type SelectRef = {
-  close: () => void;
-};

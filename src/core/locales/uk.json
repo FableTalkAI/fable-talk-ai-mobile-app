@@ -12,7 +12,8 @@
     "email": "Пошта",
     "Name": "Ім'я",
     "alphabetically": "За алфавітом",
-    "popularity": "За популярністю"
+    "popularity": "За популярністю",
+    "noResults": "Нічого не знайдено"
   },
   "bottomWindows": {
     "permissionDenied": {

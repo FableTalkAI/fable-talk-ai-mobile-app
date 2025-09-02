@@ -12,7 +12,8 @@
     "email": "Email",
     "name": "Name",
     "alphabetically": "Alphabetically",
-    "popularity": "Popularity"
+    "popularity": "Popularity",
+    "noResults": "No results"
   },
   "bottomWindows": {
     "permissionDenied": {
@@ -32,7 +33,7 @@
     "signUp": {
       "header": "Register",
       "subheader": "Please register to login",
-      "belowButton": "Already have account?"
+      "belowButton": "Already have account? "
     },
     "verify": {
       "header": "Verification",

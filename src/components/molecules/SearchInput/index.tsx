@@ -7,15 +7,7 @@ import { SPACING } from '@/core/constants/sizes.ts';
 
 import { SearchInputProps } from './types.ts';
 
-const SearchInput = ({
-  value,
-  placeholder = '',
-  withBackArrow,
-  withFilter,
-  navigation,
-  wrapperStyle,
-  onChangeText,
-}: SearchInputProps) => {
+const SearchInput = ({ placeholder, withBackArrow, withFilter, value, onChangeText, navigation }: SearchInputProps) => {
   const computedStyles = StyleSheet.create({
     wrapper: {
       gap: SPACING.m,
@@ -23,7 +15,7 @@ const SearchInput = ({
   });
 
   return (
-    <View style={[styles.wrapper, computedStyles.wrapper, wrapperStyle]}>
+    <View style={[styles.wrapper, computedStyles.wrapper]}>
       {withBackArrow && navigation && (
         <PressableCustom onPress={navigation?.goBack} style={styles.backIcon}>
           <ArrowForwardIcon />
