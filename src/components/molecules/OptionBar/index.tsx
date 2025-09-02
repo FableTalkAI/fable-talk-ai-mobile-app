@@ -13,11 +13,12 @@ import { OptionBarColorModes, OptionBarModes, OptionBarProps } from './types.ts'
 
 const OptionBar = ({
   title,
-  subtitle = '',
+  subtitle,
   mode = OptionBarModes.Simple,
   colorMode = OptionBarColorModes.Default,
   leftIcon,
   rightComponent,
+  onPress,
 }: OptionBarProps) => {
   const { colors } = useTheme();
 
@@ -63,19 +64,16 @@ const OptionBar = ({
 
   if (mode === OptionBarModes.Simple) {
     return (
-      <View style={styles.simpleContainer}>
+      <PressableCustom onPress={onPress} style={styles.simpleContainer}>
         <TextCustom text={title} />
-
-        <PressableCustom>
-          <ArrowForwardIcon width={8} />
-        </PressableCustom>
-      </View>
+        <ArrowForwardIcon width={8} />
+      </PressableCustom>
     );
   }
 
   if (mode === OptionBarModes.Complex) {
     return (
-      <PressableCustom style={styles.complexContainer}>
+      <PressableCustom onPress={onPress} style={styles.complexContainer}>
         <ResizeIcon
           icon={leftIcon}
           containerStyle={computedStyles.iconContainer}
@@ -84,7 +82,7 @@ const OptionBar = ({
 
         <View style={[computedStyles.textContainer, styles.textContainer]}>
           <TextCustom text={title} mode={TextModes.Secondary} style={computedStyles.title} />
-          <TextCustom text={subtitle} mode={TextModes.ExtraSmall} style={computedStyles.subtitle} />
+          {subtitle && <TextCustom text={subtitle} mode={TextModes.ExtraSmall} style={computedStyles.subtitle} />}
         </View>
 
         {rightComponent ?? <ArrowForwardIcon fill={localColors.icon} width={8} />}

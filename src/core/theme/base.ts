@@ -21,6 +21,7 @@ export const base = {
   errorDark: '#D5283A',
 
   gray10: '#F2F2F2',
+  gray20: '#E2E3E4',
   gray40: '#A19F9E',
   gray50: '#8A8B8A',
   grayDisabled: '#c2c6c8',

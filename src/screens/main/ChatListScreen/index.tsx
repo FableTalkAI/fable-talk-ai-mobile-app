@@ -7,13 +7,11 @@ const ChatListScreen = () => {
   const { navigation } = useNavigationRoutes();
 
   return (
-    <>
-      <SafeAreaViewCustom>
-        <PressableCustom onPress={navigation.goBack}>
-          <TextCustom text="sdasda" />
-        </PressableCustom>
-      </SafeAreaViewCustom>
-    </>
+    <SafeAreaViewCustom withGradientBackground>
+      <PressableCustom onPress={navigation.goBack}>
+        <TextCustom text="sdasda" />
+      </PressableCustom>
+    </SafeAreaViewCustom>
   );
 };
 
