@@ -1,3 +1,4 @@
+import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -13,18 +14,21 @@ import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import SearchInput from '@/components/molecules/SearchInput';
 import Tag from '@/components/molecules/Tag';
-import { SPACING } from '@/core/constants/sizes.ts';
+import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import { BOX_SHADOW } from '@/core/constants/styles.ts';
 import useAgentsStore from '@/hooks/useAgentsStore.ts';
+import useTheme from '@/hooks/useTheme.ts';
 import { OrderFilter, SortFilter } from '@/store/agents/types.ts';
 
 const SearchFilter = () => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
 
   const { filter, setFilterOrderHandler, setFilterSortHandler, tags, setFilterTagsHandler } = useAgentsStore();
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  const selectOptions = useMemo(() => Object.values(SortFilter).map(option => t(option)), [t]);
+  const selectOptions = useMemo(() => Object.values(SortFilter).map(option => t(`common.${option}`)), [t]);
   const filteredTags = useMemo(
     () => tags.filter(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())),
     [searchQuery, tags],
@@ -41,16 +45,33 @@ const SearchFilter = () => {
   console.log(filter.tags);
 
   const computedStyles = StyleSheet.create({
+    wrapper: {
+      gap: SPACING.m,
+    },
+    sectionBackground: {
+      boxShadow: BOX_SHADOW.medium,
+      backgroundColor: colors.backgroundAlt,
+      borderRadius: RADIUS.small,
+    },
     searchAndTagsNumberContainer: {
       gap: SPACING.xxs,
+      paddingRight: SPACING.xs,
     },
     tagsContainer: {
       paddingVertical: SPACING.s,
       paddingHorizontal: SPACING.xs,
       gap: SPACING.xxs,
     },
+    selectedTagsContainer: {
+      paddingTop: SPACING.xxs,
+      paddingHorizontal: SPACING.xs,
+      gap: SPACING.xxs,
+      paddingBottom: SPACING.xs,
+    },
     selectedTextContainer: {
       gap: SPACING.xxs,
+      paddingLeft: SPACING.xs,
+      paddingTop: SPACING.xs,
     },
     buttonContainer: {
       paddingTop: SPACING.lg,
@@ -58,13 +79,18 @@ const SearchFilter = () => {
   });
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[computedStyles.wrapper, styles.wrapper]}>
       <View>
-        <TextCustom text="Sort" mode={TextModes.Subtitle} />
+        <TextCustom text={t('bottomWindows.searchFilter.sort')} mode={TextModes.Subtitle} />
 
         <View style={styles.sortContainer}>
-          {/*Тут width считать как-то?*/}
-          <Select options={selectOptions} width={150} defaultOption={filter.sort} onChange={setFilterSortHandler} />
+          <Select
+            options={selectOptions}
+            //TODO: how to correctly refer to this numbers? 24 - safeArea spacing, 20 - icon width, 32 - double paddingVertical between select and icon
+            width={SCREEN_WIDTH - 24 - 20 - 32}
+            defaultOption={filter.sort}
+            onChange={setFilterSortHandler}
+          />
 
           <PressableCustom
             onPress={() => setFilterOrderHandler(filter.order === OrderFilter.ASC ? OrderFilter.DESC : OrderFilter.ASC)}
@@ -77,42 +103,53 @@ const SearchFilter = () => {
         </View>
       </View>
       <View>
-        <TextCustom text="Filter" mode={TextModes.Subtitle} />
+        <TextCustom text={t('bottomWindows.searchFilter.filter')} mode={TextModes.Subtitle} />
 
-        <View style={[computedStyles.searchAndTagsNumberContainer, styles.searchAndTagsNumberContainer]}>
-          <SearchInput placeholder="Tags" value={searchQuery} onChangeText={setSearchQuery} />
-          {/*Вид*/}
-          <TextCustom text={String(filteredTags.length)} mode={TextModes.Title} />
+        <View style={computedStyles.sectionBackground}>
+          <View style={[computedStyles.searchAndTagsNumberContainer, styles.searchAndTagsNumberContainer]}>
+            <SearchInput
+              placeholder={t('bottomWindows.searchFilter.tags')}
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+            />
+            <TextCustom text={String(filteredTags.length)} mode={TextModes.Title} />
+          </View>
+
+          <FlatList
+            data={filteredTags}
+            columnWrapperStyle={computedStyles.tagsContainer}
+            numColumns={2}
+            renderItem={({ item }) => (
+              <Tag
+                title={item}
+                containerStyle={styles.tag}
+                onToggle={onToggle}
+                isSelected={filter.tags.includes(item)}
+              />
+            )}
+          />
         </View>
-
-        <FlatList
-          data={filteredTags}
-          columnWrapperStyle={computedStyles.tagsContainer}
-          numColumns={2}
-          renderItem={({ item }) => (
-            <Tag title={item} containerStyle={styles.tag} onToggle={onToggle} isSelected={filter.tags.includes(item)} />
-          )}
-        />
       </View>
 
-      <View>
+      <View style={computedStyles.sectionBackground}>
         <View style={[computedStyles.selectedTextContainer, styles.selectedTextContainer]}>
           <TagSelectedIcon />
-          <TextCustom text="Selected" />
+          <TextCustom text={t('bottomWindows.searchFilter.tags')} />
         </View>
 
         <FlatList
           data={filter.tags}
-          contentContainerStyle={computedStyles.tagsContainer}
+          contentContainerStyle={computedStyles.selectedTagsContainer}
           horizontal
           showsHorizontalScrollIndicator={false}
+          //TODO: tags into translation
           renderItem={({ item }) => <Tag title={item} forceActive onToggle={onToggle} />}
         />
       </View>
 
       <Button
-        title="Apply"
-        mode={ButtonModes.SearchFilter}
+        title={t('bottomWindows.searchFilter.applyButton')}
+        mode={ButtonModes.Success}
         containerStyle={computedStyles.buttonContainer}
         //TODO: Server agents handling
         onPress={() => console.log('Home')}
@@ -131,11 +168,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   searchAndTagsNumberContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: 1,
+    justifyContent: 'space-between',
   },
   tag: {
     width: '48%',

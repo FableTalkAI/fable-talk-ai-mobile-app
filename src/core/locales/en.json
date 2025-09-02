@@ -19,6 +19,13 @@
     "permissionDenied": {
       "title": "Permission denied",
       "subtitle": "To use this feature, please enable photo access in settings"
+    },
+    "searchFilter": {
+      "sort": "Sort",
+      "filter": "Filter",
+      "tags": "Tags",
+      "selected": "Selected",
+      "applyButton": "Apply"
     }
   },
   "auth": {

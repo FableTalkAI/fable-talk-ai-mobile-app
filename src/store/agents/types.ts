@@ -13,7 +13,7 @@ export type Agent = {
 };
 
 export enum SortFilter {
-  Alphabetical = 'alphabetical',
+  Alphabetically = 'alphabetically',
   Popularity = 'popularity',
 }
 
