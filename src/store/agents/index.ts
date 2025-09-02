@@ -8,7 +8,7 @@ const initialState: AgentsState = {
   agents: [],
   filter: {
     tags: [],
-    sort: SortFilter.Alphabetical,
+    sort: SortFilter.Alphabetically,
     order: OrderFilter.ASC,
   },
 };
