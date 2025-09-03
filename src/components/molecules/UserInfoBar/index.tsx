@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Keyboard, StyleSheet, TextInput, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
@@ -14,18 +15,20 @@ import { formatDateCombined } from '@/core/utils/date.ts';
 import useTheme from '@/hooks/useTheme.ts';
 import useUserStore from '@/hooks/useUserStore.ts';
 
+import { TITLES } from './constants.ts';
 import { UserInfoBarProps } from './types.ts';
 
-const UserInfoBar = ({ title, field }: UserInfoBarProps) => {
+const UserInfoBar = ({ field }: UserInfoBarProps) => {
   const inputRef = useRef<TextInput>(null);
 
+  const { t } = useTranslation();
   const { colors } = useTheme();
 
   const [isEditing, setIsEditing] = useState(false);
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const { profile, setProfileHandler } = useUserStore();
 
-  const displayValue = field === 'dateOfBirth' ? formatDateCombined(profile[field] || '') : profile[field] || '';
+  const displayValue = field === 'dateOfBirth' ? formatDateCombined(profile[field]!) : profile[field]!;
 
   const startEditing = () => {
     if (field === 'dateOfBirth') {
@@ -69,10 +72,10 @@ const UserInfoBar = ({ title, field }: UserInfoBarProps) => {
   });
 
   return (
-    <PressableCustom containerStyle={[computedStyles.wrapper, styles.wrapper]} onPress={startEditing}>
+    <PressableCustom style={[computedStyles.wrapper, styles.wrapper]} onPress={startEditing}>
       <View style={styles.contentContainer}>
         <View style={styles.titleContainer}>
-          <TextCustom text={title} mode={TextModes.Caption} style={computedStyles.title} />
+          <TextCustom text={t(TITLES[field])} mode={TextModes.Caption} style={computedStyles.title} />
 
           {!isEditing && (
             <Animated.View entering={FadeIn} exiting={FadeOut}>
@@ -83,8 +86,10 @@ const UserInfoBar = ({ title, field }: UserInfoBarProps) => {
 
         {isEditing ? (
           <TextInputCustom
+            wrapperStyle={styles.textInputWrapper}
+            style={styles.textInput}
             ref={inputRef}
-            value={profile[field] || ''}
+            value={profile[field]!}
             onChangeText={handleOnChangeText}
             onBlur={() => setIsEditing(false)}
             onSubmitEditing={handleSubmit}
@@ -110,11 +115,20 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
+    gap: SPACING.xxs,
   },
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  textInput: {
+    paddingTop: 1,
+  },
+  textInputWrapper: {
+    paddingVertical: 0,
+    paddingHorizontal: 0,
+    backgroundColor: 'transparent',
   },
 });
 

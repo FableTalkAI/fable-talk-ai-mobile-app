@@ -10,7 +10,7 @@ import useTheme from '@/hooks/useTheme.ts';
 
 import { AvatarProps } from './types.ts';
 
-const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri }: AvatarProps) => {
+const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri, style }: AvatarProps) => {
   const { colors } = useTheme();
 
   const { pickImage, BottomWindowPermissionDenied } = useImagePick({ setAvatarUri });
@@ -18,7 +18,7 @@ const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri }: AvatarPr
   const computedStyles = StyleSheet.create({
     container: {
       borderRadius: RADIUS.circle,
-      backgroundColor: colors.grayDisabled,
+      backgroundColor: colors.gray10,
       width: size ?? 144,
       height: size ?? 144,
     },
@@ -35,7 +35,7 @@ const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri }: AvatarPr
   });
 
   return (
-    <>
+    <View style={style}>
       <View style={[computedStyles.container, styles.container]}>
         {avatarUri ? (
           <AutoImage source={{ uri: avatarUri }} resizeMode="cover" style={[computedStyles.image, styles.image]} />
@@ -55,7 +55,7 @@ const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri }: AvatarPr
       </View>
 
       <BottomWindowPermissionDenied />
-    </>
+    </View>
   );
 };
 

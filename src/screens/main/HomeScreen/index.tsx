@@ -3,7 +3,7 @@ import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 
 const HomeScreen = () => {
   return (
-    <SafeAreaViewCustom>
+    <SafeAreaViewCustom withGradientBackground>
       <TextCustom text="Open" />
     </SafeAreaViewCustom>
   );
