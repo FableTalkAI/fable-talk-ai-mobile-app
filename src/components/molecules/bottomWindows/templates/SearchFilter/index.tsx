@@ -42,8 +42,6 @@ const SearchFilter = () => {
     }
   };
 
-  console.log(filter.tags);
-
   const computedStyles = StyleSheet.create({
     wrapper: {
       gap: SPACING.m,
@@ -86,8 +84,7 @@ const SearchFilter = () => {
         <View style={styles.sortContainer}>
           <Select
             options={selectOptions}
-            //TODO: how to correctly refer to this numbers? 24 - safeArea spacing, 20 - icon width, 32 - double paddingVertical between select and icon
-            width={SCREEN_WIDTH - 24 - 20 - 32}
+            width={SCREEN_WIDTH - SPACING.lg - 20 - SPACING.xl}
             defaultOption={filter.sort}
             onChange={setFilterSortHandler}
           />
@@ -148,7 +145,7 @@ const SearchFilter = () => {
       </View>
 
       <Button
-        title={t('bottomWindows.searchFilter.applyButton')}
+        title={t('bottomWindows.common.apply')}
         mode={ButtonModes.Success}
         containerStyle={computedStyles.buttonContainer}
         //TODO: Server agents handling

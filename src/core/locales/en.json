@@ -13,7 +13,8 @@
     "name": "Name",
     "alphabetically": "Alphabetically",
     "popularity": "Popularity",
-    "noResults": "No results"
+    "noResults": "No results",
+    "apply": "Apply"
   },
   "bottomWindows": {
     "permissionDenied": {
@@ -24,8 +25,7 @@
       "sort": "Sort",
       "filter": "Filter",
       "tags": "Tags",
-      "selected": "Selected",
-      "applyButton": "Apply"
+      "selected": "Selected"
     }
   },
   "auth": {

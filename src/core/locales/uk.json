@@ -13,7 +13,8 @@
     "Name": "Ім'я",
     "alphabetically": "За алфавітом",
     "popularity": "За популярністю",
-    "noResults": "Нічого не знайдено"
+    "noResults": "Нічого не знайдено",
+    "apply": "Застосувати"
   },
   "bottomWindows": {
     "permissionDenied": {
@@ -22,10 +23,9 @@
     },
     "searchFilter": {
       "sort": "Сортування",
-      "filter": "Фільтрування",
+      "filter": "Фільтрація",
       "tags": "Теги",
-      "selected": "Обрані",
-      "applyButton": "Застосувати"
+      "selected": "Обрані"
     }
   },
   "auth": {
