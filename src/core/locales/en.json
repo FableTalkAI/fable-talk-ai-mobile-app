@@ -48,5 +48,9 @@
       "avatar": "Uploading an avatar, it's optional*",
       "interests": "Please, select 2 tags"
     }
+  },
+  "chatList":{
+    "searchInput" : "Search chat by agent name"
   }
+
 }
