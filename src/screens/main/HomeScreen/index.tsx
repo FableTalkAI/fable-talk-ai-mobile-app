@@ -35,7 +35,7 @@ const HomeScreen = () => {
     <>
       <SafeAreaViewCustom>
         <View>
-          <SearchInput placeholder={t('home.searchInput')} withFilter value="s" onChangeText={} />
+          <SearchInput placeholder={t('home.searchInput')} withFilter value="s" onChangeText={() => null} />
           <FlatList
             data={agents}
             numColumns={2}
