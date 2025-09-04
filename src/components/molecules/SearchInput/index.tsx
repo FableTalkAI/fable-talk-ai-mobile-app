@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ArrowForwardIcon, FilterIcon, SearchIcon } from '@/assets/icons';
@@ -9,10 +8,8 @@ import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 
 import { SearchInputProps } from './types.ts';
 
-const SearchInput = ({ placeholder, withBackArrow, withFilter }: SearchInputProps) => {
+const SearchInput = ({ placeholder, withBackArrow, withFilter, value, onChangeText }: SearchInputProps) => {
   const { navigation } = useNavigationRoutes();
-
-  const [text, setText] = useState<string>('');
 
   const computedStyles = StyleSheet.create({
     wrapper: {
@@ -30,8 +27,8 @@ const SearchInput = ({ placeholder, withBackArrow, withFilter }: SearchInputProp
 
       <TextInputCustom
         placeholder={placeholder}
-        value={text}
-        onChangeText={setText}
+        value={value}
+        onChangeText={onChangeText}
         leftIcon={<SearchIcon />}
         wrapperStyle={styles.textInputWrapper}
         numberOfLines={1}

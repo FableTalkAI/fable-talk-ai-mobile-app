@@ -1,4 +1,5 @@
 import ArrowForwardIcon from './arrow-forward.svg';
+import ArrowLinkIcon from './arrow-link.svg';
 import NotificationBellIcon from './bell.svg';
 import ChatIcon from './chat.svg';
 import EditAvatarIcon from './edit-avatar.svg';
@@ -25,6 +26,7 @@ import VerifyCodeIcon from './verify-code.svg';
 
 export {
   ArrowForwardIcon,
+  ArrowLinkIcon,
   ChatIcon,
   EditAvatarIcon,
   FilterIcon,

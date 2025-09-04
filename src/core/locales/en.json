@@ -9,8 +9,10 @@
     "year": "Year",
     "cancel": "Cancel",
     "settings": "Settings",
+    "subscription": "Subscription",
     "email": "Email",
-    "name": "Name"
+    "name": "Name",
+    "noResults": "No results"
   },
   "bottomWindows": {
     "permissionDenied": {
@@ -30,7 +32,7 @@
     "signUp": {
       "header": "Register",
       "subheader": "Please register to login",
-      "belowButton": "Already have account?"
+      "belowButton": "Already have account? "
     },
     "verify": {
       "header": "Verification",

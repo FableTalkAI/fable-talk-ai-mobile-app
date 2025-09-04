@@ -3,7 +3,3 @@ export type SelectProps = {
   width?: number;
   defaultOption?: string;
 };
-
-export type SelectRef = {
-  close: () => void;
-};

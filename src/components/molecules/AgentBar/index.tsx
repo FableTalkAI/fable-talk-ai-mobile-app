@@ -1,14 +1,13 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
-import ShadowCustom from '@/components/atoms/ShadowCustom';
-import { ShadowCustomModes } from '@/components/atoms/ShadowCustom/types.ts';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import Tag from '@/components/molecules/Tag';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import { BOX_SHADOW } from '@/core/constants/styles.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 import { AgentBarProps } from './types.ts';
@@ -17,6 +16,9 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
   const { colors } = useTheme();
 
   const computedStyles = StyleSheet.create({
+    wrapper: {
+      boxShadow: BOX_SHADOW.medium,
+    },
     pressableContainer: {
       backgroundColor: colors.backgroundBase,
       borderRadius: RADIUS.medium,
@@ -43,7 +45,7 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
   });
 
   return (
-    <ShadowCustom containerStyle={styles.shadowContainer} mode={ShadowCustomModes.Medium}>
+    <View style={[styles.wrapper, computedStyles.wrapper]}>
       <PressableCustom style={[computedStyles.pressableContainer, styles.pressableContainer, style]} onPress={onPress}>
         <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
 
@@ -65,15 +67,13 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
           renderItem={({ item }) => <Tag title={item} forceActive />}
         />
       </PressableCustom>
-    </ShadowCustom>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  shadowContainer: {
-    width: '45%',
-    borderColor: 'red',
-    borderWidth: 1,
+  wrapper: {
+    flexBasis: '45%',
   },
   pressableContainer: {
     alignItems: 'center',
