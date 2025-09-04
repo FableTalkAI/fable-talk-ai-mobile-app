@@ -1,11 +1,12 @@
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import { ChatGPTLogo } from '@/assets/images';
 import AgentBar from '@/components/molecules/AgentBar';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import SearchInput from '@/components/molecules/SearchInput';
+import { SPACING } from '@/core/constants/sizes.ts';
 // import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 // import useTheme from '@/hooks/useTheme.ts';
 // import Agents from '@/store/agents';
@@ -20,7 +21,7 @@ const HomeScreen = () => {
     {
       name: 'Jonh',
       description: 'Jonh',
-      tags: ['Home', 'Test'],
+      tags: ['Home', 'Test', 'Home1', 'Test1'],
       avatarSource: ChatGPTLogo,
     },
     {
@@ -31,14 +32,24 @@ const HomeScreen = () => {
     },
   ];
 
+  const computedStyles = StyleSheet.create({
+    wrapper: {
+      gap: SPACING.xl,
+    },
+    flatListContainer: {
+      gap: SPACING.lg,
+    },
+  });
+
   return (
     <>
-      <SafeAreaViewCustom>
-        <View>
-          <SearchInput placeholder={t('home.searchInput')} withFilter value="s" onChangeText={() => null} />
+      <SafeAreaViewCustom withGradientBackground>
+        <View style={computedStyles.wrapper}>
+          <SearchInput placeholder={t('home.searchInput')} withFilter value="" onChangeText={() => null} />
           <FlatList
             data={agents}
             numColumns={2}
+            columnWrapperStyle={computedStyles.flatListContainer}
             keyExtractor={item => item.name}
             renderItem={({ item }) => (
               <AgentBar
@@ -46,6 +57,7 @@ const HomeScreen = () => {
                 description={item.description}
                 tags={item.tags}
                 avatarSource={item.avatarSource}
+                //TODO: onPress navigate to ChatScreen
               />
             )}
           />

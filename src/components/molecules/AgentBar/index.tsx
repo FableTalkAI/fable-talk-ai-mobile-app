@@ -77,8 +77,6 @@ const styles = StyleSheet.create({
   },
   pressableContainer: {
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'yellow',
     flex: 1,
   },
   avatar: {
