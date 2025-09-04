@@ -49,8 +49,7 @@
       "interests": "Please, select 2 tags"
     }
   },
-  "chatList":{
-    "searchInput" : "Search chat by agent name"
+  "chatList": {
+    "searchInput": "Search chat by agent name"
   }
-
 }
