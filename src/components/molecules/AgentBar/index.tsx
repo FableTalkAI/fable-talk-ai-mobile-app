@@ -73,7 +73,8 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
 
 const styles = StyleSheet.create({
   wrapper: {
-    flexBasis: '45%',
+    maxWidth: '50%',
+    flex: 1,
   },
   pressableContainer: {
     alignItems: 'center',

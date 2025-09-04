@@ -50,6 +50,6 @@
     }
   },
   "home": {
-    "searchInput": "Search agents by name or tag"
+    "searchInput": "Search agents by name"
   }
 }

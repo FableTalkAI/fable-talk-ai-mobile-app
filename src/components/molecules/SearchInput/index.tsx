@@ -8,7 +8,7 @@ import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 
 import { SearchInputProps } from './types.ts';
 
-const SearchInput = ({ placeholder, withBackArrow, withFilter, value, onChangeText }: SearchInputProps) => {
+const SearchInput = ({ placeholder, withBackArrow, withFilter, value, onChangeText, isDisabled }: SearchInputProps) => {
   const { navigation } = useNavigationRoutes();
 
   const computedStyles = StyleSheet.create({
@@ -18,7 +18,7 @@ const SearchInput = ({ placeholder, withBackArrow, withFilter, value, onChangeTe
   });
 
   return (
-    <View style={[styles.wrapper, computedStyles.wrapper]}>
+    <View style={[styles.wrapper, computedStyles.wrapper]} pointerEvents={isDisabled ? 'none' : 'auto'}>
       {withBackArrow && (
         <PressableCustom onPress={navigation.goBack} style={styles.backIcon}>
           <ArrowForwardIcon />
