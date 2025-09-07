@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
-import { clearFilter, setFilterOrder, setFilterSort, setFilterTags } from '@/store/agents';
+import { clearAgents, clearFilter, setAgents, setFilterOrder, setFilterSort, setFilterTags } from '@/store/agents';
 import { agentsSelector, filterSelector, tagsSelector } from '@/store/agents/selectors.ts';
-import { OrderFilter, SortFilter } from '@/store/agents/types.ts';
+import { Agent, OrderFilter, SortFilter } from '@/store/agents/types.ts';
 
 const useAgentsStore = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +11,17 @@ const useAgentsStore = () => {
   const tags = useAppSelector(tagsSelector);
   const agents = useAppSelector(agentsSelector);
   const filter = useAppSelector(filterSelector);
+
+  const setFilteredAgents = useCallback(
+    (filteredAgents: Agent[]) => {
+      dispatch(setAgents(filteredAgents));
+    },
+    [dispatch],
+  );
+
+  const clearFilteredAgents = useCallback(() => {
+    dispatch(clearAgents());
+  }, [dispatch]);
 
   const setFilterTagsHandler = useCallback(
     (selectedTags: string[]) => {
@@ -41,6 +52,8 @@ const useAgentsStore = () => {
     tags,
     agents,
     filter,
+    setFilteredAgents,
+    clearFilteredAgents,
     setFilterTagsHandler,
     setFilterSortHandler,
     setFilterOrderHandler,

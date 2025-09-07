@@ -24,7 +24,8 @@ const SearchFilter = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
 
-  const { filter, setFilterOrderHandler, setFilterSortHandler, tags, setFilterTagsHandler } = useAgentsStore();
+  const { filter, setFilterOrderHandler, setFilterSortHandler, tags, setFilterTagsHandler, setFilteredAgents, agents } =
+    useAgentsStore();
 
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -40,6 +41,11 @@ const SearchFilter = () => {
     } else {
       setFilterTagsHandler([...filter.tags, tag]);
     }
+  };
+
+  const filterAgentsByTags = () => {
+    if (filteredTags.length === 0) return agents;
+    return agents.filter(agent => agent.tags.some(tag => filteredTags.includes(tag)));
   };
 
   const computedStyles = StyleSheet.create({
@@ -145,11 +151,14 @@ const SearchFilter = () => {
       </View>
 
       <Button
-        title={t('bottomWindows.common.apply')}
+        title={t('common.apply')}
         mode={ButtonModes.Success}
         containerStyle={computedStyles.buttonContainer}
         //TODO: Server agents handling
-        onPress={() => console.log('Home')}
+        onPress={() => {
+          const filtered = filterAgentsByTags();
+          setFilteredAgents(filtered);
+        }}
       />
     </View>
   );

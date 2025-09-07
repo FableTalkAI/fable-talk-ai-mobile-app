@@ -1,104 +1,39 @@
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-import { ChatGPTLogo } from '@/assets/images';
+import { FilterIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import AgentBar from '@/components/molecules/AgentBar';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import SearchInput from '@/components/molecules/SearchInput';
 import { SPACING } from '@/core/constants/sizes.ts';
+import useAgentsStore from '@/hooks/useAgentsStore.ts';
+import useBottomWindow from '@/hooks/useBottomWindow';
+import { BottomWindowModes } from '@/hooks/useBottomWindow/types.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 // import useTheme from '@/hooks/useTheme.ts';
-// import Agents from '@/store/agents';
 
 const HomeScreen = () => {
   const { t } = useTranslation();
   // const { colors } = useTheme();
+  const { agents } = useAgentsStore();
+  const { open, BottomWindow } = useBottomWindow({ mode: BottomWindowModes.SearchFilter });
 
   const { navigation } = useNavigationRoutes();
 
-  // TODO: waiting for searchFilter merge for agents initial state
-  const agents = [
-    {
-      name: 'Jonh7',
-      description: 'Jonh devs ass dd ss sda ss sadas s',
-      tags: ['Home', 'Test', 'Home1', 'Test1'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh6',
-      description: 'Jonh \n ',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh5',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh4',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh3',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh2',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh1',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh55',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh44',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh33',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh22',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh11',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-  ];
-
   return (
     <SafeAreaViewCustom withGradientBackground>
-      <PressableCustom onPress={() => navigation.navigate('SearchScreen')}>
-        <SearchInput placeholder={t('home.searchInput')} withFilter isDisabled />
-      </PressableCustom>
+      <View style={styles.searchAndIconContainer}>
+        <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
+          <SearchInput placeholder={t('home.searchInput')} isDisabled />
+        </PressableCustom>
+
+        <PressableCustom onPress={open}>
+          <FilterIcon />
+        </PressableCustom>
+      </View>
+      <BottomWindow />
       <FlatList
         style={styles.flatListContainer}
         data={agents}
@@ -121,6 +56,14 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  searchAndIconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.xs,
+  },
+  search: {
+    flex: 1,
+  },
   flatListContainer: {
     marginTop: SPACING.xl,
   },

@@ -7,7 +7,6 @@ export type SearchInputProps = {
   onChangeText?: (text: string) => void;
   placeholder?: string;
   withBackArrow?: boolean;
-  withFilter?: boolean;
   isDisabled?: boolean;
   navigation?: StackNavigationProp<AllNavigationParamList>;
 };

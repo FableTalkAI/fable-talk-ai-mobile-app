@@ -1,21 +1,13 @@
 import { StyleSheet, View } from 'react-native';
 
-import { ArrowForwardIcon, FilterIcon, SearchIcon } from '@/assets/icons';
+import { ArrowForwardIcon, SearchIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
 
 import { SearchInputProps } from './types.ts';
 
-const SearchInput = ({
-  placeholder,
-  withBackArrow,
-  withFilter,
-  value,
-  onChangeText,
-  navigation,
-  isDisabled,
-}: SearchInputProps) => {
+const SearchInput = ({ placeholder, withBackArrow, value, onChangeText, navigation, isDisabled }: SearchInputProps) => {
   return (
     <View style={styles.wrapper} pointerEvents={isDisabled ? 'none' : 'auto'}>
       {withBackArrow && navigation && (
@@ -32,12 +24,6 @@ const SearchInput = ({
         wrapperStyle={styles.textInputWrapper}
         numberOfLines={1}
       />
-
-      {withFilter && (
-        <PressableCustom>
-          <FilterIcon />
-        </PressableCustom>
-      )}
     </View>
   );
 };
@@ -47,7 +33,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
     gap: SPACING.m,
   },
   textInputWrapper: {
