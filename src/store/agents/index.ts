@@ -1,36 +1,37 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { getAmount } from './thunks.ts';
-import { AgentsState } from './types.ts';
-
-export const agentsSliceName = 'agents';
+import { agentsSliceName } from './thunks.ts';
+import { AgentsState, OrderFilter, SortFilter } from './types.ts';
 
 const initialState: AgentsState = {
-  amount: 0,
+  tags: ['Hone', 'Sssad', 'Ssad11'],
+  agents: [],
+  filter: {
+    tags: [],
+    sort: SortFilter.Alphabetically,
+    order: OrderFilter.ASC,
+  },
 };
 
 const agentsSlice = createSlice({
   name: agentsSliceName,
   initialState,
   reducers: {
-    setAmount: (state, action: PayloadAction<number>) => {
-      state.amount = action.payload;
+    setFilterTags: (state, action: PayloadAction<string[]>) => {
+      state.filter.tags = action.payload;
     },
-  },
-  extraReducers: builder => {
-    builder
-      .addCase(getAmount.pending, state => {
-        state.amount = 0;
-      })
-      .addCase(getAmount.fulfilled, (state, action) => {
-        state.amount = action.payload;
-      })
-      .addCase(getAmount.rejected, state => {
-        state.amount = 0;
-      });
+    setFilterSort: (state, action: PayloadAction<SortFilter>) => {
+      state.filter.sort = action.payload;
+    },
+    setFilterOrder: (state, action: PayloadAction<OrderFilter>) => {
+      state.filter.order = action.payload;
+    },
+    clearFilter: state => {
+      state.filter = initialState.filter;
+    },
   },
 });
 
-export const { setAmount } = agentsSlice.actions;
+export const { setFilterTags, setFilterSort, setFilterOrder, clearFilter } = agentsSlice.actions;
 
 export default agentsSlice.reducer;

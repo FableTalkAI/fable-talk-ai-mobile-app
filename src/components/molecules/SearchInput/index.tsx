@@ -4,23 +4,22 @@ import { ArrowForwardIcon, FilterIcon, SearchIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
-import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 
 import { SearchInputProps } from './types.ts';
 
-const SearchInput = ({ placeholder, withBackArrow, withFilter, value, onChangeText, isDisabled }: SearchInputProps) => {
-  const { navigation } = useNavigationRoutes();
-
-  const computedStyles = StyleSheet.create({
-    wrapper: {
-      gap: SPACING.m,
-    },
-  });
-
+const SearchInput = ({
+  placeholder,
+  withBackArrow,
+  withFilter,
+  value,
+  onChangeText,
+  navigation,
+  isDisabled,
+}: SearchInputProps) => {
   return (
-    <View style={[styles.wrapper, computedStyles.wrapper]} pointerEvents={isDisabled ? 'none' : 'auto'}>
-      {withBackArrow && (
-        <PressableCustom onPress={navigation.goBack} style={styles.backIcon}>
+    <View style={styles.wrapper} pointerEvents={isDisabled ? 'none' : 'auto'}>
+      {withBackArrow && navigation && (
+        <PressableCustom onPress={navigation?.goBack} style={styles.backIcon}>
           <ArrowForwardIcon />
         </PressableCustom>
       )}
@@ -48,6 +47,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
+    flex: 1,
+    gap: SPACING.m,
   },
   textInputWrapper: {
     flex: 1,

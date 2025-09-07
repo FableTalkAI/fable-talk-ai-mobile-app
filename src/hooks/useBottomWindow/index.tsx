@@ -5,6 +5,7 @@ import { openSettings } from 'react-native-permissions';
 
 import BottomWindowBase from '@/components/molecules/bottomWindows/BottomWindowBase';
 import Alert from '@/components/molecules/bottomWindows/templates/Alert';
+import SearchFilter from '@/components/molecules/bottomWindows/templates/SearchFilter';
 
 import { BottomWindowModes, UseBottomWindowProps } from './types.ts';
 
@@ -36,6 +37,8 @@ const useBottomWindow = ({ mode }: UseBottomWindowProps) => {
             onCancel={close}
           />
         );
+      case BottomWindowModes.SearchFilter:
+        return <SearchFilter />;
       default:
         return null;
     }
