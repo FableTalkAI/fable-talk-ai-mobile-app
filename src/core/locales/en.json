@@ -12,12 +12,21 @@
     "subscription": "Subscription",
     "email": "Email",
     "name": "Name",
-    "noResults": "No results"
+    "alphabetically": "Alphabetically",
+    "popularity": "Popularity",
+    "noResults": "No results",
+    "apply": "Apply"
   },
   "bottomWindows": {
     "permissionDenied": {
       "title": "Permission denied",
       "subtitle": "To use this feature, please enable photo access in settings"
+    },
+    "searchFilter": {
+      "sort": "Sort",
+      "filter": "Filter",
+      "tags": "Tags",
+      "selected": "Selected"
     }
   },
   "auth": {

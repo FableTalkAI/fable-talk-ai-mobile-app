@@ -39,6 +39,18 @@ const Button = ({
       backgroundColor: colors.primary30,
       color: colors.textLight,
     },
+    success: {
+      backgroundColor: colors.successBase,
+      color: colors.textLight,
+    },
+    reject: {
+      backgroundColor: colors.errorBase,
+      color: colors.textLight,
+    },
+    link: {
+      backgroundColor: colors.link,
+      color: colors.textLight,
+    },
   };
 
   const computedStyles = StyleSheet.create({

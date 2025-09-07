@@ -12,12 +12,21 @@
     "subscription": "Підписки",
     "email": "Пошта",
     "Name": "Ім'я",
-    "noResults": "Нічого не знайдено"
+    "alphabetically": "За алфавітом",
+    "popularity": "За популярністю",
+    "noResults": "Нічого не знайдено",
+    "apply": "Застосувати"
   },
   "bottomWindows": {
     "permissionDenied": {
       "title": "Доступ заборонений",
       "subtitle": "Для використання цієї функції, будь ласка, увімкніть доступ до фото у налаштуваннях"
+    },
+    "searchFilter": {
+      "sort": "Сортування",
+      "filter": "Фільтрація",
+      "tags": "Теги",
+      "selected": "Обрані"
     }
   },
   "auth": {

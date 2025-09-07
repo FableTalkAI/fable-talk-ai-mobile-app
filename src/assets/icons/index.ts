@@ -17,7 +17,10 @@ import ProfileIcon from './profile.svg';
 import SearchIcon from './search.svg';
 import SignInIcon from './sign-in.svg';
 import SignUpIcon from './sign-up.svg';
+import SortAscendingIcon from './sort-ascending.svg';
+import SortDescendingIcon from './sort-descending.svg';
 import SplashRobotIcon from './splash-robot.svg';
+import TagSelectedIcon from './tag-selected.svg';
 import ToggleFalseIcon from './toggle-false.svg';
 import ToggleTrueIcon from './toggle-true.svg';
 import TriangleIcon from './triangle.svg';
@@ -44,7 +47,10 @@ export {
   SearchIcon,
   SignInIcon,
   SignUpIcon,
+  SortAscendingIcon,
+  SortDescendingIcon,
   SplashRobotIcon,
+  TagSelectedIcon,
   ToggleFalseIcon,
   ToggleTrueIcon,
   TriangleIcon,
