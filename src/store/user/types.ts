@@ -2,6 +2,7 @@ export type UserState = {
   tags: string[];
   onboardingStep: number;
   profile: UserProfile;
+  theme: Theme;
 };
 
 export type UserProfile = {
@@ -10,3 +11,9 @@ export type UserProfile = {
   dateOfBirth?: string;
   email?: string;
 };
+
+export enum Theme {
+  Dark = 'dark',
+  Light = 'light',
+  System = 'system',
+}
