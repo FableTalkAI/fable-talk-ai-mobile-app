@@ -19,7 +19,7 @@ const Index = () => {
       initialRouteName="Home"
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.primary40,
+        tabBarActiveTintColor: colors.iconPrimary,
         tabBarInactiveTintColor: colors.gray40,
         tabBarLabelStyle: {
           ...TEXT_STYLES.base,
@@ -27,6 +27,7 @@ const Index = () => {
         tabBarStyle: {
           height: 70,
           paddingTop: 5,
+          backgroundColor: colors.backgroundBase,
         },
       }}
     >

@@ -79,7 +79,7 @@ const UserInfoBar = ({ field }: UserInfoBarProps) => {
 
           {!isEditing && (
             <Animated.View entering={FadeIn} exiting={FadeOut}>
-              <PencilIcon />
+              <PencilIcon fill={colors.textSecondary} />
             </Animated.View>
           )}
         </View>

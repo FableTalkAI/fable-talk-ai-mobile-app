@@ -49,7 +49,7 @@ const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri, style }: A
             hitSlop={10}
             onPress={pickImage}
           >
-            <EditAvatarIcon />
+            <EditAvatarIcon fill={colors.iconPrimary} />
           </PressableCustom>
         )}
       </View>
