@@ -59,7 +59,7 @@
       "interests": "Please, select 2 tags"
     }
   },
-  "subscription" : {
+  "subscription": {
     "header": "Subscriptions",
     "month": "/month",
     "free": {
@@ -85,10 +85,7 @@
         "Access to more Agents",
         "Faster responses with priority processing"
       ],
-      "cons": [
-        "Small limits on message limit",
-        "Limited customization"
-      ]
+      "cons": ["Small limits on message limit", "Limited customization"]
     },
     "premium": {
       "name": "Premium",
