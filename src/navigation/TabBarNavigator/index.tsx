@@ -4,8 +4,8 @@ import { ChatIcon, HomeIcon, ProfileIcon } from '@/assets/icons';
 import { TEXT_STYLES } from '@/components/atoms/TextCustom/constants.ts';
 import useTheme from '@/hooks/useTheme.ts';
 import ChatStack from '@/navigation/ChatStack';
-import ProfileStack from '@/navigation/ProfileStack';
 import HomeScreen from '@/screens/main/HomeScreen';
+import ProfileScreen from '@/screens/main/ProfileScreen';
 
 import { TabBarNavigatorParamList } from './types.ts';
 
@@ -50,8 +50,8 @@ const Index = () => {
         }}
       />
       <Tab.Screen
-        name="ProfileStack"
-        component={ProfileStack}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           title: 'Profile',
           // eslint-disable-next-line react/no-unstable-nested-components

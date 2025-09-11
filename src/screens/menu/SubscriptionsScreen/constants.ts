@@ -1,18 +1,8 @@
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@gorhom/bottom-sheet';
-import { FC } from 'react';
 
 import { SubscriptionBasicIcon, SubscriptionFreeIcon, SubscriptionPremiumIcon } from '@/assets/icons';
 
-export type GradientKey = 'free' | 'basic' | 'premium';
-
-type Subscription = {
-  name: string;
-  price: string;
-  pros: string[];
-  cons: string[];
-  svg: FC<any>;
-  gradientKey: GradientKey;
-};
+import { GradientKey, Subscription } from './types.ts';
 
 export const SUBSCRIPTIONS: Subscription[] = [
   {
@@ -30,8 +20,8 @@ export const SUBSCRIPTIONS: Subscription[] = [
       'subscription.free.cons.2',
       'subscription.free.cons.3',
     ],
-    svg: SubscriptionFreeIcon,
-    gradientKey: 'free',
+    icon: SubscriptionFreeIcon,
+    gradientKey: GradientKey.Free,
   },
   {
     name: 'subscription.basic.name',
@@ -43,8 +33,8 @@ export const SUBSCRIPTIONS: Subscription[] = [
       'subscription.basic.pros.3',
     ],
     cons: ['subscription.basic.cons.0', 'subscription.basic.cons.1'],
-    svg: SubscriptionBasicIcon,
-    gradientKey: 'basic',
+    icon: SubscriptionBasicIcon,
+    gradientKey: GradientKey.Basic,
   },
   {
     name: 'subscription.premium.name',
@@ -56,10 +46,10 @@ export const SUBSCRIPTIONS: Subscription[] = [
       'subscription.premium.pros.3',
     ],
     cons: [],
-    svg: SubscriptionPremiumIcon,
-    gradientKey: 'premium',
+    icon: SubscriptionPremiumIcon,
+    gradientKey: GradientKey.Premium,
   },
 ];
 
 export const CARD_WIDTH = SCREEN_WIDTH - 32 * 2;
-export const CARD_HEIGHT = SCREEN_HEIGHT * 0.65;
+export const CARD_HEIGHT = SCREEN_HEIGHT * 0.7;

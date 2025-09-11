@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 
-import { GreenCheckMarkIcon, RedCrossIcon } from '@/assets/icons';
+import { CheckmarkIcon, XMarkIcon } from '@/assets/icons';
 import Button from '@/components/atoms/Button';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
@@ -13,7 +13,8 @@ import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
-import { CARD_HEIGHT, CARD_WIDTH, GradientKey, SUBSCRIPTIONS } from './constants.ts';
+import { CARD_HEIGHT, CARD_WIDTH, SUBSCRIPTIONS } from './constants.ts';
+import { SubscriptionPlans } from './types.ts';
 
 const SubscriptionScreen = () => {
   const { colors } = useTheme();
@@ -29,10 +30,10 @@ const SubscriptionScreen = () => {
     },
   });
 
-  const gradientMap: Record<GradientKey, string[]> = {
+  const gradientMap: Record<SubscriptionPlans, string[]> = {
     free: [colors.backgroundBase, colors.warningDark],
-    basic: [colors.backgroundAlt, colors.link],
-    premium: [colors.backgroundAlt, colors.primary40],
+    basic: [colors.backgroundBase, colors.link],
+    premium: [colors.backgroundBase, colors.primary40],
   };
 
   return (
@@ -50,6 +51,7 @@ const SubscriptionScreen = () => {
             <LinearGradient
               colors={gradientMap[item.gradientKey]}
               style={[styles.linearGradient, { height: CARD_HEIGHT }]}
+              locations={[0, 0.85]}
             >
               <TextCustom text={t(item.name)} mode={TextModes.Xxl} style={styles.header} />
 
@@ -59,21 +61,21 @@ const SubscriptionScreen = () => {
               </View>
 
               <View style={styles.iconContainer}>
-                <item.svg />
+                <item.icon />
               </View>
 
               <View style={styles.listContainer}>
                 {item.pros.map((pro, index) => (
                   <View style={styles.innerListContainer} key={`pro-${index}`}>
-                    <GreenCheckMarkIcon />
-                    <TextCustom text={t(pro)} mode={TextModes.Caption} style={styles.prosAndConsText} />
+                    <CheckmarkIcon />
+                    <TextCustom text={t(pro)} mode={TextModes.Secondary} style={styles.prosAndConsText} />
                   </View>
                 ))}
 
                 {item.cons.map((con, index) => (
                   <View style={styles.innerListContainer} key={`con-${index}`}>
-                    <RedCrossIcon />
-                    <TextCustom text={t(con)} mode={TextModes.Caption} style={styles.prosAndConsText} />
+                    <XMarkIcon />
+                    <TextCustom text={t(con)} mode={TextModes.Secondary} style={styles.prosAndConsText} />
                   </View>
                 ))}
               </View>
