@@ -2,7 +2,7 @@ import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 
 import { SubscriptionBasicIcon, SubscriptionFreeIcon, SubscriptionPremiumIcon } from '@/assets/icons';
 
-import { GradientKey, Subscription } from './types.ts';
+import { Subscription, SubscriptionPlans } from './types.ts';
 
 export const SUBSCRIPTIONS: Subscription[] = [
   {
@@ -21,7 +21,7 @@ export const SUBSCRIPTIONS: Subscription[] = [
       'subscription.free.cons.3',
     ],
     icon: SubscriptionFreeIcon,
-    gradientKey: GradientKey.Free,
+    gradientKey: SubscriptionPlans.Free,
   },
   {
     name: 'subscription.basic.name',
@@ -34,7 +34,7 @@ export const SUBSCRIPTIONS: Subscription[] = [
     ],
     cons: ['subscription.basic.cons.0', 'subscription.basic.cons.1'],
     icon: SubscriptionBasicIcon,
-    gradientKey: GradientKey.Basic,
+    gradientKey: SubscriptionPlans.Basic,
   },
   {
     name: 'subscription.premium.name',
@@ -47,7 +47,7 @@ export const SUBSCRIPTIONS: Subscription[] = [
     ],
     cons: [],
     icon: SubscriptionPremiumIcon,
-    gradientKey: GradientKey.Premium,
+    gradientKey: SubscriptionPlans.Premium,
   },
 ];
 
