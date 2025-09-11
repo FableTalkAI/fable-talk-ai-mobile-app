@@ -19,13 +19,13 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle 
       ({
         [TagColorModes.Inactive]: {
           borderColor: colors.grayDisabled,
-          backgroundColor: colors.backgroundBase,
+          backgroundColor: colors.backgroundAlt,
           text: colors.textSecondary,
         },
         [TagColorModes.Active]: {
           borderColor: colors.primary40,
           backgroundColor: colors.backgroundHover,
-          text: colors.primary40,
+          text: colors.iconPrimary,
         },
       }[currentMode]),
     [currentMode, colors],

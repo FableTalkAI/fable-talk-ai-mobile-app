@@ -6,4 +6,7 @@ export const light = {
   backgroundBase: '#FFFFFF',
   backgroundAlt: '#FAF9F9',
   backgroundHover: '#744BA026',
+  backgroundSecondary: '#FAF9F9',
+
+  iconPrimary: '#412668',
 };

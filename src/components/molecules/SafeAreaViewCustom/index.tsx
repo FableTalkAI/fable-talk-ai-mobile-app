@@ -27,7 +27,13 @@ const SafeAreaViewCustom = ({
 
   return (
     <>
-      <LinearGradient colors={[colors.primary10, colors.backgroundAlt]} locations={[0, 0.27]} style={styles.gradient} />
+      {withGradientBackground && (
+        <LinearGradient
+          colors={[colors.primary30, colors.backgroundSecondary]}
+          locations={[0, 0.27]}
+          style={styles.gradient}
+        />
+      )}
       <SafeAreaView style={[styles.flex1, computedStyles.container, style]}>{children}</SafeAreaView>
     </>
   );
