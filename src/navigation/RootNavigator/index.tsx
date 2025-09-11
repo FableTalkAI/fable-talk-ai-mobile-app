@@ -11,7 +11,7 @@ const Stack = createStackNavigator<RootNavigatorParamList>();
 
 const RootNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="AuthStack" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="TabBarNavigator" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="AuthStack" component={AuthStack} />
       <Stack.Screen name="Onboarding" component={OnboardingScreen} />
       <Stack.Screen name="TabBarNavigator" component={TabBarNavigator} />

@@ -1,7 +1,10 @@
+import { ButtonProps } from '@/components/atoms/Button/types.ts';
+
 export type AlertProps = {
   title: string;
   subtitle: string;
-  onConfirmText: string;
-  onConfirm: () => void;
-  onCancel: () => void;
+  firstButtonProps: AlertButtonProps;
+  secondButtonProps?: AlertButtonProps;
 };
+
+type AlertButtonProps = Omit<ButtonProps, 'containerStyle'>;

@@ -14,13 +14,22 @@
     "Name": "Ім'я",
     "alphabetically": "За алфавітом",
     "popularity": "За популярністю",
-    "noResults": "Нічого не знайдено",
-    "apply": "Застосувати"
+    "apply": "Застосувати",
+    "name": "Ім'я",
+    "enable": "Увімкнуто",
+    "disable": "Вимкнуто",
+    "contactUs": "Зв’язатися з нами",
+    "delete": "Видалити",
+    "noResults": "Нічого не знайдено"
   },
   "bottomWindows": {
     "permissionDenied": {
       "title": "Доступ заборонений",
       "subtitle": "Для використання цієї функції, будь ласка, увімкніть доступ до фото у налаштуваннях"
+    },
+    "deleteAccount": {
+      "title": "Видалити акаунт",
+      "subtitle": "Ви впевнені, що хочете видалити свій акаунт?"
     },
     "searchFilter": {
       "sort": "Сортування",
@@ -57,5 +66,24 @@
       "avatar": "Завантажте аватар, це опціонально*",
       "interests": "Будь ласка, оберіть 2 теги"
     }
+  },
+  "settings": {
+    "notifications": "Повідомлення",
+    "about": "Про застосунок",
+    "account": "Акаунт",
+    "pushNotifications": "Сповіщення",
+    "termsAndConditions": "Умови та положення",
+    "legalInformation": "Юридична інформація",
+    "privacyPolicy": "Політика конфіденційності",
+    "protectYourData": "Як ми захищаємо ваші дані",
+    "getHelp": "Отримати допомогу",
+    "theme": "Тема",
+    "changeAppTheme": "Змінити тему застосунку",
+    "removeYourAccount": "Видалити обліковий запис"
+  },
+  "theme": {
+    "system": "Системна",
+    "dark": "Темна",
+    "light": "Світла"
   }
 }

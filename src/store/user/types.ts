@@ -3,6 +3,10 @@ export type UserState = {
   onboardingStep: number;
   profile: UserProfile;
   theme: Theme;
+  notifications: {
+    push: boolean;
+    email: boolean;
+  };
 };
 
 export type UserProfile = {
