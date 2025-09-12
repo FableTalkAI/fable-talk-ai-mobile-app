@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { userSliceName } from './thunks.ts';
-import { UserProfile, UserState } from './types.ts';
+import { Theme, UserProfile, UserState } from './types.ts';
 
 const initialState: UserState = {
   tags: [],
   onboardingStep: 0,
   profile: {},
+  theme: Theme.System,
 };
 
 const userSlice = createSlice({
@@ -22,9 +23,12 @@ const userSlice = createSlice({
     setOnboardingStep: (state, action: PayloadAction<number>) => {
       state.onboardingStep = action.payload;
     },
+    setTheme: (state, action: PayloadAction<Theme>) => {
+      state.theme = action.payload;
+    },
   },
 });
 
-export const { setTags, setProfile, setOnboardingStep } = userSlice.actions;
+export const { setTags, setProfile, setOnboardingStep, setTheme } = userSlice.actions;
 
 export default userSlice.reducer;

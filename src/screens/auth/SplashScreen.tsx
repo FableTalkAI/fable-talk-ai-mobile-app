@@ -52,7 +52,7 @@ const SplashScreen = () => {
               title={t('auth.signInButton')}
               mode={ButtonModes.Light}
               radius={ButtonRadius.Small}
-              onPress={() => navigation.navigate('SignInUp', { mode: 'signIn' })}
+              onPress={() => navigation.navigate('TabBarNavigator', { screen: 'Home' })}
             />
             <Button
               containerStyle={styles.button}

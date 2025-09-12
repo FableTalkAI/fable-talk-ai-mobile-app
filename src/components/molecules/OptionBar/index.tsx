@@ -66,7 +66,7 @@ const OptionBar = ({
     return (
       <PressableCustom onPress={onPress} style={styles.simpleContainer}>
         <TextCustom text={title} />
-        <ArrowForwardIcon width={8} />
+        <ArrowForwardIcon width={8} fill={colors.iconPrimary} />
       </PressableCustom>
     );
   }

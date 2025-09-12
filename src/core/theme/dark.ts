@@ -1,9 +1,12 @@
 export const dark = {
-  textPrimary: '#212122',
-  textSecondary: '#555656',
+  textPrimary: '#cccccc',
+  textSecondary: '#5d5e5e',
   textLight: '#FFFFFF',
 
-  backgroundBase: '#FFFFFF',
-  backgroundAlt: '#FAF9F9',
-  backgroundHover: '#744BA026',
+  backgroundBase: '#252525',
+  backgroundAlt: '#d5d5d5',
+  backgroundHover: '#8862B13F',
+  backgroundSecondary: '#3c3c3c',
+
+  iconPrimary: '#A37EC4',
 };
