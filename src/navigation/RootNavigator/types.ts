@@ -11,4 +11,5 @@ export type RootNavigatorParamList = {
   SearchScreen: undefined;
   Subscriptions: undefined;
   SettingsStack: NavigatorScreenParams<SettingsStackParamList>;
+  ChatScreen: undefined;
 };

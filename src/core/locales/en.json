@@ -96,5 +96,8 @@
         "Full customization access"
       ]
     }
+  },
+  "chat": {
+    "placeholder": "Write a message..."
   }
 }

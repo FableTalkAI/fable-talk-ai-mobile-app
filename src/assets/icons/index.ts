@@ -16,6 +16,7 @@ import PinIcon from './pin-icon.svg';
 import PinIconPinned from './pin-icon-pinned.svg';
 import ProfileIcon from './profile.svg';
 import SearchIcon from './search.svg';
+import SendButtonIcon from './send-button.svg';
 import SignInIcon from './sign-in.svg';
 import SignUpIcon from './sign-up.svg';
 import SortAscendingIcon from './sort-ascending.svg';
@@ -51,6 +52,7 @@ export {
   PinIconPinned,
   ProfileIcon,
   SearchIcon,
+  SendButtonIcon,
   SignInIcon,
   SignUpIcon,
   SortAscendingIcon,
