@@ -96,5 +96,10 @@
         "Full customization access"
       ]
     }
+  },
+  "validation": {
+    "name": "Please enter a valid name",
+    "email": "Please enter a valid email",
+    "empty": "Required field"
   }
 }
