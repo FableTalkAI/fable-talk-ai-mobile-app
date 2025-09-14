@@ -17,31 +17,19 @@ const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri, style }: A
 
   const computedStyles = StyleSheet.create({
     container: {
-      borderRadius: RADIUS.circle,
       backgroundColor: colors.gray10,
       width: size ?? 144,
       height: size ?? 144,
     },
     editContainer: {
-      borderRadius: RADIUS.circle,
       backgroundColor: colors.backgroundBase,
-      paddingVertical: SPACING.xs,
-      paddingLeft: SPACING.xs,
-      boxShadow: BOX_SHADOW.alt,
-    },
-    image: {
-      borderRadius: RADIUS.circle,
     },
   });
 
   return (
     <View style={style}>
       <View style={[computedStyles.container, styles.container]}>
-        {avatarUri ? (
-          <AutoImage source={{ uri: avatarUri }} resizeMode="cover" style={[computedStyles.image, styles.image]} />
-        ) : (
-          <UserIcon />
-        )}
+        {avatarUri ? <AutoImage source={{ uri: avatarUri }} resizeMode="cover" style={styles.image} /> : <UserIcon />}
 
         {isChangeable && (
           <PressableCustom
@@ -63,6 +51,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: RADIUS.circle,
   },
   editContainer: {
     width: 30,
@@ -70,10 +59,15 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     right: 10,
+    borderRadius: RADIUS.circle,
+    paddingVertical: SPACING.xs,
+    paddingLeft: SPACING.xs,
+    boxShadow: BOX_SHADOW.alt,
   },
   image: {
     width: '100%',
     height: '100%',
+    borderRadius: RADIUS.circle,
   },
 });
 

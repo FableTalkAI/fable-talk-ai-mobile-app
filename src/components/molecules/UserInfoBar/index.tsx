@@ -58,10 +58,6 @@ const UserInfoBar = ({ field }: UserInfoBarProps) => {
   const computedStyles = StyleSheet.create({
     wrapper: {
       backgroundColor: colors.backgroundBase,
-      borderRadius: RADIUS.medium,
-      paddingHorizontal: SPACING.m,
-      paddingVertical: SPACING.s,
-      boxShadow: BOX_SHADOW.base,
     },
     title: {
       color: colors.textSecondary,
@@ -112,6 +108,10 @@ const UserInfoBar = ({ field }: UserInfoBarProps) => {
 const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
+    borderRadius: RADIUS.medium,
+    paddingHorizontal: SPACING.m,
+    paddingVertical: SPACING.s,
+    boxShadow: BOX_SHADOW.base,
   },
   contentContainer: {
     flex: 1,

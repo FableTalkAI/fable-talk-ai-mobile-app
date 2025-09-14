@@ -16,7 +16,8 @@
     "popularity": "Popularity",
     "noResults": "No results",
     "apply": "Apply",
-    "choose": "Choose"
+    "choose": "Choose",
+    "send": "Send"
   },
   "bottomWindows": {
     "permissionDenied": {
@@ -96,5 +97,13 @@
         "Full customization access"
       ]
     }
+  },
+  "contactUs": {
+    "header": "Contact Us",
+    "description": "Let us know the details of your request, and our team will do their best to assist you as soon as possible",
+    "placeholder": "Type your message..."
+  },
+  "search": {
+    "placeholder": "Search agents by name..."
   }
 }

@@ -35,9 +35,6 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle 
     tags: {
       borderColor: localColors.borderColor,
       backgroundColor: localColors.backgroundColor,
-      borderRadius: RADIUS.medium,
-      paddingVertical: SPACING.xxs,
-      paddingHorizontal: SPACING.xs,
     },
     tagsText: {
       color: localColors.text,
@@ -64,6 +61,9 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle 
 const styles = StyleSheet.create({
   tags: {
     borderWidth: 2,
+    borderRadius: RADIUS.medium,
+    paddingVertical: SPACING.xxs,
+    paddingHorizontal: SPACING.xs,
   },
   tagsText: {
     textAlign: 'center',

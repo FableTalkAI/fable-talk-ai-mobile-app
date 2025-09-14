@@ -29,22 +29,8 @@ const SignInUpScreen = () => {
   const [screenMode, setScreenMode] = useState<'signIn' | 'signUp'>(mode);
 
   const computedStyles = StyleSheet.create({
-    iconContainer: {
-      paddingBottom: SPACING.lg,
-    },
-    subheader: {
-      paddingBottom: SPACING.s,
-    },
-    continueWithContainer: {
-      paddingTop: SPACING.m,
-      gap: SPACING.xs,
-    },
     continueWithText: {
       color: colors.gray40,
-    },
-    buttonAndTextContainer: {
-      paddingTop: SPACING.s,
-      gap: SPACING.xs,
     },
     belowButtonText: {
       color: colors.textSecondary,
@@ -52,26 +38,17 @@ const SignInUpScreen = () => {
     textLink: {
       color: colors.link,
     },
-    secondTextInput: {
-      paddingTop: SPACING.lg,
-    },
   });
 
   return (
     <SafeAreaViewCustom>
       <Animated.View style={styles.wrapper} exiting={FadeOut} entering={FadeIn} key={screenMode}>
         <KeyboardAvoidingViewCustom>
-          <View style={[computedStyles.iconContainer, styles.iconContainer]}>
-            {screenMode === 'signIn' ? <SignInIcon /> : <SignUpIcon />}
-          </View>
+          <View style={styles.iconContainer}>{screenMode === 'signIn' ? <SignInIcon /> : <SignUpIcon />}</View>
 
           <View>
             <TextCustom text={t(`auth.${screenMode}.header`)} mode={TextModes.Title} />
-            <TextCustom
-              text={t(`auth.${screenMode}.subheader`)}
-              mode={TextModes.Caption}
-              style={computedStyles.subheader}
-            />
+            <TextCustom text={t(`auth.${screenMode}.subheader`)} mode={TextModes.Caption} style={styles.subheader} />
 
             {screenMode === 'signUp' && (
               <TextInputCustom value="" placeholder={t('common.name')} leftIcon={<UserIcon />} />
@@ -80,11 +57,11 @@ const SignInUpScreen = () => {
               value=""
               placeholder={t('common.email')}
               leftIcon={<MailIcon />}
-              wrapperStyle={screenMode === 'signUp' ? computedStyles.secondTextInput : undefined}
+              wrapperStyle={screenMode === 'signUp' ? styles.secondTextInput : undefined}
             />
           </View>
 
-          <View style={[computedStyles.continueWithContainer, styles.continueWithContainer]}>
+          <View style={styles.continueWithContainer}>
             <TextCustom
               text={t('auth.continueWith')}
               mode={TextModes.Caption}
@@ -96,7 +73,7 @@ const SignInUpScreen = () => {
           </View>
         </KeyboardAvoidingViewCustom>
 
-        <View style={computedStyles.buttonAndTextContainer}>
+        <View style={styles.buttonAndTextContainer}>
           <Button title={t(`auth.${screenMode}Button`)} onPress={() => navigation.navigate('CodeVerification')} />
 
           <View style={styles.belowButtonContainer}>
@@ -126,13 +103,26 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     alignItems: 'center',
+    paddingBottom: SPACING.lg,
   },
   continueWithContainer: {
     alignItems: 'center',
+    paddingTop: SPACING.m,
+    gap: SPACING.xs,
   },
   belowButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
+  },
+  subheader: {
+    paddingBottom: SPACING.s,
+  },
+  buttonAndTextContainer: {
+    paddingTop: SPACING.s,
+    gap: SPACING.xs,
+  },
+  secondTextInput: {
+    paddingTop: SPACING.lg,
   },
 });
 

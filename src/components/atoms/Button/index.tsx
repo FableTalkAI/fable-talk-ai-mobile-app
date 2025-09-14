@@ -57,7 +57,6 @@ const Button = ({
     container: {
       borderRadius: RADIUS[radius],
       backgroundColor: buttonModes[localeMode].backgroundColor,
-      padding: SPACING.s,
     },
     text: {
       color: buttonModes[localeMode].color,
@@ -84,6 +83,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    padding: SPACING.s,
   },
 });
 

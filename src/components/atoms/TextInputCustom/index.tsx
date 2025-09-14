@@ -15,16 +15,12 @@ const TextInputCustom = forwardRef<TextInput, TextInputCustomProps>(
 
     const computedStyles = StyleSheet.create({
       wrapper: {
-        borderRadius: RADIUS.large,
-        paddingHorizontal: SPACING.m,
-        backgroundColor: colors.backgroundAlt,
-        gap: SPACING.xs,
-        paddingVertical: SPACING.s,
-        boxShadow: BOX_SHADOW.base,
+        backgroundColor: colors.backgroundSecondary,
       },
       textInput: {
         color: colors.textPrimary,
-        minHeight: withCharCount ? 200 : 24,
+        minHeight: withCharCount ? 180 : 24,
+        paddingBottom: withCharCount ? SPACING.lg : undefined,
       },
     });
 
@@ -60,6 +56,11 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: 'row',
     alignItems: 'center',
+    borderRadius: RADIUS.large,
+    paddingHorizontal: SPACING.m,
+    gap: SPACING.xs,
+    paddingVertical: SPACING.s,
+    boxShadow: BOX_SHADOW.base,
   },
   iconContainer: {
     width: 24,

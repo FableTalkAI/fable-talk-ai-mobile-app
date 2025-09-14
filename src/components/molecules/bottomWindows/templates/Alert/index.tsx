@@ -14,9 +14,6 @@ const Alert = ({ title, subtitle, onConfirm, onConfirmText, onCancel }: AlertPro
   const { colors } = useTheme();
 
   const computedStyles = StyleSheet.create({
-    textContainer: {
-      gap: SPACING.s,
-    },
     cancelButton: {
       backgroundColor: colors.gray40,
     },
@@ -27,7 +24,7 @@ const Alert = ({ title, subtitle, onConfirm, onConfirmText, onCancel }: AlertPro
 
   return (
     <View style={styles.wrapper}>
-      <View style={[styles.textContainer, computedStyles.textContainer]}>
+      <View style={styles.textContainer}>
         <TextCustom mode={TextModes.Subtitle} text={title} />
         <TextCustom mode={TextModes.Secondary} text={subtitle} />
       </View>
@@ -57,6 +54,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
+    gap: SPACING.s,
   },
   container: {
     flexDirection: 'row',

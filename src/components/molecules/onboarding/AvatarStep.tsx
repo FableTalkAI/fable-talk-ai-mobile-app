@@ -17,15 +17,9 @@ const AvatarStep = () => {
 
   const { pickImage, BottomWindowPermissionDenied } = useImagePick({ setAvatarUri });
 
-  const computedStyles = StyleSheet.create({
-    container: {
-      marginBottom: SPACING.xl,
-    },
-  });
-
   return (
     <>
-      <View style={[styles.container, computedStyles.container]}>
+      <View style={styles.container}>
         {profile?.avatarUri ? (
           <Avatar size={WINDOW_WIDTH * 0.7} isChangeable={false} avatarUri={profile?.avatarUri} />
         ) : (
@@ -45,6 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: SPACING.xl,
   },
 });
 

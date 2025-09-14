@@ -40,12 +40,6 @@ const testDefaultTags = [
 const InterestsStep = () => {
   const { tags, setTagsHandler } = useUserStore();
 
-  const computedStyles = StyleSheet.create({
-    container: {
-      gap: SPACING.xs,
-    },
-  });
-
   const onTagPressHandler = (tag: string) => {
     if (tags.includes(tag)) {
       setTagsHandler(tags.filter(t => t !== tag));
@@ -55,7 +49,7 @@ const InterestsStep = () => {
   };
 
   return (
-    <View style={[styles.container, computedStyles.container]}>
+    <View style={styles.container}>
       {testDefaultTags.map((tag, index) => (
         <Tag key={index} title={tag} isSelected={tags.includes(tag)} onToggle={onTagPressHandler} />
       ))}
@@ -67,6 +61,7 @@ const styles = StyleSheet.create({
   container: {
     flexWrap: 'wrap',
     flexDirection: 'row',
+    gap: SPACING.xs,
   },
 });
 

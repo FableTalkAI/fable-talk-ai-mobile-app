@@ -18,12 +18,6 @@ const Skeleton = ({ style }: SkeletonProps) => {
 
   const progress = useSharedValue(0);
 
-  const computedStyles = StyleSheet.create({
-    container: {
-      borderRadius: RADIUS.small,
-    },
-  });
-
   useEffect(() => {
     progress.value = withRepeat(
       withTiming(1, {
@@ -42,13 +36,14 @@ const Skeleton = ({ style }: SkeletonProps) => {
     };
   });
 
-  return <Animated.View style={[styles.container, computedStyles.container, animatedStyle, style]} />;
+  return <Animated.View style={[styles.container, animatedStyle, style]} />;
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     height: 48,
+    borderRadius: RADIUS.small,
   },
 });
 

@@ -16,16 +16,8 @@ const ProfileScreen = () => {
   const { navigation } = useNavigationRoutes();
 
   const computedStyles = StyleSheet.create({
-    userInfoContainer: {
-      gap: SPACING.m,
-      marginTop: SPACING.xl,
-    },
     separator: {
       backgroundColor: colors.gray20,
-      marginVertical: SPACING.lg,
-    },
-    optionsContainer: {
-      gap: SPACING.m,
     },
   });
 
@@ -34,7 +26,7 @@ const ProfileScreen = () => {
       <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
         <Avatar style={styles.avatar} />
 
-        <View style={computedStyles.userInfoContainer}>
+        <View style={styles.userInfoContainer}>
           <UserInfoBar field="name" />
           <UserInfoBar field="email" />
           <UserInfoBar field="dateOfBirth" />
@@ -42,7 +34,7 @@ const ProfileScreen = () => {
 
         <View style={[styles.separator, computedStyles.separator]} />
 
-        <View style={computedStyles.optionsContainer}>
+        <View style={styles.optionsContainer}>
           <OptionBar title={t('common.settings')} onPress={() => navigation.navigate('Settings')} />
           <OptionBar title={t('common.subscription')} onPress={() => navigation.navigate('Subscriptions')} />
         </View>
@@ -52,11 +44,19 @@ const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  userInfoContainer: {
+    gap: SPACING.m,
+    marginTop: SPACING.xl,
+  },
   avatar: {
     alignSelf: 'center',
   },
   separator: {
     height: 1,
+    marginVertical: SPACING.lg,
+  },
+  optionsContainer: {
+    gap: SPACING.m,
   },
 });
 

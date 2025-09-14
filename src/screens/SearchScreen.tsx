@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import TextCustom from '@/components/atoms/TextCustom';
@@ -10,29 +10,30 @@ import SearchBar from '@/components/molecules/SearchBar';
 import SearchInput from '@/components/molecules/SearchInput';
 import { SPACING } from '@/core/constants/sizes.ts';
 import { useDebounce } from '@/hooks/useDebounce';
+import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 import useTheme from '@/hooks/useTheme.ts';
 
 const testData = ['12412', '1432', '5324', 'gweg', 'ewcsvr'];
 
 const SearchScreen = () => {
+  const inputRef = useRef<TextInput>(null);
+
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const { navigation } = useNavigationRoutes();
 
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce({ value: search });
 
   const computedStyles = StyleSheet.create({
-    flatList: {
-      marginTop: SPACING.m,
-    },
-    flatListContainer: {
-      gap: SPACING.m,
-    },
     noResults: {
-      marginTop: SPACING.xl,
       color: colors.gray50,
     },
   });
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (debouncedSearch) {
@@ -42,14 +43,20 @@ const SearchScreen = () => {
 
   return (
     <SafeAreaViewCustom>
-      <SearchInput value={search} onChangeText={setSearch} withBackArrow />
+      <SearchInput
+        ref={inputRef}
+        placeholder={t('search.placeholder')}
+        value={search}
+        onChangeText={setSearch}
+        navigation={navigation}
+      />
 
       {testData.length ? (
         <FlatList
           data={testData}
           bounces={false}
-          style={computedStyles.flatList}
-          contentContainerStyle={computedStyles.flatListContainer}
+          style={styles.flatList}
+          contentContainerStyle={styles.flatListContainer}
           renderItem={({ item }) => <SearchBar title={item} onPress={() => {}} />}
         />
       ) : (
@@ -66,6 +73,13 @@ const SearchScreen = () => {
 const styles = StyleSheet.create({
   noResults: {
     textAlign: 'center',
+    marginTop: SPACING.xl,
+  },
+  flatList: {
+    marginTop: SPACING.m,
+  },
+  flatListContainer: {
+    gap: SPACING.m,
   },
 });
 

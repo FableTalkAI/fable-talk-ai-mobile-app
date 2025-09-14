@@ -44,10 +44,6 @@ const OptionBar = ({
   const computedStyles = StyleSheet.create({
     iconContainer: {
       backgroundColor: localColors.iconBackground,
-      borderRadius: RADIUS.small,
-    },
-    textContainer: {
-      paddingLeft: SPACING.xs,
     },
     title: {
       color: localColors.title,
@@ -76,11 +72,11 @@ const OptionBar = ({
       <PressableCustom onPress={onPress} style={styles.complexContainer}>
         <ResizeIcon
           icon={leftIcon}
-          containerStyle={computedStyles.iconContainer}
+          containerStyle={[styles.iconContainer, computedStyles.iconContainer]}
           cloneElementProps={resizeIconOption}
         />
 
-        <View style={[computedStyles.textContainer, styles.textContainer]}>
+        <View style={styles.textContainer}>
           <TextCustom text={title} mode={TextModes.Secondary} style={computedStyles.title} />
           {subtitle && <TextCustom text={subtitle} mode={TextModes.ExtraSmall} style={computedStyles.subtitle} />}
         </View>
@@ -94,6 +90,9 @@ const OptionBar = ({
 };
 
 const styles = StyleSheet.create({
+  iconContainer: {
+    borderRadius: RADIUS.small,
+  },
   simpleContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -105,6 +104,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
+    paddingLeft: SPACING.xs,
   },
 });
 
