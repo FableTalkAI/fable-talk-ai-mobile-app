@@ -8,6 +8,10 @@ const initialState: UserState = {
   onboardingStep: 0,
   profile: {},
   theme: Theme.System,
+  notifications: {
+    push: false,
+    email: false,
+  },
 };
 
 const userSlice = createSlice({
@@ -23,12 +27,19 @@ const userSlice = createSlice({
     setOnboardingStep: (state, action: PayloadAction<number>) => {
       state.onboardingStep = action.payload;
     },
+    setPushNotification: (state, action: PayloadAction<boolean>) => {
+      state.notifications.push = action.payload;
+    },
+    setEmailNotification: (state, action: PayloadAction<boolean>) => {
+      state.notifications.email = action.payload;
+    },
     setTheme: (state, action: PayloadAction<Theme>) => {
       state.theme = action.payload;
     },
   },
 });
 
-export const { setTags, setProfile, setOnboardingStep, setTheme } = userSlice.actions;
+export const { setTags, setProfile, setOnboardingStep, setPushNotification, setEmailNotification, setTheme } =
+  userSlice.actions;
 
 export default userSlice.reducer;

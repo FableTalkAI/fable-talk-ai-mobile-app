@@ -51,14 +51,14 @@ const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
     },
     flatList: {
       borderRadius: RADIUS.small,
-      boxShadow: BOX_SHADOW.base,
+      boxShadow: BOX_SHADOW.strong,
       width,
+      maxHeight: MAX_DROPDOWN_HEIGHT,
     },
     flatListContainer: {
       width,
       gap: SPACING.xxs,
       backgroundColor: colors.backgroundAlt,
-      maxHeight: MAX_DROPDOWN_HEIGHT,
       borderRadius: RADIUS.small,
       padding: SPACING.xs,
     },
@@ -96,6 +96,8 @@ const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
 
           <View style={[styles.flatListWrapper, computedStyles.flatListWrapper]}>
             <FlatList
+              bounces={false}
+              showsVerticalScrollIndicator={false}
               style={computedStyles.flatList}
               contentContainerStyle={computedStyles.flatListContainer}
               data={options}

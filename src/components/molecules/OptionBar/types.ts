@@ -9,6 +9,7 @@ export type OptionBarProps = {
   leftIcon?: ReactElement<SvgProps>;
   rightComponent?: ReactNode;
   colorMode?: OptionBarColorModes;
+  disabled?: boolean;
 };
 
 export enum OptionBarModes {
