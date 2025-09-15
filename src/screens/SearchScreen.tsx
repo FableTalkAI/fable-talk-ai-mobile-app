@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, TextInput } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -9,7 +9,6 @@ import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import SearchBar from '@/components/molecules/SearchBar';
 import SearchInput from '@/components/molecules/SearchInput';
 import { SPACING } from '@/core/constants/sizes.ts';
-import { useDebounce } from '@/hooks/useDebounce';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 import useTheme from '@/hooks/useTheme.ts';
 
@@ -22,34 +21,23 @@ const SearchScreen = () => {
   const { colors } = useTheme();
   const { navigation } = useNavigationRoutes();
 
-  const [search, setSearch] = useState('');
-  const debouncedSearch = useDebounce({ value: search });
-
   const computedStyles = StyleSheet.create({
     noResults: {
       color: colors.gray50,
     },
   });
 
+  const onStopHandler = () => {
+    // TODO: make request
+  };
+
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
-  useEffect(() => {
-    if (debouncedSearch) {
-      // TODO: make request
-    }
-  }, [debouncedSearch]);
-
   return (
     <SafeAreaViewCustom>
-      <SearchInput
-        ref={inputRef}
-        placeholder={t('search.placeholder')}
-        value={search}
-        onChangeText={setSearch}
-        navigation={navigation}
-      />
+      <SearchInput ref={inputRef} navigation={navigation} onStop={onStopHandler} />
 
       {testData.length ? (
         <FlatList

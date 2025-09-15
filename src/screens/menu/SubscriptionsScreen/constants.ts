@@ -1,4 +1,4 @@
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@gorhom/bottom-sheet';
+import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 
 import { SubscriptionBasicIcon, SubscriptionFreeIcon, SubscriptionPremiumIcon } from '@/assets/icons';
 
@@ -51,5 +51,4 @@ export const SUBSCRIPTIONS: Subscription[] = [
   },
 ];
 
-export const CARD_WIDTH = SCREEN_WIDTH - 32 * 2;
 export const CARD_HEIGHT = SCREEN_HEIGHT * 0.7;

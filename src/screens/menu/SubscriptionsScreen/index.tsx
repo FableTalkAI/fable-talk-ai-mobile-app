@@ -1,3 +1,4 @@
+import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -11,9 +12,10 @@ import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import Header from '@/components/molecules/Header';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import { BOX_SHADOW } from '@/core/constants/styles.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
-import { CARD_HEIGHT, CARD_WIDTH, SUBSCRIPTIONS } from './constants.ts';
+import { CARD_HEIGHT, SUBSCRIPTIONS } from './constants.ts';
 import { SubscriptionPlans } from './types.ts';
 
 const SubscriptionScreen = () => {
@@ -42,9 +44,11 @@ const SubscriptionScreen = () => {
       <Carousel
         ref={ref}
         data={SUBSCRIPTIONS}
-        width={CARD_WIDTH}
+        width={SCREEN_WIDTH}
         height={CARD_HEIGHT}
         mode="parallax"
+        loop={false}
+        containerStyle={styles.carouselContainer}
         onSnapToItem={index => setActiveIndex(index)}
         renderItem={({ item }) => (
           <View style={styles.wrapper}>
@@ -99,8 +103,12 @@ const styles = StyleSheet.create({
   wrapper: {
     marginHorizontal: SPACING.xs,
   },
+  carouselContainer: {
+    marginLeft: -SPACING.xl,
+  },
   linearGradient: {
     borderRadius: RADIUS.medium,
+    boxShadow: BOX_SHADOW.strong,
   },
   header: {
     textAlign: 'center',

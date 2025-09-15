@@ -1,5 +1,7 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRoute } from '@react-navigation/native';
 import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
@@ -13,10 +15,13 @@ import TextInputCustom from '@/components/atoms/TextInputCustom';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
+import { getAuthSchema } from '@/core/utils/zod/schema.ts';
+import { AuthSchema } from '@/core/utils/zod/types.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 import useTheme from '@/hooks/useTheme.ts';
+import useUserStore from '@/hooks/useUserStore.ts';
 
-import { SignInUpRouteProp } from './types.ts';
+import { AuthScreenMode, SignInUpRouteProp } from './types.ts';
 
 const SignInUpScreen = () => {
   const { t } = useTranslation();
@@ -25,8 +30,20 @@ const SignInUpScreen = () => {
   const route = useRoute<SignInUpRouteProp>();
   const { navigation } = useNavigationRoutes();
   const { mode } = route.params;
+  const { setProfileHandler } = useUserStore();
 
-  const [screenMode, setScreenMode] = useState<'signIn' | 'signUp'>(mode);
+  const [screenMode, setScreenMode] = useState<AuthScreenMode>(mode);
+
+  const authSchema = getAuthSchema(screenMode);
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<AuthSchema>({
+    resolver: zodResolver(authSchema),
+    defaultValues: { name: '', email: '' },
+  });
 
   const computedStyles = StyleSheet.create({
     continueWithText: {
@@ -38,7 +55,18 @@ const SignInUpScreen = () => {
     textLink: {
       color: colors.link,
     },
+    errorText: {
+      color: colors.errorDark,
+    },
   });
+
+  const onSubmit = () => {
+    handleSubmit((data: AuthSchema) => {
+      //TODO: make request for otp code
+      setProfileHandler(data);
+      navigation.navigate('CodeVerification');
+    })();
+  };
 
   return (
     <SafeAreaViewCustom>
@@ -51,13 +79,51 @@ const SignInUpScreen = () => {
             <TextCustom text={t(`auth.${screenMode}.subheader`)} mode={TextModes.Caption} style={styles.subheader} />
 
             {screenMode === 'signUp' && (
-              <TextInputCustom value="" placeholder={t('common.name')} leftIcon={<UserIcon />} />
+              <Controller
+                control={control}
+                name="name"
+                render={({ field: { onChange, onBlur, value } }) => (
+                  <>
+                    <TextInputCustom
+                      value={value || ''}
+                      onChangeText={onChange}
+                      onBlur={onBlur}
+                      placeholder={t('common.name')}
+                      leftIcon={<UserIcon />}
+                      wrapperStyle={styles.firstTextInput}
+                    />
+                    {errors.name && (
+                      <TextCustom
+                        style={computedStyles.errorText}
+                        text={errors.name.message || ''}
+                        mode={TextModes.Caption}
+                      />
+                    )}
+                  </>
+                )}
+              />
             )}
-            <TextInputCustom
-              value=""
-              placeholder={t('common.email')}
-              leftIcon={<MailIcon />}
-              wrapperStyle={screenMode === 'signUp' ? styles.secondTextInput : undefined}
+            <Controller
+              control={control}
+              name="email"
+              render={({ field: { onChange, onBlur, value } }) => (
+                <>
+                  <TextInputCustom
+                    value={value}
+                    onChangeText={onChange}
+                    onBlur={onBlur}
+                    placeholder={t('common.email')}
+                    leftIcon={<MailIcon />}
+                  />
+                  {errors.email && (
+                    <TextCustom
+                      style={computedStyles.errorText}
+                      text={errors.email.message || ''}
+                      mode={TextModes.Caption}
+                    />
+                  )}
+                </>
+              )}
             />
           </View>
 
@@ -74,7 +140,7 @@ const SignInUpScreen = () => {
         </KeyboardAvoidingViewCustom>
 
         <View style={styles.buttonAndTextContainer}>
-          <Button title={t(`auth.${screenMode}Button`)} onPress={() => navigation.navigate('CodeVerification')} />
+          <Button title={t(`auth.${screenMode}Button`)} onPress={onSubmit} />
 
           <View style={styles.belowButtonContainer}>
             <TextCustom
@@ -82,7 +148,11 @@ const SignInUpScreen = () => {
               mode={TextModes.Caption}
               style={computedStyles.belowButtonText}
             />
-            <PressableCustom onPress={() => setScreenMode(screenMode === 'signIn' ? 'signUp' : 'signIn')}>
+            <PressableCustom
+              onPress={() =>
+                setScreenMode(screenMode === AuthScreenMode.SignUp ? AuthScreenMode.SignIn : AuthScreenMode.SignUp)
+              }
+            >
               <TextCustom
                 text={screenMode === 'signIn' ? t('auth.signUpButton') : t('auth.signInButton')}
                 mode={TextModes.Caption}
@@ -105,24 +175,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingBottom: SPACING.lg,
   },
+  subheader: {
+    paddingBottom: SPACING.s,
+  },
   continueWithContainer: {
     alignItems: 'center',
     paddingTop: SPACING.m,
+    gap: SPACING.xs,
+  },
+  buttonAndTextContainer: {
+    paddingTop: SPACING.s,
     gap: SPACING.xs,
   },
   belowButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  subheader: {
-    paddingBottom: SPACING.s,
-  },
-  buttonAndTextContainer: {
-    paddingTop: SPACING.s,
-    gap: SPACING.xs,
-  },
-  secondTextInput: {
-    paddingTop: SPACING.lg,
+  firstTextInput: {
+    marginBottom: SPACING.lg,
   },
 });
 

@@ -49,6 +49,7 @@ const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
     },
     flatList: {
       width,
+      maxHeight: MAX_DROPDOWN_HEIGHT,
     },
     flatListContainer: {
       width,
@@ -90,6 +91,8 @@ const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
             <FlatList
               style={[styles.flatList, computedStyles.flatList]}
               contentContainerStyle={[styles.flatListContainer, computedStyles.flatListContainer]}
+              bounces={false}
+              showsVerticalScrollIndicator={false}
               data={options}
               renderItem={({ item, index }) => (
                 <PressableCustom onPress={selectOptionHandler(index)}>
@@ -119,7 +122,7 @@ const styles = StyleSheet.create({
   },
   flatList: {
     borderRadius: RADIUS.small,
-    boxShadow: BOX_SHADOW.base,
+    boxShadow: BOX_SHADOW.strong,
   },
   flatListContainer: {
     gap: SPACING.xxs,

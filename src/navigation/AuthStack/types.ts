@@ -1,5 +1,7 @@
+import { AuthScreenMode } from '@/screens/auth/SignInUpScreen/types.ts';
+
 export type AuthStackParamList = {
   Splash: undefined;
-  SignInUp: { mode: 'signIn' | 'signUp' };
+  SignInUp: { mode: AuthScreenMode };
   CodeVerification: undefined;
 };

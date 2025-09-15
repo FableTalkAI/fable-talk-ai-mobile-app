@@ -10,12 +10,12 @@ import useTheme from '@/hooks/useTheme.ts';
 
 import { HeaderProps } from './types.ts';
 
-const Header = ({ title, onPress }: HeaderProps) => {
+const Header = ({ title, onPress, style }: HeaderProps) => {
   const { navigation } = useNavigationRoutes();
   const { colors } = useTheme();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <PressableCustom containerStyle={styles.side} onPress={onPress ?? navigation.goBack} hitSlop={10}>
         <ArrowForwardIcon fill={colors.iconPrimary} />
       </PressableCustom>

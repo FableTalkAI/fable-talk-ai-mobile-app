@@ -44,7 +44,7 @@ const Button = ({
       color: colors.textLight,
     },
     reject: {
-      backgroundColor: colors.errorBase,
+      backgroundColor: colors.errorDark,
       color: colors.textLight,
     },
     link: {

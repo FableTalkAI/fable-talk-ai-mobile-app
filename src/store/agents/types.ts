@@ -1,3 +1,5 @@
+import { ImageSourcePropType } from 'react-native';
+
 export type AgentsState = {
   tags: string[];
   agents: Agent[];
@@ -10,6 +12,9 @@ export type AgentsState = {
 
 export type Agent = {
   name: string;
+  description: string;
+  tags: string[];
+  avatarSource: ImageSourcePropType;
 };
 
 export enum SortFilter {

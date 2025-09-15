@@ -30,9 +30,12 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
   });
 
   return (
-    <PressableCustom containerStyle={[styles.wrapper, computedStyles.wrapper]} onPress={onPress}>
+    <PressableCustom
+      containerStyle={[styles.wrapper, computedStyles.wrapper]}
+      style={styles.pressableContainer}
+      onPress={onPress}
+    >
       <AutoImage source={avatarSource} style={styles.avatar} />
-
       <View style={styles.messageContainer}>
         <View style={styles.nameAndPinContainer}>
           <TextCustom text={agentName} style={computedStyles.agentName} />
@@ -57,11 +60,13 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
 
 const styles = StyleSheet.create({
   wrapper: {
-    flexDirection: 'row',
     paddingHorizontal: SPACING.m,
     paddingVertical: SPACING.m,
     borderRadius: RADIUS.medium,
     boxShadow: BOX_SHADOW.medium,
+  },
+  pressableContainer: {
+    flexDirection: 'row',
   },
   avatar: {
     width: 30,

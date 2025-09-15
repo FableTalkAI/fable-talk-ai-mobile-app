@@ -26,13 +26,19 @@ const SearchFilter = () => {
 
   const { filter, setFilterOrderHandler, setFilterSortHandler, tags, setFilterTagsHandler } = useAgentsStore();
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredTags, setFilteredTags] = useState(tags);
 
   const selectOptions = useMemo(() => Object.values(SortFilter).map(option => t(`common.${option}`)), [t]);
-  const filteredTags = useMemo(
-    () => tags.filter(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())),
-    [searchQuery, tags],
-  );
+
+  const computedStyles = StyleSheet.create({
+    sectionBackground: {
+      backgroundColor: colors.backgroundAlt,
+    },
+  });
+
+  const onStopHandler = (value: string) => {
+    setFilteredTags(tags.filter(tag => tag.toLowerCase().includes(value)));
+  };
 
   const onToggle = (tag: string) => {
     if (filter.tags.includes(tag)) {
@@ -41,12 +47,6 @@ const SearchFilter = () => {
       setFilterTagsHandler([...filter.tags, tag]);
     }
   };
-
-  const computedStyles = StyleSheet.create({
-    sectionBackground: {
-      backgroundColor: colors.backgroundAlt,
-    },
-  });
 
   return (
     <View style={styles.wrapper}>
@@ -76,11 +76,7 @@ const SearchFilter = () => {
 
         <View style={computedStyles.sectionBackground}>
           <View style={styles.searchAndTagsNumberContainer}>
-            <SearchInput
-              placeholder={t('bottomWindows.searchFilter.tags')}
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
+            <SearchInput placeholder={t('bottomWindows.searchFilter.tags')} onStop={onStopHandler} />
             <TextCustom text={String(filteredTags.length)} mode={TextModes.Title} />
           </View>
 

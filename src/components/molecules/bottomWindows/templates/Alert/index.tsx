@@ -1,24 +1,16 @@
-import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import Button from '@/components/atoms/Button';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import { SPACING } from '@/core/constants/sizes.ts';
-import useTheme from '@/hooks/useTheme.ts';
 
 import { AlertProps } from './types.ts';
 
-const Alert = ({ title, subtitle, onConfirm, onConfirmText, onCancel }: AlertProps) => {
-  const { t } = useTranslation();
-  const { colors } = useTheme();
-
+const Alert = ({ title, subtitle, firstButtonProps, secondButtonProps }: AlertProps) => {
   const computedStyles = StyleSheet.create({
-    cancelButton: {
-      backgroundColor: colors.gray40,
-    },
-    confirmButton: {
-      backgroundColor: colors.link,
+    button: {
+      width: secondButtonProps ? '49%' : '100%',
     },
   });
 
@@ -30,18 +22,8 @@ const Alert = ({ title, subtitle, onConfirm, onConfirmText, onCancel }: AlertPro
       </View>
 
       <View style={styles.container}>
-        <Button
-          onPress={onCancel}
-          style={computedStyles.cancelButton}
-          containerStyle={styles.button}
-          title={t('common.cancel')}
-        />
-        <Button
-          onPress={onConfirm}
-          style={computedStyles.confirmButton}
-          containerStyle={styles.button}
-          title={onConfirmText}
-        />
+        <Button {...firstButtonProps} containerStyle={computedStyles.button} />
+        {secondButtonProps && <Button {...secondButtonProps} containerStyle={computedStyles.button} />}
       </View>
     </View>
   );
@@ -59,9 +41,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-  },
-  button: {
-    width: '49%',
   },
 });
 

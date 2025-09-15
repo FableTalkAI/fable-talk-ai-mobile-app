@@ -1,44 +1,49 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 
 import { ArrowForwardIcon, FilterIcon, SearchIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
-import useTheme from '@/hooks/useTheme.ts';
+import { useDebounce } from '@/hooks/useDebounce';
 
 import { SearchInputProps } from './types.ts';
 
-const SearchInput = forwardRef<TextInput, SearchInputProps>(
-  ({ placeholder, withFilter, value, onChangeText, navigation }, ref) => {
-    const { colors } = useTheme();
+const SearchInput = forwardRef<TextInput, SearchInputProps>(({ placeholder, withFilter, navigation, onStop }, ref) => {
+  const [value, setValue] = useState('');
+  const debouncedSearch = useDebounce({ value });
 
-    return (
-      <View style={styles.wrapper}>
-        {navigation && (
-          <PressableCustom hitSlop={10} onPress={navigation?.goBack} style={styles.backIcon}>
-            <ArrowForwardIcon fill={colors.iconPrimary} />
-          </PressableCustom>
-        )}
+  useEffect(() => {
+    if (debouncedSearch) {
+      onStop(debouncedSearch);
+    }
+  }, [debouncedSearch, onStop]);
 
-        <TextInputCustom
-          ref={ref}
-          placeholder={placeholder}
-          value={value}
-          onChangeText={onChangeText}
-          leftIcon={<SearchIcon />}
-          wrapperStyle={styles.textInputWrapper}
-        />
+  return (
+    <View style={styles.wrapper}>
+      {navigation && (
+        <PressableCustom onPress={navigation?.goBack} style={styles.backIcon}>
+          <ArrowForwardIcon />
+        </PressableCustom>
+      )}
 
-        {withFilter && (
-          <PressableCustom>
-            <FilterIcon />
-          </PressableCustom>
-        )}
-      </View>
-    );
-  },
-);
+      <TextInputCustom
+        ref={ref}
+        placeholder={placeholder}
+        value={value}
+        onChangeText={setValue}
+        leftIcon={<SearchIcon />}
+        wrapperStyle={styles.textInputWrapper}
+      />
+
+      {withFilter && (
+        <PressableCustom>
+          <FilterIcon />
+        </PressableCustom>
+      )}
+    </View>
+  );
+});
 
 const styles = StyleSheet.create({
   wrapper: {

@@ -18,8 +18,8 @@ const SafeAreaViewCustom = ({
 
   const computedStyles = StyleSheet.create({
     container: {
-      paddingTop: insets.top > 24 ? 0 : SPACING.lg,
-      paddingBottom: insets.bottom > 24 ? 0 : SPACING.lg,
+      paddingTop: insets.top > SPACING.m ? 0 : SPACING.m,
+      paddingBottom: insets.bottom > SPACING.m ? 0 : SPACING.m,
       backgroundColor: isTransparent || withGradientBackground ? 'transparent' : colors.backgroundBase,
     },
   });

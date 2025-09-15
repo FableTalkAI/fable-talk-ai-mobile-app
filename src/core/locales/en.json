@@ -14,6 +14,10 @@
     "name": "Name",
     "alphabetically": "Alphabetically",
     "popularity": "Popularity",
+    "enable": "Enable",
+    "disable": "Disable",
+    "contactUs": "Contact us",
+    "delete": "Delete",
     "noResults": "No results",
     "apply": "Apply",
     "choose": "Choose",
@@ -23,6 +27,10 @@
     "permissionDenied": {
       "title": "Permission denied",
       "subtitle": "To use this feature, please enable photo access in settings"
+    },
+    "deleteAccount": {
+      "title": "Delete account",
+      "subtitle": "Are you sure you want to delete your account?"
     },
     "searchFilter": {
       "sort": "Sort",
@@ -59,6 +67,28 @@
       "avatar": "Uploading an avatar, it's optional*",
       "interests": "Please, select 2 tags"
     }
+  },
+  "searchInput": {
+    "placeholder": "Search chat by agent name"
+  },
+  "settings": {
+    "notifications": "Notifications",
+    "about": "About",
+    "account": "Account",
+    "pushNotifications": "Push notifications",
+    "termsAndConditions": "Terms and Conditions",
+    "legalInformation": "Legal information",
+    "privacyPolicy": "Privacy Policy",
+    "protectYourData": "How we protect your data",
+    "getHelp": "Get help",
+    "theme": "Theme",
+    "changeAppTheme": "Change app theme",
+    "removeYourAccount": "Remove your account"
+  },
+  "theme": {
+    "system": "System",
+    "dark": "Dark",
+    "light": "Light"
   },
   "subscription": {
     "header": "Subscriptions",
@@ -105,5 +135,13 @@
   },
   "search": {
     "placeholder": "Search agents by name..."
+  },
+  "chat": {
+    "placeholder": "Write a message..."
+  },
+  "validation": {
+    "name": "Please enter a valid name",
+    "email": "Please enter a valid email",
+    "empty": "Required field"
   }
 }
