@@ -68,6 +68,9 @@
       "interests": "Будь ласка, оберіть 2 теги"
     }
   },
+  "searchInput": {
+    "placeholder": "Пошук у чаті за іменем агента"
+  },
   "settings": {
     "notifications": "Повідомлення",
     "about": "Про застосунок",

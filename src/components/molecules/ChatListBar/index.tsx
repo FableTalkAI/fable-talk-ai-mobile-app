@@ -40,33 +40,35 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
   });
 
   return (
-    <PressableCustom containerStyle={[styles.wrapper, computedStyles.wrapper]} onPress={onPress}>
-      <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
+    <PressableCustom containerStyle={[computedStyles.wrapper]} onPress={onPress}>
+      <View style={styles.contentWrapper}>
+        <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
 
-      <View style={[styles.messageContainer, computedStyles.messageContainer]}>
-        <View style={styles.nameAndPinContainer}>
-          <TextCustom text={agentName} style={computedStyles.agentName} />
+        <View style={[styles.messageContainer, computedStyles.messageContainer]}>
+          <View style={styles.nameAndPinContainer}>
+            <TextCustom text={agentName} style={computedStyles.agentName} />
 
-          <PressableCustom onPress={() => setIsPinned(prevState => !prevState)} hitSlop={10}>
-            <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>
-              {isPinned ? <PinIconPinned /> : <PinIcon />}
-            </Animated.View>
-          </PressableCustom>
+            <PressableCustom onPress={() => setIsPinned(prevState => !prevState)} hitSlop={10}>
+              <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>
+                {isPinned ? <PinIconPinned /> : <PinIcon />}
+              </Animated.View>
+            </PressableCustom>
+          </View>
+
+          <TextCustom
+            text={lastMessage}
+            numberOfLines={2}
+            mode={TextModes.Secondary}
+            style={computedStyles.lastMessage}
+          />
         </View>
-
-        <TextCustom
-          text={lastMessage}
-          numberOfLines={2}
-          mode={TextModes.Secondary}
-          style={computedStyles.lastMessage}
-        />
       </View>
     </PressableCustom>
   );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
+  contentWrapper: {
     flexDirection: 'row',
   },
   avatar: {

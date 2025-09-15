@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { ChatGPTLogo } from '@/assets/images';
+
 import { userSliceName } from './thunks.ts';
-import { Theme, UserProfile, UserState } from './types.ts';
+import { Chat, Theme, UserProfile, UserState } from './types.ts';
 
 const initialState: UserState = {
   tags: [],
@@ -12,6 +14,20 @@ const initialState: UserState = {
     push: false,
     email: false,
   },
+  chats: [
+    {
+      agentName: 'ChatGPT',
+      agentAvatar: ChatGPTLogo,
+      lastMessage: 'Last message of a chat',
+      isPinned: false,
+    },
+    {
+      agentName: 'ChatGPT2',
+      agentAvatar: ChatGPTLogo,
+      lastMessage: 'Last message of a chat1',
+      isPinned: false,
+    },
+  ],
 };
 
 const userSlice = createSlice({
@@ -36,10 +52,13 @@ const userSlice = createSlice({
     setTheme: (state, action: PayloadAction<Theme>) => {
       state.theme = action.payload;
     },
+    setChats: (state, action: PayloadAction<Chat[]>) => {
+      state.chats = action.payload;
+    },
   },
 });
 
-export const { setTags, setProfile, setOnboardingStep, setPushNotification, setEmailNotification, setTheme } =
+export const { setTags, setProfile, setOnboardingStep, setPushNotification, setEmailNotification, setTheme, setChats } =
   userSlice.actions;
 
 export default userSlice.reducer;

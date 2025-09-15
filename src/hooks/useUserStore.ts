@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
 import {
+  setChats,
   setEmailNotification,
   setOnboardingStep,
   setProfile,
@@ -10,13 +11,14 @@ import {
   setTheme,
 } from '@/store/user';
 import {
+  chatsSelector,
   notificationsSelector,
   onboardingStepSelector,
   profileSelector,
   tagsSelector,
   themeSelector,
 } from '@/store/user/selectors.ts';
-import { Theme, UserProfile } from '@/store/user/types.ts';
+import { Chat, Theme, UserProfile } from '@/store/user/types.ts';
 
 const useUserStore = () => {
   const dispatch = useAppDispatch();
@@ -26,6 +28,7 @@ const useUserStore = () => {
   const onboardingStep = useAppSelector(onboardingStepSelector);
   const notifications = useAppSelector(notificationsSelector);
   const theme = useAppSelector(themeSelector);
+  const chats = useAppSelector(chatsSelector);
 
   const setTagsHandler = useCallback(
     (selectedTags: string[]) => {
@@ -69,19 +72,27 @@ const useUserStore = () => {
     [dispatch],
   );
 
+  const setChatsHandler = useCallback(
+    (activeChats: Chat[]) => {
+      dispatch(setChats(activeChats));
+    },
+    [dispatch],
+  );
+
   return {
     tags,
     profile,
     onboardingStep,
     theme,
     notifications,
-
+    chats,
     setTagsHandler,
     setProfileHandler,
     setOnboardingStepHandler,
     setPushNotificationHandler,
     setEmailNotificationHandler,
     setThemeHandler,
+    setChatsHandler,
   };
 };
 
