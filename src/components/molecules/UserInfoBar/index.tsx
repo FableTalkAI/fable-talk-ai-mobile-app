@@ -79,7 +79,7 @@ const UserInfoBar = ({ field }: UserInfoBarProps) => {
 
           {!isEditing && (
             <Animated.View entering={FadeIn} exiting={FadeOut}>
-              <PencilIcon />
+              <PencilIcon fill={colors.textSecondary} />
             </Animated.View>
           )}
         </View>
@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
     paddingVertical: 0,
     paddingHorizontal: 0,
     backgroundColor: 'transparent',
+    boxShadow: 'none',
   },
 });
 

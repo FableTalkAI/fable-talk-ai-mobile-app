@@ -20,6 +20,9 @@ export enum ButtonModes {
   Disabled = 'disabled',
   Transparent = 'transparent',
   Light = 'light',
+  Success = 'success',
+  Reject = 'reject',
+  Link = 'link',
 }
 
 export enum ButtonRadius {

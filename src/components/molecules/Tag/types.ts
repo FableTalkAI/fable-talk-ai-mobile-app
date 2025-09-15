@@ -1,8 +1,11 @@
+import { StyleProp, ViewStyle } from 'react-native';
+
 export type TagProps = {
   title: string;
   forceActive?: boolean;
   isSelected?: boolean;
   onToggle?: (title: string) => void;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
 export enum TagColorModes {

@@ -32,11 +32,23 @@ const Button = ({
       color: colors.textSecondary,
     },
     transparent: {
-      backgroundColor: setColorOpacity(colors.backgroundBase, 0.22),
+      backgroundColor: setColorOpacity(colors.accentLight, 0.22),
       color: colors.textLight,
     },
     light: {
       backgroundColor: colors.primary30,
+      color: colors.textLight,
+    },
+    success: {
+      backgroundColor: colors.successBase,
+      color: colors.textLight,
+    },
+    reject: {
+      backgroundColor: colors.errorDark,
+      color: colors.textLight,
+    },
+    link: {
+      backgroundColor: colors.link,
       color: colors.textLight,
     },
   };
