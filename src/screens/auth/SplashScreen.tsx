@@ -12,6 +12,8 @@ import { SPACING } from '@/core/constants/sizes.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 import useTheme from '@/hooks/useTheme.ts';
 
+import { AuthScreenMode } from './SignInUpScreen/types.ts';
+
 const SplashScreen = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -52,14 +54,14 @@ const SplashScreen = () => {
               title={t('auth.signInButton')}
               mode={ButtonModes.Light}
               radius={ButtonRadius.Small}
-              onPress={() => navigation.navigate('TabBarNavigator', { screen: 'Home' })}
+              onPress={() => navigation.navigate('SignInUp', { mode: AuthScreenMode.SignIn })}
             />
             <Button
               containerStyle={styles.button}
               title={t('auth.signUpButton')}
               mode={ButtonModes.Transparent}
               radius={ButtonRadius.Small}
-              onPress={() => navigation.navigate('SignInUp', { mode: 'signUp' })}
+              onPress={() => navigation.navigate('SignInUp', { mode: AuthScreenMode.SignUp })}
             />
           </View>
         </View>
