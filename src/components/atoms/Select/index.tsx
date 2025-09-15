@@ -40,8 +40,6 @@ const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
   const computedStyles = StyleSheet.create({
     pressable: {
       width,
-      padding: SPACING.xs,
-      borderRadius: RADIUS.small,
       backgroundColor: colors.backgroundHover,
     },
     flatListWrapper: {
@@ -50,17 +48,12 @@ const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
       width,
     },
     flatList: {
-      borderRadius: RADIUS.small,
-      boxShadow: BOX_SHADOW.strong,
       width,
       maxHeight: MAX_DROPDOWN_HEIGHT,
     },
     flatListContainer: {
       width,
-      gap: SPACING.xxs,
       backgroundColor: colors.backgroundAlt,
-      borderRadius: RADIUS.small,
-      padding: SPACING.xs,
     },
   });
 
@@ -96,10 +89,10 @@ const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
 
           <View style={[styles.flatListWrapper, computedStyles.flatListWrapper]}>
             <FlatList
+              style={[styles.flatList, computedStyles.flatList]}
+              contentContainerStyle={[styles.flatListContainer, computedStyles.flatListContainer]}
               bounces={false}
               showsVerticalScrollIndicator={false}
-              style={computedStyles.flatList}
-              contentContainerStyle={computedStyles.flatListContainer}
               data={options}
               renderItem={({ item, index }) => (
                 <PressableCustom onPress={selectOptionHandler(index)}>
@@ -118,12 +111,24 @@ const styles = StyleSheet.create({
   pressable: {
     flexDirection: 'row',
     alignItems: 'center',
+    padding: SPACING.xs,
+    borderRadius: RADIUS.small,
   },
   flex1: {
     flex: 1,
   },
   flatListWrapper: {
     position: 'absolute',
+  },
+  flatList: {
+    borderRadius: RADIUS.small,
+    boxShadow: BOX_SHADOW.strong,
+  },
+  flatListContainer: {
+    gap: SPACING.xxs,
+    maxHeight: MAX_DROPDOWN_HEIGHT,
+    borderRadius: RADIUS.small,
+    padding: SPACING.xs,
   },
 });
 

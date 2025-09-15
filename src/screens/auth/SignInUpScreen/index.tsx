@@ -83,14 +83,13 @@ const SignInUpScreen = () => {
                 control={control}
                 name="name"
                 render={({ field: { onChange, onBlur, value } }) => (
-                  <>
+                  <View style={[styles.inputContainer, styles.firstTextInput]}>
                     <TextInputCustom
                       value={value || ''}
                       onChangeText={onChange}
                       onBlur={onBlur}
                       placeholder={t('common.name')}
                       leftIcon={<UserIcon />}
-                      wrapperStyle={styles.firstTextInput}
                     />
                     {errors.name && (
                       <TextCustom
@@ -99,7 +98,7 @@ const SignInUpScreen = () => {
                         mode={TextModes.Caption}
                       />
                     )}
-                  </>
+                  </View>
                 )}
               />
             )}
@@ -107,7 +106,7 @@ const SignInUpScreen = () => {
               control={control}
               name="email"
               render={({ field: { onChange, onBlur, value } }) => (
-                <>
+                <View style={styles.inputContainer}>
                   <TextInputCustom
                     value={value}
                     onChangeText={onChange}
@@ -122,7 +121,7 @@ const SignInUpScreen = () => {
                       mode={TextModes.Caption}
                     />
                   )}
-                </>
+                </View>
               )}
             />
           </View>
@@ -193,6 +192,9 @@ const styles = StyleSheet.create({
   },
   firstTextInput: {
     marginBottom: SPACING.lg,
+  },
+  inputContainer: {
+    gap: SPACING.xxs,
   },
 });
 

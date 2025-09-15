@@ -18,7 +18,6 @@ const SafeAreaViewCustom = ({
 
   const computedStyles = StyleSheet.create({
     container: {
-      paddingHorizontal: SPACING.xl,
       paddingTop: insets.top > SPACING.m ? 0 : SPACING.m,
       paddingBottom: insets.bottom > SPACING.m ? 0 : SPACING.m,
       backgroundColor: isTransparent || withGradientBackground ? 'transparent' : colors.backgroundBase,
@@ -34,14 +33,15 @@ const SafeAreaViewCustom = ({
           style={styles.gradient}
         />
       )}
-      <SafeAreaView style={[styles.flex1, computedStyles.container, style]}>{children}</SafeAreaView>
+      <SafeAreaView style={[styles.container, computedStyles.container, style]}>{children}</SafeAreaView>
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  flex1: {
+  container: {
     flex: 1,
+    paddingHorizontal: SPACING.xl,
   },
   gradient: {
     position: 'absolute',

@@ -37,20 +37,10 @@ const CodeVerificationScreen = () => {
   });
 
   const computedStyles = StyleSheet.create({
-    icon: {
-      marginBottom: SPACING.xl,
-    },
-    subtitleContainer: {
-      columnGap: SPACING.xxs,
-    },
-    cell: {
-      marginLeft: SPACING.xs,
-    },
     resendText: {
       color: colors.link,
     },
     codeContainer: {
-      gap: SPACING.lg,
       marginTop: SPACING.xl * 2,
     },
   });
@@ -72,11 +62,7 @@ const CodeVerificationScreen = () => {
     };
 
     return (
-      <View
-        onLayout={getCellOnLayoutHandler(index)}
-        key={index}
-        style={[styles.cell, computedStyles.cell, localStyles]}
-      >
+      <View onLayout={getCellOnLayoutHandler(index)} key={index} style={[styles.cell, localStyles]}>
         <TextCustom mode={TextModes.Title} text={symbol} />
       </View>
     );
@@ -85,11 +71,11 @@ const CodeVerificationScreen = () => {
   return (
     <SafeAreaViewCustom>
       <KeyboardAvoidingViewCustom>
-        <VerifyCodeIcon style={[styles.icon, computedStyles.icon]} />
+        <VerifyCodeIcon style={styles.icon} />
 
         <TextCustom mode={TextModes.Title} text={t('auth.verify.header')} />
 
-        <View style={[styles.subtitleContainer, computedStyles.subtitleContainer]}>
+        <View style={styles.subtitleContainer}>
           <TextCustom mode={TextModes.Caption} text={t('auth.verify.subheader')} />
           <TextCustom mode={TextModes.Tag} text={profile.email} />
         </View>
@@ -117,19 +103,23 @@ const CodeVerificationScreen = () => {
 const styles = StyleSheet.create({
   icon: {
     alignSelf: 'center',
+    marginBottom: SPACING.xl,
   },
   subtitleContainer: {
     flexWrap: 'wrap',
     flexDirection: 'row',
+    columnGap: SPACING.xxs,
   },
   codeContainer: {
     alignItems: 'center',
     justifyContent: 'center',
+    gap: SPACING.lg,
   },
   cell: {
     width: 24,
     alignItems: 'center',
     borderBottomWidth: 1,
+    marginLeft: SPACING.xs,
   },
 });
 

@@ -21,15 +21,6 @@ const OnboardingScreen = () => {
 
   const { tags, profile, setOnboardingStepHandler, onboardingStep } = useUserStore();
 
-  const computedStyles = StyleSheet.create({
-    container: {
-      marginVertical: SPACING.m,
-    },
-    subtitle: {
-      marginBottom: SPACING.xl,
-    },
-  });
-
   const { renderStep, lastStep } = useMemo(() => {
     const stepsData = [
       {
@@ -66,19 +57,14 @@ const OnboardingScreen = () => {
 
   return (
     <SafeAreaViewCustom>
-      <Animated.View
-        style={[styles.container, computedStyles.container]}
-        entering={FadeIn}
-        exiting={FadeOut}
-        key={`header-${onboardingStep}`}
-      >
+      <Animated.View style={styles.container} entering={FadeIn} exiting={FadeOut} key={`header-${onboardingStep}`}>
         {onboardingStep !== 0 && (
           <>
             <Header
               title={t(STEPS_TEXT_DATA[onboardingStep].title)}
               onPress={() => setOnboardingStepHandler(onboardingStep - 1)}
             />
-            <TextCustom style={computedStyles.subtitle} text={t(STEPS_TEXT_DATA[onboardingStep].description)} />
+            <TextCustom style={styles.subtitle} text={t(STEPS_TEXT_DATA[onboardingStep].description)} />
           </>
         )}
 
@@ -98,6 +84,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
+    marginVertical: SPACING.m,
+  },
+  subtitle: {
+    marginBottom: SPACING.xl,
   },
 });
 

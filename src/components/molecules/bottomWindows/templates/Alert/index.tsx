@@ -9,9 +9,6 @@ import { AlertProps } from './types.ts';
 
 const Alert = ({ title, subtitle, firstButtonProps, secondButtonProps }: AlertProps) => {
   const computedStyles = StyleSheet.create({
-    textContainer: {
-      gap: SPACING.s,
-    },
     button: {
       width: secondButtonProps ? '49%' : '100%',
     },
@@ -19,7 +16,7 @@ const Alert = ({ title, subtitle, firstButtonProps, secondButtonProps }: AlertPr
 
   return (
     <View style={styles.wrapper}>
-      <View style={[styles.textContainer, computedStyles.textContainer]}>
+      <View style={styles.textContainer}>
         <TextCustom mode={TextModes.Subtitle} text={title} />
         <TextCustom mode={TextModes.Secondary} text={subtitle} />
       </View>
@@ -39,6 +36,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
+    gap: SPACING.s,
   },
   container: {
     flexDirection: 'row',

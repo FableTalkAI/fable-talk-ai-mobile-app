@@ -31,36 +31,8 @@ const SearchFilter = () => {
   const selectOptions = useMemo(() => Object.values(SortFilter).map(option => t(`common.${option}`)), [t]);
 
   const computedStyles = StyleSheet.create({
-    wrapper: {
-      gap: SPACING.m,
-    },
     sectionBackground: {
-      boxShadow: BOX_SHADOW.medium,
       backgroundColor: colors.backgroundAlt,
-      borderRadius: RADIUS.small,
-    },
-    searchAndTagsNumberContainer: {
-      gap: SPACING.xxs,
-      paddingRight: SPACING.xs,
-    },
-    tagsContainer: {
-      paddingVertical: SPACING.s,
-      paddingHorizontal: SPACING.xs,
-      gap: SPACING.xxs,
-    },
-    selectedTagsContainer: {
-      paddingTop: SPACING.xxs,
-      paddingHorizontal: SPACING.xs,
-      gap: SPACING.xxs,
-      paddingBottom: SPACING.xs,
-    },
-    selectedTextContainer: {
-      gap: SPACING.xxs,
-      paddingLeft: SPACING.xs,
-      paddingTop: SPACING.xs,
-    },
-    buttonContainer: {
-      paddingTop: SPACING.lg,
     },
   });
 
@@ -77,7 +49,7 @@ const SearchFilter = () => {
   };
 
   return (
-    <View style={[computedStyles.wrapper, styles.wrapper]}>
+    <View style={styles.wrapper}>
       <View>
         <TextCustom text={t('bottomWindows.searchFilter.sort')} mode={TextModes.Subtitle} />
 
@@ -103,14 +75,14 @@ const SearchFilter = () => {
         <TextCustom text={t('bottomWindows.searchFilter.filter')} mode={TextModes.Subtitle} />
 
         <View style={computedStyles.sectionBackground}>
-          <View style={[computedStyles.searchAndTagsNumberContainer, styles.searchAndTagsNumberContainer]}>
+          <View style={styles.searchAndTagsNumberContainer}>
             <SearchInput placeholder={t('bottomWindows.searchFilter.tags')} onStop={onStopHandler} />
             <TextCustom text={String(filteredTags.length)} mode={TextModes.Title} />
           </View>
 
           <FlatList
             data={filteredTags}
-            columnWrapperStyle={computedStyles.tagsContainer}
+            columnWrapperStyle={styles.tagsContainer}
             numColumns={2}
             renderItem={({ item }) => (
               <Tag
@@ -125,14 +97,14 @@ const SearchFilter = () => {
       </View>
 
       <View style={computedStyles.sectionBackground}>
-        <View style={[computedStyles.selectedTextContainer, styles.selectedTextContainer]}>
+        <View style={styles.selectedTextContainer}>
           <TagSelectedIcon />
           <TextCustom text={t('bottomWindows.searchFilter.tags')} />
         </View>
 
         <FlatList
           data={filter.tags}
-          contentContainerStyle={computedStyles.selectedTagsContainer}
+          contentContainerStyle={styles.selectedTagsContainer}
           horizontal
           showsHorizontalScrollIndicator={false}
           //TODO: tags into translation
@@ -143,7 +115,7 @@ const SearchFilter = () => {
       <Button
         title={t('bottomWindows.common.apply')}
         mode={ButtonModes.Success}
-        containerStyle={computedStyles.buttonContainer}
+        containerStyle={styles.buttonContainer}
         //TODO: Server agents handling
         onPress={() => console.log('Home')}
       />
@@ -156,6 +128,7 @@ export default SearchFilter;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    gap: SPACING.m,
   },
   sortContainer: {
     flexDirection: 'row',
@@ -168,6 +141,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     justifyContent: 'space-between',
+    gap: SPACING.xxs,
+    paddingRight: SPACING.xs,
   },
   tag: {
     width: '48%',
@@ -175,5 +150,26 @@ const styles = StyleSheet.create({
   selectedTextContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: SPACING.xxs,
+    paddingLeft: SPACING.xs,
+    paddingTop: SPACING.xs,
+  },
+  sectionBackground: {
+    boxShadow: BOX_SHADOW.medium,
+    borderRadius: RADIUS.small,
+  },
+  tagsContainer: {
+    paddingVertical: SPACING.s,
+    paddingHorizontal: SPACING.xs,
+    gap: SPACING.xxs,
+  },
+  selectedTagsContainer: {
+    paddingTop: SPACING.xxs,
+    paddingHorizontal: SPACING.xs,
+    gap: SPACING.xxs,
+    paddingBottom: SPACING.xs,
+  },
+  buttonContainer: {
+    paddingTop: SPACING.lg,
   },
 });
