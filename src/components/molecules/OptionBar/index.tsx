@@ -19,6 +19,7 @@ const OptionBar = ({
   leftIcon,
   rightComponent,
   onPress,
+  disabled,
 }: OptionBarProps) => {
   const { colors } = useTheme();
 
@@ -73,7 +74,7 @@ const OptionBar = ({
 
   if (mode === OptionBarModes.Complex) {
     return (
-      <PressableCustom onPress={onPress} style={styles.complexContainer}>
+      <PressableCustom disabled={disabled} onPress={onPress} style={styles.complexContainer}>
         <ResizeIcon
           icon={leftIcon}
           containerStyle={computedStyles.iconContainer}

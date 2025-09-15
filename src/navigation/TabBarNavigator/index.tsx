@@ -25,8 +25,8 @@ const Index = () => {
           ...TEXT_STYLES.base,
         },
         tabBarStyle: {
-          height: 70,
-          paddingTop: 5,
+          height: 90,
+          paddingTop: 10,
           backgroundColor: colors.backgroundBase,
         },
       }}
