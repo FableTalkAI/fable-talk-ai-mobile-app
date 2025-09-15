@@ -70,6 +70,7 @@
   },
   "chatList": {
     "searchInput": "Пошук у чаті за іменем агента"
+  },
   "settings": {
     "notifications": "Повідомлення",
     "about": "Про застосунок",
