@@ -9,7 +9,7 @@ import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 
 import { HeaderProps } from './types.ts';
 
-const Header = ({ title, onPress }: HeaderProps) => {
+const Header = ({ title, onPress, style }: HeaderProps) => {
   const { navigation } = useNavigationRoutes();
 
   const computedStyles = StyleSheet.create({
@@ -19,7 +19,7 @@ const Header = ({ title, onPress }: HeaderProps) => {
   });
 
   return (
-    <View style={[styles.container, computedStyles.container]}>
+    <View style={[styles.container, computedStyles.container, style]}>
       <PressableCustom containerStyle={styles.side} onPress={onPress ?? navigation.goBack} hitSlop={10}>
         <ArrowForwardIcon />
       </PressableCustom>

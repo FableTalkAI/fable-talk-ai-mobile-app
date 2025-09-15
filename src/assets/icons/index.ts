@@ -20,6 +20,7 @@ import PinIcon from './pin-icon.svg';
 import PinIconPinned from './pin-icon-pinned.svg';
 import ProfileIcon from './profile.svg';
 import SearchIcon from './search.svg';
+import SendButtonIcon from './send-button.svg';
 import ShieldUserIcon from './shield-user.svg';
 import SignInIcon from './sign-in.svg';
 import SignUpIcon from './sign-up.svg';
@@ -61,6 +62,7 @@ export {
   PinIconPinned,
   ProfileIcon,
   SearchIcon,
+  SendButtonIcon,
   ShieldUserIcon,
   SignInIcon,
   SignUpIcon,

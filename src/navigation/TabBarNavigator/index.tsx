@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ChatIcon, HomeIcon, ProfileIcon } from '@/assets/icons';
 import { TEXT_STYLES } from '@/components/atoms/TextCustom/constants.ts';
 import useTheme from '@/hooks/useTheme.ts';
-import ChatStack from '@/navigation/ChatStack';
+import ChatListScreen from '@/screens/main/ChatListScreen';
 import HomeScreen from '@/screens/main/HomeScreen';
 import ProfileScreen from '@/screens/main/ProfileScreen';
 
@@ -41,8 +41,8 @@ const Index = () => {
         }}
       />
       <Tab.Screen
-        name="ChatStack"
-        component={ChatStack}
+        name="ChatListScreen"
+        component={ChatListScreen}
         options={{
           title: 'Chat',
           // eslint-disable-next-line react/no-unstable-nested-components

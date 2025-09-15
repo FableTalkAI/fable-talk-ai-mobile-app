@@ -127,6 +127,9 @@
       ]
     }
   },
+  "chat": {
+    "placeholder": "Write a message..."
+  },
   "validation": {
     "name": "Please enter a valid name",
     "email": "Please enter a valid email",
