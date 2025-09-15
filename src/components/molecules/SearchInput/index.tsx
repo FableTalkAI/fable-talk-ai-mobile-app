@@ -1,22 +1,33 @@
+import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { ArrowForwardIcon, FilterIcon, SearchIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
+import { useDebounce } from '@/hooks/useDebounce';
 
 import { SearchInputProps } from './types.ts';
 
-const SearchInput = ({ placeholder, withBackArrow, withFilter, value, onChangeText, navigation }: SearchInputProps) => {
+const SearchInput = ({ placeholder, withFilter, navigation, onStop }: SearchInputProps) => {
+  const [value, setValue] = useState('');
+  const debouncedSearch = useDebounce({ value });
+
   const computedStyles = StyleSheet.create({
     wrapper: {
       gap: SPACING.m,
     },
   });
 
+  useEffect(() => {
+    if (debouncedSearch) {
+      onStop(debouncedSearch);
+    }
+  }, [debouncedSearch, onStop]);
+
   return (
     <View style={[styles.wrapper, computedStyles.wrapper]}>
-      {withBackArrow && navigation && (
+      {navigation && (
         <PressableCustom onPress={navigation?.goBack} style={styles.backIcon}>
           <ArrowForwardIcon />
         </PressableCustom>
@@ -25,7 +36,7 @@ const SearchInput = ({ placeholder, withBackArrow, withFilter, value, onChangeTe
       <TextInputCustom
         placeholder={placeholder}
         value={value}
-        onChangeText={onChangeText}
+        onChangeText={setValue}
         leftIcon={<SearchIcon />}
         wrapperStyle={styles.textInputWrapper}
       />
@@ -44,7 +55,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
+    flexShrink: 1,
   },
   textInputWrapper: {
     flex: 1,

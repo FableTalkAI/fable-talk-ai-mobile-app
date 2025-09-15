@@ -67,8 +67,8 @@
       "interests": "Please, select 2 tags"
     }
   },
-  "chatList": {
-    "searchInput": "Search chat by agent name"
+  "searchInput": {
+    "placeholder": "Search chat by agent name"
   },
   "settings": {
     "notifications": "Notifications",

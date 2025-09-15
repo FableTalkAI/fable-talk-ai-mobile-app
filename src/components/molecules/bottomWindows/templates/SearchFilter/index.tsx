@@ -26,21 +26,9 @@ const SearchFilter = () => {
 
   const { filter, setFilterOrderHandler, setFilterSortHandler, tags, setFilterTagsHandler } = useAgentsStore();
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredTags, setFilteredTags] = useState(tags);
 
   const selectOptions = useMemo(() => Object.values(SortFilter).map(option => t(`common.${option}`)), [t]);
-  const filteredTags = useMemo(
-    () => tags.filter(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())),
-    [searchQuery, tags],
-  );
-
-  const onToggle = (tag: string) => {
-    if (filter.tags.includes(tag)) {
-      setFilterTagsHandler(filter.tags.filter(selectedTag => selectedTag !== tag));
-    } else {
-      setFilterTagsHandler([...filter.tags, tag]);
-    }
-  };
 
   const computedStyles = StyleSheet.create({
     wrapper: {
@@ -76,6 +64,18 @@ const SearchFilter = () => {
     },
   });
 
+  const onStopHandler = (value: string) => {
+    setFilteredTags(tags.filter(tag => tag.toLowerCase().includes(value)));
+  };
+
+  const onToggle = (tag: string) => {
+    if (filter.tags.includes(tag)) {
+      setFilterTagsHandler(filter.tags.filter(selectedTag => selectedTag !== tag));
+    } else {
+      setFilterTagsHandler([...filter.tags, tag]);
+    }
+  };
+
   return (
     <View style={[computedStyles.wrapper, styles.wrapper]}>
       <View>
@@ -104,11 +104,7 @@ const SearchFilter = () => {
 
         <View style={computedStyles.sectionBackground}>
           <View style={[computedStyles.searchAndTagsNumberContainer, styles.searchAndTagsNumberContainer]}>
-            <SearchInput
-              placeholder={t('bottomWindows.searchFilter.tags')}
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
+            <SearchInput placeholder={t('bottomWindows.searchFilter.tags')} onStop={onStopHandler} />
             <TextCustom text={String(filteredTags.length)} mode={TextModes.Title} />
           </View>
 
