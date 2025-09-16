@@ -26,7 +26,7 @@ const HomeScreen = () => {
     <SafeAreaViewCustom withGradientBackground>
       <View style={styles.searchAndIconContainer}>
         <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
-          <SearchInput placeholder={t('home.searchInput')} isDisabled />
+          <SearchInput placeholder={t('home.searchInput')} isDisabled onStop={() => null} />
         </PressableCustom>
 
         <PressableCustom onPress={open}>

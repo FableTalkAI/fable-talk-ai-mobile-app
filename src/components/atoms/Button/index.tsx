@@ -32,7 +32,7 @@ const Button = ({
       color: colors.textSecondary,
     },
     transparent: {
-      backgroundColor: setColorOpacity(colors.backgroundBase, 0.22),
+      backgroundColor: setColorOpacity(colors.accentLight, 0.22),
       color: colors.textLight,
     },
     light: {
@@ -44,7 +44,7 @@ const Button = ({
       color: colors.textLight,
     },
     reject: {
-      backgroundColor: colors.errorBase,
+      backgroundColor: colors.errorDark,
       color: colors.textLight,
     },
     link: {
@@ -57,7 +57,6 @@ const Button = ({
     container: {
       borderRadius: RADIUS[radius],
       backgroundColor: buttonModes[localeMode].backgroundColor,
-      padding: SPACING.s,
     },
     text: {
       color: buttonModes[localeMode].color,
@@ -84,6 +83,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
+    padding: SPACING.s,
   },
 });
 

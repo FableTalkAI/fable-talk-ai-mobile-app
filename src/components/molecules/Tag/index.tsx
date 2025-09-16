@@ -19,13 +19,13 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle 
       ({
         [TagColorModes.Inactive]: {
           borderColor: colors.grayDisabled,
-          backgroundColor: colors.backgroundBase,
+          backgroundColor: colors.backgroundAlt,
           text: colors.textSecondary,
         },
         [TagColorModes.Active]: {
           borderColor: colors.primary40,
           backgroundColor: colors.backgroundHover,
-          text: colors.primary40,
+          text: colors.iconPrimary,
         },
       }[currentMode]),
     [currentMode, colors],
@@ -35,9 +35,6 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle 
     tags: {
       borderColor: localColors.borderColor,
       backgroundColor: localColors.backgroundColor,
-      borderRadius: RADIUS.medium,
-      paddingVertical: SPACING.xxs,
-      paddingHorizontal: SPACING.xs,
     },
     tagsText: {
       color: localColors.text,
@@ -64,6 +61,9 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle 
 const styles = StyleSheet.create({
   tags: {
     borderWidth: 2,
+    borderRadius: RADIUS.medium,
+    paddingVertical: SPACING.xxs,
+    paddingHorizontal: SPACING.xs,
   },
   tagsText: {
     textAlign: 'center',

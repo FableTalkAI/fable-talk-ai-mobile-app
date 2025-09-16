@@ -10,14 +10,8 @@ import { SPACING } from '@/core/constants/sizes.ts';
 const InitialStep = () => {
   const { t } = useTranslation();
 
-  const computedStyles = StyleSheet.create({
-    container: {
-      gap: SPACING.xl,
-    },
-  });
-
   return (
-    <View style={[styles.container, computedStyles.container]}>
+    <View style={styles.container}>
       <OnboardingRobotIcon width={SCREEN_WIDTH} />
 
       <TextCustom text={t('onboarding.initialText')} mode={TextModes.Title} style={styles.text} />
@@ -30,6 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    gap: SPACING.xl,
   },
   text: {
     textAlign: 'center',

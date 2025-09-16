@@ -18,8 +18,8 @@ const SafeAreaViewCustom = ({
 
   const computedStyles = StyleSheet.create({
     container: {
-      paddingTop: insets.top > 24 ? 0 : SPACING.lg,
-      paddingBottom: insets.bottom > 24 ? 0 : SPACING.lg,
+      paddingTop: insets.top > SPACING.m ? 0 : SPACING.m,
+      paddingBottom: insets.bottom > SPACING.m ? 0 : SPACING.m,
       backgroundColor: isTransparent || withGradientBackground ? 'transparent' : colors.backgroundBase,
     },
   });
@@ -28,7 +28,7 @@ const SafeAreaViewCustom = ({
     <>
       {withGradientBackground && (
         <LinearGradient
-          colors={[colors.primary10, colors.backgroundAlt]}
+          colors={[colors.primary30, colors.backgroundSecondary]}
           locations={[0, 0.27]}
           style={styles.gradient}
         />

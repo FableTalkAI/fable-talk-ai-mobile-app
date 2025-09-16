@@ -3,9 +3,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { ChatIcon, HomeIcon, ProfileIcon } from '@/assets/icons';
 import { TEXT_STYLES } from '@/components/atoms/TextCustom/constants.ts';
 import useTheme from '@/hooks/useTheme.ts';
-import ChatStack from '@/navigation/ChatStack';
-import ProfileStack from '@/navigation/ProfileStack';
+import ChatListScreen from '@/screens/main/ChatListScreen';
 import HomeScreen from '@/screens/main/HomeScreen';
+import ProfileScreen from '@/screens/main/ProfileScreen';
 
 import { TabBarNavigatorParamList } from './types.ts';
 
@@ -19,14 +19,15 @@ const Index = () => {
       initialRouteName="Home"
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.primary40,
+        tabBarActiveTintColor: colors.iconPrimary,
         tabBarInactiveTintColor: colors.gray40,
         tabBarLabelStyle: {
           ...TEXT_STYLES.base,
         },
         tabBarStyle: {
-          height: 70,
-          paddingTop: 5,
+          height: 90,
+          paddingTop: 10,
+          backgroundColor: colors.backgroundBase,
         },
       }}
     >
@@ -40,8 +41,8 @@ const Index = () => {
         }}
       />
       <Tab.Screen
-        name="ChatStack"
-        component={ChatStack}
+        name="ChatListScreen"
+        component={ChatListScreen}
         options={{
           title: 'Chat',
           // eslint-disable-next-line react/no-unstable-nested-components
@@ -49,8 +50,8 @@ const Index = () => {
         }}
       />
       <Tab.Screen
-        name="ProfileStack"
-        component={ProfileStack}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           title: 'Profile',
           // eslint-disable-next-line react/no-unstable-nested-components

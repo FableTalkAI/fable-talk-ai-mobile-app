@@ -16,38 +16,21 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
   const { colors } = useTheme();
 
   const computedStyles = StyleSheet.create({
-    wrapper: {
-      boxShadow: BOX_SHADOW.medium,
-    },
     pressableContainer: {
       backgroundColor: colors.backgroundBase,
-      borderRadius: RADIUS.medium,
-      paddingVertical: SPACING.m,
-      gap: SPACING.xs,
-    },
-    avatar: {
-      borderRadius: RADIUS.circle,
     },
     name: {
       color: colors.textPrimary,
     },
     description: {
       color: colors.textSecondary,
-      paddingHorizontal: SPACING.s,
-    },
-    flatList: {
-      paddingVertical: SPACING.xxs,
-    },
-    flatListContainer: {
-      paddingHorizontal: SPACING.m,
-      gap: SPACING.xxs,
     },
   });
 
   return (
-    <View style={[styles.wrapper, computedStyles.wrapper]}>
+    <View style={styles.wrapper}>
       <PressableCustom style={[computedStyles.pressableContainer, styles.pressableContainer, style]} onPress={onPress}>
-        <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
+        <AutoImage source={avatarSource} style={styles.avatar} />
 
         <TextCustom text={name} mode={TextModes.Secondary} style={computedStyles.name} />
         <TextCustom
@@ -60,8 +43,8 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
         <FlatList
           horizontal
           data={tags}
-          style={[computedStyles.flatList, styles.flatList]}
-          contentContainerStyle={computedStyles.flatListContainer}
+          style={styles.flatList}
+          contentContainerStyle={styles.flatListContainer}
           showsHorizontalScrollIndicator={false}
           keyExtractor={item => item}
           renderItem={({ item }) => <Tag title={item} forceActive />}
@@ -73,22 +56,31 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
 
 const styles = StyleSheet.create({
   wrapper: {
-    maxWidth: '50%',
-    flex: 1,
+    flexBasis: '45%',
+    boxShadow: BOX_SHADOW.medium,
   },
   pressableContainer: {
     alignItems: 'center',
-    flex: 1,
+    borderRadius: RADIUS.medium,
+    paddingVertical: SPACING.m,
+    gap: SPACING.xs,
   },
   avatar: {
     width: 44,
     height: 44,
+    borderRadius: RADIUS.circle,
   },
   description: {
     textAlign: 'center',
+    paddingHorizontal: SPACING.s,
   },
   flatList: {
     maxHeight: 40,
+    paddingVertical: SPACING.xxs,
+  },
+  flatListContainer: {
+    paddingHorizontal: SPACING.m,
+    gap: SPACING.xxs,
   },
 });
 

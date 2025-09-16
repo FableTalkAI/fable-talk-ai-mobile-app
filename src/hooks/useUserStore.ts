@@ -1,9 +1,24 @@
 import { useCallback } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
-import { setOnboardingStep, setProfile, setTags } from '@/store/user';
-import { onboardingStepSelector, profileSelector, tagsSelector } from '@/store/user/selectors.ts';
-import { UserProfile } from '@/store/user/types.ts';
+import {
+  setChats,
+  setEmailNotification,
+  setOnboardingStep,
+  setProfile,
+  setPushNotification,
+  setTags,
+  setTheme,
+} from '@/store/user';
+import {
+  chatsSelector,
+  notificationsSelector,
+  onboardingStepSelector,
+  profileSelector,
+  tagsSelector,
+  themeSelector,
+} from '@/store/user/selectors.ts';
+import { Chat, Theme, UserProfile } from '@/store/user/types.ts';
 
 const useUserStore = () => {
   const dispatch = useAppDispatch();
@@ -11,6 +26,9 @@ const useUserStore = () => {
   const tags = useAppSelector(tagsSelector);
   const profile = useAppSelector(profileSelector);
   const onboardingStep = useAppSelector(onboardingStepSelector);
+  const notifications = useAppSelector(notificationsSelector);
+  const theme = useAppSelector(themeSelector);
+  const chats = useAppSelector(chatsSelector);
 
   const setTagsHandler = useCallback(
     (selectedTags: string[]) => {
@@ -33,13 +51,48 @@ const useUserStore = () => {
     [dispatch],
   );
 
+  const setPushNotificationHandler = useCallback(
+    (isActive: boolean) => {
+      dispatch(setPushNotification(isActive));
+    },
+    [dispatch],
+  );
+
+  const setEmailNotificationHandler = useCallback(
+    (isActive: boolean) => {
+      dispatch(setEmailNotification(isActive));
+    },
+    [dispatch],
+  );
+
+  const setThemeHandler = useCallback(
+    (themeMode: Theme) => {
+      dispatch(setTheme(themeMode));
+    },
+    [dispatch],
+  );
+
+  const setChatsHandler = useCallback(
+    (activeChats: Chat[]) => {
+      dispatch(setChats(activeChats));
+    },
+    [dispatch],
+  );
+
   return {
     tags,
     profile,
     onboardingStep,
+    theme,
+    notifications,
+    chats,
     setTagsHandler,
     setProfileHandler,
     setOnboardingStepHandler,
+    setPushNotificationHandler,
+    setEmailNotificationHandler,
+    setThemeHandler,
+    setChatsHandler,
   };
 };
 

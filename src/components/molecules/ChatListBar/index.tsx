@@ -19,17 +19,7 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
 
   const computedStyles = StyleSheet.create({
     wrapper: {
-      paddingHorizontal: SPACING.m,
-      paddingVertical: SPACING.m,
-      borderRadius: RADIUS.medium,
       backgroundColor: colors.backgroundBase,
-      boxShadow: BOX_SHADOW.medium,
-    },
-    avatar: {
-      borderRadius: RADIUS.circle,
-    },
-    messageContainer: {
-      paddingHorizontal: SPACING.s,
     },
     agentName: {
       color: colors.textPrimary,
@@ -40,10 +30,13 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
   });
 
   return (
-    <PressableCustom containerStyle={[styles.wrapper, computedStyles.wrapper]} onPress={onPress}>
-      <AutoImage source={avatarSource} style={[styles.avatar, computedStyles.avatar]} />
-
-      <View style={[styles.messageContainer, computedStyles.messageContainer]}>
+    <PressableCustom
+      containerStyle={[styles.wrapper, computedStyles.wrapper]}
+      style={styles.pressableContainer}
+      onPress={onPress}
+    >
+      <AutoImage source={avatarSource} style={styles.avatar} />
+      <View style={styles.messageContainer}>
         <View style={styles.nameAndPinContainer}>
           <TextCustom text={agentName} style={computedStyles.agentName} />
 
@@ -67,14 +60,22 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
 
 const styles = StyleSheet.create({
   wrapper: {
+    paddingHorizontal: SPACING.m,
+    paddingVertical: SPACING.m,
+    borderRadius: RADIUS.medium,
+    boxShadow: BOX_SHADOW.medium,
+  },
+  pressableContainer: {
     flexDirection: 'row',
   },
   avatar: {
     width: 30,
     height: 30,
+    borderRadius: RADIUS.circle,
   },
   messageContainer: {
     flex: 1,
+    paddingHorizontal: SPACING.s,
   },
   nameAndPinContainer: {
     justifyContent: 'space-between',

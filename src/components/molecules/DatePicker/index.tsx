@@ -7,12 +7,6 @@ import { SPACING } from '@/core/constants/sizes.ts';
 import { DatePickerProps } from './types.ts';
 
 const DatePicker = ({ isVisible, onCancel, handleConfirm, defaultDate }: DatePickerProps) => {
-  const computedStyles = StyleSheet.create({
-    modalStyleIOS: {
-      marginBottom: SPACING.xl,
-    },
-  });
-
   return (
     <DateTimePickerModal
       isVisible={isVisible}
@@ -21,17 +15,20 @@ const DatePicker = ({ isVisible, onCancel, handleConfirm, defaultDate }: DatePic
       maximumDate={new Date()}
       minimumDate={new Date(1900, 0, 1)}
       date={defaultDate ? new Date(defaultDate) : new Date()}
-      pickerStyleIOS={style.pickerStyleIOS}
-      modalStyleIOS={computedStyles.modalStyleIOS}
+      pickerStyleIOS={styles.pickerStyleIOS}
+      modalStyleIOS={styles.modalStyleIOS}
       onConfirm={handleConfirm}
       onCancel={onCancel}
     />
   );
 };
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   pickerStyleIOS: {
     alignItems: 'center',
+  },
+  modalStyleIOS: {
+    marginBottom: SPACING.xl,
   },
 });
 

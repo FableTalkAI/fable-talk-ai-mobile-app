@@ -27,13 +27,19 @@ const SearchFilter = () => {
   const { filter, setFilterOrderHandler, setFilterSortHandler, tags, setFilterTagsHandler, setFilteredAgents, agents } =
     useAgentsStore();
 
-  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredTags, setFilteredTags] = useState(tags);
 
   const selectOptions = useMemo(() => Object.values(SortFilter).map(option => t(`common.${option}`)), [t]);
-  const filteredTags = useMemo(
-    () => tags.filter(tag => tag.toLowerCase().includes(searchQuery.toLowerCase())),
-    [searchQuery, tags],
-  );
+
+  const computedStyles = StyleSheet.create({
+    sectionBackground: {
+      backgroundColor: colors.backgroundAlt,
+    },
+  });
+
+  const onStopHandler = (value: string) => {
+    setFilteredTags(tags.filter(tag => tag.toLowerCase().includes(value)));
+  };
 
   const onToggle = (tag: string) => {
     if (filter.tags.includes(tag)) {
@@ -48,42 +54,8 @@ const SearchFilter = () => {
     return agents.filter(agent => agent.tags.some(tag => filteredTags.includes(tag)));
   };
 
-  const computedStyles = StyleSheet.create({
-    wrapper: {
-      gap: SPACING.m,
-    },
-    sectionBackground: {
-      boxShadow: BOX_SHADOW.medium,
-      backgroundColor: colors.backgroundAlt,
-      borderRadius: RADIUS.small,
-    },
-    searchAndTagsNumberContainer: {
-      gap: SPACING.xxs,
-      paddingRight: SPACING.xs,
-    },
-    tagsContainer: {
-      paddingVertical: SPACING.s,
-      paddingHorizontal: SPACING.xs,
-      gap: SPACING.xxs,
-    },
-    selectedTagsContainer: {
-      paddingTop: SPACING.xxs,
-      paddingHorizontal: SPACING.xs,
-      gap: SPACING.xxs,
-      paddingBottom: SPACING.xs,
-    },
-    selectedTextContainer: {
-      gap: SPACING.xxs,
-      paddingLeft: SPACING.xs,
-      paddingTop: SPACING.xs,
-    },
-    buttonContainer: {
-      paddingTop: SPACING.lg,
-    },
-  });
-
   return (
-    <View style={[computedStyles.wrapper, styles.wrapper]}>
+    <View style={styles.wrapper}>
       <View>
         <TextCustom text={t('bottomWindows.searchFilter.sort')} mode={TextModes.Subtitle} />
 
@@ -109,18 +81,14 @@ const SearchFilter = () => {
         <TextCustom text={t('bottomWindows.searchFilter.filter')} mode={TextModes.Subtitle} />
 
         <View style={computedStyles.sectionBackground}>
-          <View style={[computedStyles.searchAndTagsNumberContainer, styles.searchAndTagsNumberContainer]}>
-            <SearchInput
-              placeholder={t('bottomWindows.searchFilter.tags')}
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-            />
+          <View style={styles.searchAndTagsNumberContainer}>
+            <SearchInput placeholder={t('bottomWindows.searchFilter.tags')} onStop={onStopHandler} />
             <TextCustom text={String(filteredTags.length)} mode={TextModes.Title} />
           </View>
 
           <FlatList
             data={filteredTags}
-            columnWrapperStyle={computedStyles.tagsContainer}
+            columnWrapperStyle={styles.tagsContainer}
             numColumns={2}
             renderItem={({ item }) => (
               <Tag
@@ -135,14 +103,14 @@ const SearchFilter = () => {
       </View>
 
       <View style={computedStyles.sectionBackground}>
-        <View style={[computedStyles.selectedTextContainer, styles.selectedTextContainer]}>
+        <View style={styles.selectedTextContainer}>
           <TagSelectedIcon />
           <TextCustom text={t('bottomWindows.searchFilter.tags')} />
         </View>
 
         <FlatList
           data={filter.tags}
-          contentContainerStyle={computedStyles.selectedTagsContainer}
+          contentContainerStyle={styles.selectedTagsContainer}
           horizontal
           showsHorizontalScrollIndicator={false}
           //TODO: tags into translation
@@ -153,7 +121,7 @@ const SearchFilter = () => {
       <Button
         title={t('common.apply')}
         mode={ButtonModes.Success}
-        containerStyle={computedStyles.buttonContainer}
+        containerStyle={styles.buttonContainer}
         //TODO: Server agents handling
         onPress={() => {
           const filtered = filterAgentsByTags();
@@ -169,6 +137,7 @@ export default SearchFilter;
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+    gap: SPACING.m,
   },
   sortContainer: {
     flexDirection: 'row',
@@ -181,6 +150,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderBottomWidth: 1,
     justifyContent: 'space-between',
+    gap: SPACING.xxs,
+    paddingRight: SPACING.xs,
   },
   tag: {
     width: '48%',
@@ -188,5 +159,26 @@ const styles = StyleSheet.create({
   selectedTextContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: SPACING.xxs,
+    paddingLeft: SPACING.xs,
+    paddingTop: SPACING.xs,
+  },
+  sectionBackground: {
+    boxShadow: BOX_SHADOW.medium,
+    borderRadius: RADIUS.small,
+  },
+  tagsContainer: {
+    paddingVertical: SPACING.s,
+    paddingHorizontal: SPACING.xs,
+    gap: SPACING.xxs,
+  },
+  selectedTagsContainer: {
+    paddingTop: SPACING.xxs,
+    paddingHorizontal: SPACING.xs,
+    gap: SPACING.xxs,
+    paddingBottom: SPACING.xs,
+  },
+  buttonContainer: {
+    paddingTop: SPACING.lg,
   },
 });

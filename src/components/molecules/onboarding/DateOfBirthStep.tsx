@@ -20,16 +20,10 @@ const DateOfBirthStep = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const computedStyles = StyleSheet.create({
-    container: {
-      gap: SPACING.m,
-    },
     buttonContainer: {
-      borderRadius: RADIUS.small,
-      padding: SPACING.s,
       backgroundColor: colors.backgroundHover,
     },
     text: {
-      paddingRight: SPACING.xxs,
       color: profile.dateOfBirth ? colors.textPrimary : colors.gray50,
     },
   });
@@ -49,15 +43,15 @@ const DateOfBirthStep = () => {
   };
 
   return (
-    <View style={[styles.container, computedStyles.container]}>
+    <View style={styles.container}>
       {Array.from({ length: 3 }).map((_, index) => (
         <PressableCustom
           onPress={() => setDatePickerVisibility(true)}
           key={index}
           style={styles.button}
-          containerStyle={[styles.flex1, computedStyles.buttonContainer]}
+          containerStyle={[styles.buttonContainer, computedStyles.buttonContainer]}
         >
-          <TextCustom style={[styles.flex1, computedStyles.text]} numberOfLines={1} text={dateOfBirth[index]} />
+          <TextCustom style={[styles.text, computedStyles.text]} numberOfLines={1} text={dateOfBirth[index]} />
           <TriangleIcon />
         </PressableCustom>
       ))}
@@ -76,14 +70,22 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    gap: SPACING.m,
   },
-  flex1: {
-    flex: 1,
-  },
+
   button: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  buttonContainer: {
+    borderRadius: RADIUS.small,
+    padding: SPACING.s,
+    flex: 1,
+  },
+  text: {
+    flex: 1,
+    paddingRight: SPACING.xxs,
   },
 });
 

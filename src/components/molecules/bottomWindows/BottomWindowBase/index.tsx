@@ -16,7 +16,6 @@ const BottomWindowBase = forwardRef<BottomSheetModalMethods, BottomWindowBasePro
   const computedStyles = StyleSheet.create({
     container: {
       paddingBottom: insets.bottom ? insets.bottom + SPACING.xxs : SPACING.lg,
-      paddingHorizontal: SPACING.lg,
     },
   });
 
@@ -44,6 +43,7 @@ const BottomWindowBase = forwardRef<BottomSheetModalMethods, BottomWindowBasePro
 const styles = StyleSheet.create({
   container: {
     minHeight: 350,
+    paddingHorizontal: SPACING.lg,
   },
 });
 
