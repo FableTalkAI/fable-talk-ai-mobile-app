@@ -1,5 +1,4 @@
-import { StyleProp, ViewStyle } from 'react-native';
-import { PressableProps } from 'react-native-gesture-handler';
+import { PressableProps, StyleProp, ViewStyle } from 'react-native';
 
 type ExcludePressableProps = 'style';
 
