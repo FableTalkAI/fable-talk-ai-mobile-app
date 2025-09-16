@@ -9,7 +9,7 @@ import useTheme from '@/hooks/useTheme.ts';
 
 import { TagColorModes, TagProps } from './types.ts';
 
-const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle }: TagProps) => {
+const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle, style }: TagProps) => {
   const { colors } = useTheme();
 
   const currentMode = forceActive || isSelected ? TagColorModes.Active : TagColorModes.Inactive;
@@ -18,12 +18,12 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle 
     () =>
       ({
         [TagColorModes.Inactive]: {
-          borderColor: colors.grayDisabled,
-          backgroundColor: colors.backgroundAlt,
-          text: colors.textSecondary,
+          borderColor: colors.borderPrimary,
+          backgroundColor: colors.backgroundBase,
+          text: colors.textPrimary,
         },
         [TagColorModes.Active]: {
-          borderColor: colors.primary40,
+          borderColor: colors.primary60,
           backgroundColor: colors.backgroundHover,
           text: colors.iconPrimary,
         },
@@ -43,7 +43,7 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle 
 
   return (
     <PressableCustom
-      style={[styles.tags, computedStyles.tags]}
+      style={[styles.tags, computedStyles.tags, style]}
       containerStyle={containerStyle}
       hitSlop={5}
       onPress={() => onToggle?.(title)}

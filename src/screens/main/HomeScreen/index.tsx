@@ -12,46 +12,49 @@ import useAgentsStore from '@/hooks/useAgentsStore.ts';
 import useBottomWindow from '@/hooks/useBottomWindow';
 import { BottomWindowModes } from '@/hooks/useBottomWindow/types.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
-// import useTheme from '@/hooks/useTheme.ts';
 
 const HomeScreen = () => {
   const { t } = useTranslation();
-  // const { colors } = useTheme();
   const { agents } = useAgentsStore();
   const { open, BottomWindow } = useBottomWindow({ mode: BottomWindowModes.SearchFilter });
 
   const { navigation } = useNavigationRoutes();
 
   return (
-    <SafeAreaViewCustom withGradientBackground>
-      <View style={styles.searchAndIconContainer}>
-        <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
-          <SearchInput placeholder={t('home.searchInput')} isDisabled onStop={() => null} />
-        </PressableCustom>
+    <>
+      <SafeAreaViewCustom withGradientBackground>
+        <View style={styles.searchAndIconContainer}>
+          <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
+            <SearchInput placeholder={t('home.searchInput')} isDisabled onStop={() => null} />
+          </PressableCustom>
 
-        <PressableCustom onPress={open}>
-          <FilterIcon />
-        </PressableCustom>
-      </View>
+          <PressableCustom onPress={open}>
+            <FilterIcon />
+          </PressableCustom>
+        </View>
+
+        <FlatList
+          style={styles.flatListContainer}
+          data={agents}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          columnWrapperStyle={styles.flatListContentContainer}
+          contentContainerStyle={styles.flatListContentContainer}
+          keyExtractor={item => item.name}
+          renderItem={({ item }) => (
+            <AgentBar
+              name={item.name}
+              description={item.description}
+              tags={item.tags}
+              avatarSource={item.avatarSource}
+              //TODO: onPress navigate to ChatScreen
+            />
+          )}
+        />
+      </SafeAreaViewCustom>
+
       <BottomWindow />
-      <FlatList
-        style={styles.flatListContainer}
-        data={agents}
-        numColumns={2}
-        columnWrapperStyle={styles.flatListContentContainer}
-        contentContainerStyle={styles.flatListContentContainer}
-        keyExtractor={item => item.name}
-        renderItem={({ item }) => (
-          <AgentBar
-            name={item.name}
-            description={item.description}
-            tags={item.tags}
-            avatarSource={item.avatarSource}
-            //TODO: onPress navigate to ChatScreen
-          />
-        )}
-      />
-    </SafeAreaViewCustom>
+    </>
   );
 };
 

@@ -37,7 +37,14 @@ const SettingsScreen = () => {
   const { BottomWindow, open } = useBottomWindow({ mode: BottomWindowModes.DeleteAccount });
   const { authorizeHandler } = useNotificationPermission();
 
-  const selectOptions = useMemo(() => Object.values(Theme).map(option => t(`theme.${option}`)), [t]);
+  const selectOptions = useMemo(
+    () =>
+      (Object.keys(Theme) as Array<keyof typeof Theme>).map(option => ({
+        value: Theme[option],
+        title: t(`theme.${option.toLowerCase()}`),
+      })),
+    [t],
+  );
 
   return (
     <>
@@ -53,7 +60,7 @@ const SettingsScreen = () => {
             <OptionBar
               onPress={authorizeHandler}
               title={t('settings.pushNotifications')}
-              subtitle={t('common.disable')}
+              subtitle={t(`common.${notifications.push ? 'enabled' : 'disabled'}`)}
               leftIcon={<NotificationBellIcon />}
               rightComponent={<Toggle isActive={notifications.push} />}
               mode={OptionBarModes.Complex}
@@ -61,7 +68,7 @@ const SettingsScreen = () => {
             <OptionBar
               onPress={() => setEmailNotificationHandler(!notifications.email)}
               title={t('common.email')}
-              subtitle={t('common.enable')}
+              subtitle={t(`common.${notifications.email ? 'enabled' : 'disabled'}`)}
               leftIcon={<MailDotIcon />}
               rightComponent={<Toggle isActive={notifications.email} />}
               mode={OptionBarModes.Complex}
@@ -99,9 +106,7 @@ const SettingsScreen = () => {
               subtitle={t('settings.changeAppTheme')}
               leftIcon={<PaletteIcon />}
               mode={OptionBarModes.Complex}
-              rightComponent={
-                <Select onChange={setThemeHandler} options={selectOptions} defaultOption={t(`theme.${theme}`)} />
-              }
+              rightComponent={<Select onChange={setThemeHandler} options={selectOptions} defaultValue={theme} />}
             />
             <OptionBar
               onPress={open}

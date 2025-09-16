@@ -6,7 +6,7 @@ import { agentsSliceName } from './thunks.ts';
 import { Agent, AgentsState, OrderFilter, SortFilter } from './types.ts';
 
 const initialState: AgentsState = {
-  tags: ['Home', 'Test', 'Home1', 'Test1'],
+  tags: ['Home', 'Test', 'Home1', 'Test2', 'Home2', 'Test3', 'Home4', 'Test6'],
   agents: [
     {
       name: 'Jonh7',

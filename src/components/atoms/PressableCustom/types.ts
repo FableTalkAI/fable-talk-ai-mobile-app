@@ -1,7 +1,5 @@
 import { ReactNode } from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
-import { PressableProps } from 'react-native-gesture-handler';
-import { PressableEvent } from 'react-native-gesture-handler/lib/typescript/components/Pressable/PressableProps';
+import { GestureResponderEvent, PressableProps, StyleProp, ViewStyle } from 'react-native';
 
 type ExcludePressableCustomProps = 'style' | 'onPressIn' | 'onPressOut';
 
@@ -11,6 +9,6 @@ export type PressableCustomProps = {
   children?: ReactNode;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
-  onPressIn?: ((event: PressableEvent) => void) | null;
-  onPressOut?: ((event: PressableEvent) => void) | null;
+  onPressIn?: ((event: GestureResponderEvent) => void) | null;
+  onPressOut?: ((event: GestureResponderEvent) => void) | null;
 } & UniquePressableProps;

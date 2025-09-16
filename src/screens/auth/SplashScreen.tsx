@@ -35,7 +35,11 @@ const SplashScreen = () => {
 
   return (
     <>
-      <LinearGradient colors={[colors.accentLight, colors.primary100]} locations={[0.2, 0.9]} style={styles.gradient} />
+      <LinearGradient
+        colors={[colors.backgroundSecondary, colors.primary100]}
+        locations={[0.2, 0.9]}
+        style={styles.gradient}
+      />
 
       <SafeAreaViewCustom isTransparent style={styles.safeAreaView}>
         <View style={[styles.logoContainer, computedStyles.logoContainer]}>

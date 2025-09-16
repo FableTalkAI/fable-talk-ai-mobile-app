@@ -6,6 +6,5 @@ export type SearchInputProps = {
   placeholder?: string;
   onStop: (value: string) => void;
   isDisabled?: boolean;
-  withFilter?: boolean;
   navigation?: StackNavigationProp<AllNavigationParamList>;
 };

@@ -56,14 +56,15 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
 
 const styles = StyleSheet.create({
   wrapper: {
-    flexBasis: '45%',
+    maxWidth: '50%',
+    flex: 1,
     boxShadow: BOX_SHADOW.medium,
   },
   pressableContainer: {
     alignItems: 'center',
     borderRadius: RADIUS.medium,
     paddingVertical: SPACING.m,
-    gap: SPACING.xs,
+    gap: SPACING.xxs,
   },
   avatar: {
     width: 44,
@@ -73,6 +74,8 @@ const styles = StyleSheet.create({
   description: {
     textAlign: 'center',
     paddingHorizontal: SPACING.s,
+    height: 24,
+    textAlignVertical: 'center',
   },
   flatList: {
     maxHeight: 40,

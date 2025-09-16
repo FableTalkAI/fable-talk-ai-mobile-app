@@ -1,5 +1,5 @@
 import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -29,17 +29,30 @@ const SearchFilter = () => {
 
   const [filteredTags, setFilteredTags] = useState(tags);
 
-  const selectOptions = useMemo(() => Object.values(SortFilter).map(option => t(`common.${option}`)), [t]);
+  const selectOptions = useMemo(
+    () =>
+      (Object.keys(SortFilter) as Array<keyof typeof SortFilter>).map(option => ({
+        value: SortFilter[option],
+        title: t(`common.${option.toLowerCase()}`),
+      })),
+    [t],
+  );
 
   const computedStyles = StyleSheet.create({
     sectionBackground: {
-      backgroundColor: colors.backgroundAlt,
+      backgroundColor: colors.backgroundSecondary,
+    },
+    noResults: {
+      color: colors.gray50,
     },
   });
 
-  const onStopHandler = (value: string) => {
-    setFilteredTags(tags.filter(tag => tag.toLowerCase().includes(value)));
-  };
+  const onStopHandler = useCallback(
+    (value: string) => {
+      setFilteredTags(tags.filter(tag => tag.toLowerCase().includes(value.toLowerCase())));
+    },
+    [tags],
+  );
 
   const onToggle = (tag: string) => {
     if (filter.tags.includes(tag)) {
@@ -63,7 +76,7 @@ const SearchFilter = () => {
           <Select
             options={selectOptions}
             width={SCREEN_WIDTH - SPACING.lg - 20 - SPACING.xl}
-            defaultOption={filter.sort}
+            defaultValue={filter.sort}
             onChange={setFilterSortHandler}
           />
 
@@ -72,7 +85,11 @@ const SearchFilter = () => {
             hitSlop={5}
           >
             <Animated.View exiting={FadeOut} entering={FadeIn} key={`sort-ascending-${filter.order}`}>
-              {filter.order === OrderFilter.ASC ? <SortAscendingIcon /> : <SortDescendingIcon />}
+              {filter.order === OrderFilter.ASC ? (
+                <SortAscendingIcon fill={colors.iconPrimary} />
+              ) : (
+                <SortDescendingIcon fill={colors.iconPrimary} />
+              )}
             </Animated.View>
           </PressableCustom>
         </View>
@@ -80,29 +97,40 @@ const SearchFilter = () => {
       <View>
         <TextCustom text={t('bottomWindows.searchFilter.filter')} mode={TextModes.Subtitle} />
 
-        <View style={computedStyles.sectionBackground}>
+        <View style={[computedStyles.sectionBackground, styles.sectionBackground]}>
           <View style={styles.searchAndTagsNumberContainer}>
             <SearchInput placeholder={t('bottomWindows.searchFilter.tags')} onStop={onStopHandler} />
-            <TextCustom text={String(filteredTags.length)} mode={TextModes.Title} />
+            <TextCustom text={String(filteredTags.length)} />
           </View>
 
-          <FlatList
-            data={filteredTags}
-            columnWrapperStyle={styles.tagsContainer}
-            numColumns={2}
-            renderItem={({ item }) => (
-              <Tag
-                title={item}
-                containerStyle={styles.tag}
-                onToggle={onToggle}
-                isSelected={filter.tags.includes(item)}
-              />
-            )}
-          />
+          {filteredTags.length ? (
+            <FlatList
+              data={filteredTags}
+              nestedScrollEnabled
+              showsVerticalScrollIndicator={false}
+              columnWrapperStyle={styles.tagsFlatListWrapper}
+              style={styles.tagsFlatList}
+              contentContainerStyle={styles.tagsFlatListContainer}
+              numColumns={2}
+              renderItem={({ item }) => (
+                <Tag
+                  title={item}
+                  containerStyle={styles.tagContainer}
+                  style={styles.tag}
+                  onToggle={onToggle}
+                  isSelected={filter.tags.includes(item)}
+                />
+              )}
+            />
+          ) : (
+            <View style={styles.noResultsContainer}>
+              <TextCustom style={computedStyles.noResults} mode={TextModes.Secondary} text={t('common.noResults')} />
+            </View>
+          )}
         </View>
       </View>
 
-      <View style={computedStyles.sectionBackground}>
+      <View style={[computedStyles.sectionBackground, styles.sectionBackground]}>
         <View style={styles.selectedTextContainer}>
           <TagSelectedIcon />
           <TextCustom text={t('bottomWindows.searchFilter.tags')} />
@@ -112,6 +140,7 @@ const SearchFilter = () => {
           data={filter.tags}
           contentContainerStyle={styles.selectedTagsContainer}
           horizontal
+          bounces={false}
           showsHorizontalScrollIndicator={false}
           //TODO: tags into translation
           renderItem={({ item }) => <Tag title={item} forceActive onToggle={onToggle} />}
@@ -153,8 +182,12 @@ const styles = StyleSheet.create({
     gap: SPACING.xxs,
     paddingRight: SPACING.xs,
   },
+  tagContainer: {
+    flex: 1,
+    maxWidth: '50%',
+  },
   tag: {
-    width: '48%',
+    paddingVertical: SPACING.xs,
   },
   selectedTextContainer: {
     flexDirection: 'row',
@@ -167,9 +200,14 @@ const styles = StyleSheet.create({
     boxShadow: BOX_SHADOW.medium,
     borderRadius: RADIUS.small,
   },
-  tagsContainer: {
-    paddingVertical: SPACING.s,
-    paddingHorizontal: SPACING.xs,
+  tagsFlatListContainer: {
+    padding: SPACING.xs,
+  },
+  tagsFlatList: {
+    height: 180,
+  },
+  tagsFlatListWrapper: {
+    paddingVertical: SPACING.xxs,
     gap: SPACING.xxs,
   },
   selectedTagsContainer: {
@@ -180,5 +218,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingTop: SPACING.lg,
+  },
+  noResultsContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 180,
   },
 });
