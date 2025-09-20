@@ -13,7 +13,7 @@ import { AvatarProps } from './types.ts';
 const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri, style }: AvatarProps) => {
   const { colors } = useTheme();
 
-  const { pickImage, BottomWindowPermissionDenied } = useImagePick({ setAvatarUri });
+  const { pickImage } = useImagePick({ setAvatarUri });
 
   const computedStyles = StyleSheet.create({
     container: {
@@ -27,22 +27,18 @@ const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri, style }: A
   });
 
   return (
-    <View style={style}>
-      <View style={[computedStyles.container, styles.container]}>
-        {avatarUri ? <AutoImage source={{ uri: avatarUri }} resizeMode="cover" style={styles.image} /> : <UserIcon />}
+    <View style={[computedStyles.container, styles.container, style]}>
+      {avatarUri ? <AutoImage source={{ uri: avatarUri }} resizeMode="cover" style={styles.image} /> : <UserIcon />}
 
-        {isChangeable && (
-          <PressableCustom
-            containerStyle={[computedStyles.editContainer, styles.editContainer]}
-            hitSlop={10}
-            onPress={pickImage}
-          >
-            <EditAvatarIcon fill={colors.iconPrimary} />
-          </PressableCustom>
-        )}
-      </View>
-
-      <BottomWindowPermissionDenied />
+      {isChangeable && (
+        <PressableCustom
+          containerStyle={[computedStyles.editContainer, styles.editContainer]}
+          hitSlop={10}
+          onPress={pickImage}
+        >
+          <EditAvatarIcon fill={colors.iconPrimary} />
+        </PressableCustom>
+      )}
     </View>
   );
 };

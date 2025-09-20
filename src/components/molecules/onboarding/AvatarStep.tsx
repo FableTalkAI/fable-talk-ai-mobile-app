@@ -15,22 +15,18 @@ const AvatarStep = () => {
     setProfileHandler({ ...profile, avatarUri: uri });
   };
 
-  const { pickImage, BottomWindowPermissionDenied } = useImagePick({ setAvatarUri });
+  const { pickImage } = useImagePick({ setAvatarUri });
 
   return (
-    <>
-      <View style={styles.container}>
-        {profile?.avatarUri ? (
-          <Avatar size={WINDOW_WIDTH * 0.7} isChangeable={false} avatarUri={profile?.avatarUri} />
-        ) : (
-          <PressableCustom onPress={pickImage}>
-            <ImagePlusIcon width={WINDOW_WIDTH} height={WINDOW_WIDTH * 0.7} />
-          </PressableCustom>
-        )}
-      </View>
-
-      <BottomWindowPermissionDenied />
-    </>
+    <View style={styles.container}>
+      {profile?.avatarUri ? (
+        <Avatar size={WINDOW_WIDTH * 0.7} isChangeable={false} avatarUri={profile?.avatarUri} />
+      ) : (
+        <PressableCustom onPress={pickImage}>
+          <ImagePlusIcon width={WINDOW_WIDTH} height={WINDOW_WIDTH * 0.7} />
+        </PressableCustom>
+      )}
+    </View>
   );
 };
 

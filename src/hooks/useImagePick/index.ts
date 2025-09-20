@@ -10,7 +10,7 @@ import { BottomWindowModes } from '@/hooks/useBottomWindow/types.ts';
 import { UseImagePickProps } from './types.ts';
 
 export const useImagePick = ({ setAvatarUri }: UseImagePickProps) => {
-  const { BottomWindow, open } = useBottomWindow({ mode: BottomWindowModes.PermissionDenied });
+  const { open } = useBottomWindow(BottomWindowModes.PermissionDenied);
 
   const requestGalleryPermission = useCallback(async (): Promise<PermissionStatus> => {
     let permission;
@@ -84,5 +84,5 @@ export const useImagePick = ({ setAvatarUri }: UseImagePickProps) => {
     }
   };
 
-  return { pickImage, BottomWindowPermissionDenied: BottomWindow };
+  return { pickImage };
 };

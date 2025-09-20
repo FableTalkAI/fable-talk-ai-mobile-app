@@ -1,13 +1,11 @@
 {
   "common": {
-    "continue": "Continue",
     "dateOfBirth": "Date of Birth",
     "avatar": "Avatar",
     "interests": "Interests",
     "day": "Day",
     "month": "Month",
     "year": "Year",
-    "cancel": "Cancel",
     "settings": "Settings",
     "subscription": "Subscription",
     "email": "Email",
@@ -17,11 +15,15 @@
     "enabled": "Enabled",
     "disabled": "Disabled",
     "contactUs": "Contact us",
-    "delete": "Delete",
-    "noResults": "No results",
+    "noResults": "No results"
+  },
+  "actions": {
     "apply": "Apply",
     "choose": "Choose",
-    "send": "Send"
+    "send": "Send",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "continue": "Continue"
   },
   "bottomWindows": {
     "permissionDenied": {

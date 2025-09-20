@@ -5,11 +5,13 @@ import persistConfig from '@/core/configs/persist.ts';
 import { ReducersTypes } from '@/core/redux/types.ts';
 
 import agentsReducer from './agents';
+import uiReducer from './ui';
 import userReducer from './user';
 
 const rootReducer = combineReducers<ReducersTypes>({
   agents: agentsReducer,
   user: userReducer,
+  ui: uiReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, rootReducer);

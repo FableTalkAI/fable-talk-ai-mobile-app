@@ -148,7 +148,7 @@ const SearchFilter = () => {
       </View>
 
       <Button
-        title={t('common.apply')}
+        title={t('actions.apply')}
         mode={ButtonModes.Success}
         containerStyle={styles.buttonContainer}
         //TODO: Server agents handling

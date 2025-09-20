@@ -16,7 +16,7 @@ import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 const HomeScreen = () => {
   const { t } = useTranslation();
   const { agents } = useAgentsStore();
-  const { open, BottomWindow } = useBottomWindow({ mode: BottomWindowModes.SearchFilter });
+  const { open } = useBottomWindow(BottomWindowModes.SearchFilter);
 
   const { navigation } = useNavigationRoutes();
 
@@ -52,8 +52,6 @@ const HomeScreen = () => {
           )}
         />
       </SafeAreaViewCustom>
-
-      <BottomWindow />
     </>
   );
 };

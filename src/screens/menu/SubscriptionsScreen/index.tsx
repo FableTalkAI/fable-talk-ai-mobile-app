@@ -88,7 +88,7 @@ const SubscriptionScreen = () => {
         )}
       />
       <Button
-        title={t('common.choose')}
+        title={t('actions.choose')}
         containerStyle={styles.button}
         onPress={() => {
           const selected = SUBSCRIPTIONS[activeIndex];

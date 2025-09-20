@@ -1,5 +1,4 @@
-import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
-import { useCallback, useMemo, useRef } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { openSettings } from 'react-native-permissions';
 
@@ -7,31 +6,35 @@ import { ButtonModes } from '@/components/atoms/Button/types.ts';
 import BottomWindowBase from '@/components/molecules/bottomWindows/BottomWindowBase';
 import Alert from '@/components/molecules/bottomWindows/templates/Alert';
 import SearchFilter from '@/components/molecules/bottomWindows/templates/SearchFilter';
+import { bottomWindowRef } from '@/core/utils/bottomWindow.ts';
+import useUIStore from '@/hooks/useUIStore.ts';
 
-import { BottomWindowModes, UseBottomWindowProps } from './types.ts';
+import { BottomWindowModes } from './types.ts';
 
-const useBottomWindow = ({ mode }: UseBottomWindowProps) => {
-  const bottomWindowRef = useRef<BottomSheetModalMethods>(null);
-
+const useBottomWindow = (mode?: BottomWindowModes) => {
   const { t } = useTranslation();
+  const { bottomWindowMode, setBottomWindowModeHandler } = useUIStore();
 
   const open = useCallback(() => {
-    bottomWindowRef.current?.present();
-  }, []);
+    setBottomWindowModeHandler(mode);
+    requestAnimationFrame(() => {
+      bottomWindowRef.current?.present();
+    });
+  }, [mode, setBottomWindowModeHandler]);
 
   const close = useCallback(() => {
     bottomWindowRef.current?.dismiss();
   }, []);
 
   const templateComponent = useMemo(() => {
-    switch (mode) {
+    switch (bottomWindowMode) {
       case BottomWindowModes.PermissionDenied:
         return (
           <Alert
             title={t('bottomWindows.permissionDenied.title')}
             subtitle={t('bottomWindows.permissionDenied.subtitle')}
             firstButtonProps={{
-              title: t('common.cancel'),
+              title: t('actions.cancel'),
               mode: ButtonModes.Disabled,
               onPress: close,
             }}
@@ -51,12 +54,12 @@ const useBottomWindow = ({ mode }: UseBottomWindowProps) => {
             title={t('bottomWindows.deleteAccount.title')}
             subtitle={t('bottomWindows.deleteAccount.subtitle')}
             firstButtonProps={{
-              title: t('common.cancel'),
+              title: t('actions.cancel'),
               mode: ButtonModes.Disabled,
               onPress: close,
             }}
             secondButtonProps={{
-              title: t('common.delete'),
+              title: t('actions.delete'),
               mode: ButtonModes.Reject,
               onPress: () => {
                 // TODO add delete account logic
@@ -71,7 +74,7 @@ const useBottomWindow = ({ mode }: UseBottomWindowProps) => {
       default:
         return null;
     }
-  }, [close, t, mode]);
+  }, [bottomWindowMode, close, t]);
 
   const BottomWindow = () => <BottomWindowBase ref={bottomWindowRef}>{templateComponent}</BottomWindowBase>;
 

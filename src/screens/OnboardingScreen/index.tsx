@@ -73,7 +73,7 @@ const OnboardingScreen = () => {
         </ScrollView>
       </Animated.View>
 
-      <Button title={t('common.continue')} isDisable={renderStep?.isDisabled} onPress={onContinuePress} />
+      <Button title={t('actions.continue')} isDisable={renderStep?.isDisabled} onPress={onContinuePress} />
     </SafeAreaViewCustom>
   );
 };
