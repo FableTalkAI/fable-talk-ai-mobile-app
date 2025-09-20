@@ -21,38 +21,36 @@ const HomeScreen = () => {
   const { navigation } = useNavigationRoutes();
 
   return (
-    <>
-      <SafeAreaViewCustom withGradientBackground>
-        <View style={styles.searchAndIconContainer}>
-          <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
-            <SearchInput placeholder={t('home.searchInput')} isDisabled onStop={() => null} />
-          </PressableCustom>
+    <SafeAreaViewCustom withGradientBackground>
+      <View style={styles.searchAndIconContainer}>
+        <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
+          <SearchInput placeholder={t('home.searchInput')} isDisabled onStop={() => null} />
+        </PressableCustom>
 
-          <PressableCustom onPress={open}>
-            <FilterIcon />
-          </PressableCustom>
-        </View>
+        <PressableCustom onPress={open}>
+          <FilterIcon />
+        </PressableCustom>
+      </View>
 
-        <FlatList
-          style={styles.flatListContainer}
-          data={agents}
-          numColumns={2}
-          showsVerticalScrollIndicator={false}
-          columnWrapperStyle={styles.flatListContentContainer}
-          contentContainerStyle={styles.flatListContentContainer}
-          keyExtractor={item => item.name}
-          renderItem={({ item }) => (
-            <AgentBar
-              name={item.name}
-              description={item.description}
-              tags={item.tags}
-              avatarSource={item.avatarSource}
-              //TODO: onPress navigate to ChatScreen
-            />
-          )}
-        />
-      </SafeAreaViewCustom>
-    </>
+      <FlatList
+        style={styles.flatListContainer}
+        data={agents}
+        numColumns={2}
+        showsVerticalScrollIndicator={false}
+        columnWrapperStyle={styles.flatListContentContainer}
+        contentContainerStyle={styles.flatListContentContainer}
+        keyExtractor={item => item.name}
+        renderItem={({ item }) => (
+          <AgentBar
+            name={item.name}
+            description={item.description}
+            tags={item.tags}
+            avatarSource={item.avatarSource}
+            //TODO: onPress navigate to ChatScreen
+          />
+        )}
+      />
+    </SafeAreaViewCustom>
   );
 };
 
