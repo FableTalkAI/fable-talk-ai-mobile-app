@@ -11,6 +11,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from '@/store';
 import RootNavigator from '@/navigation/RootNavigator';
+import BottomWindowProvider from '@/core/providers/BottomWindowProvider';
 
 function App() {
   return (
@@ -20,9 +21,11 @@ function App() {
           <GestureHandlerRootView style={styles.flex1}>
             <BottomSheetModalProvider>
               <SafeAreaProvider>
-                <NavigationContainer>
-                  <RootNavigator />
-                </NavigationContainer>
+                <BottomWindowProvider>
+                  <NavigationContainer>
+                    <RootNavigator />
+                  </NavigationContainer>
+                </BottomWindowProvider>
 
                 <Toast />
               </SafeAreaProvider>

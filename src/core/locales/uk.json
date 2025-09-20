@@ -1,13 +1,11 @@
 {
   "common": {
-    "continue": "Продовжити",
     "dateOfBirth": "Дата народження",
     "avatar": "Аватар",
     "interests": "Інтереси",
     "day": "День",
     "month": "Місяць",
     "year": "Рік",
-    "cancel": "Скасувати",
     "settings": "Налаштування",
     "subscription": "Підписки",
     "email": "Пошта",
@@ -15,14 +13,18 @@
     "alphabetically": "За алфавітом",
     "popularity": "За популярністю",
     "name": "Ім'я",
-    "enable": "Увімкнуто",
-    "disable": "Вимкнуто",
+    "enabled": "Увімкнуто",
+    "disabled": "Вимкнуто",
     "contactUs": "Зв’язатися з нами",
-    "delete": "Видалити",
-    "noResults": "Нічого не знайдено",
+    "noResults": "Нічого не знайдено"
+  },
+  "actions": {
     "apply": "Застосувати",
     "choose": "Обрати",
-    "send": "Відправити"
+    "send": "Відправити",
+    "delete": "Видалити",
+    "cancel": "Скасувати",
+    "continue": "Продовжити"
   },
   "bottomWindows": {
     "permissionDenied": {
@@ -68,6 +70,9 @@
       "avatar": "Завантажте аватар, це опціонально*",
       "interests": "Будь ласка, оберіть 2 теги"
     }
+  },
+  "home": {
+    "searchInput": "Пошук агентів за іменем"
   },
   "searchInput": {
     "placeholder": "Пошук у чаті за іменем агента"

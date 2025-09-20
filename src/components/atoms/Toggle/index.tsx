@@ -12,17 +12,17 @@ const Toggle = ({ isActive, setIsActive }: ToggleProps) => {
 
   const computedStyles = StyleSheet.create({
     container: {
-      borderColor: colors.primary80,
+      borderColor: colors.iconPrimary,
       alignItems: isActive ? 'flex-end' : 'flex-start',
     },
   });
 
   const animatedStyles = {
     container: useAnimatedStyle(() => ({
-      backgroundColor: withTiming(isActive ? colors.primary80 : colors.backgroundBase),
+      backgroundColor: withTiming(isActive ? colors.iconPrimary : colors.backgroundBase),
     })),
     dot: useAnimatedStyle(() => ({
-      backgroundColor: withTiming(isActive ? colors.backgroundBase : colors.primary80),
+      backgroundColor: withTiming(isActive ? colors.backgroundBase : colors.iconPrimary),
     })),
   };
 

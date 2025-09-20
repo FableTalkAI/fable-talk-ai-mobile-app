@@ -28,14 +28,14 @@ const SubscriptionScreen = () => {
 
   const computedStyles = StyleSheet.create({
     priceColor: {
-      color: colors.textSecondary,
+      color: colors.textTertiary,
     },
   });
 
   const gradientMap: Record<SubscriptionPlans, string[]> = {
-    free: [colors.backgroundBase, colors.warningDark],
-    basic: [colors.backgroundBase, colors.link],
-    premium: [colors.backgroundBase, colors.primary40],
+    free: [colors.backgroundHover, colors.warningDark],
+    basic: [colors.backgroundHover, colors.link],
+    premium: [colors.backgroundHover, colors.primary40],
   };
 
   return (
@@ -88,7 +88,7 @@ const SubscriptionScreen = () => {
         )}
       />
       <Button
-        title={t('common.choose')}
+        title={t('actions.choose')}
         containerStyle={styles.button}
         onPress={() => {
           const selected = SUBSCRIPTIONS[activeIndex];

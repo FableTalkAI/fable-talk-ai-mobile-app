@@ -13,7 +13,7 @@ const SettingsContainer = ({ label, children }: SettingsContainerProps) => {
 
   const computedStyles = StyleSheet.create({
     container: {
-      backgroundColor: colors.backgroundAlt,
+      backgroundColor: colors.backgroundSecondary,
     },
     label: {
       color: colors.textLight,

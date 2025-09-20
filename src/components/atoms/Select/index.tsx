@@ -14,16 +14,18 @@ import useTheme from '@/hooks/useTheme.ts';
 import { MAX_DROPDOWN_HEIGHT, ROW_HEIGHT } from './constants.ts';
 import { SelectProps } from './types.ts';
 
-const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
+const Select = <T,>({ defaultValue, options, width = 90, onChange }: SelectProps<T>) => {
   const { colors } = useTheme();
 
   const triggerRef = useRef<View>(null);
-  const defaultIndex = options.findIndex(option => option === defaultOption);
+  const defaultIndex = options.findIndex(option => option.value === defaultValue);
 
   const [isOpen, setIsOpen] = useState(false);
   const [shouldOpenDown, setShouldOpenDown] = useState(true);
   const [selectedOption, setSelectedOption] = useState(defaultIndex !== -1 ? options[defaultIndex] : options[0]);
   const [triggerLayout, setTriggerLayout] = useState({ x: 0, y: 0, w: 0, h: 0 });
+
+  const optionsTitles = options.map(option => option.title);
 
   const estimatedDropdownH = useMemo(
     () => Math.min(MAX_DROPDOWN_HEIGHT, options.length * ROW_HEIGHT + 2 * SPACING.xs),
@@ -53,12 +55,13 @@ const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
     },
     flatListContainer: {
       width,
-      backgroundColor: colors.backgroundAlt,
+      backgroundColor: colors.backgroundSecondary,
     },
   });
 
   const selectOptionHandler = (index: number) => () => {
     setSelectedOption(options[index]);
+    onChange(options[index].value);
     setIsOpen(false);
   };
 
@@ -78,7 +81,7 @@ const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
     <>
       <View ref={triggerRef}>
         <PressableCustom onPress={openHandler} style={[styles.pressable, computedStyles.pressable]}>
-          <TextCustom style={styles.flex1} numberOfLines={1} mode={TextModes.Caption} text={selectedOption} />
+          <TextCustom style={styles.flex1} numberOfLines={1} mode={TextModes.Caption} text={selectedOption.title} />
           <TriangleIcon />
         </PressableCustom>
       </View>
@@ -93,7 +96,7 @@ const Select = ({ defaultOption, options, width = 90 }: SelectProps) => {
               contentContainerStyle={[styles.flatListContainer, computedStyles.flatListContainer]}
               bounces={false}
               showsVerticalScrollIndicator={false}
-              data={options}
+              data={optionsTitles}
               renderItem={({ item, index }) => (
                 <PressableCustom onPress={selectOptionHandler(index)}>
                   <TextCustom mode={TextModes.Caption} text={item} />

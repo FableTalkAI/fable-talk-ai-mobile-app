@@ -29,7 +29,7 @@ const OptionBar = ({
         [OptionBarColorModes.Default]: {
           title: colors.textPrimary,
           subtitle: colors.textSecondary,
-          icon: colors.primary80,
+          icon: colors.iconPrimary,
           iconBackground: colors.backgroundHover,
         },
         [OptionBarColorModes.Red]: {
@@ -70,7 +70,7 @@ const OptionBar = ({
 
   if (mode === OptionBarModes.Complex) {
     return (
-      <PressableCustom disabled={disabled} onPress={onPress} style={styles.complexContainer}>
+      <PressableCustom disabled={disabled} onPress={onPress} style={styles.pressable}>
         <ResizeIcon
           icon={leftIcon}
           containerStyle={[styles.iconContainer, computedStyles.iconContainer]}
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  complexContainer: {
+  pressable: {
     flexDirection: 'row',
     alignItems: 'center',
   },

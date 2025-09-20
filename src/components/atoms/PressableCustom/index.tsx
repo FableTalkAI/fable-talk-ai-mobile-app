@@ -1,5 +1,4 @@
-import { Pressable } from 'react-native-gesture-handler';
-import { PressableEvent } from 'react-native-gesture-handler/lib/typescript/components/Pressable/PressableProps';
+import { GestureResponderEvent, Pressable } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { PressableCustomProps } from './types.ts';
@@ -19,12 +18,12 @@ const PressableCustom = ({
     };
   });
 
-  const handlePressIn = (event: PressableEvent) => {
+  const handlePressIn = (event: GestureResponderEvent) => {
     opacity.value = withTiming(0.6, { duration: 100 });
     onPressIn?.(event);
   };
 
-  const handlePressOut = (event: PressableEvent) => {
+  const handlePressOut = (event: GestureResponderEvent) => {
     opacity.value = withTiming(1, { duration: 300 });
     onPressOut?.(event);
   };

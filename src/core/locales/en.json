@@ -1,27 +1,29 @@
 {
   "common": {
-    "continue": "Continue",
     "dateOfBirth": "Date of Birth",
     "avatar": "Avatar",
     "interests": "Interests",
     "day": "Day",
     "month": "Month",
     "year": "Year",
-    "cancel": "Cancel",
     "settings": "Settings",
     "subscription": "Subscription",
     "email": "Email",
     "name": "Name",
     "alphabetically": "Alphabetically",
     "popularity": "Popularity",
-    "enable": "Enable",
-    "disable": "Disable",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
     "contactUs": "Contact us",
-    "delete": "Delete",
-    "noResults": "No results",
+    "noResults": "No results"
+  },
+  "actions": {
     "apply": "Apply",
     "choose": "Choose",
-    "send": "Send"
+    "send": "Send",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "continue": "Continue"
   },
   "bottomWindows": {
     "permissionDenied": {
@@ -67,6 +69,9 @@
       "avatar": "Uploading an avatar, it's optional*",
       "interests": "Please, select 2 tags"
     }
+  },
+  "home": {
+    "searchInput": "Search agents by name"
   },
   "searchInput": {
     "placeholder": "Search chat by agent name"

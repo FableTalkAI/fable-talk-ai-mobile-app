@@ -75,11 +75,12 @@ const styles = StyleSheet.create({
   },
   messageContainer: {
     flex: 1,
-    paddingHorizontal: SPACING.s,
+    marginLeft: SPACING.s,
   },
   nameAndPinContainer: {
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
 });
+
 export default ChatListBar;

@@ -5,17 +5,22 @@ import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { SPACING } from '@/core/constants/sizes.ts';
+import useTheme from '@/hooks/useTheme.ts';
 
 import { BottomWindowBaseProps } from './types.ts';
 
 const BottomWindowBase = forwardRef<BottomSheetModalMethods, BottomWindowBaseProps>(({ children }, ref) => {
   const bottomSheetRef = useRef<BottomSheetModalMethods>(null);
 
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
 
   const computedStyles = StyleSheet.create({
     container: {
       paddingBottom: insets.bottom ? insets.bottom + SPACING.xxs : SPACING.lg,
+    },
+    backgroundModal: {
+      backgroundColor: colors.backgroundBase,
     },
   });
 
@@ -34,7 +39,12 @@ const BottomWindowBase = forwardRef<BottomSheetModalMethods, BottomWindowBasePro
   );
 
   return (
-    <BottomSheetModal ref={bottomSheetRef} backdropComponent={renderBackdrop} enablePanDownToClose>
+    <BottomSheetModal
+      ref={bottomSheetRef}
+      backdropComponent={renderBackdrop}
+      enablePanDownToClose
+      backgroundStyle={computedStyles.backgroundModal}
+    >
       <BottomSheetView style={[styles.container, computedStyles.container]}>{children}</BottomSheetView>
     </BottomSheetModal>
   );

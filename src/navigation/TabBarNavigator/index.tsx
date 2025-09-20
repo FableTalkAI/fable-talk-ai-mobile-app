@@ -1,4 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ChatIcon, HomeIcon, ProfileIcon } from '@/assets/icons';
 import { TEXT_STYLES } from '@/components/atoms/TextCustom/constants.ts';
@@ -13,6 +15,14 @@ const Tab = createBottomTabNavigator<TabBarNavigatorParamList>();
 
 const Index = () => {
   const { colors } = useTheme();
+  const insets = useSafeAreaInsets();
+
+  const computedStyles = StyleSheet.create({
+    tabBar: {
+      backgroundColor: colors.backgroundBase,
+      height: insets.bottom === 0 ? 70 : 90,
+    },
+  });
 
   return (
     <Tab.Navigator
@@ -21,14 +31,8 @@ const Index = () => {
         headerShown: false,
         tabBarActiveTintColor: colors.iconPrimary,
         tabBarInactiveTintColor: colors.gray40,
-        tabBarLabelStyle: {
-          ...TEXT_STYLES.base,
-        },
-        tabBarStyle: {
-          height: 90,
-          paddingTop: 10,
-          backgroundColor: colors.backgroundBase,
-        },
+        tabBarLabelStyle: TEXT_STYLES.base,
+        tabBarStyle: [computedStyles.tabBar, styles.tabBar],
       }}
     >
       <Tab.Screen
@@ -61,5 +65,11 @@ const Index = () => {
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  tabBar: {
+    paddingTop: 10,
+  },
+});
 
 export default Index;

@@ -11,7 +11,7 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier -c .",
     "prettier:fix": "prettier -w .",
-    "formatter": "yarn prettier:fix && yarn lint:fix"
+    "formatter": "yarn prettier:fix && yarn lint:fix && yarn typecheck"
   },
   "dependencies": {
     "@babel/plugin-transform-export-namespace-from": "^7.27.1",

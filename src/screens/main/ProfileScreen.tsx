@@ -35,7 +35,10 @@ const ProfileScreen = () => {
         <View style={[styles.separator, computedStyles.separator]} />
 
         <View style={styles.optionsContainer}>
-          <OptionBar title={t('common.settings')} onPress={() => navigation.navigate('Settings')} />
+          <OptionBar
+            title={t('common.settings')}
+            onPress={() => navigation.navigate('SettingsStack', { screen: 'Settings' })}
+          />
           <OptionBar title={t('common.subscription')} onPress={() => navigation.navigate('Subscriptions')} />
         </View>
       </ScrollView>

@@ -1,7 +1,9 @@
-export type SelectProps = {
-  options: string[];
+export type SelectProps<T> = {
+  options: {
+    title: string;
+    value: T;
+  }[];
+  onChange: (value: T) => void;
   width?: number;
-  defaultOption?: string;
-  // TODO: any
-  onChange?: (value: any) => void;
+  defaultValue?: T;
 };

@@ -40,7 +40,7 @@ const ContactUsScreen = () => {
         />
       </KeyboardAvoidingViewCustom>
 
-      <Button onPress={onSend} title={t('common.send')} style={styles.button} />
+      <Button onPress={onSend} title={t('actions.send')} style={styles.button} />
     </SafeAreaViewCustom>
   );
 };
