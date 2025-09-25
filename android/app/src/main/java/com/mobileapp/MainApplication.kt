@@ -1,4 +1,4 @@
-package com.mobileapp
+package com.fabletalkai
 
 import android.app.Application
 import com.facebook.react.PackageList
