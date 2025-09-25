@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "434907128053",
+    "project_id": "fabletalkai",
+    "storage_bucket": "fabletalkai.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434907128053:android:588d071b4708982446a5bc",
+        "android_client_info": {
+          "package_name": "com.fabletalkai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZLvZKR5iAyOAbeNH89h7nnPzDgHPj-lc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
