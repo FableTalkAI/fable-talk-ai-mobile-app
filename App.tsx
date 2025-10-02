@@ -12,28 +12,31 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistor, store } from '@/store';
 import RootNavigator from '@/navigation/RootNavigator';
 import BottomWindowProvider from '@/core/providers/BottomWindowProvider';
+import FirebaseProvider from '@/core/providers/FirebaseProvider/index.tsx';
 
 function App() {
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <I18nextProvider i18n={i18n}>
-          <GestureHandlerRootView style={styles.flex1}>
-            <BottomSheetModalProvider>
-              <SafeAreaProvider>
-                <BottomWindowProvider>
-                  <NavigationContainer>
-                    <RootNavigator />
-                  </NavigationContainer>
-                </BottomWindowProvider>
+    <FirebaseProvider>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+          <I18nextProvider i18n={i18n}>
+            <GestureHandlerRootView style={styles.flex1}>
+              <BottomSheetModalProvider>
+                <SafeAreaProvider>
+                  <BottomWindowProvider>
+                    <NavigationContainer>
+                      <RootNavigator />
+                    </NavigationContainer>
+                  </BottomWindowProvider>
 
-                <Toast />
-              </SafeAreaProvider>
-            </BottomSheetModalProvider>
-          </GestureHandlerRootView>
-        </I18nextProvider>
-      </PersistGate>
-    </Provider>
+                  <Toast />
+                </SafeAreaProvider>
+              </BottomSheetModalProvider>
+            </GestureHandlerRootView>
+          </I18nextProvider>
+        </PersistGate>
+      </Provider>
+    </FirebaseProvider>
   );
 }
 

@@ -32,6 +32,9 @@ target 'FableTalkAI' do
   pod 'Firebase/Auth'
   pod '@react-native-google-signin/google-signin', :path => '../node_modules/@react-native-google-signin/google-signin'
 
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
+
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
