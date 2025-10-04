@@ -71,6 +71,8 @@ const SignInUpScreen = () => {
   };
 
   const onGoogleButtonPress = async () => {
+    await GoogleSignin.signOut();
+
     const googleSighInResponse = await GoogleSignin.signIn();
     if (googleSighInResponse.type === 'cancelled') return;
 
