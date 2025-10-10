@@ -8,6 +8,7 @@ import { Chat, Theme, UserProfile, UserState } from './types.ts';
 const initialState: UserState = {
   tags: [],
   onboardingStep: 0,
+  isOnboardingDone: false,
   profile: {},
   theme: Theme.System,
   notifications: {
@@ -43,6 +44,9 @@ const userSlice = createSlice({
     setOnboardingStep: (state, action: PayloadAction<number>) => {
       state.onboardingStep = action.payload;
     },
+    setIsOnboardingDone: (state, action: PayloadAction<boolean>) => {
+      state.isOnboardingDone = action.payload;
+    },
     setPushNotification: (state, action: PayloadAction<boolean>) => {
       state.notifications.push = action.payload;
     },
@@ -58,7 +62,15 @@ const userSlice = createSlice({
   },
 });
 
-export const { setTags, setProfile, setOnboardingStep, setPushNotification, setEmailNotification, setTheme, setChats } =
-  userSlice.actions;
+export const {
+  setTags,
+  setProfile,
+  setOnboardingStep,
+  setPushNotification,
+  setEmailNotification,
+  setTheme,
+  setChats,
+  setIsOnboardingDone,
+} = userSlice.actions;
 
 export default userSlice.reducer;

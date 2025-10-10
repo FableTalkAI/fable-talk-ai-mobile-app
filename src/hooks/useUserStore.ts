@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
 import {
   setChats,
   setEmailNotification,
+  setIsOnboardingDone,
   setOnboardingStep,
   setProfile,
   setPushNotification,
@@ -12,6 +13,7 @@ import {
 } from '@/store/user';
 import {
   chatsSelector,
+  isOnboardingDoneSelector,
   notificationsSelector,
   onboardingStepSelector,
   profileSelector,
@@ -29,6 +31,7 @@ const useUserStore = () => {
   const notifications = useAppSelector(notificationsSelector);
   const theme = useAppSelector(themeSelector);
   const chats = useAppSelector(chatsSelector);
+  const isOnboardingDone = useAppSelector(isOnboardingDoneSelector);
 
   const setTagsHandler = useCallback(
     (selectedTags: string[]) => {
@@ -47,6 +50,13 @@ const useUserStore = () => {
   const setOnboardingStepHandler = useCallback(
     (step: number) => {
       dispatch(setOnboardingStep(step));
+    },
+    [dispatch],
+  );
+
+  const setIsOnboardingDoneHandler = useCallback(
+    (isDone: boolean) => {
+      dispatch(setIsOnboardingDone(isDone));
     },
     [dispatch],
   );
@@ -86,6 +96,8 @@ const useUserStore = () => {
     theme,
     notifications,
     chats,
+    isOnboardingDone,
+
     setTagsHandler,
     setProfileHandler,
     setOnboardingStepHandler,
@@ -93,6 +105,7 @@ const useUserStore = () => {
     setEmailNotificationHandler,
     setThemeHandler,
     setChatsHandler,
+    setIsOnboardingDoneHandler,
   };
 };
 

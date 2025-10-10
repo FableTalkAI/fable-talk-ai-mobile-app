@@ -19,7 +19,7 @@ const OnboardingScreen = () => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
 
-  const { tags, profile, setOnboardingStepHandler, onboardingStep } = useUserStore();
+  const { tags, profile, setOnboardingStepHandler, onboardingStep, setIsOnboardingDoneHandler } = useUserStore();
 
   const { renderStep, lastStep } = useMemo(() => {
     const stepsData = [
@@ -47,6 +47,7 @@ const OnboardingScreen = () => {
 
   const onContinuePress = () => {
     if (onboardingStep === lastStep) {
+      setIsOnboardingDoneHandler(true);
       return navigation.reset({
         index: 0,
         routes: [{ name: 'TabBarNavigator', params: { screen: 'Home' } }],

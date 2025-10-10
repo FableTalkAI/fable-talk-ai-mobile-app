@@ -12,7 +12,28 @@
           "package_name": "com.fabletalkai"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "434907128053-9mj65o54vofj40cdd9g0a7iihigtm5ca.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fabletalkai",
+            "certificate_hash": "68d8f0e98763da4bcd088029109945781bf89dad"
+          }
+        },
+        {
+          "client_id": "434907128053-aobuqpe60qnb6ee3fa9m7l54hqdc459j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fabletalkai",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "434907128053-voh9u03136fu2ghqp3oqivam3aeetj81.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDZLvZKR5iAyOAbeNH89h7nnPzDgHPj-lc"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "434907128053-kh7v0d230ub2us85rhpe8ell1rdbul6o.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "434907128053-m0g2rj4jrq434v8b7gut1r70bra5jm9g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fabletalkai"
+              }
+            }
+          ]
         }
       }
     }
