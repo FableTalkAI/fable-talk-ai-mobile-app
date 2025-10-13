@@ -1,6 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import auth from '@react-native-firebase/auth';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -8,12 +6,13 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import { GoogleLogoIcon, MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/assets/icons';
+import { MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/assets/icons';
 import Button from '@/components/atoms/Button';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
+import GoogleButton from '@/components/molecules/GoogleButton/index.tsx';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
@@ -32,7 +31,7 @@ const SignInUpScreen = () => {
   const route = useRoute<SignInUpRouteProp>();
   const { navigation } = useNavigationRoutes();
   const { mode } = route.params;
-  const { setProfileHandler, isOnboardingDone } = useUserStore();
+  const { setProfileHandler } = useUserStore();
 
   const [screenMode, setScreenMode] = useState<AuthScreenMode>(mode);
 
@@ -68,28 +67,6 @@ const SignInUpScreen = () => {
       setProfileHandler(data);
       navigation.navigate('CodeVerification');
     })();
-  };
-
-  const onGoogleButtonPress = async () => {
-    await GoogleSignin.signOut();
-
-    const googleSighInResponse = await GoogleSignin.signIn();
-    if (googleSighInResponse.type === 'cancelled') return;
-
-    const googleCredential = auth.GoogleAuthProvider.credential(googleSighInResponse.data.idToken);
-    await auth().signInWithCredential(googleCredential);
-
-    if (isOnboardingDone) {
-      return navigation.reset({
-        index: 0,
-        routes: [{ name: 'TabBarNavigator', params: { screen: 'Home' } }],
-      });
-    }
-
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Onboarding' }],
-    });
   };
 
   return (
@@ -156,9 +133,8 @@ const SignInUpScreen = () => {
               mode={TextModes.Caption}
               style={computedStyles.continueWithText}
             />
-            <PressableCustom onPress={onGoogleButtonPress}>
-              <GoogleLogoIcon />
-            </PressableCustom>
+
+            <GoogleButton />
           </View>
         </KeyboardAvoidingViewCustom>
 
