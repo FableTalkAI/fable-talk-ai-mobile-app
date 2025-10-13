@@ -1,18 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
-import {
-  CodeField,
-  RenderCellOptions,
-  useBlurOnFulfill,
-  useClearByFocusCell,
-} from 'react-native-confirmation-code-field';
+import { CodeField, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
 
 import { VerifyCodeIcon } from '@/assets/icons';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
+import RenderCodeField from '@/components/molecules/RenderCodeField/index.tsx';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
@@ -56,18 +52,6 @@ const CodeVerificationScreen = () => {
 
   if (!profile.email) return null;
 
-  const renderCodeField = ({ index, symbol, isFocused }: RenderCellOptions) => {
-    const localStyles = {
-      borderBottomColor: isFocused ? colors.link : colors.textPrimary,
-    };
-
-    return (
-      <View onLayout={getCellOnLayoutHandler(index)} key={index} style={[styles.cell, localStyles]}>
-        <TextCustom mode={TextModes.Title} text={symbol} />
-      </View>
-    );
-  };
-
   return (
     <SafeAreaViewCustom>
       <KeyboardAvoidingViewCustom>
@@ -88,7 +72,7 @@ const CodeVerificationScreen = () => {
             onChangeText={setValue}
             cellCount={CELL_COUNT}
             keyboardType="number-pad"
-            renderCell={renderCodeField}
+            renderCell={options => <RenderCodeField getCellOnLayoutHandler={getCellOnLayoutHandler} {...options} />}
           />
 
           <PressableCustom hitSlop={8} onPress={() => console.log('resend')}>
@@ -114,12 +98,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: SPACING.lg,
-  },
-  cell: {
-    width: 24,
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    marginLeft: SPACING.xs,
   },
 });
 

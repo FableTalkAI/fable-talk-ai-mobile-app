@@ -27,7 +27,7 @@ const useUserStore = () => {
 
   const tags = useAppSelector(tagsSelector);
   const profile = useAppSelector(profileSelector);
-  const onboardingStep = useAppSelector(onboardingStepSelector);
+  const onboardingStepIndex = useAppSelector(onboardingStepSelector);
   const notifications = useAppSelector(notificationsSelector);
   const theme = useAppSelector(themeSelector);
   const chats = useAppSelector(chatsSelector);
@@ -47,7 +47,7 @@ const useUserStore = () => {
     [dispatch],
   );
 
-  const setOnboardingStepHandler = useCallback(
+  const setOnboardingStepIndexHandler = useCallback(
     (step: number) => {
       dispatch(setOnboardingStep(step));
     },
@@ -92,7 +92,7 @@ const useUserStore = () => {
   return {
     tags,
     profile,
-    onboardingStep,
+    onboardingStepIndex,
     theme,
     notifications,
     chats,
@@ -100,7 +100,7 @@ const useUserStore = () => {
 
     setTagsHandler,
     setProfileHandler,
-    setOnboardingStepHandler,
+    setOnboardingStepIndexHandler,
     setPushNotificationHandler,
     setEmailNotificationHandler,
     setThemeHandler,
