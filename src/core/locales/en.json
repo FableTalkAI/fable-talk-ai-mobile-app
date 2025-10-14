@@ -15,7 +15,9 @@
     "enabled": "Enabled",
     "disabled": "Disabled",
     "contactUs": "Contact us",
-    "noResults": "No results"
+    "noResults": "No results",
+    "error": "Error",
+    "success": "Success"
   },
   "actions": {
     "apply": "Apply",
@@ -148,5 +150,12 @@
     "name": "Please enter a valid name",
     "email": "Please enter a valid email",
     "empty": "Required field"
+  },
+  "serverResponses": {
+    "emailOrNameRequired": "Email or name not valid",
+    "messageRequired": "Please, enter the message!",
+    "messageSentSuccess": "Message successfully sent",
+    "rateLimitedContactUs": "Rate limited, please wait {{amount}} seconds",
+    "serverError": "Oops, something went wrong, try again later"
   }
 }

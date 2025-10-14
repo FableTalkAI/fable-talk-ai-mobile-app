@@ -1,5 +1,5 @@
 import { GestureResponderEvent, Pressable } from 'react-native';
-import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { PressableCustomProps } from './types.ts';
 
@@ -30,7 +30,9 @@ const PressableCustom = ({
 
   return (
     <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut} style={containerStyle} {...pressableProps}>
-      <Animated.View style={[animatedStyle, style]}>{children}</Animated.View>
+      <Animated.View style={[animatedStyle, style]} entering={FadeIn} exiting={FadeOut}>
+        {children}
+      </Animated.View>
     </Pressable>
   );
 };
