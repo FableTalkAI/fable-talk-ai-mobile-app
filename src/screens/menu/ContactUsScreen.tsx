@@ -9,18 +9,21 @@ import Header from '@/components/molecules/Header';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
-import useNavigationRoutes from '@/hooks/useNavigationRoutes';
+import useProfileStore from '@/hooks/useProfileStore.ts';
 
 const ContactUsScreen = () => {
   const { t } = useTranslation();
-  const { navigation } = useNavigationRoutes();
+  const { sendSupportMessageHandler, isLoading } = useProfileStore();
 
   const [message, setMessage] = useState('');
 
-  const onSend = () => {
-    // TODO: add request for send message
-    console.log(message);
-    navigation.goBack();
+  const onSend = async () => {
+    try {
+      await sendSupportMessageHandler(message);
+      setMessage('');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -40,7 +43,13 @@ const ContactUsScreen = () => {
         />
       </KeyboardAvoidingViewCustom>
 
-      <Button onPress={onSend} title={t('actions.send')} style={styles.button} />
+      <Button
+        onPress={onSend}
+        title={t('actions.send')}
+        style={styles.button}
+        isLoading={isLoading.contactUs}
+        isDisable={!message.length}
+      />
     </SafeAreaViewCustom>
   );
 };

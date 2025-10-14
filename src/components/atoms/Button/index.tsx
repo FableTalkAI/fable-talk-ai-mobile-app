@@ -1,4 +1,5 @@
 import { ActivityIndicator, StyleSheet } from 'react-native';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
@@ -20,7 +21,7 @@ const Button = ({
 }: ButtonProps) => {
   const { colors, setColorOpacity } = useTheme();
 
-  const localeMode: ButtonModes = isDisable || isLoading ? ButtonModes.Disabled : mode;
+  const localeMode: ButtonModes = isDisable ? ButtonModes.Disabled : mode;
 
   const buttonModes: Record<ButtonModes, ButtonModesObject> = {
     primary: {
@@ -61,19 +62,29 @@ const Button = ({
     text: {
       color: buttonModes[localeMode].color,
     },
+    loadingContainer: {
+      backgroundColor: setColorOpacity(colors.grayDisabled, 0.7),
+    },
   });
 
   return (
     <PressableCustom
+      key={localeMode}
       disabled={isDisable || isLoading}
       containerStyle={containerStyle}
       style={[computedStyles.container, styles.container, style]}
       {...pressableProps}
     >
-      {isLoading ? (
-        <ActivityIndicator color={colors.textSecondary} />
-      ) : (
-        <TextCustom text={title} mode={TextModes.Subtitle} style={computedStyles.text} />
+      <TextCustom text={title} mode={TextModes.Subtitle} style={computedStyles.text} />
+
+      {isLoading && (
+        <Animated.View
+          style={[computedStyles.loadingContainer, styles.loadingContainer]}
+          entering={FadeIn}
+          exiting={FadeOut}
+        >
+          <ActivityIndicator color={colors.textSecondary} />
+        </Animated.View>
       )}
     </PressableCustom>
   );
@@ -84,6 +95,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     padding: SPACING.s,
+    overflow: 'hidden',
+  },
+  loadingContainer: {
+    position: 'absolute',
+    inset: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
