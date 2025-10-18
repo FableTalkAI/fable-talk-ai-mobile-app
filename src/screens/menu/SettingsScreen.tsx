@@ -25,6 +25,7 @@ import useBottomWindow from '@/hooks/useBottomWindow';
 import { BottomWindowModes } from '@/hooks/useBottomWindow/types.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 import useNotificationPermission from '@/hooks/useNotificationPermission.ts';
+import useProfileStore from '@/hooks/useProfileStore.ts';
 import useUserStore from '@/hooks/useUserStore.ts';
 import { Theme } from '@/store/user/types.ts';
 
@@ -32,10 +33,13 @@ const SettingsScreen = () => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
 
-  const { notifications, theme, setEmailNotificationHandler, setThemeHandler } = useUserStore();
+  const { notifications, theme, setThemeHandler } = useUserStore();
+  const { updateUserProfileHandler, profile, isLoading } = useProfileStore();
 
   const { open } = useBottomWindow(BottomWindowModes.DeleteAccount);
   const { authorizeHandler } = useNotificationPermission();
+
+  const emailNotifications = profile ? profile.isEmailNotificationEnabled : false;
 
   const selectOptions = useMemo(
     () =>
@@ -65,12 +69,17 @@ const SettingsScreen = () => {
             mode={OptionBarModes.Complex}
           />
           <OptionBar
-            onPress={() => setEmailNotificationHandler(!notifications.email)}
+            onPress={() =>
+              updateUserProfileHandler({
+                isEmailNotificationEnabled: profile ? !profile.isEmailNotificationEnabled : false,
+              })
+            }
             title={t('common.email')}
-            subtitle={t(`common.${notifications.email ? 'enabled' : 'disabled'}`)}
+            subtitle={t(`common.${emailNotifications ? 'enabled' : 'disabled'}`)}
             leftIcon={<MailDotIcon />}
-            rightComponent={<Toggle isActive={notifications.email} />}
+            rightComponent={<Toggle isActive={emailNotifications} />}
             mode={OptionBarModes.Complex}
+            disabled={isLoading.profile}
           />
         </SettingsContainer>
 

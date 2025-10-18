@@ -20,7 +20,6 @@ import { getAuthSchema } from '@/core/utils/zod/schema.ts';
 import { AuthSchema } from '@/core/utils/zod/types.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
 import useTheme from '@/hooks/useTheme.ts';
-import useUserStore from '@/hooks/useUserStore.ts';
 
 import { AuthScreenMode, SignInUpRouteProp } from './types.ts';
 
@@ -31,7 +30,6 @@ const SignInUpScreen = () => {
   const route = useRoute<SignInUpRouteProp>();
   const { navigation } = useNavigationRoutes();
   const { mode } = route.params;
-  const { setProfileHandler } = useUserStore();
 
   const [screenMode, setScreenMode] = useState<AuthScreenMode>(mode);
 
@@ -64,7 +62,7 @@ const SignInUpScreen = () => {
   const onSubmit = () => {
     handleSubmit((data: AuthSchema) => {
       //TODO: make request for otp code
-      setProfileHandler(data);
+      console.log(data);
       navigation.navigate('CodeVerification');
     })();
   };

@@ -1,9 +1,9 @@
-import { ActivityIndicator, StyleSheet } from 'react-native';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import { StyleSheet } from 'react-native';
 
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
+import ComponentLoader from '@/components/molecules/ComponentLoader/index.tsx';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
@@ -62,9 +62,6 @@ const Button = ({
     text: {
       color: buttonModes[localeMode].color,
     },
-    loadingContainer: {
-      backgroundColor: setColorOpacity(colors.grayDisabled, 0.7),
-    },
   });
 
   return (
@@ -77,15 +74,7 @@ const Button = ({
     >
       <TextCustom text={title} mode={TextModes.Subtitle} style={computedStyles.text} />
 
-      {isLoading && (
-        <Animated.View
-          style={[computedStyles.loadingContainer, styles.loadingContainer]}
-          entering={FadeIn}
-          exiting={FadeOut}
-        >
-          <ActivityIndicator color={colors.textSecondary} />
-        </Animated.View>
-      )}
+      <ComponentLoader isVisible={isLoading} />
     </PressableCustom>
   );
 };
@@ -96,12 +85,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: SPACING.s,
     overflow: 'hidden',
-  },
-  loadingContainer: {
-    position: 'absolute',
-    inset: 0,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

@@ -1,3 +1,4 @@
+import { BACKEND_BASE_URL } from '@env';
 import { StyleSheet, View } from 'react-native';
 
 import { EditAvatarIcon, UserIcon } from '@/assets/icons';
@@ -5,15 +6,17 @@ import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import { BOX_SHADOW } from '@/core/constants/styles.ts';
-import { useImagePick } from '@/hooks/useImagePick';
+import { useImagePick } from '@/hooks/useImagePick.ts';
+import useProfileStore from '@/hooks/useProfileStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 import { AvatarProps } from './types.ts';
 
-const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri, style }: AvatarProps) => {
+const Avatar = ({ size, isChangeable = true, style }: AvatarProps) => {
   const { colors } = useTheme();
+  const { profile } = useProfileStore();
 
-  const { pickImage } = useImagePick({ setAvatarUri });
+  const { pickImage } = useImagePick();
 
   const computedStyles = StyleSheet.create({
     container: {
@@ -28,7 +31,11 @@ const Avatar = ({ size, isChangeable = true, avatarUri, setAvatarUri, style }: A
 
   return (
     <View style={[computedStyles.container, styles.container, style]}>
-      {avatarUri ? <AutoImage source={{ uri: avatarUri }} resizeMode="cover" style={styles.image} /> : <UserIcon />}
+      {profile && profile.avatarUrl ? (
+        <AutoImage source={{ uri: BACKEND_BASE_URL + profile.avatarUrl }} resizeMode="cover" style={styles.image} />
+      ) : (
+        <UserIcon />
+      )}
 
       {isChangeable && (
         <PressableCustom

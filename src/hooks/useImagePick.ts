@@ -4,13 +4,14 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { check, PERMISSIONS, PermissionStatus, request, RESULTS } from 'react-native-permissions';
 
 import { IS_ANDROID, IS_IOS } from '@/core/constants/device.ts';
-import useBottomWindow from '@/hooks/useBottomWindow';
-import { BottomWindowModes } from '@/hooks/useBottomWindow/types.ts';
 
-import { UseImagePickProps } from './types.ts';
+import useBottomWindow from './useBottomWindow/index.tsx';
+import { BottomWindowModes } from './useBottomWindow/types.ts';
+import useProfileStore from './useProfileStore.ts';
 
-export const useImagePick = ({ setAvatarUri }: UseImagePickProps) => {
+export const useImagePick = () => {
   const { open } = useBottomWindow(BottomWindowModes.PermissionDenied);
+  const { profile, uploadAvatarHandler } = useProfileStore();
 
   const requestGalleryPermission = useCallback(async (): Promise<PermissionStatus> => {
     let permission;
@@ -76,8 +77,8 @@ export const useImagePick = ({ setAvatarUri }: UseImagePickProps) => {
       }
 
       const uri = response.assets?.[0]?.uri;
-      if (uri) {
-        setAvatarUri?.(uri);
+      if (uri && profile) {
+        uploadAvatarHandler(uri).catch(console.error);
       }
     } catch (error) {
       console.warn('ImagePicker failed: ', error);

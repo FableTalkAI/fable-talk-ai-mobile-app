@@ -1,32 +1,21 @@
 import { useCallback } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
-import {
-  setChats,
-  setEmailNotification,
-  setIsOnboardingDone,
-  setOnboardingStep,
-  setProfile,
-  setPushNotification,
-  setTags,
-  setTheme,
-} from '@/store/user';
+import { setChats, setIsOnboardingDone, setOnboardingStep, setPushNotification, setTags, setTheme } from '@/store/user';
 import {
   chatsSelector,
   isOnboardingDoneSelector,
   notificationsSelector,
   onboardingStepSelector,
-  profileSelector,
   tagsSelector,
   themeSelector,
 } from '@/store/user/selectors.ts';
-import { Chat, Theme, UserProfile } from '@/store/user/types.ts';
+import { Chat, Theme } from '@/store/user/types.ts';
 
 const useUserStore = () => {
   const dispatch = useAppDispatch();
 
   const tags = useAppSelector(tagsSelector);
-  const profile = useAppSelector(profileSelector);
   const onboardingStepIndex = useAppSelector(onboardingStepSelector);
   const notifications = useAppSelector(notificationsSelector);
   const theme = useAppSelector(themeSelector);
@@ -36,13 +25,6 @@ const useUserStore = () => {
   const setTagsHandler = useCallback(
     (selectedTags: string[]) => {
       dispatch(setTags(selectedTags));
-    },
-    [dispatch],
-  );
-
-  const setProfileHandler = useCallback(
-    (newProfile: UserProfile) => {
-      dispatch(setProfile(newProfile));
     },
     [dispatch],
   );
@@ -68,13 +50,6 @@ const useUserStore = () => {
     [dispatch],
   );
 
-  const setEmailNotificationHandler = useCallback(
-    (isActive: boolean) => {
-      dispatch(setEmailNotification(isActive));
-    },
-    [dispatch],
-  );
-
   const setThemeHandler = useCallback(
     (themeMode: Theme) => {
       dispatch(setTheme(themeMode));
@@ -91,7 +66,6 @@ const useUserStore = () => {
 
   return {
     tags,
-    profile,
     onboardingStepIndex,
     theme,
     notifications,
@@ -99,10 +73,8 @@ const useUserStore = () => {
     isOnboardingDone,
 
     setTagsHandler,
-    setProfileHandler,
     setOnboardingStepIndexHandler,
     setPushNotificationHandler,
-    setEmailNotificationHandler,
     setThemeHandler,
     setChatsHandler,
     setIsOnboardingDoneHandler,

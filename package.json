@@ -35,6 +35,7 @@
     "react-native": "0.80.1",
     "react-native-confirmation-code-field": "^8.0.1",
     "react-native-dotenv": "^3.4.11",
+    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.27.1",
     "react-native-gifted-chat": "^2.8.1",
     "react-native-image-picker": "^8.2.1",

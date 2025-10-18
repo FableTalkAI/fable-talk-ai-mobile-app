@@ -14,8 +14,9 @@ const SearchInput = forwardRef<TextInput, SearchInputProps>(({ placeholder, navi
   const debouncedSearch = useDebounce({ value });
 
   useEffect(() => {
+    if (!value) return;
     onStop(debouncedSearch);
-  }, [debouncedSearch, onStop]);
+  }, [debouncedSearch, onStop, value]);
 
   return (
     <View style={styles.wrapper} pointerEvents={isDisabled ? 'none' : 'auto'}>

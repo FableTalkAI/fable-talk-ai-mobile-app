@@ -8,14 +8,14 @@ import TextCustom from '@/components/atoms/TextCustom';
 import DatePicker from '@/components/molecules/DatePicker';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import { formatDateSeparated } from '@/core/utils/date.ts';
+import useProfileStore from '@/hooks/useProfileStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
-import useUserStore from '@/hooks/useUserStore.ts';
 
 const DateOfBirthStep = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
 
-  const { profile, setProfileHandler } = useUserStore();
+  const { profile, updateUserProfileHandler } = useProfileStore();
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -24,12 +24,12 @@ const DateOfBirthStep = () => {
       backgroundColor: colors.backgroundHover,
     },
     text: {
-      color: profile.dateOfBirth ? colors.textPrimary : colors.gray50,
+      color: profile && profile.dateOfBirth ? colors.textPrimary : colors.gray50,
     },
   });
 
   const dateOfBirth = useMemo(() => {
-    if (!profile.dateOfBirth) {
+    if (!profile || !profile.dateOfBirth) {
       return [t('common.day'), t('common.month'), t('common.year')];
     }
 
@@ -38,7 +38,9 @@ const DateOfBirthStep = () => {
   }, [profile, t]);
 
   const handleConfirm = (date: Date) => {
-    setProfileHandler({ ...profile, dateOfBirth: date.toISOString() });
+    if (profile) {
+      updateUserProfileHandler({ dateOfBirth: date.toISOString() }).catch(console.error);
+    }
     setDatePickerVisibility(false);
   };
 
@@ -60,7 +62,7 @@ const DateOfBirthStep = () => {
         isVisible={isDatePickerVisible}
         handleConfirm={handleConfirm}
         onCancel={() => setDatePickerVisibility(false)}
-        defaultDate={profile.dateOfBirth}
+        defaultDate={profile ? profile.dateOfBirth : undefined}
       />
     </View>
   );
