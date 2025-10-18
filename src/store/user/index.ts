@@ -3,17 +3,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ChatGPTLogo } from '@/assets/images';
 
 import { userSliceName } from './thunks.ts';
-import { Chat, Theme, UserProfile, UserState } from './types.ts';
+import { Chat, Theme, UserState } from './types.ts';
 
 const initialState: UserState = {
   tags: [],
   onboardingStep: 0,
   isOnboardingDone: false,
-  profile: {},
   theme: Theme.System,
   notifications: {
     push: false,
-    email: false,
   },
   chats: [
     {
@@ -38,9 +36,6 @@ const userSlice = createSlice({
     setTags: (state, action: PayloadAction<string[]>) => {
       state.tags = action.payload;
     },
-    setProfile: (state, action: PayloadAction<UserProfile>) => {
-      state.profile = action.payload;
-    },
     setOnboardingStep: (state, action: PayloadAction<number>) => {
       state.onboardingStep = action.payload;
     },
@@ -49,9 +44,6 @@ const userSlice = createSlice({
     },
     setPushNotification: (state, action: PayloadAction<boolean>) => {
       state.notifications.push = action.payload;
-    },
-    setEmailNotification: (state, action: PayloadAction<boolean>) => {
-      state.notifications.email = action.payload;
     },
     setTheme: (state, action: PayloadAction<Theme>) => {
       state.theme = action.payload;
@@ -62,15 +54,7 @@ const userSlice = createSlice({
   },
 });
 
-export const {
-  setTags,
-  setProfile,
-  setOnboardingStep,
-  setPushNotification,
-  setEmailNotification,
-  setTheme,
-  setChats,
-  setIsOnboardingDone,
-} = userSlice.actions;
+export const { setTags, setOnboardingStep, setPushNotification, setTheme, setChats, setIsOnboardingDone } =
+  userSlice.actions;
 
 export default userSlice.reducer;

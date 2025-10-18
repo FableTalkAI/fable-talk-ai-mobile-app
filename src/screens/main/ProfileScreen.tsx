@@ -8,12 +8,14 @@ import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import UserInfoBar from '@/components/molecules/UserInfoBar';
 import { SPACING } from '@/core/constants/sizes.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
+import useProfileStore from '@/hooks/useProfileStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 const ProfileScreen = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
+  const { isLoading } = useProfileStore();
 
   const computedStyles = StyleSheet.create({
     separator: {
@@ -27,9 +29,8 @@ const ProfileScreen = () => {
         <Avatar style={styles.avatar} />
 
         <View style={styles.userInfoContainer}>
-          <UserInfoBar field="name" />
-          <UserInfoBar field="email" />
-          <UserInfoBar field="dateOfBirth" />
+          <UserInfoBar field="name" isLoading={isLoading.updateProfile} />
+          <UserInfoBar field="dateOfBirth" isLoading={isLoading.updateProfile} />
         </View>
 
         <View style={[styles.separator, computedStyles.separator]} />

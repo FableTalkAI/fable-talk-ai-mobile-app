@@ -5,22 +5,18 @@ import PressableCustom from '@/components/atoms/PressableCustom';
 import Avatar from '@/components/molecules/Avatar';
 import { WINDOW_WIDTH } from '@/core/constants/device.ts';
 import { SPACING } from '@/core/constants/sizes.ts';
-import { useImagePick } from '@/hooks/useImagePick';
-import useUserStore from '@/hooks/useUserStore.ts';
+import { useImagePick } from '@/hooks/useImagePick.ts';
+import useProfileStore from '@/hooks/useProfileStore.ts';
 
 const AvatarStep = () => {
-  const { profile, setProfileHandler } = useUserStore();
+  const { profile } = useProfileStore();
 
-  const setAvatarUri = (uri: string) => {
-    setProfileHandler({ ...profile, avatarUri: uri });
-  };
-
-  const { pickImage } = useImagePick({ setAvatarUri });
+  const { pickImage } = useImagePick();
 
   return (
     <View style={styles.container}>
-      {profile?.avatarUri ? (
-        <Avatar size={WINDOW_WIDTH * 0.7} isChangeable={false} avatarUri={profile?.avatarUri} />
+      {profile?.avatarUrl ? (
+        <Avatar size={WINDOW_WIDTH * 0.7} isChangeable={false} />
       ) : (
         <PressableCustom onPress={pickImage}>
           <ImagePlusIcon width={WINDOW_WIDTH} height={WINDOW_WIDTH * 0.7} />

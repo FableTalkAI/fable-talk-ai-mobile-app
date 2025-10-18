@@ -12,8 +12,8 @@ import RenderCodeField from '@/components/molecules/RenderCodeField/index.tsx';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
+import useProfileStore from '@/hooks/useProfileStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
-import useUserStore from '@/hooks/useUserStore.ts';
 
 import { CELL_COUNT } from './constants.ts';
 
@@ -22,7 +22,7 @@ const CodeVerificationScreen = () => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
 
-  const { profile } = useUserStore();
+  const { profile } = useProfileStore();
 
   const [value, setValue] = useState('');
 
@@ -50,7 +50,7 @@ const CodeVerificationScreen = () => {
     }
   }, [navigation, value]);
 
-  if (!profile.email) return null;
+  if (profile === null) return null;
 
   return (
     <SafeAreaViewCustom>

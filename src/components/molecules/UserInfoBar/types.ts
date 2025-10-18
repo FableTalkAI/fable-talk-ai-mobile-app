@@ -1,7 +1,6 @@
-import { UserProfile } from '@/store/user/types.ts';
-
 export type UserInfoBarProps = {
   field: UserInfoBarField;
+  isLoading: boolean;
 };
 
-export type UserInfoBarField = Exclude<keyof UserProfile, 'avatarUri'>;
+export type UserInfoBarField = 'dateOfBirth' | 'name';

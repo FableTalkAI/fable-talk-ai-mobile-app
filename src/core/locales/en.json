@@ -156,6 +156,10 @@
     "messageRequired": "Please, enter the message!",
     "messageSentSuccess": "Message successfully sent",
     "rateLimitedContactUs": "Rate limited, please wait {{amount}} seconds",
-    "serverError": "Oops, something went wrong, try again later"
+    "serverError": "Oops, something went wrong, try again later",
+    "userUpdated": "User updated successfully",
+    "emailRequired": "Email required",
+    "noAvatarUploaded": "Avatar required",
+    "avatarUploaded": "Avatar successfully uploaded"
   }
 }

@@ -4,12 +4,14 @@ import DateOfBirthStep from '@/components/molecules/onboarding/DateOfBirthStep.t
 import { AvatarStep, InterestsStep } from '@/components/molecules/onboarding/index.ts';
 import InitialStep from '@/components/molecules/onboarding/InitialStep.tsx';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes/index.ts';
+import useProfileStore from '@/hooks/useProfileStore.ts';
 import useUserStore from '@/hooks/useUserStore.ts';
 
 const useOnboardingSteps = () => {
   const { navigation } = useNavigationRoutes();
-  const { setOnboardingStepIndexHandler, onboardingStepIndex, setIsOnboardingDoneHandler, profile, tags } =
-    useUserStore();
+  const { setOnboardingStepIndexHandler, onboardingStepIndex, setIsOnboardingDoneHandler, tags } = useUserStore();
+
+  const { profile } = useProfileStore();
 
   const stepsData = useMemo(
     () => [
@@ -18,7 +20,7 @@ const useOnboardingSteps = () => {
       },
       {
         component: DateOfBirthStep,
-        isDisabled: !profile.dateOfBirth?.length,
+        isDisabled: !!profile && !profile.dateOfBirth?.length,
       },
       {
         component: AvatarStep,
@@ -28,7 +30,7 @@ const useOnboardingSteps = () => {
         isDisabled: tags.length !== 2,
       },
     ],
-    [profile.dateOfBirth, tags],
+    [profile, tags.length],
   );
 
   const lastStep = stepsData.length - 1;
