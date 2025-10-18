@@ -79,7 +79,7 @@ const SettingsScreen = () => {
             leftIcon={<MailDotIcon />}
             rightComponent={<Toggle isActive={emailNotifications} />}
             mode={OptionBarModes.Complex}
-            disabled={isLoading.profile}
+            disabled={isLoading.updateProfile}
           />
         </SettingsContainer>
 

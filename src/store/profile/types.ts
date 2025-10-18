@@ -2,7 +2,6 @@ export type ProfileState = {
   profile: User | null;
   loading: {
     contactUs: boolean;
-    profile: boolean;
     uploadAvatar: boolean;
     updateProfile: boolean;
   };

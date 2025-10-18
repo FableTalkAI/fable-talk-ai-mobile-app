@@ -11,7 +11,6 @@ const initialState: ProfileState = {
     contactUs: false,
     updateProfile: false,
     uploadAvatar: false,
-    profile: false,
   },
 };
 
@@ -45,15 +44,8 @@ const profileSlice = createSlice({
       })
 
       //getUserProfile
-      .addCase(getUserProfile.pending, state => {
-        state.loading.profile = true;
-      })
       .addCase(getUserProfile.fulfilled, (state, action) => {
-        state.loading.profile = false;
         state.profile = action.payload;
-      })
-      .addCase(getUserProfile.rejected, state => {
-        state.loading.profile = false;
       })
 
       //updateUserProfile

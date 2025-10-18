@@ -29,8 +29,8 @@ const ProfileScreen = () => {
         <Avatar style={styles.avatar} />
 
         <View style={styles.userInfoContainer}>
-          <UserInfoBar field="name" isLoading={isLoading.profile} />
-          <UserInfoBar field="dateOfBirth" isLoading={isLoading.profile} />
+          <UserInfoBar field="name" isLoading={isLoading.updateProfile} />
+          <UserInfoBar field="dateOfBirth" isLoading={isLoading.updateProfile} />
         </View>
 
         <View style={[styles.separator, computedStyles.separator]} />
