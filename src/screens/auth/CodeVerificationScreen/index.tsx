@@ -4,25 +4,19 @@ import { StyleSheet, View } from 'react-native';
 import { CodeField, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
 
 import { VerifyCodeIcon } from '@/assets/icons';
-import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
 import RenderCodeField from '@/components/molecules/RenderCodeField/index.tsx';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
-import useNavigationRoutes from '@/hooks/useNavigationRoutes';
-import useProfileStore from '@/hooks/useProfileStore.ts';
-import useTheme from '@/hooks/useTheme.ts';
+import useAuthStore from '@/hooks/useAuthStore.ts';
 
 import { CELL_COUNT } from './constants.ts';
 
 const CodeVerificationScreen = () => {
-  const { colors } = useTheme();
   const { t } = useTranslation();
-  const { navigation } = useNavigationRoutes();
-
-  const { profile } = useProfileStore();
+  const { verifyOtpHandler, verifyData } = useAuthStore();
 
   const [value, setValue] = useState('');
 
@@ -33,9 +27,6 @@ const CodeVerificationScreen = () => {
   });
 
   const computedStyles = StyleSheet.create({
-    resendText: {
-      color: colors.link,
-    },
     codeContainer: {
       marginTop: SPACING.xl * 2,
     },
@@ -43,14 +34,12 @@ const CodeVerificationScreen = () => {
 
   useEffect(() => {
     if (value.length === CELL_COUNT) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: 'Onboarding' }],
-      });
+      if (!verifyData) return;
+      verifyOtpHandler({ ...verifyData, code: value }).catch(console.error);
     }
-  }, [navigation, value]);
+  }, [value, verifyData, verifyOtpHandler]);
 
-  if (profile === null) return null;
+  if (verifyData === null) return null;
 
   return (
     <SafeAreaViewCustom>
@@ -61,7 +50,7 @@ const CodeVerificationScreen = () => {
 
         <View style={styles.subtitleContainer}>
           <TextCustom mode={TextModes.Caption} text={t('auth.verify.subheader')} />
-          <TextCustom mode={TextModes.Tag} text={profile.email} />
+          <TextCustom mode={TextModes.Tag} text={verifyData.email} />
         </View>
 
         <View style={[styles.codeContainer, computedStyles.codeContainer]}>
@@ -74,10 +63,6 @@ const CodeVerificationScreen = () => {
             keyboardType="number-pad"
             renderCell={options => <RenderCodeField getCellOnLayoutHandler={getCellOnLayoutHandler} {...options} />}
           />
-
-          <PressableCustom hitSlop={8} onPress={() => console.log('resend')}>
-            <TextCustom mode={TextModes.Caption} style={computedStyles.resendText} text={t('auth.verify.resendCode')} />
-          </PressableCustom>
         </View>
       </KeyboardAvoidingViewCustom>
     </SafeAreaViewCustom>

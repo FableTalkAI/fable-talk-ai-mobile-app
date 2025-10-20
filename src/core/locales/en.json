@@ -59,8 +59,7 @@
     },
     "verify": {
       "header": "Verification",
-      "subheader": "Please enter the code from your email",
-      "resendCode": "Resend code"
+      "subheader": "Please enter the code from your email"
     },
     "continueWith": "Or continue with"
   },

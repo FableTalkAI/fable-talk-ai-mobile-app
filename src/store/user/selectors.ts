@@ -5,4 +5,3 @@ export const onboardingStepSelector = (state: AppState) => state.user.onboarding
 export const notificationsSelector = (state: AppState) => state.user.notifications;
 export const themeSelector = (state: AppState) => state.user.theme;
 export const chatsSelector = (state: AppState) => state.user.chats;
-export const isOnboardingDoneSelector = (state: AppState) => state.user.isOnboardingDone;

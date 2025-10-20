@@ -3,7 +3,6 @@ import { Agent } from '@/store/agents/types.ts';
 export type UserState = {
   tags: string[];
   onboardingStep: number;
-  isOnboardingDone: boolean;
   theme: Theme;
   notifications: {
     push: boolean;

@@ -9,9 +9,9 @@ import useUserStore from '@/hooks/useUserStore.ts';
 
 const useOnboardingSteps = () => {
   const { navigation } = useNavigationRoutes();
-  const { setOnboardingStepIndexHandler, onboardingStepIndex, setIsOnboardingDoneHandler, tags } = useUserStore();
+  const { setOnboardingStepIndexHandler, onboardingStepIndex, tags } = useUserStore();
 
-  const { profile } = useProfileStore();
+  const { profile, updateUserProfileHandler } = useProfileStore();
 
   const stepsData = useMemo(
     () => [
@@ -36,9 +36,9 @@ const useOnboardingSteps = () => {
   const lastStep = stepsData.length - 1;
   const currentStep = stepsData[onboardingStepIndex] ?? stepsData[0];
 
-  const onContinuePress = () => {
+  const onContinuePress = async () => {
     if (onboardingStepIndex === lastStep) {
-      setIsOnboardingDoneHandler(true);
+      await updateUserProfileHandler({ isOnboardingDone: true });
       return navigation.reset({
         index: 0,
         routes: [{ name: 'TabBarNavigator', params: { screen: 'Home' } }],

@@ -1,10 +1,9 @@
 import { useCallback } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
-import { setChats, setIsOnboardingDone, setOnboardingStep, setPushNotification, setTags, setTheme } from '@/store/user';
+import { setChats, setOnboardingStep, setPushNotification, setTags, setTheme } from '@/store/user';
 import {
   chatsSelector,
-  isOnboardingDoneSelector,
   notificationsSelector,
   onboardingStepSelector,
   tagsSelector,
@@ -20,7 +19,6 @@ const useUserStore = () => {
   const notifications = useAppSelector(notificationsSelector);
   const theme = useAppSelector(themeSelector);
   const chats = useAppSelector(chatsSelector);
-  const isOnboardingDone = useAppSelector(isOnboardingDoneSelector);
 
   const setTagsHandler = useCallback(
     (selectedTags: string[]) => {
@@ -32,13 +30,6 @@ const useUserStore = () => {
   const setOnboardingStepIndexHandler = useCallback(
     (step: number) => {
       dispatch(setOnboardingStep(step));
-    },
-    [dispatch],
-  );
-
-  const setIsOnboardingDoneHandler = useCallback(
-    (isDone: boolean) => {
-      dispatch(setIsOnboardingDone(isDone));
     },
     [dispatch],
   );
@@ -70,14 +61,12 @@ const useUserStore = () => {
     theme,
     notifications,
     chats,
-    isOnboardingDone,
 
     setTagsHandler,
     setOnboardingStepIndexHandler,
     setPushNotificationHandler,
     setThemeHandler,
     setChatsHandler,
-    setIsOnboardingDoneHandler,
   };
 };
 

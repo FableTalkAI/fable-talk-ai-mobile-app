@@ -16,10 +16,12 @@ import GoogleButton from '@/components/molecules/GoogleButton/index.tsx';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
+import { getDeviceLanguage } from '@/core/utils/device.ts';
 import { getAuthSchema } from '@/core/utils/zod/schema.ts';
 import { AuthSchema } from '@/core/utils/zod/types.ts';
-import useNavigationRoutes from '@/hooks/useNavigationRoutes';
+import useAuthStore from '@/hooks/useAuthStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
+import { SendOtpLanguages } from '@/store/auth/types.ts';
 
 import { AuthScreenMode, SignInUpRouteProp } from './types.ts';
 
@@ -28,7 +30,7 @@ const SignInUpScreen = () => {
   const { colors } = useTheme();
 
   const route = useRoute<SignInUpRouteProp>();
-  const { navigation } = useNavigationRoutes();
+  const { sendOtpHandler, setVerifyDataHandler } = useAuthStore();
   const { mode } = route.params;
 
   const [screenMode, setScreenMode] = useState<AuthScreenMode>(mode);
@@ -60,10 +62,16 @@ const SignInUpScreen = () => {
   });
 
   const onSubmit = () => {
-    handleSubmit((data: AuthSchema) => {
-      //TODO: make request for otp code
-      console.log(data);
-      navigation.navigate('CodeVerification');
+    handleSubmit(async (data: AuthSchema) => {
+      const lang: SendOtpLanguages = getDeviceLanguage() === 'uk' ? 'uk' : 'en';
+      const dataOptions = {
+        email: data.email,
+        lang,
+        ...(screenMode === AuthScreenMode.SignUp && { name: data.name }),
+      };
+
+      setVerifyDataHandler(data);
+      await sendOtpHandler(dataOptions);
     })();
   };
 

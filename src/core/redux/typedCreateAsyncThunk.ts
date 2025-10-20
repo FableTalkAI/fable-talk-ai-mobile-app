@@ -6,6 +6,7 @@ import { type AppDispatch, type AppState } from '../../store';
 type DefaultThunkError = {
   messageKey: string;
   details: string;
+  remainingAttempts: number;
 };
 
 const baseTypedCreateAsyncThunk = createAsyncThunk.withTypes<{
@@ -32,6 +33,7 @@ export function createAxiosAsyncThunk<Returned, ThunkArg = void, ThunkError = De
     return Promise.resolve(payloadCreator(arg, thunkAPI)).catch((error: unknown) => {
       const axiosError = error as AxiosError<ThunkError>;
       const data = axiosError.response?.data;
+      console.error(error);
 
       return thunkAPI.rejectWithValue(data || ({ messageKey: 'serverError' } as ThunkError));
     });
