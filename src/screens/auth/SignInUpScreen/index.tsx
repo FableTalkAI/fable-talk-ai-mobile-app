@@ -12,6 +12,7 @@ import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
+import ComponentLoader from '@/components/molecules/ComponentLoader/index.tsx';
 import GoogleButton from '@/components/molecules/GoogleButton/index.tsx';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
@@ -30,7 +31,7 @@ const SignInUpScreen = () => {
   const { colors } = useTheme();
 
   const route = useRoute<SignInUpRouteProp>();
-  const { sendOtpHandler, setVerifyDataHandler } = useAuthStore();
+  const { sendOtpHandler, setVerifyDataHandler, isLoading } = useAuthStore();
   const { mode } = route.params;
 
   const [screenMode, setScreenMode] = useState<AuthScreenMode>(mode);
@@ -93,6 +94,7 @@ const SignInUpScreen = () => {
                   <View style={[styles.inputContainer, styles.firstTextInput]}>
                     <TextInputCustom
                       value={value || ''}
+                      maxLength={20}
                       onChangeText={onChange}
                       onBlur={onBlur}
                       placeholder={t('common.name')}
@@ -116,8 +118,9 @@ const SignInUpScreen = () => {
                 <View style={styles.inputContainer}>
                   <TextInputCustom
                     value={value}
-                    onChangeText={onChange}
+                    onChangeText={text => onChange(text.toLowerCase())}
                     onBlur={onBlur}
+                    autoCapitalize="none"
                     placeholder={t('common.email')}
                     leftIcon={<MailIcon />}
                   />
@@ -140,12 +143,12 @@ const SignInUpScreen = () => {
               style={computedStyles.continueWithText}
             />
 
-            <GoogleButton />
+            <GoogleButton isLoading={isLoading.login} />
           </View>
         </KeyboardAvoidingViewCustom>
 
         <View style={styles.buttonAndTextContainer}>
-          <Button title={t(`auth.${screenMode}Button`)} onPress={onSubmit} />
+          <Button title={t(`auth.${screenMode}Button`)} onPress={onSubmit} isLoading={isLoading.login} />
 
           <View style={styles.belowButtonContainer}>
             <TextCustom

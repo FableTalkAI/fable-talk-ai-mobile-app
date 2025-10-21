@@ -1,11 +1,16 @@
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { StyleSheet } from 'react-native';
 
 import { GoogleLogoIcon } from '@/assets/icons/index.ts';
 import PressableCustom from '@/components/atoms/PressableCustom/index.tsx';
+import ComponentLoader from '@/components/molecules/ComponentLoader/index.tsx';
+import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useAuthStore from '@/hooks/useAuthStore.ts';
 
-const GoogleButton = () => {
+import { GoogleButtonProps } from './types.ts';
+
+const GoogleButton = ({ isLoading }: GoogleButtonProps) => {
   const { upsertGoogleHandler } = useAuthStore();
 
   const onGoogleButtonPress = async () => {
@@ -27,10 +32,19 @@ const GoogleButton = () => {
   };
 
   return (
-    <PressableCustom onPress={onGoogleButtonPress}>
+    <PressableCustom onPress={onGoogleButtonPress} disabled={isLoading} style={styles.container}>
       <GoogleLogoIcon />
+      <ComponentLoader isVisible={isLoading} />
     </PressableCustom>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    overflow: 'hidden',
+    borderRadius: RADIUS.circle,
+    padding: SPACING.xxs,
+  },
+});
 
 export default GoogleButton;

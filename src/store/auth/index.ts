@@ -9,9 +9,8 @@ const initialState: AuthState = {
   verifyData: null,
   isLoggedIn: false,
   loading: {
-    sendOtp: false,
     verifyOtp: false,
-    upsertGoogle: false,
+    login: false,
   },
 };
 
@@ -30,13 +29,13 @@ const authSlice = createSlice({
     builder
       //sendOtp
       .addCase(sendOtp.pending, state => {
-        state.loading.sendOtp = true;
+        state.loading.login = true;
       })
       .addCase(sendOtp.fulfilled, state => {
-        state.loading.sendOtp = false;
+        state.loading.login = false;
       })
       .addCase(sendOtp.rejected, (state, action) => {
-        state.loading.sendOtp = false;
+        state.loading.login = false;
         Toast.show({
           type: 'error',
           text1: i18n.t('common.error'),
@@ -63,13 +62,13 @@ const authSlice = createSlice({
 
       //upsertGoogle
       .addCase(upsertGoogle.pending, state => {
-        state.loading.upsertGoogle = true;
+        state.loading.login = true;
       })
       .addCase(upsertGoogle.fulfilled, state => {
-        state.loading.upsertGoogle = false;
+        state.loading.login = false;
       })
       .addCase(upsertGoogle.rejected, (state, action) => {
-        state.loading.upsertGoogle = false;
+        state.loading.login = false;
         Toast.show({
           type: 'error',
           text1: i18n.t('common.error'),

@@ -5,9 +5,8 @@ export type AuthState = {
   verifyData: VerifyData | null;
   isLoggedIn: boolean;
   loading: {
-    sendOtp: boolean;
     verifyOtp: boolean;
-    upsertGoogle: boolean;
+    login: boolean;
   };
 };
 

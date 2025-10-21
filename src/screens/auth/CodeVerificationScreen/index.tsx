@@ -6,17 +6,19 @@ import { CodeField, useBlurOnFulfill, useClearByFocusCell } from 'react-native-c
 import { VerifyCodeIcon } from '@/assets/icons';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
+import ComponentLoader from '@/components/molecules/ComponentLoader/index.tsx';
+import Header from '@/components/molecules/Header/index.tsx';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
 import RenderCodeField from '@/components/molecules/RenderCodeField/index.tsx';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
-import { SPACING } from '@/core/constants/sizes.ts';
+import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useAuthStore from '@/hooks/useAuthStore.ts';
 
 import { CELL_COUNT } from './constants.ts';
 
 const CodeVerificationScreen = () => {
   const { t } = useTranslation();
-  const { verifyOtpHandler, verifyData } = useAuthStore();
+  const { verifyOtpHandler, verifyData, isLoading } = useAuthStore();
 
   const [value, setValue] = useState('');
 
@@ -43,6 +45,7 @@ const CodeVerificationScreen = () => {
 
   return (
     <SafeAreaViewCustom>
+      <Header />
       <KeyboardAvoidingViewCustom>
         <VerifyCodeIcon style={styles.icon} />
 
@@ -61,8 +64,12 @@ const CodeVerificationScreen = () => {
             onChangeText={setValue}
             cellCount={CELL_COUNT}
             keyboardType="number-pad"
-            renderCell={options => <RenderCodeField getCellOnLayoutHandler={getCellOnLayoutHandler} {...options} />}
+            renderCell={options => (
+              <RenderCodeField getCellOnLayoutHandler={getCellOnLayoutHandler} {...options} key={options.index} />
+            )}
           />
+
+          <ComponentLoader isVisible={isLoading.verifyOtp} />
         </View>
       </KeyboardAvoidingViewCustom>
     </SafeAreaViewCustom>
@@ -83,6 +90,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: SPACING.lg,
+    overflow: 'hidden',
+    width: 250,
+    padding: SPACING.xxs,
+    borderRadius: RADIUS.large,
+    alignSelf: 'center',
   },
 });
 

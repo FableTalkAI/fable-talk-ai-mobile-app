@@ -19,7 +19,11 @@ export const verifyOtp = createAxiosAsyncThunk<void, VerifyOtpRequest>(
     const response = await defaultAxiosInstance.post(`${AUTH_ROUTE}/verify`, data);
 
     await auth().signInWithCustomToken(response.data);
-    await dispatch(getUserProfile());
+    auth().onAuthStateChanged(async user => {
+      if (user) {
+        await dispatch(getUserProfile());
+      }
+    });
   },
 );
 

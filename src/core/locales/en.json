@@ -10,6 +10,7 @@
     "subscription": "Subscription",
     "email": "Email",
     "name": "Name",
+    "yourName": "Your name",
     "alphabetically": "Alphabetically",
     "popularity": "Popularity",
     "enabled": "Enabled",
@@ -66,6 +67,7 @@
   "onboarding": {
     "initialText": "Start your communication with different agents",
     "description": {
+      "name": "Please, enter your name",
       "dateOfBirth": "Please, select your date of birth",
       "avatar": "Uploading an avatar, it's optional*",
       "interests": "Please, select 2 tags"
@@ -159,6 +161,12 @@
     "userUpdated": "User updated successfully",
     "emailRequired": "Email required",
     "noAvatarUploaded": "Avatar required",
-    "avatarUploaded": "Avatar successfully uploaded"
+    "avatarUploaded": "Avatar successfully uploaded",
+    "userAlreadyExists": "User already exists, please login",
+    "userNotFound": "User not found, please register",
+    "emailOrCodeRequired": "Please enter valid email or code",
+    "codeExpired": "Code expired, login again",
+    "tooManyAttempts": "Too many attempts, login again",
+    "wrongCode": "Wrong code, remaining attempts: {{amount}}"
   }
 }
