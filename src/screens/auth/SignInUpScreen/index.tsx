@@ -12,7 +12,6 @@ import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
-import ComponentLoader from '@/components/molecules/ComponentLoader/index.tsx';
 import GoogleButton from '@/components/molecules/GoogleButton/index.tsx';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
