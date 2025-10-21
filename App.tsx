@@ -13,6 +13,7 @@ import { persistor, store } from '@/store';
 import RootNavigator from '@/navigation/RootNavigator';
 import BottomWindowProvider from '@/core/providers/BottomWindowProvider';
 import FirebaseProvider from '@/core/providers/FirebaseProvider/index.tsx';
+import InitialSetup from '@/core/providers/InitialSetup/index.tsx';
 
 function App() {
   return (
@@ -25,7 +26,9 @@ function App() {
                 <SafeAreaProvider>
                   <BottomWindowProvider>
                     <NavigationContainer>
-                      <RootNavigator />
+                      <InitialSetup>
+                        <RootNavigator />
+                      </InitialSetup>
                     </NavigationContainer>
                   </BottomWindowProvider>
 

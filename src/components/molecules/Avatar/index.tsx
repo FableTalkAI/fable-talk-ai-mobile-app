@@ -30,11 +30,17 @@ const Avatar = ({ size, isChangeable = true, style }: AvatarProps) => {
     },
   });
 
+  const getAvatarUrl = () => {
+    if (!profile) return '';
+    if (profile.avatarUrl.startsWith('http')) return profile.avatarUrl;
+    return BACKEND_BASE_URL + profile.avatarUrl;
+  };
+
   return (
     <View style={[computedStyles.container, styles.container, style]}>
       <View style={styles.imageContainer}>
         {profile && profile.avatarUrl ? (
-          <AutoImage source={{ uri: BACKEND_BASE_URL + profile.avatarUrl }} resizeMode="cover" style={styles.image} />
+          <AutoImage source={{ uri: getAvatarUrl() }} resizeMode="cover" style={styles.image} />
         ) : (
           <UserIcon />
         )}

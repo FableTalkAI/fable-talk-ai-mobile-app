@@ -1,16 +1,83 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import i18n from 'i18next';
+import Toast from 'react-native-toast-message';
 
-import { authSliceName } from './thunks.ts';
-import { AuthState } from './types.ts';
+import { authSliceName, sendOtp, upsertGoogle, verifyOtp } from './thunks.ts';
+import { AuthState, VerifyData } from './types.ts';
 
-const initialState: AuthState = {};
+const initialState: AuthState = {
+  verifyData: null,
+  isLoggedIn: false,
+  loading: {
+    verifyOtp: false,
+    login: false,
+  },
+};
 
 const authSlice = createSlice({
   name: authSliceName,
   initialState,
-  reducers: {},
+  reducers: {
+    setVerifyData: (state, action: PayloadAction<VerifyData>) => {
+      state.verifyData = action.payload;
+    },
+    setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload;
+    },
+  },
+  extraReducers: builder => {
+    builder
+      //sendOtp
+      .addCase(sendOtp.pending, state => {
+        state.loading.login = true;
+      })
+      .addCase(sendOtp.fulfilled, state => {
+        state.loading.login = false;
+      })
+      .addCase(sendOtp.rejected, (state, action) => {
+        state.loading.login = false;
+        Toast.show({
+          type: 'error',
+          text1: i18n.t('common.error'),
+          text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
+          position: 'bottom',
+        });
+      })
+
+      //verifyOtp
+      .addCase(verifyOtp.pending, state => {
+        state.loading.verifyOtp = true;
+      })
+      .addCase(verifyOtp.fulfilled, state => {
+        state.loading.verifyOtp = false;
+      })
+      .addCase(verifyOtp.rejected, (state, action) => {
+        state.loading.verifyOtp = false;
+        Toast.show({
+          type: 'error',
+          text1: i18n.t('common.error'),
+          text2: i18n.t(`serverResponses.${action.payload?.messageKey}`, { amount: action.payload?.remainingAttempts }),
+        });
+      })
+
+      //upsertGoogle
+      .addCase(upsertGoogle.pending, state => {
+        state.loading.login = true;
+      })
+      .addCase(upsertGoogle.fulfilled, state => {
+        state.loading.login = false;
+      })
+      .addCase(upsertGoogle.rejected, (state, action) => {
+        state.loading.login = false;
+        Toast.show({
+          type: 'error',
+          text1: i18n.t('common.error'),
+          text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
+        });
+      });
+  },
 });
 
-export const {} = authSlice.actions;
+export const { setVerifyData, setIsLoggedIn } = authSlice.actions;
 
 export default authSlice.reducer;

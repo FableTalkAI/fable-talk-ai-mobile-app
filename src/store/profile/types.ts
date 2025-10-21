@@ -21,6 +21,7 @@ export type User = {
   email: string;
   isEmailNotificationEnabled: boolean;
   name: string;
+  isOnboardingDone: boolean;
 };
 
 export type UpdateUserProfileRequest = {

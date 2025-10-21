@@ -8,7 +8,6 @@ import { Chat, Theme, UserState } from './types.ts';
 const initialState: UserState = {
   tags: [],
   onboardingStep: 0,
-  isOnboardingDone: false,
   theme: Theme.System,
   notifications: {
     push: false,
@@ -39,9 +38,6 @@ const userSlice = createSlice({
     setOnboardingStep: (state, action: PayloadAction<number>) => {
       state.onboardingStep = action.payload;
     },
-    setIsOnboardingDone: (state, action: PayloadAction<boolean>) => {
-      state.isOnboardingDone = action.payload;
-    },
     setPushNotification: (state, action: PayloadAction<boolean>) => {
       state.notifications.push = action.payload;
     },
@@ -54,7 +50,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setTags, setOnboardingStep, setPushNotification, setTheme, setChats, setIsOnboardingDone } =
-  userSlice.actions;
+export const { setTags, setOnboardingStep, setPushNotification, setTheme, setChats } = userSlice.actions;
 
 export default userSlice.reducer;

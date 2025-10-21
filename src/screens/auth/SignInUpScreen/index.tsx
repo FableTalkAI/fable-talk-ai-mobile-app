@@ -16,10 +16,12 @@ import GoogleButton from '@/components/molecules/GoogleButton/index.tsx';
 import KeyboardAvoidingViewCustom from '@/components/molecules/KeyboardAvoidingViewCustom';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
+import { getDeviceLanguage } from '@/core/utils/device.ts';
 import { getAuthSchema } from '@/core/utils/zod/schema.ts';
 import { AuthSchema } from '@/core/utils/zod/types.ts';
-import useNavigationRoutes from '@/hooks/useNavigationRoutes';
+import useAuthStore from '@/hooks/useAuthStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
+import { SendOtpLanguages } from '@/store/auth/types.ts';
 
 import { AuthScreenMode, SignInUpRouteProp } from './types.ts';
 
@@ -28,7 +30,7 @@ const SignInUpScreen = () => {
   const { colors } = useTheme();
 
   const route = useRoute<SignInUpRouteProp>();
-  const { navigation } = useNavigationRoutes();
+  const { sendOtpHandler, setVerifyDataHandler, isLoading } = useAuthStore();
   const { mode } = route.params;
 
   const [screenMode, setScreenMode] = useState<AuthScreenMode>(mode);
@@ -60,10 +62,16 @@ const SignInUpScreen = () => {
   });
 
   const onSubmit = () => {
-    handleSubmit((data: AuthSchema) => {
-      //TODO: make request for otp code
-      console.log(data);
-      navigation.navigate('CodeVerification');
+    handleSubmit(async (data: AuthSchema) => {
+      const lang: SendOtpLanguages = getDeviceLanguage() === 'uk' ? 'uk' : 'en';
+      const dataOptions = {
+        email: data.email,
+        lang,
+        ...(screenMode === AuthScreenMode.SignUp && { name: data.name }),
+      };
+
+      setVerifyDataHandler(data);
+      await sendOtpHandler(dataOptions);
     })();
   };
 
@@ -85,6 +93,7 @@ const SignInUpScreen = () => {
                   <View style={[styles.inputContainer, styles.firstTextInput]}>
                     <TextInputCustom
                       value={value || ''}
+                      maxLength={20}
                       onChangeText={onChange}
                       onBlur={onBlur}
                       placeholder={t('common.name')}
@@ -108,8 +117,9 @@ const SignInUpScreen = () => {
                 <View style={styles.inputContainer}>
                   <TextInputCustom
                     value={value}
-                    onChangeText={onChange}
+                    onChangeText={text => onChange(text.toLowerCase())}
                     onBlur={onBlur}
+                    autoCapitalize="none"
                     placeholder={t('common.email')}
                     leftIcon={<MailIcon />}
                   />
@@ -132,12 +142,12 @@ const SignInUpScreen = () => {
               style={computedStyles.continueWithText}
             />
 
-            <GoogleButton />
+            <GoogleButton isLoading={isLoading.login} />
           </View>
         </KeyboardAvoidingViewCustom>
 
         <View style={styles.buttonAndTextContainer}>
-          <Button title={t(`auth.${screenMode}Button`)} onPress={onSubmit} />
+          <Button title={t(`auth.${screenMode}Button`)} onPress={onSubmit} isLoading={isLoading.login} />
 
           <View style={styles.belowButtonContainer}>
             <TextCustom

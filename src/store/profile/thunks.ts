@@ -38,7 +38,6 @@ export const uploadAvatar = createAxiosAsyncThunk<MessageKey, string>(
   `${profileSliceName}/uploadAvatar`,
   async (imgUri, { dispatch }) => {
     const avatarBase64 = await convertImageToBase64(imgUri);
-    console.log('avatar', avatarBase64);
     const response = await defaultAxiosInstance.patch(`${PROFILE_ROUTE}/upload-avatar`, {
       avatarBase64,
     });
