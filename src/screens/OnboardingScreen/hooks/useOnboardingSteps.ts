@@ -10,7 +10,7 @@ import useUserStore from '@/hooks/useUserStore.ts';
 
 const useOnboardingSteps = () => {
   const { navigation } = useNavigationRoutes();
-  const { setOnboardingStepIndexHandler, onboardingStepIndex, tags } = useUserStore();
+  const { setOnboardingStepIndexHandler, onboardingStepIndex, filter } = useUserStore();
 
   const { profile, updateUserProfileHandler } = useProfileStore();
 
@@ -33,10 +33,10 @@ const useOnboardingSteps = () => {
       },
       {
         component: InterestsStep,
-        isDisabled: tags.length !== 2,
+        isDisabled: filter.tags.length !== 2,
       },
     ],
-    [profile, tags.length],
+    [profile, filter.tags.length],
   );
 
   const lastStep = stepsData.length - 1;

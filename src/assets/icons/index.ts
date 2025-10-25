@@ -18,7 +18,9 @@ import PaperInfoIcon from './paper-info.svg';
 import PencilIcon from './pencil.svg';
 import PinIcon from './pin-icon.svg';
 import PinIconPinned from './pin-icon-pinned.svg';
+import PlusIcon from './plus.svg';
 import ProfileIcon from './profile.svg';
+import RobotIcon from './robot.svg';
 import SearchIcon from './search.svg';
 import SendButtonIcon from './send-button.svg';
 import ShieldUserIcon from './shield-user.svg';
@@ -60,7 +62,9 @@ export {
   PencilIcon,
   PinIcon,
   PinIconPinned,
+  PlusIcon,
   ProfileIcon,
+  RobotIcon,
   SearchIcon,
   SendButtonIcon,
   ShieldUserIcon,

@@ -29,7 +29,11 @@ const Skeleton = ({ style }: SkeletonProps) => {
   }, [progress]);
 
   const animatedStyle = useAnimatedStyle(() => {
-    const backgroundColor = interpolateColor(progress.value, [0, 1], [colors.grayDisabled, colors.gray40]);
+    const backgroundColor = interpolateColor(
+      progress.value,
+      [0, 1],
+      [colors.skeletonPrimary, colors.skeletonSecondary],
+    );
 
     return {
       backgroundColor,
@@ -41,7 +45,6 @@ const Skeleton = ({ style }: SkeletonProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     borderRadius: RADIUS.small,
   },
 });

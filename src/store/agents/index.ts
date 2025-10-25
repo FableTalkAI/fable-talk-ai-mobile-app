@@ -1,90 +1,19 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
-import { ChatGPTLogo } from '@/assets/images';
-
-import { agentsSliceName } from './thunks.ts';
-import { Agent, AgentsState, OrderFilter, SortFilter } from './types.ts';
+import { agentsSliceName, getAllUniqueTags, getFilteredAgents, getResultsOfSearch } from './thunks.ts';
+import { AgentsState } from './types.ts';
 
 const initialState: AgentsState = {
-  tags: ['Home', 'Test', 'Home1', 'Test2', 'Home2', 'Test3', 'Home4', 'Test6'],
-  agents: [
-    {
-      name: 'Jonh7',
-      description: 'Jonh devs ass dd ss sda ss sadas s',
-      tags: ['Home', 'Test', 'Home1', 'Test1'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh6',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh5',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh4',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh3',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh2',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh1',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh55',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh44',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh33',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh22',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-    {
-      name: 'Jonh11',
-      description: 'Jonh',
-      tags: ['Home', 'Test'],
-      avatarSource: ChatGPTLogo,
-    },
-  ],
-  filter: {
-    tags: [],
-    sort: SortFilter.Alphabetically,
-    order: OrderFilter.ASC,
+  tags: [],
+  agents: [],
+  pagination: {
+    hasMore: true,
+  },
+  searchResults: [],
+  loading: {
+    agents: false,
+    tags: false,
+    searchResults: false,
   },
 };
 
@@ -92,28 +21,54 @@ const agentsSlice = createSlice({
   name: agentsSliceName,
   initialState,
   reducers: {
-    setAgents: (state, action: PayloadAction<Agent[]>) => {
-      state.agents = action.payload;
+    clearSearchResults: state => {
+      state.searchResults = initialState.searchResults;
     },
-    clearAgents: state => {
-      state.agents = initialState.agents;
-    },
-    setFilterTags: (state, action: PayloadAction<string[]>) => {
-      state.filter.tags = action.payload;
-    },
-    setFilterSort: (state, action: PayloadAction<SortFilter>) => {
-      state.filter.sort = action.payload;
-    },
-    setFilterOrder: (state, action: PayloadAction<OrderFilter>) => {
-      state.filter.order = action.payload;
-    },
-    clearFilter: state => {
-      state.filter = initialState.filter;
-    },
+  },
+  extraReducers: builder => {
+    builder
+      //getAllUniqueTags
+      .addCase(getAllUniqueTags.pending, state => {
+        state.loading.tags = true;
+      })
+      .addCase(getAllUniqueTags.fulfilled, (state, action) => {
+        state.loading.tags = false;
+        state.tags = action.payload;
+      })
+      .addCase(getAllUniqueTags.rejected, state => {
+        state.loading.tags = false;
+      })
+
+      //getFilteredAgents
+      .addCase(getFilteredAgents.pending, state => {
+        state.loading.agents = true;
+      })
+      .addCase(getFilteredAgents.fulfilled, (state, action) => {
+        state.loading.agents = false;
+        const { data, nextCursor, hasMore } = action.payload;
+        const loadMore = action.meta.arg;
+
+        state.agents = loadMore ? [...state.agents, ...data] : data;
+        state.pagination = { hasMore, nextCursor };
+      })
+      .addCase(getFilteredAgents.rejected, state => {
+        state.loading.agents = false;
+      })
+
+      //getResultsOfSearch
+      .addCase(getResultsOfSearch.pending, state => {
+        state.loading.searchResults = true;
+      })
+      .addCase(getResultsOfSearch.fulfilled, (state, action) => {
+        state.loading.searchResults = false;
+        state.searchResults = action.payload;
+      })
+      .addCase(getResultsOfSearch.rejected, state => {
+        state.loading.searchResults = false;
+      });
   },
 });
 
-export const { setAgents, clearAgents, setFilterTags, setFilterSort, setFilterOrder, clearFilter } =
-  agentsSlice.actions;
+export const { clearSearchResults } = agentsSlice.actions;
 
 export default agentsSlice.reducer;

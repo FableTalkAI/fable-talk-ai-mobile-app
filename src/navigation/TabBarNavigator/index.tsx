@@ -6,7 +6,7 @@ import { ChatIcon, HomeIcon, ProfileIcon } from '@/assets/icons';
 import { TEXT_STYLES } from '@/components/atoms/TextCustom/constants.ts';
 import useTheme from '@/hooks/useTheme.ts';
 import ChatListScreen from '@/screens/main/ChatListScreen';
-import HomeScreen from '@/screens/main/HomeScreen';
+import HomeScreen from '@/screens/main/HomeScreen.tsx';
 import ProfileScreen from '@/screens/main/ProfileScreen';
 
 import { TabBarNavigatorParamList } from './types.ts';

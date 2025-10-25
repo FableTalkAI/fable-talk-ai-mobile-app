@@ -1,31 +1,58 @@
 import { useCallback } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
-import { setChats, setOnboardingStep, setPushNotification, setTags, setTheme } from '@/store/user';
+import {
+  clearFilter,
+  setChats,
+  setFilterSort,
+  setFilterSortBy,
+  setFilterTags,
+  setOnboardingStep,
+  setPushNotification,
+  setTheme,
+} from '@/store/user';
 import {
   chatsSelector,
+  filterSelector,
   notificationsSelector,
   onboardingStepSelector,
-  tagsSelector,
   themeSelector,
 } from '@/store/user/selectors.ts';
-import { Chat, Theme } from '@/store/user/types.ts';
+import { Chat, SortByFilter, SortFilter, Theme } from '@/store/user/types.ts';
 
 const useUserStore = () => {
   const dispatch = useAppDispatch();
 
-  const tags = useAppSelector(tagsSelector);
   const onboardingStepIndex = useAppSelector(onboardingStepSelector);
   const notifications = useAppSelector(notificationsSelector);
   const theme = useAppSelector(themeSelector);
   const chats = useAppSelector(chatsSelector);
+  const filter = useAppSelector(filterSelector);
 
-  const setTagsHandler = useCallback(
+  const setFilterTagsHandler = useCallback(
     (selectedTags: string[]) => {
-      dispatch(setTags(selectedTags));
+      dispatch(setFilterTags(selectedTags));
     },
     [dispatch],
   );
+
+  const setFilterSortByHandler = useCallback(
+    (sortBy: SortByFilter) => {
+      dispatch(setFilterSortBy(sortBy));
+    },
+    [dispatch],
+  );
+
+  const setFilterSortHandler = useCallback(
+    (sort: SortFilter) => {
+      dispatch(setFilterSort(sort));
+    },
+    [dispatch],
+  );
+
+  const clearFilterHandler = useCallback(() => {
+    dispatch(clearFilter());
+  }, [dispatch]);
 
   const setOnboardingStepIndexHandler = useCallback(
     (step: number) => {
@@ -56,17 +83,20 @@ const useUserStore = () => {
   );
 
   return {
-    tags,
+    filter,
     onboardingStepIndex,
     theme,
     notifications,
     chats,
 
-    setTagsHandler,
     setOnboardingStepIndexHandler,
     setPushNotificationHandler,
     setThemeHandler,
     setChatsHandler,
+    setFilterTagsHandler,
+    setFilterSortHandler,
+    setFilterSortByHandler,
+    clearFilterHandler,
   };
 };
 

@@ -70,7 +70,7 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
           />
         );
       case BottomWindowModes.SearchFilter:
-        return <SearchFilter />;
+        return <SearchFilter close={close} />;
       default:
         return null;
     }

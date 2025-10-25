@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 
 import { ArrowForwardIcon, SearchIcon } from '@/assets/icons';
@@ -13,10 +13,16 @@ const SearchInput = forwardRef<TextInput, SearchInputProps>(({ placeholder, navi
   const [value, setValue] = useState('');
   const debouncedSearch = useDebounce({ value });
 
+  const isFirstRun = useRef(true);
+
   useEffect(() => {
-    if (!value) return;
-    onStop(debouncedSearch);
-  }, [debouncedSearch, onStop, value]);
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+    onStop?.(debouncedSearch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
 
   return (
     <View style={styles.wrapper} pointerEvents={isDisabled ? 'none' : 'auto'}>

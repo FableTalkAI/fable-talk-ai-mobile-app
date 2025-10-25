@@ -1,6 +1,8 @@
+import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
+import { RobotIcon } from '@/assets/icons/index.ts';
 import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
@@ -16,6 +18,9 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
   const { colors } = useTheme();
 
   const computedStyles = StyleSheet.create({
+    wrapper: {
+      width: (SCREEN_WIDTH - SPACING.xl * 2 - SPACING.lg) / 2,
+    },
     pressableContainer: {
       backgroundColor: colors.backgroundBase,
     },
@@ -28,9 +33,13 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
   });
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[computedStyles.wrapper, styles.wrapper]}>
       <PressableCustom style={[computedStyles.pressableContainer, styles.pressableContainer, style]} onPress={onPress}>
-        <AutoImage source={avatarSource} style={styles.avatar} />
+        {avatarSource ? (
+          <AutoImage source={avatarSource} style={styles.avatar} />
+        ) : (
+          <RobotIcon width={44} height={44} fill={colors.iconPrimary} />
+        )}
 
         <TextCustom text={name} mode={TextModes.Secondary} style={computedStyles.name} />
         <TextCustom
@@ -56,8 +65,6 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
 
 const styles = StyleSheet.create({
   wrapper: {
-    maxWidth: '50%',
-    flex: 1,
     boxShadow: BOX_SHADOW.medium,
   },
   pressableContainer: {
@@ -69,6 +76,8 @@ const styles = StyleSheet.create({
   avatar: {
     width: 44,
     height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
     borderRadius: RADIUS.circle,
   },
   description: {

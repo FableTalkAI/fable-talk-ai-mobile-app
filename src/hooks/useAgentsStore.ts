@@ -1,63 +1,58 @@
 import { useCallback } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
-import { clearAgents, clearFilter, setAgents, setFilterOrder, setFilterSort, setFilterTags } from '@/store/agents';
-import { agentsSelector, filterSelector, tagsSelector } from '@/store/agents/selectors.ts';
-import { Agent, OrderFilter, SortFilter } from '@/store/agents/types.ts';
+import { clearSearchResults } from '@/store/agents/index.ts';
+import {
+  agentsSelector,
+  isLoadingSelector,
+  paginationSelector,
+  searchResultsSelector,
+  tagsSelector,
+} from '@/store/agents/selectors.ts';
+import { getAllUniqueTags, getFilteredAgents, getResultsOfSearch } from '@/store/agents/thunks.ts';
 
 const useAgentsStore = () => {
   const dispatch = useAppDispatch();
 
   const tags = useAppSelector(tagsSelector);
   const agents = useAppSelector(agentsSelector);
-  const filter = useAppSelector(filterSelector);
+  const isLoading = useAppSelector(isLoadingSelector);
+  const searchResults = useAppSelector(searchResultsSelector);
+  const pagination = useAppSelector(paginationSelector);
 
-  const setFilteredAgents = useCallback(
-    (filteredAgents: Agent[]) => {
-      dispatch(setAgents(filteredAgents));
+  const getSearchResultsHandler = useCallback(
+    async (searchQuery: string) => {
+      await dispatch(getResultsOfSearch({ searchQuery })).unwrap();
     },
     [dispatch],
   );
 
-  const clearFilteredAgents = useCallback(() => {
-    dispatch(clearAgents());
+  const getAgentsHandler = useCallback(
+    async (loadMore: boolean = false) => {
+      await dispatch(getFilteredAgents(loadMore)).unwrap();
+    },
+    [dispatch],
+  );
+
+  const getTagsHandler = useCallback(async () => {
+    await dispatch(getAllUniqueTags()).unwrap();
   }, [dispatch]);
 
-  const setFilterTagsHandler = useCallback(
-    (selectedTags: string[]) => {
-      dispatch(setFilterTags(selectedTags));
-    },
-    [dispatch],
-  );
-
-  const setFilterSortHandler = useCallback(
-    (sort: SortFilter) => {
-      dispatch(setFilterSort(sort));
-    },
-    [dispatch],
-  );
-
-  const setFilterOrderHandler = useCallback(
-    (order: OrderFilter) => {
-      dispatch(setFilterOrder(order));
-    },
-    [dispatch],
-  );
-
-  const clearFilterHandler = useCallback(() => {
-    dispatch(clearFilter());
+  const clearSearchResultsHandler = useCallback(() => {
+    dispatch(clearSearchResults());
   }, [dispatch]);
 
   return {
     tags,
     agents,
-    filter,
-    setFilteredAgents,
-    clearFilteredAgents,
-    setFilterTagsHandler,
-    setFilterSortHandler,
-    setFilterOrderHandler,
-    clearFilterHandler,
+    isLoading,
+    searchResults,
+    pagination,
+
+    getSearchResultsHandler,
+    clearSearchResultsHandler,
+    getAgentsHandler,
+    getTagsHandler,
   };
 };
 

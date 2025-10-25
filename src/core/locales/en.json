@@ -13,6 +13,7 @@
     "yourName": "Your name",
     "alphabetically": "Alphabetically",
     "popularity": "Popularity",
+    "dateAdded": "Date added",
     "enabled": "Enabled",
     "disabled": "Disabled",
     "contactUs": "Contact us",
@@ -22,6 +23,7 @@
   },
   "actions": {
     "apply": "Apply",
+    "clear": "Clear",
     "choose": "Choose",
     "send": "Send",
     "delete": "Delete",

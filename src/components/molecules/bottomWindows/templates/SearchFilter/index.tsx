@@ -18,22 +18,27 @@ import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import { BOX_SHADOW } from '@/core/constants/styles.ts';
 import useAgentsStore from '@/hooks/useAgentsStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
-import { OrderFilter, SortFilter } from '@/store/agents/types.ts';
+import useUserStore from '@/hooks/useUserStore.ts';
+import { SortByFilter, SortFilter } from '@/store/user/types.ts';
 
-const SearchFilter = () => {
+import { SearchFilterProps } from './types.ts';
+
+const SearchFilter = ({ close }: SearchFilterProps) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
 
-  const { filter, setFilterOrderHandler, setFilterSortHandler, tags, setFilterTagsHandler, setFilteredAgents, agents } =
-    useAgentsStore();
+  const { tags, getAgentsHandler } = useAgentsStore();
+
+  const { filter, setFilterSortByHandler, setFilterSortHandler, setFilterTagsHandler, clearFilterHandler } =
+    useUserStore();
 
   const [filteredTags, setFilteredTags] = useState(tags);
 
   const selectOptions = useMemo(
     () =>
-      (Object.keys(SortFilter) as Array<keyof typeof SortFilter>).map(option => ({
-        value: SortFilter[option],
-        title: t(`common.${option.toLowerCase()}`),
+      (Object.keys(SortByFilter) as Array<keyof typeof SortByFilter>).map(option => ({
+        value: SortByFilter[option],
+        title: t(`common.${SortByFilter[option]}`),
       })),
     [t],
   );
@@ -62,9 +67,15 @@ const SearchFilter = () => {
     }
   };
 
-  const filterAgentsByTags = () => {
-    if (filteredTags.length === 0) return agents;
-    return agents.filter(agent => agent.tags.some(tag => filteredTags.includes(tag)));
+  const onApply = () => {
+    getAgentsHandler().catch(console.error);
+    close();
+  };
+
+  const onClear = () => {
+    clearFilterHandler();
+    getAgentsHandler().catch(console.error);
+    close();
   };
 
   return (
@@ -76,16 +87,16 @@ const SearchFilter = () => {
           <Select
             options={selectOptions}
             width={SCREEN_WIDTH - SPACING.lg - 20 - SPACING.xl}
-            defaultValue={filter.sort}
-            onChange={setFilterSortHandler}
+            defaultValue={filter.sortBy}
+            onChange={setFilterSortByHandler}
           />
 
           <PressableCustom
-            onPress={() => setFilterOrderHandler(filter.order === OrderFilter.ASC ? OrderFilter.DESC : OrderFilter.ASC)}
+            onPress={() => setFilterSortHandler(filter.sort === SortFilter.ASC ? SortFilter.DESC : SortFilter.ASC)}
             hitSlop={5}
           >
-            <Animated.View exiting={FadeOut} entering={FadeIn} key={`sort-ascending-${filter.order}`}>
-              {filter.order === OrderFilter.ASC ? (
+            <Animated.View exiting={FadeOut} entering={FadeIn} key={`sort-ascending-${filter.sort}`}>
+              {filter.sort === SortFilter.ASC ? (
                 <SortAscendingIcon fill={colors.iconPrimary} />
               ) : (
                 <SortDescendingIcon fill={colors.iconPrimary} />
@@ -147,16 +158,20 @@ const SearchFilter = () => {
         />
       </View>
 
-      <Button
-        title={t('actions.apply')}
-        mode={ButtonModes.Success}
-        containerStyle={styles.buttonContainer}
-        //TODO: Server agents handling
-        onPress={() => {
-          const filtered = filterAgentsByTags();
-          setFilteredAgents(filtered);
-        }}
-      />
+      <View style={styles.buttonWrapper}>
+        <Button
+          title={t('actions.clear')}
+          mode={ButtonModes.Disabled}
+          containerStyle={styles.buttonContainer}
+          onPress={onClear}
+        />
+        <Button
+          title={t('actions.apply')}
+          mode={ButtonModes.Success}
+          containerStyle={styles.buttonContainer}
+          onPress={onApply}
+        />
+      </View>
     </View>
   );
 };
@@ -216,8 +231,14 @@ const styles = StyleSheet.create({
     gap: SPACING.xxs,
     paddingBottom: SPACING.xs,
   },
+  buttonWrapper: {
+    flexDirection: 'row',
+    flex: 1,
+    gap: SPACING.xs,
+  },
   buttonContainer: {
     paddingTop: SPACING.lg,
+    flex: 1,
   },
   noResultsContainer: {
     justifyContent: 'center',

@@ -13,6 +13,7 @@
     "yourName": "Ваше ім'я",
     "alphabetically": "За алфавітом",
     "popularity": "За популярністю",
+    "dateAdded": "За датою",
     "name": "Ім'я",
     "enabled": "Увімкнуто",
     "disabled": "Вимкнуто",
@@ -23,6 +24,7 @@
   },
   "actions": {
     "apply": "Застосувати",
+    "clear": "Очистити",
     "choose": "Обрати",
     "send": "Відправити",
     "delete": "Видалити",
