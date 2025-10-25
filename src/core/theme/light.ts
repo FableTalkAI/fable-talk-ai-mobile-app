@@ -9,6 +9,9 @@ export const light = {
   backgroundHover: '#744BA026',
   backgroundSecondary: '#FAF9F9',
 
+  skeletonPrimary: '#C1C0C099',
+  skeletonSecondary: '#E3E2E2E5',
+
   borderPrimary: '#c2c6c8',
 
   iconPrimary: '#412668',

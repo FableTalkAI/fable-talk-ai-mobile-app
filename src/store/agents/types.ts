@@ -3,10 +3,12 @@ import { ImageSourcePropType } from 'react-native';
 export type AgentsState = {
   tags: string[];
   agents: Agent[];
-  filter: {
-    tags: string[];
-    sort: SortFilter;
-    order: OrderFilter;
+  pagination: Omit<GetFilteredAgentsResponse, 'data'>;
+  searchResults: Agent[];
+  loading: {
+    tags: boolean;
+    agents: boolean;
+    searchResults: boolean;
   };
 };
 
@@ -17,12 +19,12 @@ export type Agent = {
   avatarSource: ImageSourcePropType;
 };
 
-export enum SortFilter {
-  Alphabetically = 'alphabetically',
-  Popularity = 'popularity',
-}
+export type GetResultsOfSearchRequest = {
+  searchQuery: string;
+};
 
-export enum OrderFilter {
-  ASC = 'ASC',
-  DESC = 'DESC',
-}
+export type GetFilteredAgentsResponse = {
+  data: Agent[];
+  hasMore: boolean;
+  nextCursor?: string;
+};

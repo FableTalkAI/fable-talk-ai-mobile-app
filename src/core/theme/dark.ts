@@ -9,6 +9,9 @@ export const dark = {
   backgroundHover: '#8862B13F',
   backgroundSecondary: '#3c3c3c',
 
+  skeletonPrimary: '#68686899',
+  skeletonSecondary: '#787878CC',
+
   borderPrimary: '#232325',
 
   iconPrimary: '#A37EC4',
