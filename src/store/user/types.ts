@@ -1,5 +1,3 @@
-import { Agent } from '@/store/agents/types.ts';
-
 export type UserState = {
   onboardingStep: number;
   filter: {
@@ -11,7 +9,6 @@ export type UserState = {
   notifications: {
     push: boolean;
   };
-  chats: Chat[];
 };
 
 export enum SortByFilter {
@@ -24,13 +21,6 @@ export enum SortFilter {
   ASC = 'asc',
   DESC = 'desc',
 }
-
-export type Chat = {
-  agentName: Agent['name'];
-  agentAvatar: Agent['avatarSource'];
-  lastMessage: string;
-  isPinned: boolean;
-};
 
 export enum Theme {
   Dark = 'dark',

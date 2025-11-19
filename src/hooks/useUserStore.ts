@@ -3,7 +3,6 @@ import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
 import {
   clearFilter,
-  setChats,
   setFilterSort,
   setFilterSortBy,
   setFilterTags,
@@ -12,13 +11,12 @@ import {
   setTheme,
 } from '@/store/user';
 import {
-  chatsSelector,
   filterSelector,
   notificationsSelector,
   onboardingStepSelector,
   themeSelector,
 } from '@/store/user/selectors.ts';
-import { Chat, SortByFilter, SortFilter, Theme } from '@/store/user/types.ts';
+import { SortByFilter, SortFilter, Theme } from '@/store/user/types.ts';
 
 const useUserStore = () => {
   const dispatch = useAppDispatch();
@@ -26,7 +24,6 @@ const useUserStore = () => {
   const onboardingStepIndex = useAppSelector(onboardingStepSelector);
   const notifications = useAppSelector(notificationsSelector);
   const theme = useAppSelector(themeSelector);
-  const chats = useAppSelector(chatsSelector);
   const filter = useAppSelector(filterSelector);
 
   const setFilterTagsHandler = useCallback(
@@ -75,24 +72,15 @@ const useUserStore = () => {
     [dispatch],
   );
 
-  const setChatsHandler = useCallback(
-    (activeChats: Chat[]) => {
-      dispatch(setChats(activeChats));
-    },
-    [dispatch],
-  );
-
   return {
     filter,
     onboardingStepIndex,
     theme,
     notifications,
-    chats,
 
     setOnboardingStepIndexHandler,
     setPushNotificationHandler,
     setThemeHandler,
-    setChatsHandler,
     setFilterTagsHandler,
     setFilterSortHandler,
     setFilterSortByHandler,

@@ -5,19 +5,21 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { SendButtonIcon } from '@/assets/icons';
 import { SPACING } from '@/core/constants/sizes.ts';
 
-const Send = (props: SendProps<IMessage>) => (
-  <GiftedChatSend {...props} containerStyle={styles.send}>
-    <Animated.View entering={FadeIn} exiting={FadeOut}>
-      <SendButtonIcon />
-    </Animated.View>
-  </GiftedChatSend>
-);
+const Send = (props: SendProps<IMessage>) => {
+  return (
+    <GiftedChatSend {...props} containerStyle={styles.send}>
+      <Animated.View entering={FadeIn} exiting={FadeOut}>
+        <SendButtonIcon />
+      </Animated.View>
+    </GiftedChatSend>
+  );
+};
 
 const styles = StyleSheet.create({
   send: {
-    position: 'absolute',
     right: SPACING.xl,
-    bottom: 8,
+    position: 'absolute',
+    bottom: 16,
     justifyContent: 'center',
     alignItems: 'center',
   },

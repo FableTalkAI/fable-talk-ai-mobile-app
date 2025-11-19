@@ -48,7 +48,7 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
         </View>
 
         <TextCustom
-          text={lastMessage}
+          text={lastMessage.text}
           numberOfLines={2}
           mode={TextModes.Secondary}
           style={computedStyles.lastMessage}

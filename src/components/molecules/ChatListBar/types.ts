@@ -1,8 +1,8 @@
-import { ImageSourcePropType } from 'react-native';
+import { Message } from '@/store/chat/types.ts';
 
 export type ChatListBarProps = {
   agentName: string;
-  lastMessage: string;
-  avatarSource: ImageSourcePropType;
+  lastMessage: Message;
+  avatarSource: string;
   onPress?: () => void;
 };

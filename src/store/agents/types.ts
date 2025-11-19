@@ -14,6 +14,7 @@ export type AgentsState = {
 
 export type Agent = {
   name: string;
+  id: string;
   description: string;
   tags: string[];
   avatarSource: ImageSourcePropType;

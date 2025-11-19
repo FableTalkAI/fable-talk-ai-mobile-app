@@ -7,17 +7,26 @@ import ChatListBar from '@/components/molecules/ChatListBar';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import SearchInput from '@/components/molecules/SearchInput';
 import { SPACING } from '@/core/constants/sizes.ts';
-import useUserStore from '@/hooks/useUserStore.ts';
+import useChatStore from '@/hooks/useChatStore.ts';
 
 const ChatListScreen = () => {
   const { t } = useTranslation();
-  const { chats } = useUserStore();
+  const { chats } = useChatStore();
 
   const [filteredChats, setFilteredChats] = useState(chats);
 
   const onStopHandler = (value: string) => {
-    setFilteredChats(chats.filter(chat => chat.agentName.toLowerCase().includes(value)));
+    setFilteredChats(chats.filter(chat => chat.agentInfo.name.toLowerCase().includes(value)));
   };
+
+  // useEffect(() => {
+  //   (async () => {
+  //     if (!chats.length) {
+  //       await getAllChatsHandler();
+  //       setFilteredChats(chats);
+  //     }
+  //   })();
+  // }, [chats, getAllChatsHandler]);
 
   return (
     <SafeAreaViewCustom withGradientBackground>
@@ -26,7 +35,11 @@ const ChatListScreen = () => {
         data={filteredChats}
         contentContainerStyle={styles.contentContainerStyle}
         renderItem={({ item }) => (
-          <ChatListBar avatarSource={item.agentAvatar} agentName={item.agentName} lastMessage={item.lastMessage} />
+          <ChatListBar
+            avatarSource={item.agentInfo.avatarUrl}
+            agentName={item.agentInfo.name}
+            lastMessage={item.lastMessage}
+          />
         )}
       />
     </SafeAreaViewCustom>

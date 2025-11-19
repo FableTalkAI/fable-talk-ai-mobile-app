@@ -14,6 +14,7 @@ import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useAgentsStore from '@/hooks/useAgentsStore.ts';
 import useBottomWindow from '@/hooks/useBottomWindow/index.tsx';
 import { BottomWindowModes } from '@/hooks/useBottomWindow/types.ts';
+import useChatStore from '@/hooks/useChatStore.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes/index.ts';
 import useTheme from '@/hooks/useTheme.ts';
 import useUserStore from '@/hooks/useUserStore.ts';
@@ -25,6 +26,7 @@ const HomeScreen = () => {
   const { agents, isLoading, getAgentsHandler, pagination } = useAgentsStore();
   const { filter } = useUserStore();
   const { open } = useBottomWindow(BottomWindowModes.SearchFilter);
+  const { getChatByIdHandler } = useChatStore();
 
   const { navigation } = useNavigationRoutes();
 
@@ -40,6 +42,11 @@ const HomeScreen = () => {
   const onEndReachedHandler = () => {
     if (!pagination.hasMore || isLoading.agents) return;
     getAgentsHandler(true).catch(console.error);
+  };
+
+  const onChatOpenHandler = (value: string) => async () => {
+    await getChatByIdHandler(value);
+    navigation.navigate('ChatScreen');
   };
 
   const listFooterComponent = useMemo(() => {
@@ -88,7 +95,7 @@ const HomeScreen = () => {
             description={item.description}
             tags={item.tags}
             avatarSource={item.avatarSource}
-            //TODO: onPress navigate to ChatScreen
+            onPress={onChatOpenHandler(item.id)}
           />
         )}
         onEndReached={onEndReachedHandler}
