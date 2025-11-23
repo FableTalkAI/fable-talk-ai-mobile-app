@@ -10,6 +10,7 @@ export type ChatState = {
 
 export type GetChatByIdRequest = {
   agentId: string;
+  chatId?: string;
 };
 
 export type GetChatByIdResponse = {

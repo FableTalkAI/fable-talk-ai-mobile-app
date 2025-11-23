@@ -1,6 +1,13 @@
-import { ComposerProps as ComposerPropsBase } from 'react-native-gifted-chat';
+import {
+  IMessage,
+  InputToolbarProps as InputToolbarPropsBase,
+  SendProps as SendPropsBase,
+} from 'react-native-gifted-chat';
 
-export type ComposerProps = {
-  backgroundColor: string;
-  placeholder: string;
-} & Omit<ComposerPropsBase, 'placeholder'>;
+export type InputToolbarProps = {
+  messageLoading: boolean;
+} & InputToolbarPropsBase<IMessage>;
+
+export type SendProps = {
+  messageLoading: boolean;
+} & SendPropsBase<IMessage>;

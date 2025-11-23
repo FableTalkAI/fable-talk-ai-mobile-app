@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
+import TextCustom from '@/components/atoms/TextCustom';
 import ChatListBar from '@/components/molecules/ChatListBar';
 import SafeAreaViewCustom from '@/components/molecules/SafeAreaViewCustom';
 import SearchInput from '@/components/molecules/SearchInput';
@@ -19,29 +20,27 @@ const ChatListScreen = () => {
     setFilteredChats(chats.filter(chat => chat.agentInfo.name.toLowerCase().includes(value)));
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     if (!chats.length) {
-  //       await getAllChatsHandler();
-  //       setFilteredChats(chats);
-  //     }
-  //   })();
-  // }, [chats, getAllChatsHandler]);
-
   return (
     <SafeAreaViewCustom withGradientBackground>
       <SearchInput placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
-      <FlatList
-        data={filteredChats}
-        contentContainerStyle={styles.contentContainerStyle}
-        renderItem={({ item }) => (
-          <ChatListBar
-            avatarSource={item.agentInfo.avatarUrl}
-            agentName={item.agentInfo.name}
-            lastMessage={item.lastMessage}
-          />
-        )}
-      />
+
+      {filteredChats.length === 0 ? (
+        <View style={styles.noResultsContainer}>
+          <TextCustom text={t('common.noResults')} />
+        </View>
+      ) : (
+        <FlatList
+          data={filteredChats}
+          contentContainerStyle={styles.contentContainerStyle}
+          renderItem={({ item }) => (
+            <ChatListBar
+              avatarSource={item.agentInfo.avatarUrl}
+              agentName={item.agentInfo.name}
+              lastMessage={item.lastMessage}
+            />
+          )}
+        />
+      )}
     </SafeAreaViewCustom>
   );
 };
@@ -50,6 +49,11 @@ const styles = StyleSheet.create({
   contentContainerStyle: {
     gap: SPACING.lg,
     paddingTop: SPACING.lg,
+  },
+  noResultsContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

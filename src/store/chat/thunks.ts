@@ -56,7 +56,7 @@ export const sendMessage = createAxiosAsyncThunk<Message, string>(
         params: { chatId: selectedChat.chat.chatId },
       },
     );
-    console.log('response', response.data);
+
     return response.data;
   },
 );

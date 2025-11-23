@@ -24,7 +24,7 @@ const useChatStore = () => {
 
   const sendMessageHandler = useCallback(
     async (message: string) => {
-      await dispatch(sendMessage(message)).unwrap();
+      return await dispatch(sendMessage(message)).unwrap();
     },
     [dispatch],
   );

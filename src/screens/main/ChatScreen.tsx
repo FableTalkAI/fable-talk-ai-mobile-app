@@ -13,18 +13,16 @@ import useTheme from '@/hooks/useTheme.ts';
 const ChatScreen = () => {
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const { selectedChat, sendMessageHandler } = useChatStore();
+  const { selectedChat, sendMessageHandler, isLoading } = useChatStore();
   const { profile } = useProfileStore();
 
   const [messageHistory, setMessageHistory] = useState<IMessage[]>(selectedChat ? selectedChat.messageHistory : []);
 
-  console.log('selectedChat', selectedChat);
-  console.log('messageHistory', messageHistory);
-
   const onSend = useCallback(
     async (m: IMessage[] = []) => {
       setMessageHistory(previousMessages => GiftedChat.append(previousMessages, m));
-      await sendMessageHandler(m[0].text);
+      const agentAnswer = await sendMessageHandler(m[0].text);
+      setMessageHistory(previousMessages => GiftedChat.append(previousMessages, [agentAnswer]));
     },
     [sendMessageHandler],
   );
@@ -53,9 +51,9 @@ const ChatScreen = () => {
         }}
         renderBubble={Bubble}
         renderMessage={Message}
-        renderInputToolbar={InputToolbar}
+        renderInputToolbar={props => <InputToolbar messageLoading={isLoading.sendMessage} {...props} />}
         renderComposer={props => <Composer {...props} />}
-        renderSend={Send}
+        renderSend={props => <Send messageLoading={isLoading.sendMessage} {...props} />}
       />
     </SafeAreaView>
   );

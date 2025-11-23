@@ -12,7 +12,7 @@ export const dark = {
   skeletonPrimary: '#68686899',
   skeletonSecondary: '#787878CC',
 
-  borderPrimary: '#232325',
+  borderPrimary: '#424245',
 
   iconPrimary: '#A37EC4',
 };
