@@ -9,10 +9,10 @@ const Bubble = (props: BubbleProps<IMessage>) => {
 
   const computedStyles = StyleSheet.create({
     leftBubbleWrapper: {
-      backgroundColor: colors.gray70,
+      backgroundColor: colors.agentBubble,
     },
     rightBubbleWrapper: {
-      backgroundColor: colors.primary30,
+      backgroundColor: colors.userBubble,
     },
     bubbleText: {
       color: colors.textLight,

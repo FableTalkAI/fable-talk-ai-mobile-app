@@ -14,5 +14,8 @@ export const light = {
 
   borderPrimary: '#c2c6c8',
 
-  iconPrimary: '#412668',
+  iconPrimary: '#2E2374',
+
+  agentBubble: '#424242',
+  userBubble: '#523FAE',
 };

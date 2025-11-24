@@ -1,28 +1,35 @@
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Chase } from 'react-native-animated-spinkit';
+import Animated, { FadeIn } from 'react-native-reanimated';
 
 import useTheme from '@/hooks/useTheme.ts';
 
-const ScreenLoader = () => {
-  const { colors } = useTheme();
+import { ScreenLoaderProps } from './types.ts';
+
+const ScreenLoader = ({ isLoading }: ScreenLoaderProps) => {
+  const { colors, setColorOpacity } = useTheme();
 
   const computedStyles = StyleSheet.create({
     container: {
-      backgroundColor: colors.backgroundBase,
+      backgroundColor: setColorOpacity(colors.gray50, 0.3),
     },
   });
 
+  if (!isLoading) return null;
+
   return (
-    <View style={[styles.container, computedStyles.container]}>
-      <ActivityIndicator size="large" />
-    </View>
+    <Animated.View entering={FadeIn} style={[styles.container, computedStyles.container]}>
+      <Chase size={48} color={colors.textPrimary} />
+    </Animated.View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    position: 'absolute',
+    inset: 0,
   },
 });
 

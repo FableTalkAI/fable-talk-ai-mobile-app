@@ -1,7 +1,7 @@
 import auth from '@react-native-firebase/auth';
 import { useEffect, useState } from 'react';
 
-import ScreenLoader from '@/components/atoms/ScreenLoader';
+import AppStub from '@/components/atoms/AppStub.tsx';
 import useAgentsStore from '@/hooks/useAgentsStore.ts';
 import useAuthStore from '@/hooks/useAuthStore.ts';
 import useChatStore from '@/hooks/useChatStore.ts';
@@ -36,7 +36,7 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
     });
   }, [getAgentsHandler, getAllChatsHandler, getTagsHandler, getUserProfileHandler, setIsLoggedInHandler]);
 
-  if (isLoading) return <ScreenLoader />;
+  if (isLoading) return <AppStub />;
 
   return <>{children}</>;
 };

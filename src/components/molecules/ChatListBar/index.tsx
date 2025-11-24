@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import { PinIcon, PinIconPinned } from '@/assets/icons';
+import { PinIcon, PinIconPinned, RobotIcon } from '@/assets/icons';
 import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
@@ -35,14 +35,19 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
       style={styles.pressableContainer}
       onPress={onPress}
     >
-      <AutoImage source={avatarSource} style={styles.avatar} />
+      {avatarSource ? (
+        <AutoImage source={avatarSource} style={styles.avatar} />
+      ) : (
+        <RobotIcon style={styles.avatar} fill={colors.iconPrimary} />
+      )}
+
       <View style={styles.messageContainer}>
         <View style={styles.nameAndPinContainer}>
           <TextCustom text={agentName} style={computedStyles.agentName} />
 
           <PressableCustom onPress={() => setIsPinned(prevState => !prevState)} hitSlop={10}>
             <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>
-              {isPinned ? <PinIconPinned /> : <PinIcon />}
+              {isPinned ? <PinIconPinned /> : <PinIcon fill={colors.textPrimary} />}
             </Animated.View>
           </PressableCustom>
         </View>
