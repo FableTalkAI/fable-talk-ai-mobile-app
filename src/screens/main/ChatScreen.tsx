@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -11,15 +11,22 @@ import useProfileStore from '@/hooks/useProfileStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 const ChatScreen = () => {
+  const chatWasUsed = useRef(false);
+
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
-  const { selectedChat, sendMessageHandler, isLoading } = useChatStore();
+
+  const { selectedChat, sendMessageHandler, isLoading, getAllChatsHandler } = useChatStore();
   const { profile } = useProfileStore();
 
   const [messageHistory, setMessageHistory] = useState<IMessage[]>(selectedChat ? selectedChat.messageHistory : []);
 
   const onSend = useCallback(
     async (m: IMessage[] = []) => {
+      if (!chatWasUsed.current) {
+        chatWasUsed.current = true;
+      }
+
       setMessageHistory(previousMessages => GiftedChat.append(previousMessages, m));
       const agentAnswer = await sendMessageHandler(m[0].text);
       setMessageHistory(previousMessages => GiftedChat.append(previousMessages, [agentAnswer]));
@@ -34,6 +41,13 @@ const ChatScreen = () => {
       paddingBottom: insets.bottom > SPACING.m ? 0 : SPACING.m,
     },
   });
+
+  useEffect(() => {
+    return () => {
+      if (!chatWasUsed.current) return;
+      getAllChatsHandler().catch(console.error);
+    };
+  }, [getAllChatsHandler]);
 
   if (!selectedChat || !profile) return null;
 

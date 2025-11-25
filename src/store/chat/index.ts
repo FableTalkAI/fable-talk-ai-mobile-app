@@ -25,12 +25,10 @@ const chatSlice = createSlice({
       })
       .addCase(getAllChats.fulfilled, (state, action) => {
         state.loading.chats = false;
-        console.log(action.payload);
         state.chats = action.payload;
       })
       .addCase(getAllChats.rejected, state => {
         state.loading.chats = false;
-        console.log('rejected');
       })
 
       //getChatById

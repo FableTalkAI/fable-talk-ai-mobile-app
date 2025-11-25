@@ -37,5 +37,6 @@ export type Message = {
   createdAt: number;
   user: {
     _id: string;
+    avatar: string;
   };
 };

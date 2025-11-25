@@ -3,25 +3,37 @@ import { Flow } from 'react-native-animated-spinkit';
 import { InputToolbar as GiftedChatInputToolBar } from 'react-native-gifted-chat';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
+import { RobotIcon } from '@/assets/icons';
+import AutoImage from '@/components/atoms/AutoImage';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
+import useChatStore from '@/hooks/useChatStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 import { InputToolbarProps } from './types.ts';
 
 const InputToolbar = ({ messageLoading, ...props }: InputToolbarProps) => {
   const { colors } = useTheme();
+  const { selectedChat } = useChatStore();
 
   const computedStyles = StyleSheet.create({
     loadingContainer: {
-      backgroundColor: colors.gray70,
+      backgroundColor: colors.agentBubble,
     },
   });
 
   return (
     <View>
       {messageLoading && (
-        <Animated.View entering={FadeIn} style={[styles.loadingContainer, computedStyles.loadingContainer]}>
-          <Flow size={36} color="#fff" />
+        <Animated.View entering={FadeIn} style={styles.loadingWrapper}>
+          {selectedChat && selectedChat.chat.agentInfo.avatarUrl ? (
+            <AutoImage source={selectedChat.chat.agentInfo.avatarUrl} style={styles.agentAvatar} />
+          ) : (
+            <RobotIcon style={styles.agentAvatar} width={36} height={36} fill={colors.iconPrimary} />
+          )}
+
+          <View style={[styles.loadingContainer, computedStyles.loadingContainer]}>
+            <Flow size={36} color={colors.textPrimary} />
+          </View>
         </Animated.View>
       )}
 
@@ -34,12 +46,21 @@ const styles = StyleSheet.create({
   inputToolbar: {
     borderTopWidth: 0,
   },
+  loadingWrapper: {
+    flexDirection: 'row',
+    marginLeft: SPACING.xs,
+    gap: SPACING.xs,
+  },
   loadingContainer: {
     paddingHorizontal: SPACING.m,
     paddingVertical: SPACING.s,
     borderRadius: RADIUS.small,
-    marginLeft: SPACING.m + 32,
     width: 68,
+  },
+  agentAvatar: {
+    width: 36,
+    height: 36,
+    borderRadius: RADIUS.circle,
   },
 });
 

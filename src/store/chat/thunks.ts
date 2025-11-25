@@ -2,6 +2,7 @@ import { CHAT_ROUTE } from '@env';
 
 import defaultAxiosInstance from '@/api/defaultAxiosInstance.ts';
 import { createAxiosAsyncThunk } from '@/core/redux/typedCreateAsyncThunk.ts';
+import { getUserProfile } from '@/store/profile/thunks.ts';
 
 import { Chat, GetChatByIdRequest, GetChatByIdResponse, Message } from './types.ts';
 
@@ -14,18 +15,21 @@ export const getAllChats = createAxiosAsyncThunk<Chat[], void>(`${chatSliceName}
 
 export const getChatById = createAxiosAsyncThunk<GetChatByIdResponse, GetChatByIdRequest>(
   `${chatSliceName}/getChatById`,
-  async ({ agentId }, { getState }) => {
-    const profile = getState().profile.profile;
+  async ({ agentId, chatId }, { dispatch }) => {
+    let resolvedChatId;
 
-    if (!profile) return;
-
-    const chatId = profile.chats.find(chat => chat.agentId === agentId)?.chatId;
+    if (!chatId) {
+      const profile = await dispatch(getUserProfile()).unwrap();
+      resolvedChatId = profile.chats.find(chat => chat.agentId === agentId)?.chatId;
+    } else {
+      resolvedChatId = chatId;
+    }
 
     const response = await defaultAxiosInstance.post(
       `${CHAT_ROUTE}/`,
       { agentId },
       {
-        params: { chatId },
+        params: { chatId: resolvedChatId },
       },
     );
     return response.data;
@@ -46,6 +50,7 @@ export const sendMessage = createAxiosAsyncThunk<Message, string>(
       createdAt: Date.now(),
       user: {
         _id: profile.email,
+        avatar: profile.avatarUrl,
       },
     };
 

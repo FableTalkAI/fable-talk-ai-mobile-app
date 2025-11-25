@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -28,6 +28,10 @@ const ChatListScreen = () => {
     await getChatByIdHandler(agentId, chatId);
     navigation.navigate('ChatScreen');
   };
+
+  useEffect(() => {
+    setFilteredChats(chats);
+  }, [chats]);
 
   return (
     <>

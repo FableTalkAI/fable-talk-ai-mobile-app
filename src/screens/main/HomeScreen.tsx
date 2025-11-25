@@ -17,6 +17,7 @@ import useBottomWindow from '@/hooks/useBottomWindow/index.tsx';
 import { BottomWindowModes } from '@/hooks/useBottomWindow/types.ts';
 import useChatStore from '@/hooks/useChatStore.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes/index.ts';
+import useProfileStore from '@/hooks/useProfileStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
 import useUserStore from '@/hooks/useUserStore.ts';
 
@@ -44,8 +45,8 @@ const HomeScreen = () => {
     getAgentsHandler(true).catch(console.error);
   };
 
-  const onChatOpenHandler = (value: string) => async () => {
-    await getChatByIdHandler(value);
+  const onChatOpenHandler = (agentId: string) => async () => {
+    await getChatByIdHandler(agentId);
     navigation.navigate('ChatScreen');
   };
 
