@@ -2,7 +2,6 @@ import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-import { RobotIcon } from '@/assets/icons/index.ts';
 import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
@@ -35,11 +34,7 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
   return (
     <View style={[computedStyles.wrapper, styles.wrapper]}>
       <PressableCustom style={[computedStyles.pressableContainer, styles.pressableContainer, style]} onPress={onPress}>
-        {avatarSource ? (
-          <AutoImage source={avatarSource} style={styles.avatar} />
-        ) : (
-          <RobotIcon width={44} height={44} fill={colors.iconPrimary} />
-        )}
+        <AutoImage source={avatarSource} style={styles.avatar} />
 
         <TextCustom text={name} mode={TextModes.Secondary} style={computedStyles.name} />
         <TextCustom

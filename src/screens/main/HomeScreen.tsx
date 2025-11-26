@@ -17,7 +17,6 @@ import useBottomWindow from '@/hooks/useBottomWindow/index.tsx';
 import { BottomWindowModes } from '@/hooks/useBottomWindow/types.ts';
 import useChatStore from '@/hooks/useChatStore.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes/index.ts';
-import useProfileStore from '@/hooks/useProfileStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
 import useUserStore from '@/hooks/useUserStore.ts';
 

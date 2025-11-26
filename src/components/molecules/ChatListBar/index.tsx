@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import { PinIcon, PinIconPinned, RobotIcon } from '@/assets/icons';
+import { PinIcon, PinIconPinned } from '@/assets/icons';
 import AutoImage from '@/components/atoms/AutoImage';
 import PressableCustom from '@/components/atoms/PressableCustom';
 import TextCustom from '@/components/atoms/TextCustom';
@@ -35,11 +35,7 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
       style={styles.pressableContainer}
       onPress={onPress}
     >
-      {avatarSource ? (
-        <AutoImage source={avatarSource} style={styles.avatar} />
-      ) : (
-        <RobotIcon style={styles.avatar} fill={colors.iconPrimary} />
-      )}
+      <AutoImage source={avatarSource} style={styles.avatar} />
 
       <View style={styles.messageContainer}>
         <View style={styles.nameAndPinContainer}>

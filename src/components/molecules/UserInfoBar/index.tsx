@@ -103,6 +103,7 @@ const UserInfoBar = ({ field, isLoading }: UserInfoBarProps) => {
       </View>
 
       <DatePicker
+        defaultDate={profile.dateOfBirth}
         isVisible={isDatePickerVisible}
         handleConfirm={handleConfirm}
         onCancel={() => setDatePickerVisibility(false)}

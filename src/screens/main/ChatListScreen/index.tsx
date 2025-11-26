@@ -21,7 +21,8 @@ const ChatListScreen = () => {
   const [filteredChats, setFilteredChats] = useState(chats);
 
   const onStopHandler = (value: string) => {
-    setFilteredChats(chats.filter(chat => chat.agentInfo.name.toLowerCase().includes(value)));
+    const lower = value.toLowerCase();
+    setFilteredChats(chats.filter(chat => chat.agentInfo.name.toLowerCase().includes(lower)));
   };
 
   const onChatOpenHandler = (agentId: string, chatId?: string) => async () => {

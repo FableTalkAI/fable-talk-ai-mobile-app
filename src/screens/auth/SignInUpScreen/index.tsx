@@ -120,6 +120,10 @@ const SignInUpScreen = () => {
                     onChangeText={text => onChange(text.toLowerCase())}
                     onBlur={onBlur}
                     autoCapitalize="none"
+                    keyboardType="email-address"
+                    autoComplete="email"
+                    textContentType="emailAddress"
+                    autoCorrect={false}
                     placeholder={t('common.email')}
                     leftIcon={<MailIcon />}
                   />
