@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
-import Toast from 'react-native-toast-message';
+
+import { showToast } from '@/core/utils/toast';
 
 import { authSliceName, sendOtp, upsertGoogle, verifyOtp } from './thunks.ts';
 import { AuthState, VerifyData } from './types.ts';
@@ -36,9 +37,8 @@ const authSlice = createSlice({
       })
       .addCase(sendOtp.rejected, (state, action) => {
         state.loading.login = false;
-        Toast.show({
+        showToast({
           type: 'error',
-          text1: i18n.t('common.error'),
           text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
           position: 'bottom',
         });
@@ -53,9 +53,8 @@ const authSlice = createSlice({
       })
       .addCase(verifyOtp.rejected, (state, action) => {
         state.loading.verifyOtp = false;
-        Toast.show({
+        showToast({
           type: 'error',
-          text1: i18n.t('common.error'),
           text2: i18n.t(`serverResponses.${action.payload?.messageKey}`, { amount: action.payload?.remainingAttempts }),
         });
       })
@@ -69,9 +68,8 @@ const authSlice = createSlice({
       })
       .addCase(upsertGoogle.rejected, (state, action) => {
         state.loading.login = false;
-        Toast.show({
+        showToast({
           type: 'error',
-          text1: i18n.t('common.error'),
           text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
         });
       });

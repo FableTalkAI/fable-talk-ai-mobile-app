@@ -1,4 +1,5 @@
-import { ActivityIndicator, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Chase } from 'react-native-animated-spinkit';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import useTheme from '@/hooks/useTheme.ts';
@@ -22,7 +23,7 @@ const ComponentLoader = ({ isVisible }: ComponentLoaderProps) => {
       entering={FadeIn}
       exiting={FadeOut}
     >
-      <ActivityIndicator color={colors.textSecondary} />
+      <Chase size={36} color={colors.textSecondary} />
     </Animated.View>
   );
 };

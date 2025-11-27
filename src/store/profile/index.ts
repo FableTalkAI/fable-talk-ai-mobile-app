@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import i18n from 'i18next';
-import Toast from 'react-native-toast-message';
+
+import { showToast } from '@/core/utils/toast';
 
 import { getUserProfile, profileSliceName, sendSupportMessage, updateUserProfile, uploadAvatar } from './thunks.ts';
 import { ProfileState } from './types.ts';
@@ -26,18 +27,16 @@ const profileSlice = createSlice({
       })
       .addCase(sendSupportMessage.fulfilled, (state, action) => {
         state.loading.contactUs = false;
-        Toast.show({
+        showToast({
           type: 'success',
-          text1: i18n.t('common.success'),
           text2: i18n.t(`serverResponses.${action.payload.messageKey}`),
           position: 'bottom',
         });
       })
       .addCase(sendSupportMessage.rejected, (state, action) => {
         state.loading.contactUs = false;
-        Toast.show({
+        showToast({
           type: 'error',
-          text1: i18n.t('common.error'),
           text2: i18n.t(`serverResponses.${action.payload?.messageKey}`, { amount: action.payload?.details }),
           position: 'bottom',
         });
@@ -55,21 +54,19 @@ const profileSlice = createSlice({
       .addCase(updateUserProfile.fulfilled, (state, action) => {
         state.loading.updateProfile = false;
 
-        const { showToast } = action.meta.arg;
+        const { showToast: withShowToast } = action.meta.arg;
 
-        if (showToast) {
-          Toast.show({
+        if (withShowToast) {
+          showToast({
             type: 'success',
-            text1: i18n.t('common.success'),
             text2: i18n.t(`serverResponses.${action.payload.messageKey}`),
           });
         }
       })
       .addCase(updateUserProfile.rejected, (state, action) => {
         state.loading.updateProfile = false;
-        Toast.show({
+        showToast({
           type: 'error',
-          text1: i18n.t('common.error'),
           text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
         });
       })
@@ -80,17 +77,15 @@ const profileSlice = createSlice({
       })
       .addCase(uploadAvatar.fulfilled, (state, action) => {
         state.loading.uploadAvatar = false;
-        Toast.show({
+        showToast({
           type: 'success',
-          text1: i18n.t('common.success'),
           text2: i18n.t(`serverResponses.${action.payload.messageKey}`),
         });
       })
       .addCase(uploadAvatar.rejected, (state, action) => {
         state.loading.uploadAvatar = false;
-        Toast.show({
+        showToast({
           type: 'error',
-          text1: i18n.t('common.error'),
           text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
         });
       });

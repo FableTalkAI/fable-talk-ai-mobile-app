@@ -17,7 +17,10 @@ const AutoImage = ({
 }: AutoImageProps) => {
   const localPaddingHorizontal = paddingHorizontal + (withSafeAreaInsets ? SPACING.xl * 2 : 0);
   const imageWidth = width ?? WINDOW_WIDTH - localPaddingHorizontal;
-  const { width: originalWidth, height: originalHeight } = Image.resolveAssetSource(source);
+
+  const imageSource = typeof source === 'string' ? { uri: source } : source;
+
+  const { width: originalWidth, height: originalHeight } = Image.resolveAssetSource(imageSource);
 
   const calculatedHeight = useMemo(() => {
     const scale = imageWidth / originalWidth;
@@ -31,7 +34,9 @@ const AutoImage = ({
     },
   });
 
-  return <Image source={source} style={[computedStyles.container, style]} resizeMode={resizeMode} {...imageProps} />;
+  return (
+    <Image source={imageSource} style={[computedStyles.container, style]} resizeMode={resizeMode} {...imageProps} />
+  );
 };
 
 export default AutoImage;

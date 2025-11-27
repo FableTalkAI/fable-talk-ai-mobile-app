@@ -5,7 +5,7 @@ type ExcludeImageProps = 'style' | 'width' | 'resizeMode' | 'source';
 type UniqueImageProps = Omit<ImageProps, ExcludeImageProps>;
 
 export type AutoImageProps = {
-  source: ImageSourcePropType;
+  source: ImageSourcePropType | string;
   width?: number;
   paddingHorizontal?: number;
   style?: StyleProp<ImageStyle>;

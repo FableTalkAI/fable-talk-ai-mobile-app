@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import i18n from 'i18next';
 
-import { ChatGPTLogo } from '@/assets/images';
+import { showToast } from '@/core/utils/toast';
 
 import { userSliceName } from './thunks.ts';
-import { Chat, SortByFilter, SortFilter, Theme, UserState } from './types.ts';
+import { SortByFilter, SortFilter, Theme, UserState } from './types.ts';
 
 const initialState: UserState = {
   onboardingStep: 0,
@@ -16,20 +17,7 @@ const initialState: UserState = {
   notifications: {
     push: false,
   },
-  chats: [
-    {
-      agentName: 'ChatGPT',
-      agentAvatar: ChatGPTLogo,
-      lastMessage: 'Last message of a chat',
-      isPinned: false,
-    },
-    {
-      agentName: 'ChatGPT2',
-      agentAvatar: ChatGPTLogo,
-      lastMessage: 'Last message of a chat1',
-      isPinned: false,
-    },
-  ],
+  pinnedChatIds: [],
 };
 
 const userSlice = createSlice({
@@ -57,8 +45,21 @@ const userSlice = createSlice({
     setTheme: (state, action: PayloadAction<Theme>) => {
       state.theme = action.payload;
     },
-    setChats: (state, action: PayloadAction<Chat[]>) => {
-      state.chats = action.payload;
+    updatePinnedChatIds: (state, action: PayloadAction<string>) => {
+      if (state.pinnedChatIds.includes(action.payload)) {
+        state.pinnedChatIds = state.pinnedChatIds.filter(i => i !== action.payload);
+        return;
+      }
+
+      if (state.pinnedChatIds.length === 2) {
+        showToast({
+          type: 'error',
+          text2: i18n.t(`common.pinnedWarning`),
+        });
+        return;
+      }
+
+      state.pinnedChatIds.push(action.payload);
     },
   },
 });
@@ -71,7 +72,7 @@ export const {
   setOnboardingStep,
   setPushNotification,
   setTheme,
-  setChats,
+  updatePinnedChatIds,
 } = userSlice.actions;
 
 export default userSlice.reducer;

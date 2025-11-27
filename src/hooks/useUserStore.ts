@@ -3,22 +3,22 @@ import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '@/core/redux/hooks.ts';
 import {
   clearFilter,
-  setChats,
   setFilterSort,
   setFilterSortBy,
   setFilterTags,
   setOnboardingStep,
   setPushNotification,
   setTheme,
+  updatePinnedChatIds,
 } from '@/store/user';
 import {
-  chatsSelector,
   filterSelector,
   notificationsSelector,
   onboardingStepSelector,
+  pinnedChatIdsSelector,
   themeSelector,
 } from '@/store/user/selectors.ts';
-import { Chat, SortByFilter, SortFilter, Theme } from '@/store/user/types.ts';
+import { SortByFilter, SortFilter, Theme } from '@/store/user/types.ts';
 
 const useUserStore = () => {
   const dispatch = useAppDispatch();
@@ -26,8 +26,8 @@ const useUserStore = () => {
   const onboardingStepIndex = useAppSelector(onboardingStepSelector);
   const notifications = useAppSelector(notificationsSelector);
   const theme = useAppSelector(themeSelector);
-  const chats = useAppSelector(chatsSelector);
   const filter = useAppSelector(filterSelector);
+  const pinnedChatIds = useAppSelector(pinnedChatIdsSelector);
 
   const setFilterTagsHandler = useCallback(
     (selectedTags: string[]) => {
@@ -75,9 +75,9 @@ const useUserStore = () => {
     [dispatch],
   );
 
-  const setChatsHandler = useCallback(
-    (activeChats: Chat[]) => {
-      dispatch(setChats(activeChats));
+  const updatePinnedChatIdsHandler = useCallback(
+    (chatId: string) => {
+      dispatch(updatePinnedChatIds(chatId));
     },
     [dispatch],
   );
@@ -87,16 +87,16 @@ const useUserStore = () => {
     onboardingStepIndex,
     theme,
     notifications,
-    chats,
+    pinnedChatIds,
 
     setOnboardingStepIndexHandler,
     setPushNotificationHandler,
     setThemeHandler,
-    setChatsHandler,
     setFilterTagsHandler,
     setFilterSortHandler,
     setFilterSortByHandler,
     clearFilterHandler,
+    updatePinnedChatIdsHandler,
   };
 };
 

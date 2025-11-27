@@ -18,7 +18,7 @@ defaultAxiosInstance.interceptors.request.use(
 defaultAxiosInstance.interceptors.response.use(
   response => response,
   error => {
-    return Promise.reject(error);
+    return Promise.reject(error.response);
   },
 );
 

@@ -13,10 +13,15 @@ export type AgentsState = {
 };
 
 export type Agent = {
-  name: string;
+  ageRestriction: string;
+  avatarUrl: ImageSourcePropType;
   description: string;
+  id: string;
+  name: string;
+  nameLower: string;
+  popularity: number;
+  prompt: string;
   tags: string[];
-  avatarSource: ImageSourcePropType;
 };
 
 export type GetResultsOfSearchRequest = {

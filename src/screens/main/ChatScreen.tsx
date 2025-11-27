@@ -1,63 +1,84 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ChatGPTLogo } from '@/assets/images';
 import { Bubble, Composer, InputToolbar, Message, Send } from '@/components/molecules/giftedChat';
 import Header from '@/components/molecules/Header';
 import { SPACING } from '@/core/constants/sizes.ts';
+import useChatStore from '@/hooks/useChatStore.ts';
+import useProfileStore from '@/hooks/useProfileStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
 const ChatScreen = () => {
+  const chatWasUsed = useRef(false);
+  const activeSendPromise = useRef<Promise<void> | null>(null);
+
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
 
-  const [messages, setMessages] = useState<IMessage[]>([]);
+  const { selectedChat, sendMessageHandler, isLoading, getAllChatsHandler } = useChatStore();
+  const { profile } = useProfileStore();
 
-  useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: ChatGPTLogo,
-        },
-      },
-    ]);
-  }, []);
+  const [messageHistory, setMessageHistory] = useState<IMessage[]>(selectedChat ? selectedChat.messageHistory : []);
 
-  const onSend = useCallback((m: IMessage[] = []) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, m));
-  }, []);
+  const onSend = useCallback(
+    async (m: IMessage[] = []) => {
+      if (!chatWasUsed.current) {
+        chatWasUsed.current = true;
+      }
+
+      setMessageHistory(previousMessages => GiftedChat.append(previousMessages, m));
+      activeSendPromise.current = (async () => {
+        const agentAnswer = await sendMessageHandler(m[0].text);
+        setMessageHistory(prev => GiftedChat.append(prev, [agentAnswer]));
+      })();
+    },
+    [sendMessageHandler],
+  );
 
   const computedStyles = StyleSheet.create({
     container: {
-      backgroundColor: colors.backgroundBase,
+      backgroundColor: colors.backgroundTertiary,
       paddingTop: insets.top > SPACING.m ? 0 : SPACING.m,
       paddingBottom: insets.bottom > SPACING.m ? 0 : SPACING.m,
     },
   });
 
+  useEffect(() => {
+    return () => {
+      if (!chatWasUsed.current) return;
+
+      const waitAndFetch = async () => {
+        if (activeSendPromise.current) {
+          await activeSendPromise.current;
+        }
+        await getAllChatsHandler();
+      };
+
+      waitAndFetch().catch(console.error);
+    };
+  }, [getAllChatsHandler]);
+
+  if (!selectedChat || !profile) return null;
+
   return (
     <SafeAreaView style={[computedStyles.container, styles.container]}>
-      <Header title="Test" style={styles.header} />
+      <Header title={selectedChat.chat.agentInfo.name} style={styles.header} />
       <GiftedChat
-        messages={messages}
+        messages={messageHistory}
         onSend={chatMessages => onSend(chatMessages)}
         showUserAvatar
+        alwaysShowSend
         user={{
-          _id: 1,
-          avatar: ChatGPTLogo,
+          _id: profile.email,
+          avatar: profile.avatarUrl,
         }}
         renderBubble={Bubble}
         renderMessage={Message}
-        renderInputToolbar={InputToolbar}
-        renderComposer={Composer}
-        renderSend={Send}
+        renderInputToolbar={props => <InputToolbar messageLoading={isLoading.sendMessage} {...props} />}
+        renderComposer={props => <Composer {...props} />}
+        renderSend={props => <Send messageLoading={isLoading.sendMessage} {...props} />}
       />
     </SafeAreaView>
   );

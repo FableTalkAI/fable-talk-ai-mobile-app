@@ -5,6 +5,7 @@ import { FlatList } from 'react-native-gesture-handler';
 
 import { FilterIcon, PlusIcon } from '@/assets/icons/index.ts';
 import PressableCustom from '@/components/atoms/PressableCustom/index.tsx';
+import ScreenLoader from '@/components/atoms/ScreenLoader';
 import TextCustom from '@/components/atoms/TextCustom/index.tsx';
 import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import AgentBar from '@/components/molecules/AgentBar/index.tsx';
@@ -14,6 +15,7 @@ import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useAgentsStore from '@/hooks/useAgentsStore.ts';
 import useBottomWindow from '@/hooks/useBottomWindow/index.tsx';
 import { BottomWindowModes } from '@/hooks/useBottomWindow/types.ts';
+import useChatStore from '@/hooks/useChatStore.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes/index.ts';
 import useTheme from '@/hooks/useTheme.ts';
 import useUserStore from '@/hooks/useUserStore.ts';
@@ -21,12 +23,12 @@ import useUserStore from '@/hooks/useUserStore.ts';
 const HomeScreen = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const { navigation } = useNavigationRoutes();
 
   const { agents, isLoading, getAgentsHandler, pagination } = useAgentsStore();
   const { filter } = useUserStore();
   const { open } = useBottomWindow(BottomWindowModes.SearchFilter);
-
-  const { navigation } = useNavigationRoutes();
+  const { getChatByIdHandler, isLoading: isLoadingChat } = useChatStore();
 
   const computedStyles = StyleSheet.create({
     selectedTagsContainer: {
@@ -42,6 +44,11 @@ const HomeScreen = () => {
     getAgentsHandler(true).catch(console.error);
   };
 
+  const onChatOpenHandler = (agentId: string) => async () => {
+    await getChatByIdHandler(agentId);
+    navigation.navigate('ChatScreen');
+  };
+
   const listFooterComponent = useMemo(() => {
     return isLoading.agents ? (
       <View style={styles.listFooterComponentContainer}>
@@ -51,51 +58,55 @@ const HomeScreen = () => {
   }, [isLoading.agents]);
 
   return (
-    <SafeAreaViewCustom withGradientBackground>
-      <View style={styles.searchAndIconContainer}>
-        <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
-          <SearchInput placeholder={t('home.searchInput')} isDisabled onStop={() => null} />
-        </PressableCustom>
+    <>
+      <SafeAreaViewCustom withGradientBackground>
+        <View style={styles.searchAndIconContainer}>
+          <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
+            <SearchInput placeholder={t('home.searchInput')} isDisabled onStop={() => null} />
+          </PressableCustom>
 
-        <PressableCustom onPress={open}>
-          <FilterIcon />
+          <PressableCustom onPress={open}>
+            <FilterIcon />
 
-          {!!filter.tags.length && (
-            <View style={[computedStyles.selectedTagsContainer, styles.selectedTagsContainer]}>
-              <TextCustom
-                text={filter.tags.length > 9 ? 9 : filter.tags.length}
-                mode={TextModes.ExtraSmall}
-                style={computedStyles.text}
-              />
+            {!!filter.tags.length && (
+              <View style={[computedStyles.selectedTagsContainer, styles.selectedTagsContainer]}>
+                <TextCustom
+                  text={filter.tags.length > 9 ? 9 : filter.tags.length}
+                  mode={TextModes.ExtraSmall}
+                  style={computedStyles.text}
+                />
 
-              {filter.tags.length > 9 && <PlusIcon style={styles.plusIcon} />}
-            </View>
+                {filter.tags.length > 9 && <PlusIcon style={styles.plusIcon} />}
+              </View>
+            )}
+          </PressableCustom>
+        </View>
+
+        <FlatList
+          style={styles.flatListContainer}
+          data={agents}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          columnWrapperStyle={styles.flatListContentContainer}
+          contentContainerStyle={styles.flatListContentContainer}
+          keyExtractor={item => item.name}
+          renderItem={({ item }) => (
+            <AgentBar
+              name={item.name}
+              description={item.description}
+              tags={item.tags}
+              avatarSource={item.avatarUrl}
+              onPress={onChatOpenHandler(item.id)}
+            />
           )}
-        </PressableCustom>
-      </View>
+          onEndReached={onEndReachedHandler}
+          onEndReachedThreshold={0.3}
+          ListFooterComponent={listFooterComponent}
+        />
+      </SafeAreaViewCustom>
 
-      <FlatList
-        style={styles.flatListContainer}
-        data={agents}
-        numColumns={2}
-        showsVerticalScrollIndicator={false}
-        columnWrapperStyle={styles.flatListContentContainer}
-        contentContainerStyle={styles.flatListContentContainer}
-        keyExtractor={item => item.name}
-        renderItem={({ item }) => (
-          <AgentBar
-            name={item.name}
-            description={item.description}
-            tags={item.tags}
-            avatarSource={item.avatarSource}
-            //TODO: onPress navigate to ChatScreen
-          />
-        )}
-        onEndReached={onEndReachedHandler}
-        onEndReachedThreshold={0.3}
-        ListFooterComponent={listFooterComponent}
-      />
-    </SafeAreaViewCustom>
+      <ScreenLoader isLoading={isLoadingChat.selectedChat} />
+    </>
   );
 };
 

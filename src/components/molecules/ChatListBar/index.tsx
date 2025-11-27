@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
@@ -10,12 +9,15 @@ import { TextModes } from '@/components/atoms/TextCustom/types.ts';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import { BOX_SHADOW } from '@/core/constants/styles.ts';
 import useTheme from '@/hooks/useTheme.ts';
+import useUserStore from '@/hooks/useUserStore.ts';
 
 import { ChatListBarProps } from './types.ts';
 
-const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatListBarProps) => {
+const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress, chatId }: ChatListBarProps) => {
   const { colors } = useTheme();
-  const [isPinned, setIsPinned] = useState(false);
+  const { pinnedChatIds, updatePinnedChatIdsHandler } = useUserStore();
+
+  const isPinned = pinnedChatIds.includes(chatId);
 
   const computedStyles = StyleSheet.create({
     wrapper: {
@@ -36,19 +38,20 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress }: ChatList
       onPress={onPress}
     >
       <AutoImage source={avatarSource} style={styles.avatar} />
+
       <View style={styles.messageContainer}>
         <View style={styles.nameAndPinContainer}>
           <TextCustom text={agentName} style={computedStyles.agentName} />
 
-          <PressableCustom onPress={() => setIsPinned(prevState => !prevState)} hitSlop={10}>
+          <PressableCustom onPress={() => updatePinnedChatIdsHandler(chatId)} hitSlop={10}>
             <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>
-              {isPinned ? <PinIconPinned /> : <PinIcon />}
+              {isPinned ? <PinIconPinned fill={colors.iconPrimary} /> : <PinIcon fill={colors.textPrimary} />}
             </Animated.View>
           </PressableCustom>
         </View>
 
         <TextCustom
-          text={lastMessage}
+          text={lastMessage.text}
           numberOfLines={2}
           mode={TextModes.Secondary}
           style={computedStyles.lastMessage}
