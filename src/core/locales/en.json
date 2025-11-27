@@ -19,7 +19,10 @@
     "contactUs": "Contact us",
     "noResults": "No results",
     "error": "Error",
-    "success": "Success"
+    "success": "Success",
+    "info": "Info",
+    "warning": "Warning",
+    "pinnedWarning": "You have reached the maximum number of pinned chats. Unpin a chat or upgrade your subscription plan"
   },
   "actions": {
     "apply": "Apply",

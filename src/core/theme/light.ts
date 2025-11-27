@@ -5,9 +5,10 @@ export const light = {
   textLight: '#FFFFFF',
 
   backgroundBase: '#FFFFFF',
+  backgroundSecondary: '#FAF9F9',
+  backgroundTertiary: '#f0f0f0',
   backgroundAlt: '#FAF9F9',
   backgroundHover: '#744BA026',
-  backgroundSecondary: '#FAF9F9',
 
   skeletonPrimary: '#C1C0C099',
   skeletonSecondary: '#E3E2E2E5',
@@ -16,6 +17,6 @@ export const light = {
 
   iconPrimary: '#2E2374',
 
-  agentBubble: '#424242',
+  agentBubble: '#343443',
   userBubble: '#523FAE',
 };

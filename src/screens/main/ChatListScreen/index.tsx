@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import Animated, { LinearTransition } from 'react-native-reanimated';
 
 import ScreenLoader from '@/components/atoms/ScreenLoader';
 import TextCustom from '@/components/atoms/TextCustom';
@@ -11,12 +12,14 @@ import SearchInput from '@/components/molecules/SearchInput';
 import { SPACING } from '@/core/constants/sizes.ts';
 import useChatStore from '@/hooks/useChatStore.ts';
 import useNavigationRoutes from '@/hooks/useNavigationRoutes';
+import useUserStore from '@/hooks/useUserStore.ts';
 
 const ChatListScreen = () => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
 
   const { chats, getChatByIdHandler, isLoading } = useChatStore();
+  const { pinnedChatIds } = useUserStore();
 
   const [filteredChats, setFilteredChats] = useState(chats);
 
@@ -29,10 +32,18 @@ const ChatListScreen = () => {
     await getChatByIdHandler(agentId, chatId);
     navigation.navigate('ChatScreen');
   };
-
   useEffect(() => {
-    setFilteredChats(chats);
-  }, [chats]);
+    const sortedChats = [...chats].sort((a, b) => {
+      const aPinned = pinnedChatIds.includes(a.chatId || '');
+      const bPinned = pinnedChatIds.includes(b.chatId || '');
+
+      if (aPinned === bPinned) return 0;
+
+      return aPinned ? -1 : 1;
+    });
+
+    setFilteredChats(sortedChats);
+  }, [chats, pinnedChatIds]);
 
   return (
     <>
@@ -45,15 +56,19 @@ const ChatListScreen = () => {
           </View>
         ) : (
           <FlatList
+            keyExtractor={item => item.chatId}
             data={filteredChats}
             contentContainerStyle={styles.contentContainerStyle}
             renderItem={({ item }) => (
-              <ChatListBar
-                avatarSource={item.agentInfo.avatarUrl}
-                agentName={item.agentInfo.name}
-                lastMessage={item.lastMessage}
-                onPress={onChatOpenHandler(item.agentInfo.id, item?.chatId)}
-              />
+              <Animated.View layout={LinearTransition}>
+                <ChatListBar
+                  avatarSource={item.agentInfo.avatarUrl}
+                  agentName={item.agentInfo.name}
+                  lastMessage={item.lastMessage}
+                  onPress={onChatOpenHandler(item.agentInfo.id, item.chatId)}
+                  chatId={item.chatId}
+                />
+              </Animated.View>
             )}
           />
         )}

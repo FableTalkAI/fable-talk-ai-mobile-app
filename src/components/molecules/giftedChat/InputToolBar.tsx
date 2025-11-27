@@ -27,7 +27,7 @@ const InputToolbar = ({ messageLoading, ...props }: InputToolbarProps) => {
           {selectedChat && <AutoImage source={selectedChat.chat.agentInfo.avatarUrl} style={styles.agentAvatar} />}
 
           <View style={[styles.loadingContainer, computedStyles.loadingContainer]}>
-            <Flow size={36} color={colors.textPrimary} />
+            <Flow size={36} color={colors.textLight} />
           </View>
         </Animated.View>
       )}

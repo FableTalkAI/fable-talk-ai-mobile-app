@@ -9,6 +9,7 @@ export type UserState = {
   notifications: {
     push: boolean;
   };
+  pinnedChatIds: string[];
 };
 
 export enum SortByFilter {

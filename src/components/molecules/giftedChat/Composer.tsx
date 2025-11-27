@@ -16,7 +16,7 @@ const Composer = ({ text, onTextChanged, ...props }: ComposerProps) => {
       paddingRight: SPACING.lg * 2,
     },
     wrapper: {
-      backgroundColor: colors.backgroundBase,
+      backgroundColor: colors.backgroundTertiary,
     },
   });
 

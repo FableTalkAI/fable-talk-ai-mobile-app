@@ -9,11 +9,13 @@ import {
   setOnboardingStep,
   setPushNotification,
   setTheme,
+  updatePinnedChatIds,
 } from '@/store/user';
 import {
   filterSelector,
   notificationsSelector,
   onboardingStepSelector,
+  pinnedChatIdsSelector,
   themeSelector,
 } from '@/store/user/selectors.ts';
 import { SortByFilter, SortFilter, Theme } from '@/store/user/types.ts';
@@ -25,6 +27,7 @@ const useUserStore = () => {
   const notifications = useAppSelector(notificationsSelector);
   const theme = useAppSelector(themeSelector);
   const filter = useAppSelector(filterSelector);
+  const pinnedChatIds = useAppSelector(pinnedChatIdsSelector);
 
   const setFilterTagsHandler = useCallback(
     (selectedTags: string[]) => {
@@ -72,11 +75,19 @@ const useUserStore = () => {
     [dispatch],
   );
 
+  const updatePinnedChatIdsHandler = useCallback(
+    (chatId: string) => {
+      dispatch(updatePinnedChatIds(chatId));
+    },
+    [dispatch],
+  );
+
   return {
     filter,
     onboardingStepIndex,
     theme,
     notifications,
+    pinnedChatIds,
 
     setOnboardingStepIndexHandler,
     setPushNotificationHandler,
@@ -85,6 +96,7 @@ const useUserStore = () => {
     setFilterSortHandler,
     setFilterSortByHandler,
     clearFilterHandler,
+    updatePinnedChatIdsHandler,
   };
 };
 

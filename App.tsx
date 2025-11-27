@@ -14,6 +14,7 @@ import RootNavigator from '@/navigation/RootNavigator';
 import BottomWindowProvider from '@/core/providers/BottomWindowProvider';
 import FirebaseProvider from '@/core/providers/FirebaseProvider/index.tsx';
 import InitialSetup from '@/core/providers/InitialSetup/index.tsx';
+import { toastConfig } from '@/core/configs/toast.tsx';
 
 function App() {
   return (
@@ -32,7 +33,7 @@ function App() {
                     </NavigationContainer>
                   </BottomWindowProvider>
 
-                  <Toast />
+                  <Toast config={toastConfig} />
                 </SafeAreaProvider>
               </BottomSheetModalProvider>
             </GestureHandlerRootView>

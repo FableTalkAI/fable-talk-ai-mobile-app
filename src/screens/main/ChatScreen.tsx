@@ -12,6 +12,7 @@ import useTheme from '@/hooks/useTheme.ts';
 
 const ChatScreen = () => {
   const chatWasUsed = useRef(false);
+  const activeSendPromise = useRef<Promise<void> | null>(null);
 
   const { colors } = useTheme();
   const insets = useSafeAreaInsets();
@@ -28,15 +29,17 @@ const ChatScreen = () => {
       }
 
       setMessageHistory(previousMessages => GiftedChat.append(previousMessages, m));
-      const agentAnswer = await sendMessageHandler(m[0].text);
-      setMessageHistory(previousMessages => GiftedChat.append(previousMessages, [agentAnswer]));
+      activeSendPromise.current = (async () => {
+        const agentAnswer = await sendMessageHandler(m[0].text);
+        setMessageHistory(prev => GiftedChat.append(prev, [agentAnswer]));
+      })();
     },
     [sendMessageHandler],
   );
 
   const computedStyles = StyleSheet.create({
     container: {
-      backgroundColor: colors.backgroundBase,
+      backgroundColor: colors.backgroundTertiary,
       paddingTop: insets.top > SPACING.m ? 0 : SPACING.m,
       paddingBottom: insets.bottom > SPACING.m ? 0 : SPACING.m,
     },
@@ -45,7 +48,15 @@ const ChatScreen = () => {
   useEffect(() => {
     return () => {
       if (!chatWasUsed.current) return;
-      getAllChatsHandler().catch(console.error);
+
+      const waitAndFetch = async () => {
+        if (activeSendPromise.current) {
+          await activeSendPromise.current;
+        }
+        await getAllChatsHandler();
+      };
+
+      waitAndFetch().catch(console.error);
     };
   }, [getAllChatsHandler]);
 

@@ -1,5 +1,5 @@
 export type ChatState = {
-  chats: Chat[];
+  chats: Required<Chat>[];
   selectedChat: GetChatByIdResponse | null;
   loading: {
     chats: boolean;

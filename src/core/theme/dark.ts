@@ -5,9 +5,10 @@ export const dark = {
   textLight: '#FFFFFF',
 
   backgroundBase: '#252525',
+  backgroundSecondary: '#333333',
+  backgroundTertiary: '#252525',
   backgroundAlt: '#d5d5d5',
   backgroundHover: '#7364D43F',
-  backgroundSecondary: '#333333',
 
   skeletonPrimary: '#68686899',
   skeletonSecondary: '#787878CC',
