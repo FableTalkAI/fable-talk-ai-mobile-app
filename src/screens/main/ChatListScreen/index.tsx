@@ -22,18 +22,20 @@ const ChatListScreen = () => {
   const { pinnedChatIds } = useUserStore();
 
   const [filteredChats, setFilteredChats] = useState(chats);
+  const [sortedChats, setSortedChats] = useState(chats);
 
   const onStopHandler = (value: string) => {
     const lower = value.toLowerCase();
-    setFilteredChats(chats.filter(chat => chat.agentInfo.name.toLowerCase().includes(lower)));
+    setFilteredChats(sortedChats.filter(chat => chat.agentInfo.name.toLowerCase().includes(lower)));
   };
 
   const onChatOpenHandler = (agentId: string, chatId?: string) => async () => {
     await getChatByIdHandler(agentId, chatId);
     navigation.navigate('ChatScreen');
   };
+
   useEffect(() => {
-    const sortedChats = [...chats].sort((a, b) => {
+    const localSortedChats = [...chats].sort((a, b) => {
       const aPinned = pinnedChatIds.includes(a.chatId || '');
       const bPinned = pinnedChatIds.includes(b.chatId || '');
 
@@ -42,7 +44,8 @@ const ChatListScreen = () => {
       return aPinned ? -1 : 1;
     });
 
-    setFilteredChats(sortedChats);
+    setSortedChats(localSortedChats);
+    setFilteredChats(localSortedChats);
   }, [chats, pinnedChatIds]);
 
   return (

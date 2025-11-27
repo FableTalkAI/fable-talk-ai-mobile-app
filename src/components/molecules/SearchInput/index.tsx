@@ -6,10 +6,13 @@ import PressableCustom from '@/components/atoms/PressableCustom';
 import TextInputCustom from '@/components/atoms/TextInputCustom';
 import { SPACING } from '@/core/constants/sizes.ts';
 import { useDebounce } from '@/hooks/useDebounce';
+import useTheme from '@/hooks/useTheme.ts';
 
 import { SearchInputProps } from './types.ts';
 
 const SearchInput = forwardRef<TextInput, SearchInputProps>(({ placeholder, navigation, onStop, isDisabled }, ref) => {
+  const { colors } = useTheme();
+
   const [value, setValue] = useState('');
   const debouncedSearch = useDebounce({ value });
 
@@ -28,7 +31,7 @@ const SearchInput = forwardRef<TextInput, SearchInputProps>(({ placeholder, navi
     <View style={styles.wrapper} pointerEvents={isDisabled ? 'none' : 'auto'}>
       {navigation && (
         <PressableCustom onPress={navigation?.goBack} style={styles.backIcon}>
-          <ArrowForwardIcon />
+          <ArrowForwardIcon fill={colors.iconPrimary} />
         </PressableCustom>
       )}
 

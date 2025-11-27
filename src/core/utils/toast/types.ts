@@ -1,6 +1,6 @@
-import {ToastShowParams} from "react-native-toast-message";
+import { ToastShowParams } from 'react-native-toast-message';
 
-import {toastConfig} from "@/core/configs/toast.tsx";
+import { toastConfig } from '@/core/configs/toast.tsx';
 
 type CustomToastType = keyof typeof toastConfig;
 

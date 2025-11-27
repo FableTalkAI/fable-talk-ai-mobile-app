@@ -8,7 +8,7 @@ import { Chat, GetChatByIdRequest, GetChatByIdResponse, Message } from './types.
 
 export const chatSliceName = 'chat';
 
-export const getAllChats = createAxiosAsyncThunk<Chat[], void>(`${chatSliceName}/getAllChats`, async () => {
+export const getAllChats = createAxiosAsyncThunk<Required<Chat>[], void>(`${chatSliceName}/getAllChats`, async () => {
   const response = await defaultAxiosInstance.get(`${CHAT_ROUTE}/all`);
   return response.data;
 });
