@@ -89,7 +89,7 @@ const HomeScreen = () => {
           showsVerticalScrollIndicator={false}
           columnWrapperStyle={styles.flatListContentContainer}
           contentContainerStyle={styles.flatListContentContainer}
-          keyExtractor={item => item.name}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <AgentBar
               name={item.name}

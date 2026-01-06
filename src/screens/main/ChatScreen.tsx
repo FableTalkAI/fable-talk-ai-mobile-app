@@ -1,14 +1,22 @@
+import dayjs from 'dayjs';
+import uk from 'dayjs/locale/uk';
+import calendar from 'dayjs/plugin/calendar';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { GiftedChat, IMessage } from 'react-native-gifted-chat';
+import { Day, GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Bubble, Composer, InputToolbar, Message, Send } from '@/components/molecules/giftedChat';
+import ChatAvatar from '@/components/molecules/giftedChat/ChatAvatar.tsx';
 import Header from '@/components/molecules/Header';
 import { SPACING } from '@/core/constants/sizes.ts';
 import useChatStore from '@/hooks/useChatStore.ts';
 import useProfileStore from '@/hooks/useProfileStore.ts';
 import useTheme from '@/hooks/useTheme.ts';
+
+dayjs.extend(calendar);
+
+dayjs().calendar(dayjs('2008-01-01'));
 
 const ChatScreen = () => {
   const chatWasUsed = useRef(false);
@@ -68,8 +76,22 @@ const ChatScreen = () => {
       <GiftedChat
         messages={messageHistory}
         onSend={chatMessages => onSend(chatMessages)}
-        showUserAvatar
-        alwaysShowSend
+        renderAvatar={props => <ChatAvatar {...props} />}
+        //@ts-ignore
+        locale={uk}
+        // isDayAnimationEnabled={true}
+        // dateFormatCalendar={{
+        //   sameDay: '[Today at] h:mm A', // The same day ( Today at 2:30 AM )
+        //   nextDay: '[Tomorrow at] h:mm A', // The next day ( Tomorrow at 2:30 AM )
+        //   nextWeek: 'dddd [at] h:mm A', // The next week ( Sunday at 2:30 AM )
+        //   lastDay: '[Yesterday at] h:mm A', // The day before ( Yesterday at 2:30 AM )
+        //   lastWeek: '[Last] dddd [at] h:mm A', // Last week ( Last Monday at 2:30 AM )
+        //   sameElse: 'DD/MM/YYYY', // Everything else ( 17/10/2011 )
+        // }}
+        dateFormat="DD.MM.YYYY"
+        timeFormat="HH:mm"
+        isUserAvatarVisible
+        isSendButtonAlwaysVisible
         user={{
           _id: profile.email,
           avatar: profile.avatarUrl,

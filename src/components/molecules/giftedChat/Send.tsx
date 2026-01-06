@@ -11,14 +11,8 @@ import { SendProps } from './types.ts';
 const Send = ({ messageLoading, ...props }: SendProps) => {
   const { colors } = useTheme();
 
-  const computedStyles = StyleSheet.create({
-    send: {
-      opacity: messageLoading ? 0.3 : 1,
-    },
-  });
-
   return (
-    <GiftedChatSend {...props} disabled={messageLoading} containerStyle={[styles.send, computedStyles.send]}>
+    <GiftedChatSend {...props} isSendButtonAlwaysVisible={!messageLoading} containerStyle={[styles.send]}>
       <Animated.View entering={FadeIn} exiting={FadeOut}>
         <SendButtonIcon fill={colors.iconPrimary} />
       </Animated.View>
@@ -30,7 +24,7 @@ const styles = StyleSheet.create({
   send: {
     right: SPACING.xl,
     position: 'absolute',
-    bottom: 16,
+    bottom: 28,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Flow } from 'react-native-animated-spinkit';
 import { InputToolbar as GiftedChatInputToolBar } from 'react-native-gifted-chat';
@@ -20,11 +21,13 @@ const InputToolbar = ({ messageLoading, ...props }: InputToolbarProps) => {
     },
   });
 
+  const avatarSource = useMemo(() => selectedChat && selectedChat.chat.agentInfo.avatarUrl, [selectedChat]);
+
   return (
     <View>
       {messageLoading && (
         <Animated.View entering={FadeIn} style={styles.loadingWrapper}>
-          {selectedChat && <AutoImage source={selectedChat.chat.agentInfo.avatarUrl} style={styles.agentAvatar} />}
+          {avatarSource && <AutoImage source={avatarSource} style={styles.agentAvatar} resizeMode="cover" />}
 
           <View style={[styles.loadingContainer, computedStyles.loadingContainer]}>
             <Flow size={36} color={colors.textLight} />

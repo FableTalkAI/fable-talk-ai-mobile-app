@@ -19,6 +19,7 @@ const RootNavigator = () => {
   const { profile } = useProfileStore();
 
   const getInitialRouteName = () => {
+    return 'TabBarNavigator';
     if (!isLoggedIn || !profile) return 'AuthStack';
     if (!profile.isOnboardingDone) return 'Onboarding';
     return 'TabBarNavigator';

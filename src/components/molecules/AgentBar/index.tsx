@@ -34,7 +34,7 @@ const AgentBar = ({ name, description, tags, avatarSource, style, onPress }: Age
   return (
     <View style={[computedStyles.wrapper, styles.wrapper]}>
       <PressableCustom style={[computedStyles.pressableContainer, styles.pressableContainer, style]} onPress={onPress}>
-        <AutoImage source={avatarSource} style={styles.avatar} />
+        <AutoImage source={avatarSource} style={styles.avatar} resizeMode="cover" />
 
         <TextCustom text={name} mode={TextModes.Secondary} style={computedStyles.name} />
         <TextCustom
