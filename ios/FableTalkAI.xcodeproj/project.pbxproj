@@ -206,6 +206,20 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FableTalkAI/Pods-FableTalkAI-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		6A09D6EEB3E7482D80BCE5BD /* Upload Debug Symbols to Sentry */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Upload Debug Symbols to Sentry";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh ../node_modules/@sentry/react-native/scripts/sentry-xcode-debug-files.sh";
+		};
 		84B509B7322ECF383E93B235 /* [CP-User] [RNFB] Core Configuration */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -257,20 +271,6 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FableTalkAI/Pods-FableTalkAI-resources.sh\"\n";
 			showEnvVarsInLog = 0;
-		};
-		6A09D6EEB3E7482D80BCE5BD /* Upload Debug Symbols to Sentry */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			name = "Upload Debug Symbols to Sentry";
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			shellPath = /bin/sh;
-			shellScript = "/bin/sh ../node_modules/@sentry/react-native/scripts/sentry-xcode-debug-files.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 

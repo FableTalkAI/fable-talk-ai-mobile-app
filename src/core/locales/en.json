@@ -150,7 +150,10 @@
     "placeholder": "Search agents by name..."
   },
   "chat": {
-    "placeholder": "Write a message..."
+    "placeholder": "Write a message...",
+    "sameDay": "[Today]",
+    "nextDay": "[Tomorrow]",
+    "lastDay": "[Yesterday]"
   },
   "validation": {
     "name": "Please enter a valid name",

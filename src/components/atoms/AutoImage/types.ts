@@ -1,14 +1,15 @@
-import { ImageProps, ImageSourcePropType, ImageStyle, StyleProp } from 'react-native';
+import { ComponentProps } from 'react';
+import FastImage, { FastImageProps } from 'react-native-fast-image';
 
-type ExcludeImageProps = 'style' | 'width' | 'resizeMode' | 'source';
+export type AutoImageResizeMode = keyof typeof FastImage.resizeMode;
 
-type UniqueImageProps = Omit<ImageProps, ExcludeImageProps>;
+export type AutoImageSource = string | number | { uri: string };
 
 export type AutoImageProps = {
-  source: ImageSourcePropType | string;
+  source: AutoImageSource;
   width?: number;
   paddingHorizontal?: number;
-  style?: StyleProp<ImageStyle>;
+  style?: FastImageProps['style'];
   withSafeAreaInsets?: boolean;
-  resizeMode?: 'cover' | 'contain' | 'stretch' | 'center';
-} & UniqueImageProps;
+  resizeMode?: AutoImageResizeMode;
+} & Omit<ComponentProps<typeof FastImage>, 'source' | 'style' | 'resizeMode'>;

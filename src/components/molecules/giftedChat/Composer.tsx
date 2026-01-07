@@ -6,7 +6,7 @@ import TextInputCustom from '@/components/atoms/TextInputCustom/index.tsx';
 import { RADIUS, SPACING } from '@/core/constants/sizes.ts';
 import useTheme from '@/hooks/useTheme.ts';
 
-const Composer = ({ text, onTextChanged, ...props }: ComposerProps) => {
+const Composer = ({ text, textInputProps, ...props }: ComposerProps) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
 
@@ -24,7 +24,7 @@ const Composer = ({ text, onTextChanged, ...props }: ComposerProps) => {
     <TextInputCustom
       {...props}
       value={text}
-      onChangeText={onTextChanged}
+      onChangeText={textInputProps?.onChangeText}
       style={[computedStyles.composer, styles.composer]}
       wrapperStyle={[computedStyles.wrapper, styles.wrapper]}
       placeholder={t('chat.placeholder')}

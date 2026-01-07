@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from 'react-native';
+import { AutoImageSource } from '@/components/atoms/AutoImage/types.ts';
 
 export type AgentsState = {
   tags: string[];
@@ -14,7 +14,7 @@ export type AgentsState = {
 
 export type Agent = {
   ageRestriction: string;
-  avatarUrl: ImageSourcePropType;
+  avatarUrl: AutoImageSource;
   description: string;
   id: string;
   name: string;
