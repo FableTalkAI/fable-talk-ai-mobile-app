@@ -15,6 +15,7 @@ import { OptionBarColorModes, OptionBarModes } from '@/features/profile/ui/Optio
 import SettingsContainer from '@/features/profile/ui/SettingsContainer';
 import {
   HeadphonesIcon,
+  LogoutIcon,
   MailDotIcon,
   NotificationBellIcon,
   PaletteIcon,
@@ -36,7 +37,8 @@ const SettingsScreen = () => {
   const { notifications, theme, setThemeHandler } = useUserStore();
   const { updateUserProfileHandler, profile, isLoading } = useProfileStore();
 
-  const { open } = useBottomWindow(BottomWindowModes.DeleteAccount);
+  const { open: openDeleteAcc } = useBottomWindow(BottomWindowModes.DeleteAccount);
+  const { open: openLogoutAcc } = useBottomWindow(BottomWindowModes.Logout);
   const { authorizeHandler } = useNotificationPermission();
 
   const emailNotifications = profile ? profile.isEmailNotificationEnabled : false;
@@ -117,7 +119,14 @@ const SettingsScreen = () => {
             rightComponent={<Select onChange={setThemeHandler} options={selectOptions} defaultValue={theme} />}
           />
           <OptionBar
-            onPress={open}
+            onPress={openLogoutAcc}
+            title={t('actions.logout')}
+            subtitle={t('settings.exitFromAcc')}
+            leftIcon={<LogoutIcon />}
+            mode={OptionBarModes.Complex}
+          />
+          <OptionBar
+            onPress={openDeleteAcc}
             title={t('actions.delete')}
             subtitle={t('settings.removeYourAccount')}
             colorMode={OptionBarColorModes.Red}

@@ -45,13 +45,13 @@ function App() {
             <GestureHandlerRootView style={styles.flex1}>
               <BottomSheetModalProvider>
                 <SafeAreaProvider>
-                  <BottomWindowProvider>
-                    <NavigationContainer>
+                  <NavigationContainer>
+                    <BottomWindowProvider>
                       <InitialSetup>
                         <RootNavigator />
                       </InitialSetup>
-                    </NavigationContainer>
-                  </BottomWindowProvider>
+                    </BottomWindowProvider>
+                  </NavigationContainer>
 
                   <Toast config={toastConfig} />
                 </SafeAreaProvider>

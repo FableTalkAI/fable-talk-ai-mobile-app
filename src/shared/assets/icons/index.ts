@@ -10,6 +10,7 @@ import HeadphonesIcon from './headphones.svg';
 import HomeIcon from './home-icon.svg';
 import ImagePlusIcon from './image-plus.svg';
 import LogoIcon from './logo.svg';
+import LogoutIcon from './logout.svg';
 import MailIcon from './mail.svg';
 import MailDotIcon from './mail-dot.svg';
 import OnboardingRobotIcon from './onboarding-robot.svg';
@@ -53,6 +54,7 @@ export {
   HomeIcon,
   ImagePlusIcon,
   LogoIcon,
+  LogoutIcon,
   MailDotIcon,
   MailIcon,
   NotificationBellIcon,

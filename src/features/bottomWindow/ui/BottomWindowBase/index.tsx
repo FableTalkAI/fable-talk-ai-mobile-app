@@ -9,46 +9,48 @@ import { SPACING } from '@/shared/model/sizes.ts';
 
 import { BottomWindowBaseProps } from './types.ts';
 
-const BottomWindowBase = forwardRef<BottomSheetModalMethods, BottomWindowBaseProps>(({ children }, ref) => {
-  const bottomSheetRef = useRef<BottomSheetModalMethods>(null);
+const BottomWindowBase = forwardRef<BottomSheetModalMethods, BottomWindowBaseProps>(
+  ({ children, enableClose = true }, ref) => {
+    const bottomSheetRef = useRef<BottomSheetModalMethods>(null);
 
-  const { colors } = useTheme();
-  const insets = useSafeAreaInsets();
+    const { colors } = useTheme();
+    const insets = useSafeAreaInsets();
 
-  const computedStyles = StyleSheet.create({
-    container: {
-      paddingBottom: insets.bottom ? insets.bottom + SPACING.xxs : SPACING.lg,
-    },
-    backgroundModal: {
-      backgroundColor: colors.backgroundBase,
-    },
-  });
+    const computedStyles = StyleSheet.create({
+      container: {
+        paddingBottom: insets.bottom ? insets.bottom + SPACING.xxs : SPACING.lg,
+      },
+      backgroundModal: {
+        backgroundColor: colors.backgroundBase,
+      },
+    });
 
-  useImperativeHandle(ref, () => bottomSheetRef.current!);
+    useImperativeHandle(ref, () => bottomSheetRef.current!);
 
-  const renderBackdrop = (props: BottomSheetBackdropProps) => (
-    <BottomSheetBackdrop
-      {...props}
-      appearsOnIndex={0}
-      disappearsOnIndex={-1}
-      opacity={0.5}
-      onPress={() => {
-        bottomSheetRef.current?.close();
-      }}
-    />
-  );
+    const renderBackdrop = (props: BottomSheetBackdropProps) => (
+      <BottomSheetBackdrop
+        {...props}
+        appearsOnIndex={0}
+        disappearsOnIndex={-1}
+        opacity={0.5}
+        onPress={() => {
+          enableClose && bottomSheetRef.current?.close();
+        }}
+      />
+    );
 
-  return (
-    <BottomSheetModal
-      ref={bottomSheetRef}
-      backdropComponent={renderBackdrop}
-      enablePanDownToClose
-      backgroundStyle={computedStyles.backgroundModal}
-    >
-      <BottomSheetView style={[styles.container, computedStyles.container]}>{children}</BottomSheetView>
-    </BottomSheetModal>
-  );
-});
+    return (
+      <BottomSheetModal
+        ref={bottomSheetRef}
+        backdropComponent={renderBackdrop}
+        enablePanDownToClose={enableClose}
+        backgroundStyle={computedStyles.backgroundModal}
+      >
+        <BottomSheetView style={[styles.container, computedStyles.container]}>{children}</BottomSheetView>
+      </BottomSheetModal>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   container: {

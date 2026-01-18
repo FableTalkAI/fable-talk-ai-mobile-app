@@ -3,6 +3,7 @@ import auth from '@react-native-firebase/auth';
 
 import { createAxiosAsyncThunk } from '@/app/store/typedCreateAsyncThunk.ts';
 import { getUserProfile } from '@/features/profile/store/profile/thunks.ts';
+import { User } from '@/features/profile/store/profile/types.ts';
 import http from '@/shared/api/http.ts';
 
 import { SendOtpRequest, UpsertGoogleRequest, VerifyOtpRequest } from './types.ts';
@@ -13,26 +14,29 @@ export const sendOtp = createAxiosAsyncThunk<void, SendOtpRequest>(`${authSliceN
   await http.post(`${AUTH_ROUTE}/send-otp`, data);
 });
 
-export const verifyOtp = createAxiosAsyncThunk<void, VerifyOtpRequest>(
+export const verifyOtp = createAxiosAsyncThunk<User, VerifyOtpRequest>(
   `${authSliceName}/verifyOtp`,
   async (data, { dispatch }) => {
     const response = await http.post(`${AUTH_ROUTE}/verify`, data);
 
     await auth().signInWithCustomToken(response.data);
-    auth().onAuthStateChanged(async user => {
-      if (user) {
-        await dispatch(getUserProfile());
-      }
+    return new Promise<User>((resolve, reject) => {
+      const unsubscribe = auth().onAuthStateChanged(user => {
+        if (!user) return;
+        dispatch(getUserProfile()).unwrap().then(resolve).catch(reject).finally(unsubscribe);
+      });
+
+      setTimeout(() => reject(new Error('Firebase onAuthStateChanged timeout')), 10000);
     });
   },
 );
 
-export const upsertGoogle = createAxiosAsyncThunk<void, UpsertGoogleRequest>(
+export const upsertGoogle = createAxiosAsyncThunk<User, UpsertGoogleRequest>(
   `${authSliceName}/upsertGoogle`,
   async ({ data, credential }, { dispatch }) => {
     await http.post(`${AUTH_ROUTE}/google`, data);
 
     await auth().signInWithCredential(credential);
-    await dispatch(getUserProfile());
+    return await dispatch(getUserProfile()).unwrap();
   },
 );

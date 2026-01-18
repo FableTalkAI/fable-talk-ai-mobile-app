@@ -31,7 +31,8 @@
     "send": "Відправити",
     "delete": "Видалити",
     "cancel": "Скасувати",
-    "continue": "Продовжити"
+    "continue": "Продовжити",
+    "logout": "Вихід"
   },
   "bottomWindows": {
     "permissionDenied": {
@@ -41,6 +42,10 @@
     "deleteAccount": {
       "title": "Видалити акаунт",
       "subtitle": "Ви впевнені, що хочете видалити свій акаунт?"
+    },
+    "logout": {
+      "title": "Вийти з акаунту",
+      "subtitle": "Ви впевнені, що хочете вийти зі свого акаунту?"
     },
     "searchFilter": {
       "sort": "Сортування",
@@ -96,7 +101,8 @@
     "getHelp": "Отримати допомогу",
     "theme": "Тема",
     "changeAppTheme": "Змінити тему застосунку",
-    "removeYourAccount": "Видалити обліковий запис"
+    "removeYourAccount": "Видалити обліковий запис",
+    "exitFromAcc": "Завершити сесію в акаунті"
   },
   "theme": {
     "system": "Системна",
