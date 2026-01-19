@@ -22,6 +22,7 @@ export enum ButtonModes {
   Success = 'success',
   Reject = 'reject',
   Link = 'link',
+  Ghost = 'ghost',
 }
 
 export enum ButtonRadius {

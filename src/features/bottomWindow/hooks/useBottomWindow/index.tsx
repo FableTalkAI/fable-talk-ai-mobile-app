@@ -41,7 +41,7 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
             subtitle={t('bottomWindows.permissionDenied.subtitle')}
             firstButtonProps={{
               title: t('actions.cancel'),
-              mode: ButtonModes.Disabled,
+              mode: ButtonModes.Ghost,
               onPress: close,
             }}
             secondButtonProps={{
@@ -60,13 +60,11 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
             title={t('bottomWindows.deleteAccount.title')}
             subtitle={t('bottomWindows.deleteAccount.subtitle')}
             firstButtonProps={{
-              isDisable: isLoading.deleteUserProfile,
               title: t('actions.cancel'),
-              mode: ButtonModes.Disabled,
+              mode: ButtonModes.Ghost,
               onPress: close,
             }}
             secondButtonProps={{
-              isLoading: isLoading.deleteUserProfile,
               title: t('actions.delete'),
               mode: ButtonModes.Reject,
               onPress: deleteUserProfileHandler,
@@ -80,7 +78,7 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
             subtitle={t('bottomWindows.logout.subtitle')}
             firstButtonProps={{
               title: t('actions.cancel'),
-              mode: ButtonModes.Disabled,
+              mode: ButtonModes.Ghost,
               onPress: close,
             }}
             secondButtonProps={{
@@ -95,7 +93,7 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
       default:
         return null;
     }
-  }, [navigation, bottomWindowMode, close, deleteUserProfileHandler, isLoading.deleteUserProfile, t]);
+  }, [navigation, bottomWindowMode, close, deleteUserProfileHandler, t]);
 
   const enableClose = useMemo(() => !isLoading.deleteUserProfile, [isLoading.deleteUserProfile]);
 

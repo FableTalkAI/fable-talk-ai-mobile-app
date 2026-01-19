@@ -161,7 +161,7 @@ const SearchFilter = ({ close }: SearchFilterProps) => {
       <View style={styles.buttonWrapper}>
         <Button
           title={t('actions.clear')}
-          mode={ButtonModes.Disabled}
+          mode={ButtonModes.Ghost}
           containerStyle={styles.buttonContainer}
           onPress={onClear}
         />
