@@ -1,7 +1,10 @@
 import { useCallback } from 'react';
 
+import { logoutUser } from '@/features/auth/services/logoutUser.ts';
+import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import { isLoadingSelector, profileSelector } from '@/features/profile/store/profile/selectors.ts';
 import {
+  deleteUserProfile,
   getUserProfile,
   sendSupportMessage,
   updateUserProfile,
@@ -12,6 +15,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
 const useProfileStore = () => {
   const dispatch = useAppDispatch();
+  const { navigation } = useNavigationRoutes();
 
   const isLoading = useAppSelector(isLoadingSelector);
   const profile = useAppSelector(profileSelector);
@@ -41,6 +45,11 @@ const useProfileStore = () => {
     [dispatch],
   );
 
+  const deleteUserProfileHandler = useCallback(async () => {
+    await dispatch(deleteUserProfile()).unwrap();
+    await logoutUser(navigation);
+  }, [dispatch, navigation]);
+
   return {
     isLoading,
     profile,
@@ -49,6 +58,7 @@ const useProfileStore = () => {
     getUserProfileHandler,
     updateUserProfileHandler,
     uploadAvatarHandler,
+    deleteUserProfileHandler,
   };
 };
 

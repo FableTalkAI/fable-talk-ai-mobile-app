@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native';
-import { Pressable } from 'react-native-gesture-handler';
+import { Pressable, StyleSheet } from 'react-native';
 import Animated, { LinearTransition, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
 import useTheme from '@/shared/hooks/useTheme.ts';

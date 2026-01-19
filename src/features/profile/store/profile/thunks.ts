@@ -45,3 +45,11 @@ export const uploadAvatar = createAxiosAsyncThunk<MessageKey, string>(
     return response.data;
   },
 );
+
+export const deleteUserProfile = createAxiosAsyncThunk<MessageKey, void>(
+  `${profileSliceName}/deleteUserProfile`,
+  async () => {
+    const response = await http.delete(`${PROFILE_ROUTE}`);
+    return response.data;
+  },
+);

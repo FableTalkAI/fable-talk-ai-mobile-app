@@ -2,18 +2,24 @@ import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { openSettings } from 'react-native-permissions';
 
+import { logoutUser } from '@/features/auth/services/logoutUser.ts';
 import useBottomWindowStore from '@/features/bottomWindow/hooks/useBottomWindowStore.ts';
 import { bottomWindowRef } from '@/features/bottomWindow/services/bottomWindowRef.ts';
 import BottomWindowBase from '@/features/bottomWindow/ui/BottomWindowBase';
 import Alert from '@/features/bottomWindow/ui/templates/Alert';
 import SearchFilter from '@/features/bottomWindow/ui/templates/SearchFilter';
+import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { ButtonModes } from '@/shared/ui/Button/types.ts';
 
 import { BottomWindowModes } from './types.ts';
 
 const useBottomWindow = (mode?: BottomWindowModes) => {
   const { t } = useTranslation();
+  const { navigation } = useNavigationRoutes();
+
   const { bottomWindowMode, setBottomWindowModeHandler } = useBottomWindowStore();
+  const { deleteUserProfileHandler, isLoading } = useProfileStore();
 
   const open = useCallback(() => {
     setBottomWindowModeHandler(mode);
@@ -35,7 +41,7 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
             subtitle={t('bottomWindows.permissionDenied.subtitle')}
             firstButtonProps={{
               title: t('actions.cancel'),
-              mode: ButtonModes.Disabled,
+              mode: ButtonModes.Ghost,
               onPress: close,
             }}
             secondButtonProps={{
@@ -55,17 +61,30 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
             subtitle={t('bottomWindows.deleteAccount.subtitle')}
             firstButtonProps={{
               title: t('actions.cancel'),
-              mode: ButtonModes.Disabled,
+              mode: ButtonModes.Ghost,
               onPress: close,
             }}
             secondButtonProps={{
               title: t('actions.delete'),
               mode: ButtonModes.Reject,
-              onPress: () => {
-                // TODO add delete account logic
-                console.log('delete account');
-                close();
-              },
+              onPress: deleteUserProfileHandler,
+            }}
+          />
+        );
+      case BottomWindowModes.Logout:
+        return (
+          <Alert
+            title={t('bottomWindows.logout.title')}
+            subtitle={t('bottomWindows.logout.subtitle')}
+            firstButtonProps={{
+              title: t('actions.cancel'),
+              mode: ButtonModes.Ghost,
+              onPress: close,
+            }}
+            secondButtonProps={{
+              title: t('actions.logout'),
+              mode: ButtonModes.Link,
+              onPress: async () => await logoutUser(navigation),
             }}
           />
         );
@@ -74,9 +93,15 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
       default:
         return null;
     }
-  }, [bottomWindowMode, close, t]);
+  }, [navigation, bottomWindowMode, close, deleteUserProfileHandler, t]);
 
-  const BottomWindow = () => <BottomWindowBase ref={bottomWindowRef}>{templateComponent}</BottomWindowBase>;
+  const enableClose = useMemo(() => !isLoading.deleteUserProfile, [isLoading.deleteUserProfile]);
+
+  const BottomWindow = () => (
+    <BottomWindowBase ref={bottomWindowRef} enableClose={enableClose}>
+      {templateComponent}
+    </BottomWindowBase>
+  );
 
   return {
     BottomWindow,

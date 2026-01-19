@@ -31,7 +31,8 @@
     "send": "Send",
     "delete": "Delete",
     "cancel": "Cancel",
-    "continue": "Continue"
+    "continue": "Continue",
+    "logout": "Logout"
   },
   "bottomWindows": {
     "permissionDenied": {
@@ -41,6 +42,10 @@
     "deleteAccount": {
       "title": "Delete account",
       "subtitle": "Are you sure you want to delete your account?"
+    },
+    "logout": {
+      "title": "Logout from account",
+      "subtitle": "Are you sure you want to logout from your account?"
     },
     "searchFilter": {
       "sort": "Sort",
@@ -96,7 +101,8 @@
     "getHelp": "Get help",
     "theme": "Theme",
     "changeAppTheme": "Change app theme",
-    "removeYourAccount": "Remove your account"
+    "removeYourAccount": "Remove your account",
+    "exitFromAcc": "Exit from your account"
   },
   "theme": {
     "system": "System",

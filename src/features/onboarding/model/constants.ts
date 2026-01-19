@@ -1,4 +1,4 @@
-import { StepTextData } from './types.ts';
+import { StepTextData } from '../ui/screens/OnboardingScreen/types.ts';
 
 const STEPS_TEXT_DATA: Record<number, StepTextData> = {
   1: {

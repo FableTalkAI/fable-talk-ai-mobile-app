@@ -4,6 +4,7 @@ export type ProfileState = {
     contactUs: boolean;
     uploadAvatar: boolean;
     updateProfile: boolean;
+    deleteUserProfile: boolean;
   };
 };
 

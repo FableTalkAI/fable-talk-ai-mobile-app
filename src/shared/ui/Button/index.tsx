@@ -32,6 +32,10 @@ const Button = ({
       backgroundColor: colors.grayDisabled,
       color: colors.textSecondary,
     },
+    ghost: {
+      backgroundColor: colors.gray20,
+      color: colors.gray80,
+    },
     transparent: {
       backgroundColor: setColorOpacity(colors.accentLight, 0.22),
       color: colors.textLight,

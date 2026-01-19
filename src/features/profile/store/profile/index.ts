@@ -3,7 +3,14 @@ import i18n from 'i18next';
 
 import { showToast } from '@/shared/lib/toast';
 
-import { getUserProfile, profileSliceName, sendSupportMessage, updateUserProfile, uploadAvatar } from './thunks.ts';
+import {
+  deleteUserProfile,
+  getUserProfile,
+  profileSliceName,
+  sendSupportMessage,
+  updateUserProfile,
+  uploadAvatar,
+} from './thunks.ts';
 import { ProfileState } from './types.ts';
 
 const initialState: ProfileState = {
@@ -12,6 +19,7 @@ const initialState: ProfileState = {
     contactUs: false,
     updateProfile: false,
     uploadAvatar: false,
+    deleteUserProfile: false,
   },
 };
 
@@ -88,6 +96,17 @@ const profileSlice = createSlice({
           type: 'error',
           text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
         });
+      })
+
+      //deleteUserProfile
+      .addCase(deleteUserProfile.pending, state => {
+        state.loading.deleteUserProfile = true;
+      })
+      .addCase(deleteUserProfile.fulfilled, state => {
+        state.loading.deleteUserProfile = false;
+      })
+      .addCase(deleteUserProfile.rejected, state => {
+        state.loading.deleteUserProfile = false;
       });
   },
 });

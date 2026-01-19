@@ -7,12 +7,9 @@ import { SendOtpRequest, UpsertGoogleRequest, VerifyData, VerifyOtpRequest } fro
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
-import useProfileStore from '../../profile/hooks/useProfileStore.ts';
-
 const useAuthStore = () => {
   const dispatch = useAppDispatch();
   const { navigation } = useNavigationRoutes();
-  const { profile } = useProfileStore();
 
   const isLoading = useAppSelector(isLoadingSelector);
   const verifyData = useAppSelector(verifyDataSelector);
@@ -42,7 +39,7 @@ const useAuthStore = () => {
 
   const verifyOtpHandler = useCallback(
     async (data: VerifyOtpRequest) => {
-      await dispatch(verifyOtp(data)).unwrap();
+      const profile = await dispatch(verifyOtp(data)).unwrap();
 
       if (profile && profile.isOnboardingDone) {
         return navigation.reset({
@@ -56,12 +53,12 @@ const useAuthStore = () => {
         routes: [{ name: 'Onboarding' }],
       });
     },
-    [dispatch, profile, navigation],
+    [dispatch, navigation],
   );
 
   const upsertGoogleHandler = useCallback(
     async (data: UpsertGoogleRequest) => {
-      await dispatch(upsertGoogle(data)).unwrap();
+      const profile = await dispatch(upsertGoogle(data)).unwrap();
 
       if (profile && profile.isOnboardingDone) {
         return navigation.reset({
@@ -75,7 +72,7 @@ const useAuthStore = () => {
         routes: [{ name: 'Onboarding' }],
       });
     },
-    [dispatch, navigation, profile],
+    [dispatch, navigation],
   );
 
   return {
