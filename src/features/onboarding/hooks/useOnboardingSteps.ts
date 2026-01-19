@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 
+import useAgentsStore from '@/features/home/hooks/useAgentsStore.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import { AvatarStep, InterestsStep } from '@/features/onboarding/ui/steps';
 import DateOfBirthStep from '@/features/onboarding/ui/steps/DateOfBirthStep.tsx';
@@ -12,7 +13,8 @@ const useOnboardingSteps = () => {
   const { navigation } = useNavigationRoutes();
   const { setOnboardingStepIndexHandler, onboardingStepIndex, filter } = useUserStore();
 
-  const { profile, updateUserProfileHandler } = useProfileStore();
+  const { profile, updateUserProfileHandler, isLoading: isLoadingProfile } = useProfileStore();
+  const { getAgentsHandler, isLoading: isLoadingAgents } = useAgentsStore();
 
   const stepsData = useMemo(
     () => [
@@ -43,10 +45,13 @@ const useOnboardingSteps = () => {
   const currentStep = stepsData[onboardingStepIndex] ?? stepsData[0];
   const nextStep = stepsData[onboardingStepIndex + 1] ?? stepsData[lastStep];
   const previousStep = stepsData[onboardingStepIndex - 1] ?? stepsData[0];
+  const isOnboardingEndLoading = Boolean(
+    (isLoadingProfile.updateProfile || isLoadingAgents.agents) && onboardingStepIndex !== 0,
+  );
 
   const onContinuePress = async () => {
     if (onboardingStepIndex === lastStep) {
-      await updateUserProfileHandler({ isOnboardingDone: true });
+      await Promise.all([updateUserProfileHandler({ isOnboardingDone: true }), getAgentsHandler()]);
       return navigation.reset({
         index: 0,
         routes: [{ name: 'TabBarNavigator', params: { screen: 'Home' } }],
@@ -64,7 +69,7 @@ const useOnboardingSteps = () => {
     setOnboardingStepIndexHandler(backStep);
   };
 
-  return { currentStep, onContinuePress, onboardingStepIndex, onBack };
+  return { currentStep, onContinuePress, onboardingStepIndex, onBack, isOnboardingEndLoading };
 };
 
 export default useOnboardingSteps;

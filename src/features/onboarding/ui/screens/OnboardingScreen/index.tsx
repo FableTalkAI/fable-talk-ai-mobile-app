@@ -3,19 +3,18 @@ import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
+import useOnboardingSteps from '@/features/onboarding/hooks/useOnboardingSteps.ts';
+import { STEPS_TEXT_DATA } from '@/features/onboarding/model/constants.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Button from '@/shared/ui/Button';
 import Header from '@/shared/ui/Header';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 import TextCustom from '@/shared/ui/TextCustom';
 
-import { STEPS_TEXT_DATA } from './constants.ts';
-import useOnboardingSteps from './hooks/useOnboardingSteps.ts';
-
 const OnboardingScreen = () => {
   const { t } = useTranslation();
 
-  const { currentStep, onContinuePress, onboardingStepIndex, onBack } = useOnboardingSteps();
+  const { currentStep, onContinuePress, onboardingStepIndex, onBack, isOnboardingEndLoading } = useOnboardingSteps();
 
   const CurrentStep = currentStep.component;
 
@@ -34,7 +33,12 @@ const OnboardingScreen = () => {
         </ScrollView>
       </Animated.View>
 
-      <Button title={t('actions.continue')} isDisable={currentStep?.isDisabled} onPress={onContinuePress} />
+      <Button
+        title={t('actions.continue')}
+        isLoading={isOnboardingEndLoading}
+        isDisable={currentStep?.isDisabled}
+        onPress={onContinuePress}
+      />
     </SafeAreaViewCustom>
   );
 };
