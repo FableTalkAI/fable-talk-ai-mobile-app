@@ -81,7 +81,7 @@ const SearchFilter = ({ close }: SearchFilterProps) => {
   return (
     <View style={styles.wrapper}>
       <View>
-        <TextCustom text={t('bottomWindows.searchFilter.sort')} mode={TextModes.Subtitle} />
+        <TextCustom style={styles.title} text={t('bottomWindows.searchFilter.sort')} mode={TextModes.Subtitle} />
 
         <View style={styles.sortContainer}>
           <Select
@@ -105,8 +105,9 @@ const SearchFilter = ({ close }: SearchFilterProps) => {
           </PressableCustom>
         </View>
       </View>
+
       <View>
-        <TextCustom text={t('bottomWindows.searchFilter.filter')} mode={TextModes.Subtitle} />
+        <TextCustom style={styles.title} text={t('bottomWindows.searchFilter.filter')} mode={TextModes.Subtitle} />
 
         <View style={[computedStyles.sectionBackground, styles.sectionBackground]}>
           <View style={styles.searchAndTagsNumberContainer}>
@@ -244,5 +245,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 180,
+  },
+  title: {
+    marginBottom: SPACING.xs,
   },
 });

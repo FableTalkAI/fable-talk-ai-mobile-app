@@ -11,7 +11,6 @@ import { Bubble, Composer, InputToolbar, Message, Send } from '@/features/chat/u
 import ChatAvatar from '@/features/chat/ui/giftedChat/ChatAvatar.tsx';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useTheme from '@/shared/hooks/useTheme.ts';
-import { DEVICE_LANGUAGE } from '@/shared/model/device.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Header from '@/shared/ui/Header';
 
@@ -22,7 +21,7 @@ const ChatScreen = () => {
   const activeSendPromise = useRef<Promise<void> | null>(null);
 
   const { colors } = useTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();
 
   const { selectedChat, sendMessageHandler, isLoading, getAllChatsHandler } = useChatStore();
@@ -87,7 +86,7 @@ const ChatScreen = () => {
         onSend={chatMessages => onSend(chatMessages)}
         renderAvatar={props => <ChatAvatar {...props} />}
         //@ts-ignore
-        locale={DEVICE_LANGUAGE}
+        locale={i18n.language}
         isDayAnimationEnabled={false}
         dateFormatCalendar={dateFormatCalendar}
         dateFormat="D MMMM YYYY"

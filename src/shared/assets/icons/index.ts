@@ -9,6 +9,7 @@ import GoogleLogoIcon from './google-logo.svg';
 import HeadphonesIcon from './headphones.svg';
 import HomeIcon from './home-icon.svg';
 import ImagePlusIcon from './image-plus.svg';
+import LanguageIcon from './language.svg';
 import LogoIcon from './logo.svg';
 import LogoutIcon from './logout.svg';
 import MailIcon from './mail.svg';
@@ -53,6 +54,7 @@ export {
   HeadphonesIcon,
   HomeIcon,
   ImagePlusIcon,
+  LanguageIcon,
   LogoIcon,
   LogoutIcon,
   MailDotIcon,

@@ -13,7 +13,6 @@ import { SendOtpLanguages } from '@/features/auth/store/auth/types.ts';
 import GoogleButton from '@/features/auth/ui/GoogleButton';
 import { MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
-import { getDeviceLanguage } from '@/shared/lib/device.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Button from '@/shared/ui/Button';
 import KeyboardAvoidingViewCustom from '@/shared/ui/KeyboardAvoidingViewCustom';
@@ -26,7 +25,7 @@ import TextInputCustom from '@/shared/ui/TextInputCustom';
 import { AuthScreenMode, SignInUpRouteProp } from './types.ts';
 
 const SignInUpScreen = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors } = useTheme();
 
   const route = useRoute<SignInUpRouteProp>();
@@ -63,7 +62,7 @@ const SignInUpScreen = () => {
 
   const onSubmit = () => {
     handleSubmit(async (data: AuthSchema) => {
-      const lang: SendOtpLanguages = getDeviceLanguage() === 'uk' ? 'uk' : 'en';
+      const lang: SendOtpLanguages = i18n.language === 'uk' ? 'uk' : 'en';
       const dataOptions = {
         email: data.email,
         lang,
