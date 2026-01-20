@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -15,6 +16,7 @@ const Tab = createBottomTabNavigator<TabBarNavigatorParamList>();
 
 const Index = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
   const computedStyles = StyleSheet.create({
@@ -39,7 +41,7 @@ const Index = () => {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'Home',
+          title: t('tabBar.home'),
           // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({ color }) => <HomeIcon fill={color} />,
         }}
@@ -48,7 +50,7 @@ const Index = () => {
         name="ChatListScreen"
         component={ChatListScreen}
         options={{
-          title: 'Chat',
+          title: t('tabBar.chat'),
           // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({ color }) => <ChatIcon fill={color} />,
         }}
@@ -57,7 +59,7 @@ const Index = () => {
         name="Profile"
         component={ProfileScreen}
         options={{
-          title: 'Profile',
+          title: t('tabBar.profile'),
           // eslint-disable-next-line react/no-unstable-nested-components
           tabBarIcon: ({ color }) => <ProfileIcon fill={color} />,
         }}

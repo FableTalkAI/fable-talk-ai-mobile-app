@@ -1,11 +1,10 @@
-import { I18nextProvider } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Toast from 'react-native-toast-message';
 import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import i18n from '@/shared/lib/i18n.ts';
+import '@/features/locales/i18n.ts';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
@@ -41,23 +40,21 @@ function App() {
     <FirebaseProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <I18nextProvider i18n={i18n}>
-            <GestureHandlerRootView style={styles.flex1}>
-              <BottomSheetModalProvider>
-                <SafeAreaProvider>
-                  <NavigationContainer>
-                    <BottomWindowProvider>
-                      <InitialSetup>
-                        <RootNavigator />
-                      </InitialSetup>
-                    </BottomWindowProvider>
-                  </NavigationContainer>
+          <GestureHandlerRootView style={styles.flex1}>
+            <BottomSheetModalProvider>
+              <SafeAreaProvider>
+                <NavigationContainer>
+                  <BottomWindowProvider>
+                    <InitialSetup>
+                      <RootNavigator />
+                    </InitialSetup>
+                  </BottomWindowProvider>
+                </NavigationContainer>
 
-                  <Toast config={toastConfig} />
-                </SafeAreaProvider>
-              </BottomSheetModalProvider>
-            </GestureHandlerRootView>
-          </I18nextProvider>
+                <Toast config={toastConfig} />
+              </SafeAreaProvider>
+            </BottomSheetModalProvider>
+          </GestureHandlerRootView>
         </PersistGate>
       </Provider>
     </FirebaseProvider>

@@ -5,6 +5,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
 import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
+import { setAppLanguage } from '@/features/locales/services/setAppLanguage.ts';
+import { Languages } from '@/features/locales/types.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useNotificationPermission from '@/features/notifications/hooks/useNotificationPermission.ts';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
@@ -15,6 +17,7 @@ import { OptionBarColorModes, OptionBarModes } from '@/features/profile/ui/Optio
 import SettingsContainer from '@/features/profile/ui/SettingsContainer';
 import {
   HeadphonesIcon,
+  LanguageIcon,
   LogoutIcon,
   MailDotIcon,
   NotificationBellIcon,
@@ -31,7 +34,7 @@ import Select from '@/shared/ui/Select';
 import Toggle from '@/shared/ui/Toggle';
 
 const SettingsScreen = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { navigation } = useNavigationRoutes();
 
   const { notifications, theme, setThemeHandler } = useUserStore();
@@ -43,11 +46,20 @@ const SettingsScreen = () => {
 
   const emailNotifications = profile ? profile.isEmailNotificationEnabled : false;
 
-  const selectOptions = useMemo(
+  const selectThemeOptions = useMemo(
     () =>
       (Object.keys(Theme) as Array<keyof typeof Theme>).map(option => ({
         value: Theme[option],
         title: t(`theme.${option.toLowerCase()}`),
+      })),
+    [t],
+  );
+
+  const selectLanguageOptions = useMemo(
+    () =>
+      (Object.keys(Languages) as Array<keyof typeof Languages>).map(option => ({
+        value: Languages[option],
+        title: t(`languages.${option.toLowerCase()}`),
       })),
     [t],
   );
@@ -116,7 +128,29 @@ const SettingsScreen = () => {
             subtitle={t('settings.changeAppTheme')}
             leftIcon={<PaletteIcon />}
             mode={OptionBarModes.Complex}
-            rightComponent={<Select onChange={setThemeHandler} options={selectOptions} defaultValue={theme} />}
+            rightComponent={
+              <Select
+                key={`theme-${i18n.language}`}
+                onChange={setThemeHandler}
+                options={selectThemeOptions}
+                defaultValue={theme}
+              />
+            }
+          />
+          <OptionBar
+            disabled
+            title={t('settings.language')}
+            subtitle={t('settings.changeAppLanguage')}
+            leftIcon={<LanguageIcon />}
+            mode={OptionBarModes.Complex}
+            rightComponent={
+              <Select
+                key={`language-${i18n.language}`}
+                onChange={setAppLanguage}
+                options={selectLanguageOptions}
+                defaultValue={i18n.language as Languages}
+              />
+            }
           />
           <OptionBar
             onPress={openLogoutAcc}

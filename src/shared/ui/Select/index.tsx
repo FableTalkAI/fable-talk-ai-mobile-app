@@ -14,7 +14,7 @@ import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 import { MAX_DROPDOWN_HEIGHT, ROW_HEIGHT } from './constants.ts';
 import { SelectProps } from './types.ts';
 
-const Select = <T,>({ defaultValue, options, width = 90, onChange }: SelectProps<T>) => {
+const Select = <T,>({ defaultValue, options, width = 100, onChange }: SelectProps<T>) => {
   const { colors } = useTheme();
 
   const triggerRef = useRef<View>(null);
@@ -31,6 +31,7 @@ const Select = <T,>({ defaultValue, options, width = 90, onChange }: SelectProps
     () => Math.min(MAX_DROPDOWN_HEIGHT, options.length * ROW_HEIGHT + 2 * SPACING.xs),
     [options],
   );
+
   const top = useMemo(
     () =>
       shouldOpenDown

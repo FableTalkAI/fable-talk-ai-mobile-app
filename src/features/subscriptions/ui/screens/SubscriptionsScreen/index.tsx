@@ -26,16 +26,10 @@ const SubscriptionScreen = () => {
 
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const computedStyles = StyleSheet.create({
-    priceColor: {
-      color: colors.textTertiary,
-    },
-  });
-
   const gradientMap: Record<SubscriptionPlans, string[]> = {
-    free: [colors.backgroundHover, colors.warningDark],
-    basic: [colors.backgroundHover, colors.link],
-    premium: [colors.backgroundHover, colors.primary40],
+    free: [colors.gray10, colors.warningDark],
+    basic: [colors.gray10, colors.link],
+    premium: [colors.gray10, colors.primary40],
   };
 
   return (
@@ -57,11 +51,11 @@ const SubscriptionScreen = () => {
               style={[styles.linearGradient, { height: CARD_HEIGHT }]}
               locations={[0, 0.85]}
             >
-              <TextCustom text={t(item.name)} mode={TextModes.Xxl} style={styles.header} />
+              <TextCustom textColor={colors.gray90} text={t(item.name)} mode={TextModes.Xxl} style={styles.header} />
 
               <View style={styles.priceContainer}>
-                <TextCustom text={item.price} mode={TextModes.Title} />
-                <TextCustom text={t('subscription.month')} mode={TextModes.Title} style={computedStyles.priceColor} />
+                <TextCustom textColor={colors.gray90} text={item.price} mode={TextModes.Title} />
+                <TextCustom textColor={colors.textTertiary} text={t('subscription.month')} mode={TextModes.Title} />
               </View>
 
               <View style={styles.iconContainer}>
@@ -72,14 +66,24 @@ const SubscriptionScreen = () => {
                 {item.pros.map((pro, index) => (
                   <View style={styles.innerListContainer} key={`pro-${index}`}>
                     <CheckmarkIcon />
-                    <TextCustom text={t(pro)} mode={TextModes.Secondary} style={styles.prosAndConsText} />
+                    <TextCustom
+                      textColor={colors.gray90}
+                      text={t(pro)}
+                      mode={TextModes.Secondary}
+                      style={styles.prosAndConsText}
+                    />
                   </View>
                 ))}
 
                 {item.cons.map((con, index) => (
                   <View style={styles.innerListContainer} key={`con-${index}`}>
                     <XMarkIcon />
-                    <TextCustom text={t(con)} mode={TextModes.Secondary} style={styles.prosAndConsText} />
+                    <TextCustom
+                      textColor={colors.gray90}
+                      text={t(con)}
+                      mode={TextModes.Secondary}
+                      style={styles.prosAndConsText}
+                    />
                   </View>
                 ))}
               </View>
@@ -87,6 +91,7 @@ const SubscriptionScreen = () => {
           </View>
         )}
       />
+
       <Button
         title={t('actions.choose')}
         containerStyle={styles.button}

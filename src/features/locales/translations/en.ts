@@ -1,0 +1,219 @@
+import { Translations } from '../types.ts';
+
+const en: Translations = {
+  common: {
+    dateOfBirth: 'Date of Birth',
+    avatar: 'Avatar',
+    interests: 'Interests',
+    day: 'Day',
+    month: 'Month',
+    year: 'Year',
+    settings: 'Settings',
+    subscription: 'Subscription',
+    email: 'Email',
+    name: 'Name',
+    yourName: 'Your name',
+    alphabetically: 'Alphabetically',
+    popularity: 'Popularity',
+    dateAdded: 'Date added',
+    enabled: 'Enabled',
+    disabled: 'Disabled',
+    contactUs: 'Contact us',
+    noResults: 'No results',
+    error: 'Error',
+    success: 'Success',
+    info: 'Info',
+    warning: 'Warning',
+    pinnedWarning:
+      'You have reached the maximum number of pinned chats. Unpin a chat or upgrade your subscription plan',
+  },
+
+  tabBar: {
+    home: 'Home',
+    chat: 'Chat',
+    profile: 'Profile',
+  },
+
+  languages: {
+    uk: 'Ukrainian',
+    en: 'English',
+  },
+
+  actions: {
+    apply: 'Apply',
+    clear: 'Clear',
+    choose: 'Choose',
+    send: 'Send',
+    delete: 'Delete',
+    cancel: 'Cancel',
+    continue: 'Continue',
+    logout: 'Logout',
+  },
+
+  bottomWindows: {
+    permissionDenied: {
+      title: 'Permission denied',
+      subtitle: 'To use this feature, please enable photo access in settings',
+    },
+    deleteAccount: {
+      title: 'Delete account',
+      subtitle: 'Are you sure you want to delete your account?',
+    },
+    logout: {
+      title: 'Logout from account',
+      subtitle: 'Are you sure you want to logout from your account?',
+    },
+    searchFilter: {
+      sort: 'Sort',
+      filter: 'Filter',
+      tags: 'Tags',
+      selected: 'Selected',
+    },
+  },
+
+  auth: {
+    splashText: 'Choose\nYour Agent',
+    signInButton: 'Sign In',
+    signUpButton: 'Sign Up',
+    signIn: {
+      header: 'Login',
+      subheader: 'Please login to continue',
+      belowButton: "Don't have an account? ",
+    },
+    signUp: {
+      header: 'Register',
+      subheader: 'Please register to login',
+      belowButton: 'Already have account? ',
+    },
+    verify: {
+      header: 'Verification',
+      subheader: 'Please enter the code from your email',
+    },
+    continueWith: 'Or continue with',
+  },
+
+  onboarding: {
+    initialText: 'Start your communication with different agents',
+    description: {
+      name: 'Please, enter your name',
+      dateOfBirth: 'Please, select your date of birth',
+      avatar: "Uploading an avatar, it's optional*",
+      interests: 'Please, select 2 tags',
+    },
+  },
+
+  home: {
+    searchInput: 'Search agents by name',
+  },
+
+  searchInput: {
+    placeholder: 'Search chat by agent name',
+  },
+
+  settings: {
+    notifications: 'Notifications',
+    about: 'About',
+    account: 'Account',
+    pushNotifications: 'Push notifications',
+    termsAndConditions: 'Terms and Conditions',
+    legalInformation: 'Legal information',
+    privacyPolicy: 'Privacy Policy',
+    protectYourData: 'How we protect your data',
+    getHelp: 'Get help',
+    theme: 'Theme',
+    changeAppTheme: 'Change app theme',
+    removeYourAccount: 'Remove your account',
+    exitFromAcc: 'Exit from your account',
+    language: 'Language',
+    changeAppLanguage: 'Change app language',
+  },
+
+  theme: {
+    system: 'System',
+    dark: 'Dark',
+    light: 'Light',
+  },
+
+  subscription: {
+    header: 'Subscriptions',
+    month: '/month',
+    free: {
+      name: 'Free',
+      pros: [
+        'Completely free',
+        'Access to a basic set of Agents',
+        'Try out the app without any commitment',
+        'Limited but sufficient session time for exploration',
+      ],
+      cons: [
+        'Daily message limit',
+        'Contains Advertising',
+        'Only basic Agents available',
+        'Possible delays during peak hours due to lower server priority',
+      ],
+    },
+    basic: {
+      name: 'Basic',
+      pros: [
+        'Affordable, great for regular use',
+        'Higher message limit',
+        'Access to more Agents',
+        'Faster responses with priority processing',
+      ],
+      cons: ['Small limits on message limit', 'Limited customization'],
+    },
+    premium: {
+      name: 'Premium',
+      pros: [
+        'Unlimited messages and sessions',
+        'Full access to all Agents',
+        'Highest request priority',
+        'Full customization access',
+      ],
+    },
+  },
+
+  contactUs: {
+    header: 'Contact Us',
+    description:
+      'Let us know the details of your request, and our team will do their best to assist you as soon as possible',
+    placeholder: 'Type your message...',
+  },
+
+  search: {
+    placeholder: 'Search agents by name...',
+  },
+
+  chat: {
+    placeholder: 'Write a message...',
+    sameDay: '[Today]',
+    nextDay: '[Tomorrow]',
+    lastDay: '[Yesterday]',
+  },
+
+  validation: {
+    name: 'Please enter a valid name',
+    email: 'Please enter a valid email',
+    empty: 'Required field',
+  },
+
+  serverResponses: {
+    emailOrNameRequired: 'Email or name not valid',
+    messageRequired: 'Please, enter the message!',
+    messageSentSuccess: 'Message successfully sent',
+    rateLimitedContactUs: 'Rate limited, please wait {{amount}} seconds',
+    serverError: 'Oops, something went wrong, try again later',
+    userUpdated: 'User updated successfully',
+    emailRequired: 'Email required',
+    noAvatarUploaded: 'Avatar required',
+    avatarUploaded: 'Avatar successfully uploaded',
+    userAlreadyExists: 'User already exists, please login',
+    userNotFound: 'User not found, please register',
+    emailOrCodeRequired: 'Please enter valid email or code',
+    codeExpired: 'Code expired, login again',
+    tooManyAttempts: 'Too many attempts, login again',
+    wrongCode: 'Wrong code, remaining attempts: {{amount}}',
+  },
+};
+
+export default en;
