@@ -2,9 +2,10 @@ import { CHAT_ROUTE } from '@env';
 
 import { createAxiosAsyncThunk } from '@/app/store/typedCreateAsyncThunk.ts';
 import { getUserProfile } from '@/features/profile/store/profile/thunks.ts';
+import { MessageKey } from '@/features/profile/store/profile/types.ts';
 import http from '@/shared/api/http.ts';
 
-import { Chat, GetChatByIdRequest, GetChatByIdResponse, Message } from './types.ts';
+import { Chat, deleteChatRequest, GetChatByIdRequest, GetChatByIdResponse, Message } from './types.ts';
 
 export const chatSliceName = 'chat';
 
@@ -62,6 +63,15 @@ export const sendMessage = createAxiosAsyncThunk<Message, string>(
       },
     );
 
+    return response.data;
+  },
+);
+
+export const deleteChat = createAxiosAsyncThunk<MessageKey, deleteChatRequest>(
+  `${chatSliceName}/deleteChat`,
+  async ({ chatIds }, { dispatch }) => {
+    const response = await http.delete(`${CHAT_ROUTE}/`, { data: { chatIds } });
+    await dispatch(getAllChats());
     return response.data;
   },
 );

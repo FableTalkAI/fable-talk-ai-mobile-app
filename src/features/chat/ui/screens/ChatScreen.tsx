@@ -80,7 +80,12 @@ const ChatScreen = () => {
 
   return (
     <SafeAreaView style={[computedStyles.container, styles.container]}>
-      <Header title={selectedChat.chat.agentInfo.name} style={styles.header} />
+      <Header
+        title={selectedChat.chat.agentInfo.name}
+        style={styles.header}
+        withDeleteIcon
+        chatId={selectedChat.chat.chatId}
+      />
       <GiftedChat
         messages={messageHistory}
         onSend={chatMessages => onSend(chatMessages)}
@@ -97,8 +102,8 @@ const ChatScreen = () => {
           _id: profile.email,
           avatar: profile.avatarUrl,
         }}
-        renderBubble={Bubble}
-        renderMessage={Message}
+        renderBubble={props => <Bubble {...props} />}
+        renderMessage={props => <Message {...props} />}
         renderInputToolbar={props => <InputToolbar messageLoading={isLoading.sendMessage} {...props} />}
         renderComposer={props => <Composer {...props} />}
         renderSend={props => <Send messageLoading={isLoading.sendMessage} {...props} />}

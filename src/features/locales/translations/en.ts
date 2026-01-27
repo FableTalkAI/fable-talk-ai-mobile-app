@@ -213,6 +213,8 @@ const en: Translations = {
     codeExpired: 'Code expired, login again',
     tooManyAttempts: 'Too many attempts, login again',
     wrongCode: 'Wrong code, remaining attempts: {{amount}}',
+    chatIdsRequired: 'Please provide chat id',
+    chatDeleted: 'Chat deleted!',
   },
 };
 

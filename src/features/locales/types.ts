@@ -194,5 +194,7 @@ export type Translations = {
     codeExpired: string;
     tooManyAttempts: string;
     wrongCode: string;
+    chatIdsRequired: string;
+    chatDeleted: string;
   };
 };

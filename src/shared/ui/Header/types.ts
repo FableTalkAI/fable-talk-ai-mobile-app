@@ -4,4 +4,6 @@ export type HeaderProps = {
   title?: string;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
+  withDeleteIcon?: boolean;
+  chatId?: string;
 };

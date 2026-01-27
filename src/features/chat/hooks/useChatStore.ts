@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 
 import { chatsSelector, isLoadingSelector, selectedChatSelector } from '@/features/chat/store/chat/selectors.ts';
-import { getAllChats, getChatById, sendMessage } from '@/features/chat/store/chat/thunks.ts';
+import { deleteChat, getAllChats, getChatById, sendMessage } from '@/features/chat/store/chat/thunks.ts';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
 const useChatStore = () => {
@@ -29,6 +29,13 @@ const useChatStore = () => {
     [dispatch],
   );
 
+  const deleteChatHandler = useCallback(
+    async (chatIds: string[]) => {
+      await dispatch(deleteChat({ chatIds })).unwrap();
+    },
+    [dispatch],
+  );
+
   return {
     isLoading,
     chats,
@@ -37,6 +44,7 @@ const useChatStore = () => {
     getAllChatsHandler,
     getChatByIdHandler,
     sendMessageHandler,
+    deleteChatHandler,
   };
 };
 

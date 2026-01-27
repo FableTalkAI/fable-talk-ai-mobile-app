@@ -211,6 +211,8 @@ const uk: Translations = {
     codeExpired: 'Код закінчився, увійдіть знову',
     tooManyAttempts: 'Забагато спроб, увійдіть ще раз',
     wrongCode: 'Неправильний код, залишилося спроб: {{amount}}',
+    chatIdsRequired: 'Будь ласка, надайте айді чату',
+    chatDeleted: 'Чат видалено',
   },
 };
 

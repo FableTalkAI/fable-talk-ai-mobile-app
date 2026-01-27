@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import i18n from 'i18next';
 
-import { chatSliceName, getAllChats, getChatById, sendMessage } from './thunks.ts';
+import { showToast } from '@/shared/lib/toast/index.ts';
+
+import { chatSliceName, deleteChat, getAllChats, getChatById, sendMessage } from './thunks.ts';
 import { ChatState } from './types.ts';
 
 const initialState: ChatState = {
@@ -10,6 +13,7 @@ const initialState: ChatState = {
     sendMessage: false,
     chats: false,
     selectedChat: false,
+    deleteChat: false,
   },
 };
 
@@ -58,6 +62,27 @@ const chatSlice = createSlice({
       })
       .addCase(sendMessage.rejected, state => {
         state.loading.sendMessage = false;
+      })
+
+      //deleteChat
+      .addCase(deleteChat.pending, state => {
+        state.loading.deleteChat = true;
+      })
+      .addCase(deleteChat.fulfilled, (state, action) => {
+        state.loading.deleteChat = false;
+        showToast({
+          type: 'success',
+          text2: i18n.t(`serverResponses.${action.payload.messageKey}`),
+          position: 'bottom',
+        });
+      })
+      .addCase(deleteChat.rejected, (state, action) => {
+        state.loading.deleteChat = false;
+        showToast({
+          type: 'error',
+          text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
+          position: 'bottom',
+        });
       });
   },
 });
