@@ -1,0 +1,24 @@
+diff --git a/node_modules/react-native-gifted-chat/src/Bubble/index.tsx b/node_modules/react-native-gifted-chat/src/Bubble/index.tsx
+index e440951..55d0bb9 100644
+--- a/node_modules/react-native-gifted-chat/src/Bubble/index.tsx
++++ b/node_modules/react-native-gifted-chat/src/Bubble/index.tsx
+@@ -293,6 +293,7 @@ export const Bubble = <TMessage extends IMessage = IMessage>(props: BubbleProps<
+         return null
+ 
+       if (renderUsername)
++        //@ts-expect-error
+         return renderComponentOrElement(renderUsername, currentMessage.user)
+ 
+       return (
+diff --git a/node_modules/react-native-gifted-chat/src/MessagesContainer/index.tsx b/node_modules/react-native-gifted-chat/src/MessagesContainer/index.tsx
+index 0d08513..92bccd5 100644
+--- a/node_modules/react-native-gifted-chat/src/MessagesContainer/index.tsx
++++ b/node_modules/react-native-gifted-chat/src/MessagesContainer/index.tsx
+@@ -399,6 +399,7 @@ export const MessagesContainer = <TMessage extends IMessage>(props: MessagesCont
+         automaticallyAdjustContentInsets={false}
+         style={stylesCommon.fill}
+         contentContainerStyle={styles.messagesContainer}
++        //@ts-expect-error
+         ListEmptyComponent={renderChatEmpty}
+         ListFooterComponent={
+           isInverted ? ListHeaderComponent : <>{ListFooterComponent}</>
