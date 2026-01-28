@@ -1,8 +1,8 @@
 import { StyleSheet, View } from 'react-native';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
-import { PinIcon, PinIconPinned } from '@/shared/assets/icons';
+import { CheckmarkIcon, PinIcon, PinIconPinned } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
@@ -13,7 +13,16 @@ import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
 import { ChatListBarProps } from './types.ts';
 
-const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress, chatId }: ChatListBarProps) => {
+const ChatListBar = ({
+  agentName,
+  lastMessage,
+  avatarSource,
+  onPress,
+  chatId,
+  onLongPress,
+  isSelected,
+  isSelectMode,
+}: ChatListBarProps) => {
   const { colors } = useTheme();
   const { pinnedChatIds, updatePinnedChatIdsHandler } = useUserStore();
 
@@ -35,15 +44,24 @@ const ChatListBar = ({ agentName, lastMessage, avatarSource, onPress, chatId }: 
     <PressableCustom
       containerStyle={[styles.wrapper, computedStyles.wrapper]}
       style={styles.pressableContainer}
+      onLongPress={() => onLongPress?.(chatId)}
       onPress={onPress}
     >
-      <AutoImage source={avatarSource} style={styles.avatar} resizeMode="cover" />
+      <View>
+        <AutoImage source={avatarSource} style={styles.avatar} resizeMode="cover" />
+
+        {isSelected && (
+          <Animated.View entering={ZoomIn} exiting={ZoomOut} style={styles.checkMark}>
+            <CheckmarkIcon width={20} height={20} />
+          </Animated.View>
+        )}
+      </View>
 
       <View style={styles.messageContainer}>
         <View style={styles.nameAndPinContainer}>
           <TextCustom text={agentName} style={computedStyles.agentName} />
 
-          <PressableCustom onPress={() => updatePinnedChatIdsHandler(chatId)} hitSlop={10}>
+          <PressableCustom disabled={isSelectMode} onPress={() => updatePinnedChatIdsHandler(chatId)} hitSlop={10}>
             <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>
               {isPinned ? <PinIconPinned fill={colors.iconPrimary} /> : <PinIcon fill={colors.textPrimary} />}
             </Animated.View>
@@ -83,6 +101,11 @@ const styles = StyleSheet.create({
   nameAndPinContainer: {
     justifyContent: 'space-between',
     flexDirection: 'row',
+  },
+  checkMark: {
+    position: 'absolute',
+    bottom: -5,
+    right: -5,
   },
 });
 

@@ -114,7 +114,7 @@ const uk: Translations = {
     about: 'Про застосунок',
     account: 'Акаунт',
     pushNotifications: 'Сповіщення',
-    termsAndConditions: 'Умови та положення',
+    termsOfService: 'Умови обслуговування',
     legalInformation: 'Юридична інформація',
     privacyPolicy: 'Політика конфіденційності',
     protectYourData: 'Як ми захищаємо ваші дані',

@@ -5,5 +5,8 @@ export type ChatListBarProps = {
   agentName: string;
   lastMessage: Message;
   avatarSource: string;
+  isSelected?: boolean;
+  onLongPress?: (chatId: string) => void;
   onPress?: () => void;
+  isSelectMode?: boolean;
 };

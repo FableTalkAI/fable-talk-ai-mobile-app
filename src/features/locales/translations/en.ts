@@ -115,7 +115,7 @@ const en: Translations = {
     about: 'About',
     account: 'Account',
     pushNotifications: 'Push notifications',
-    termsAndConditions: 'Terms and Conditions',
+    termsOfService: 'Terms of Service',
     legalInformation: 'Legal information',
     privacyPolicy: 'Privacy Policy',
     protectYourData: 'How we protect your data',

@@ -117,7 +117,7 @@ export type Translations = {
     about: string;
     account: string;
     pushNotifications: string;
-    termsAndConditions: string;
+    termsOfService: string;
     legalInformation: string;
     privacyPolicy: string;
     protectYourData: string;

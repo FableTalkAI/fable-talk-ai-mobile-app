@@ -100,7 +100,7 @@ const SettingsScreen = () => {
         <SettingsContainer label={t('settings.about')}>
           <OptionBar
             onPress={() => navigation.navigate('TermsAndConditions')}
-            title={t('settings.termsAndConditions')}
+            title={t('settings.termsOfService')}
             subtitle={t('settings.legalInformation')}
             leftIcon={<ShieldUserIcon />}
             mode={OptionBarModes.Complex}
