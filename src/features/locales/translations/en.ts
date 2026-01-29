@@ -69,6 +69,12 @@ const en: Translations = {
       tags: 'Tags',
       selected: 'Selected',
     },
+    deleteChat: {
+      title_one: 'Delete chat',
+      title_other: 'Delete chats',
+      subtitle_one: 'Are you sure you want to delete this chat?',
+      subtitle_other: 'Are you sure you want to delete those chats?',
+    },
   },
 
   auth: {

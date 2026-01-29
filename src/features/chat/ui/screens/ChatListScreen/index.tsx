@@ -1,10 +1,13 @@
+import { useIsFocused } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 
-import useChatsMultiSelect from '@/features/chat/hooks/useChatsMultiSelect.ts';
+import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
+import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
+import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import ChatListBar from '@/features/chat/ui/ChatListBar';
 import MultiSelectHeader from '@/features/chat/ui/MultiSelectHeader';
@@ -19,13 +22,15 @@ import TextCustom from '@/shared/ui/TextCustom';
 const ChatListScreen = () => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
+  const isFocused = useIsFocused();
 
   const { chats, getChatByIdHandler, isLoading } = useChatStore();
   const { pinnedChatIds } = useUserStore();
+  const { open } = useBottomWindow(BottomWindowModes.DeleteChat);
 
   const [filteredChats, setFilteredChats] = useState(chats);
   const [sortedChats, setSortedChats] = useState(chats);
-  const { selectedChatIds, toggleSelectChat, resetSelectedIds, isSelectedMode, deleteHandler } = useChatsMultiSelect();
+  const { multiSelectionsChatIds, toggleSelectChat, clear, isSelectedMode } = useChatMultiSelection();
 
   const onStopHandler = (value: string) => {
     const lower = value.toLowerCase();
@@ -56,11 +61,15 @@ const ChatListScreen = () => {
     setFilteredChats(localSortedChats);
   }, [chats, pinnedChatIds]);
 
+  useEffect(() => {
+    if (!isFocused && isSelectedMode) clear();
+  }, [isFocused, clear, isSelectedMode]);
+
   return (
     <>
       <SafeAreaViewCustom withGradientBackground>
         <SearchInput placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
-        <MultiSelectHeader onCrossPress={resetSelectedIds} onBinPress={deleteHandler} isVisible={isSelectedMode} />
+        <MultiSelectHeader onCrossPress={clear} onBinPress={open} isVisible={isSelectedMode} />
 
         {filteredChats.length === 0 ? (
           <View style={styles.noResultsContainer}>
@@ -79,7 +88,7 @@ const ChatListScreen = () => {
                   lastMessage={item.lastMessage}
                   onPress={onChatOpenHandler(item.agentInfo.id, item.chatId)}
                   chatId={item.chatId}
-                  isSelected={selectedChatIds.includes(item.chatId)}
+                  isSelected={multiSelectionsChatIds.includes(item.chatId)}
                   onLongPress={toggleSelectChat}
                   isSelectMode={isSelectedMode}
                 />

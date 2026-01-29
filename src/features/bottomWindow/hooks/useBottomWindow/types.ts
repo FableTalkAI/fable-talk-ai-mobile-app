@@ -3,4 +3,5 @@ export enum BottomWindowModes {
   SearchFilter = 'search-filter',
   Logout = 'logout',
   DeleteAccount = 'delete-account',
+  DeleteChat = 'delete-chat',
 }

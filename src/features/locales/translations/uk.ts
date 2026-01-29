@@ -68,6 +68,12 @@ const uk: Translations = {
       tags: 'Теги',
       selected: 'Обрані',
     },
+    deleteChat: {
+      title_one: 'Видалити чат',
+      title_other: 'Видалити чаты',
+      subtitle_one: 'Ви впевнені, що хочете видалити цей чат?',
+      subtitle_other: 'Ви впевнені, що хочете видалити ці чати?',
+    },
   },
 
   auth: {

@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     gap: SPACING.xxs,
     borderLeftWidth: 6,
     maxWidth: 500,
+    minWidth: '90%',
   },
   text1: {
     fontWeight: 'bold',

@@ -6,6 +6,9 @@ import { StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
+import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
+import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { Bubble, Composer, InputToolbar, Message, Send } from '@/features/chat/ui/giftedChat';
 import ChatAvatar from '@/features/chat/ui/giftedChat/ChatAvatar.tsx';
@@ -26,10 +29,12 @@ const ChatScreen = () => {
   const { colors } = useTheme();
   const { t, i18n } = useTranslation();
   const insets = useSafeAreaInsets();
-  const { navigation } = useNavigationRoutes();
 
-  const { selectedChat, sendMessageHandler, isLoading, getAllChatsHandler, deleteChatHandler } = useChatStore();
+  const { selectedChat, sendMessageHandler, isLoading, getAllChatsHandler } = useChatStore();
   const { profile } = useProfileStore();
+  const { toggleSelectChat } = useChatMultiSelection();
+
+  const { open } = useBottomWindow(BottomWindowModes.DeleteChat);
 
   const [messageHistory, setMessageHistory] = useState<IMessage[]>(selectedChat ? selectedChat.messageHistory : []);
 
@@ -65,14 +70,15 @@ const ChatScreen = () => {
     [sendMessageHandler],
   );
 
+  // TODO: Change it
   const deleteChatButtonHandler = useCallback(
     async (selectedChatId?: string) => {
       if (!selectedChatId) return;
 
-      await deleteChatHandler([selectedChatId]);
-      navigation.goBack();
+      toggleSelectChat(selectedChatId);
+      open();
     },
-    [deleteChatHandler, navigation],
+    [open, toggleSelectChat],
   );
 
   useEffect(() => {
