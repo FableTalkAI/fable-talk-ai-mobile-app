@@ -1,4 +1,3 @@
-import { useIsFocused } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -22,7 +21,6 @@ import TextCustom from '@/shared/ui/TextCustom';
 const ChatListScreen = () => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
-  const isFocused = useIsFocused();
 
   const { chats, getChatByIdHandler, isLoading } = useChatStore();
   const { pinnedChatIds } = useUserStore();
@@ -62,8 +60,14 @@ const ChatListScreen = () => {
   }, [chats, pinnedChatIds]);
 
   useEffect(() => {
-    if (!isFocused && isSelectedMode) clear();
-  }, [isFocused, clear, isSelectedMode]);
+    const unsubscribe = navigation.addListener('blur', e => {
+      if (e.target?.includes('ChatListScreen')) {
+        clear();
+      }
+    });
+
+    return unsubscribe;
+  }, [clear, navigation]);
 
   return (
     <>

@@ -20,7 +20,7 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
 
   const { bottomWindowMode, setBottomWindowModeHandler } = useBottomWindowStore();
   const { deleteUserProfileHandler, isLoading } = useProfileStore();
-  const { deleteHandler, multiSelectionsChatIdsCount, isChatDeleting } = useChatMultiSelection();
+  const { deleteHandler, multiSelectionsChatIdsCount, isChatDeleting, clear } = useChatMultiSelection();
 
   const open = useCallback(() => {
     setBottomWindowModeHandler(mode);
@@ -106,7 +106,14 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
               title: t('actions.cancel'),
               mode: ButtonModes.Ghost,
               disabled: isChatDeleting,
-              onPress: close,
+              onPress: () => {
+                const state = navigation.getState();
+                const currentRoute = state.routes[state.index];
+                if (currentRoute.name === 'ChatScreen') {
+                  clear();
+                }
+                close();
+              },
             }}
             secondButtonProps={{
               title: t('actions.delete'),
@@ -125,6 +132,7 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
         return null;
     }
   }, [
+    clear,
     bottomWindowMode,
     t,
     close,

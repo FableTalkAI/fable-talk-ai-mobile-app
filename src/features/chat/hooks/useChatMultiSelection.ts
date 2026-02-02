@@ -2,12 +2,14 @@ import { useCallback } from 'react';
 
 import { clearChatSelection, toggleChatSelection } from '@/features/chat/store/chat';
 import { multiSelectionsChatIdsSelector } from '@/features/chat/store/chat/selectors.ts';
+import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
 import useChatStore from './useChatStore.ts';
 
 const useChatMultiSelection = () => {
   const dispatch = useAppDispatch();
+  const { navigation } = useNavigationRoutes();
 
   const { deleteChatHandler, isLoading } = useChatStore();
 
@@ -24,10 +26,17 @@ const useChatMultiSelection = () => {
     dispatch(clearChatSelection());
   }, [dispatch]);
 
-  const deleteHandler = async () => {
+  const deleteHandler = useCallback(async () => {
     await deleteChatHandler(multiSelectionsChatIds);
     clear();
-  };
+
+    const state = navigation.getState();
+    const currentRoute = state.routes[state.index];
+
+    if (currentRoute.name === 'ChatScreen') {
+      navigation.goBack();
+    }
+  }, [clear, deleteChatHandler, multiSelectionsChatIds, navigation]);
 
   return {
     toggleSelectChat,

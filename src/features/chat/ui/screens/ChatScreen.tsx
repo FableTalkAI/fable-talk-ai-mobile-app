@@ -12,7 +12,6 @@ import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection.t
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { Bubble, Composer, InputToolbar, Message, Send } from '@/features/chat/ui/giftedChat';
 import ChatAvatar from '@/features/chat/ui/giftedChat/ChatAvatar.tsx';
-import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { TrashBinIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -70,7 +69,6 @@ const ChatScreen = () => {
     [sendMessageHandler],
   );
 
-  // TODO: Change it
   const deleteChatButtonHandler = useCallback(
     async (selectedChatId?: string) => {
       if (!selectedChatId) return;
