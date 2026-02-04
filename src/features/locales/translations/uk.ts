@@ -68,6 +68,12 @@ const uk: Translations = {
       tags: 'Теги',
       selected: 'Обрані',
     },
+    deleteChat: {
+      title_one: 'Видалити чат',
+      title_other: 'Видалити чаты',
+      subtitle_one: 'Ви впевнені, що хочете видалити цей чат?',
+      subtitle_other: 'Ви впевнені, що хочете видалити ці чати?',
+    },
   },
 
   auth: {
@@ -114,7 +120,7 @@ const uk: Translations = {
     about: 'Про застосунок',
     account: 'Акаунт',
     pushNotifications: 'Сповіщення',
-    termsAndConditions: 'Умови та положення',
+    termsOfService: 'Умови обслуговування',
     legalInformation: 'Юридична інформація',
     privacyPolicy: 'Політика конфіденційності',
     protectYourData: 'Як ми захищаємо ваші дані',
@@ -211,6 +217,8 @@ const uk: Translations = {
     codeExpired: 'Код закінчився, увійдіть знову',
     tooManyAttempts: 'Забагато спроб, увійдіть ще раз',
     wrongCode: 'Неправильний код, залишилося спроб: {{amount}}',
+    chatIdsRequired: 'Будь ласка, надайте айді чату',
+    chatDeleted: 'Чат видалено',
   },
 };
 

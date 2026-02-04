@@ -69,6 +69,12 @@ const en: Translations = {
       tags: 'Tags',
       selected: 'Selected',
     },
+    deleteChat: {
+      title_one: 'Delete chat',
+      title_other: 'Delete chats',
+      subtitle_one: 'Are you sure you want to delete this chat?',
+      subtitle_other: 'Are you sure you want to delete those chats?',
+    },
   },
 
   auth: {
@@ -115,7 +121,7 @@ const en: Translations = {
     about: 'About',
     account: 'Account',
     pushNotifications: 'Push notifications',
-    termsAndConditions: 'Terms and Conditions',
+    termsOfService: 'Terms of Service',
     legalInformation: 'Legal information',
     privacyPolicy: 'Privacy Policy',
     protectYourData: 'How we protect your data',
@@ -213,6 +219,8 @@ const en: Translations = {
     codeExpired: 'Code expired, login again',
     tooManyAttempts: 'Too many attempts, login again',
     wrongCode: 'Wrong code, remaining attempts: {{amount}}',
+    chatIdsRequired: 'Please provide chat id',
+    chatDeleted: 'Chat deleted!',
   },
 };
 

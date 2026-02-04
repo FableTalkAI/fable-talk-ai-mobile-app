@@ -1,18 +1,23 @@
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
+import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
+import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { Bubble, Composer, InputToolbar, Message, Send } from '@/features/chat/ui/giftedChat';
 import ChatAvatar from '@/features/chat/ui/giftedChat/ChatAvatar.tsx';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
+import { TrashBinIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Header from '@/shared/ui/Header';
+import PressableCustom from '@/shared/ui/PressableCustom';
 
 dayjs.extend(calendar);
 
@@ -26,6 +31,9 @@ const ChatScreen = () => {
 
   const { selectedChat, sendMessageHandler, isLoading, getAllChatsHandler } = useChatStore();
   const { profile } = useProfileStore();
+  const { toggleSelectChat } = useChatMultiSelection();
+
+  const { open } = useBottomWindow(BottomWindowModes.DeleteChat);
 
   const [messageHistory, setMessageHistory] = useState<IMessage[]>(selectedChat ? selectedChat.messageHistory : []);
 
@@ -61,6 +69,16 @@ const ChatScreen = () => {
     [sendMessageHandler],
   );
 
+  const deleteChatButtonHandler = useCallback(
+    async (selectedChatId?: string) => {
+      if (!selectedChatId) return;
+
+      toggleSelectChat(selectedChatId);
+      open();
+    },
+    [open, toggleSelectChat],
+  );
+
   useEffect(() => {
     return () => {
       if (!chatWasUsed.current) return;
@@ -76,11 +94,21 @@ const ChatScreen = () => {
     };
   }, [getAllChatsHandler]);
 
+  const trashBin = useMemo(() => {
+    if (!selectedChat || !selectedChat.chat.chatId) return null;
+
+    return (
+      <PressableCustom onPress={() => deleteChatButtonHandler(selectedChat.chat.chatId)}>
+        <TrashBinIcon width={20} height={20} />
+      </PressableCustom>
+    );
+  }, [deleteChatButtonHandler, selectedChat]);
+
   if (!selectedChat || !profile) return null;
 
   return (
     <SafeAreaView style={[computedStyles.container, styles.container]}>
-      <Header title={selectedChat.chat.agentInfo.name} style={styles.header} />
+      <Header title={selectedChat.chat.agentInfo.name} style={styles.header} rightIcon={trashBin} />
       <GiftedChat
         messages={messageHistory}
         onSend={chatMessages => onSend(chatMessages)}
@@ -97,8 +125,8 @@ const ChatScreen = () => {
           _id: profile.email,
           avatar: profile.avatarUrl,
         }}
-        renderBubble={Bubble}
-        renderMessage={Message}
+        renderBubble={props => <Bubble {...props} />}
+        renderMessage={props => <Message {...props} />}
         renderInputToolbar={props => <InputToolbar messageLoading={isLoading.sendMessage} {...props} />}
         renderComposer={props => <Composer {...props} />}
         renderSend={props => <Send messageLoading={isLoading.sendMessage} {...props} />}

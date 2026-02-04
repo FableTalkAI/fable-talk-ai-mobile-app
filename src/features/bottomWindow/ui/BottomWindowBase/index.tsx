@@ -10,7 +10,7 @@ import { SPACING } from '@/shared/model/sizes.ts';
 import { BottomWindowBaseProps } from './types.ts';
 
 const BottomWindowBase = forwardRef<BottomSheetModalMethods, BottomWindowBaseProps>(
-  ({ children, enableClose = true }, ref) => {
+  ({ children, disableClose = false }, ref) => {
     const bottomSheetRef = useRef<BottomSheetModalMethods>(null);
 
     const { colors } = useTheme();
@@ -33,9 +33,7 @@ const BottomWindowBase = forwardRef<BottomSheetModalMethods, BottomWindowBasePro
         appearsOnIndex={0}
         disappearsOnIndex={-1}
         opacity={0.5}
-        onPress={() => {
-          enableClose && bottomSheetRef.current?.close();
-        }}
+        pressBehavior={disableClose ? 'none' : 'close'}
       />
     );
 
@@ -43,7 +41,7 @@ const BottomWindowBase = forwardRef<BottomSheetModalMethods, BottomWindowBasePro
       <BottomSheetModal
         ref={bottomSheetRef}
         backdropComponent={renderBackdrop}
-        enablePanDownToClose={enableClose}
+        enablePanDownToClose={!disableClose}
         backgroundStyle={computedStyles.backgroundModal}
       >
         <BottomSheetView style={[styles.container, computedStyles.container]}>{children}</BottomSheetView>

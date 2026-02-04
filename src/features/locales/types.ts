@@ -71,6 +71,12 @@ export type Translations = {
       tags: string;
       selected: string;
     };
+    deleteChat: {
+      title_one: string;
+      title_other: string;
+      subtitle_one: string;
+      subtitle_other: string;
+    };
   };
 
   auth: {
@@ -117,7 +123,7 @@ export type Translations = {
     about: string;
     account: string;
     pushNotifications: string;
-    termsAndConditions: string;
+    termsOfService: string;
     legalInformation: string;
     privacyPolicy: string;
     protectYourData: string;
@@ -194,5 +200,7 @@ export type Translations = {
     codeExpired: string;
     tooManyAttempts: string;
     wrongCode: string;
+    chatIdsRequired: string;
+    chatDeleted: string;
   };
 };

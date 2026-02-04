@@ -1,10 +1,12 @@
 export type ChatState = {
   chats: Required<Chat>[];
   selectedChat: GetChatByIdResponse | null;
+  multiSelectionsChatIds: string[];
   loading: {
     chats: boolean;
     selectedChat: boolean;
     sendMessage: boolean;
+    deleteChat: boolean;
   };
 };
 
@@ -16,6 +18,10 @@ export type GetChatByIdRequest = {
 export type GetChatByIdResponse = {
   chat: Chat;
   messageHistory: Message[];
+};
+
+export type deleteChatRequest = {
+  chatIds: string[];
 };
 
 export type Chat = {

@@ -5,9 +5,9 @@ import { openSettings } from 'react-native-permissions';
 import { logoutUser } from '@/features/auth/services/logoutUser.ts';
 import useBottomWindowStore from '@/features/bottomWindow/hooks/useBottomWindowStore.ts';
 import { bottomWindowRef } from '@/features/bottomWindow/services/bottomWindowRef.ts';
-import BottomWindowBase from '@/features/bottomWindow/ui/BottomWindowBase';
 import Alert from '@/features/bottomWindow/ui/templates/Alert';
 import SearchFilter from '@/features/bottomWindow/ui/templates/SearchFilter';
+import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { ButtonModes } from '@/shared/ui/Button/types.ts';
@@ -20,6 +20,7 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
 
   const { bottomWindowMode, setBottomWindowModeHandler } = useBottomWindowStore();
   const { deleteUserProfileHandler, isLoading } = useProfileStore();
+  const { deleteHandler, multiSelectionsChatIdsCount, isChatDeleting, clear } = useChatMultiSelection();
 
   const open = useCallback(() => {
     setBottomWindowModeHandler(mode);
@@ -62,12 +63,17 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
             firstButtonProps={{
               title: t('actions.cancel'),
               mode: ButtonModes.Ghost,
+              disabled: isLoading.deleteUserProfile,
               onPress: close,
             }}
             secondButtonProps={{
               title: t('actions.delete'),
               mode: ButtonModes.Reject,
-              onPress: deleteUserProfileHandler,
+              isLoading: isLoading.deleteUserProfile,
+              onPress: async () => {
+                await deleteUserProfileHandler();
+                close();
+              },
             }}
           />
         );
@@ -84,7 +90,39 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
             secondButtonProps={{
               title: t('actions.logout'),
               mode: ButtonModes.Link,
-              onPress: async () => await logoutUser(navigation),
+              onPress: async () => {
+                await logoutUser(navigation);
+                close();
+              },
+            }}
+          />
+        );
+      case BottomWindowModes.DeleteChat:
+        return (
+          <Alert
+            title={t('bottomWindows.deleteChat.title', { count: multiSelectionsChatIdsCount })}
+            subtitle={t('bottomWindows.deleteChat.subtitle', { count: multiSelectionsChatIdsCount })}
+            firstButtonProps={{
+              title: t('actions.cancel'),
+              mode: ButtonModes.Ghost,
+              disabled: isChatDeleting,
+              onPress: () => {
+                const state = navigation.getState();
+                const currentRoute = state.routes[state.index];
+                if (currentRoute.name === 'ChatScreen') {
+                  clear();
+                }
+                close();
+              },
+            }}
+            secondButtonProps={{
+              title: t('actions.delete'),
+              mode: ButtonModes.Reject,
+              isLoading: isChatDeleting,
+              onPress: async () => {
+                await deleteHandler();
+                close();
+              },
             }}
           />
         );
@@ -93,18 +131,27 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
       default:
         return null;
     }
-  }, [navigation, bottomWindowMode, close, deleteUserProfileHandler, t]);
+  }, [
+    clear,
+    bottomWindowMode,
+    t,
+    close,
+    isLoading.deleteUserProfile,
+    multiSelectionsChatIdsCount,
+    isChatDeleting,
+    deleteUserProfileHandler,
+    navigation,
+    deleteHandler,
+  ]);
 
-  const enableClose = useMemo(() => !isLoading.deleteUserProfile, [isLoading.deleteUserProfile]);
-
-  const BottomWindow = () => (
-    <BottomWindowBase ref={bottomWindowRef} enableClose={enableClose}>
-      {templateComponent}
-    </BottomWindowBase>
+  const disableClose = useMemo(
+    () => isLoading.deleteUserProfile || isChatDeleting,
+    [isLoading.deleteUserProfile, isChatDeleting],
   );
 
   return {
-    BottomWindow,
+    templateComponent,
+    disableClose,
     open,
     close,
   };
