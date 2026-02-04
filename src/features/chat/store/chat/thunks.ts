@@ -16,12 +16,20 @@ export const getAllChats = createAxiosAsyncThunk<Required<Chat>[], void>(`${chat
 
 export const getChatById = createAxiosAsyncThunk<GetChatByIdResponse, GetChatByIdRequest>(
   `${chatSliceName}/getChatById`,
-  async ({ agentId, chatId }, { dispatch }) => {
+  async ({ agentId, chatId }, { dispatch, getState }) => {
     let resolvedChatId;
+    let currentProfile;
+
+    const profile = getState().profile.profile;
 
     if (!chatId) {
-      const profile = await dispatch(getUserProfile()).unwrap();
-      resolvedChatId = profile.chats.find(chat => chat.agentId === agentId)?.chatId;
+      if (profile) {
+        currentProfile = profile;
+      } else {
+        currentProfile = await dispatch(getUserProfile()).unwrap();
+      }
+
+      resolvedChatId = currentProfile.chats.find(chat => chat.agentId === agentId)?.chatId;
     } else {
       resolvedChatId = chatId;
     }
