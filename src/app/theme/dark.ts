@@ -7,6 +7,7 @@ export const dark = {
   backgroundBase: '#252525',
   backgroundSecondary: '#333333',
   backgroundTertiary: '#252525',
+  backgroundQuaternary: '#3e2f85',
   backgroundAlt: '#d5d5d5',
   backgroundHover: '#7364D43F',
 

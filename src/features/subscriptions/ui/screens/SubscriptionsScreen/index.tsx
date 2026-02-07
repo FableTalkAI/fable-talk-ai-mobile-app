@@ -1,103 +1,115 @@
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
+import { FlatList } from 'react-native-gesture-handler';
 
-import { CheckmarkIcon, XMarkIcon } from '@/shared/assets/icons';
+import { SubscriptionButton } from '@/features/subscriptions/ui/SubscriptionButton/index.tsx';
+import { CheckmarkRoundedIcon } from '@/shared/assets/icons/index.ts';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import Button from '@/shared/ui/Button';
 import Header from '@/shared/ui/Header';
+import ResizeIcon from '@/shared/ui/ResizeIcon/index.tsx';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
-import { CARD_HEIGHT, SUBSCRIPTIONS } from './constants.ts';
+import { BENEFITS } from './constants.tsx';
 import { SubscriptionPlans } from './types.ts';
 
 const SubscriptionScreen = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
 
-  const ref = useRef<ICarouselInstance>(null);
+  const [selectedSubscription, setSelectedSubscription] = useState<SubscriptionPlans>(SubscriptionPlans.Annual);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const computedStyles = StyleSheet.create({
+    benefitRow: {
+      borderColor: colors.backgroundQuaternary,
+    },
+    mark: {
+      backgroundColor: colors.backgroundQuaternary,
+    },
+    containerHeaderText: {
+      backgroundColor: colors.backgroundBase,
+    },
+  });
 
-  const gradientMap: Record<SubscriptionPlans, string[]> = {
-    free: [colors.gray10, colors.warningDark],
-    basic: [colors.gray10, colors.link],
-    premium: [colors.gray10, colors.primary40],
+  const resizeIconOptions = {
+    leftIcon: {
+      fill: colors.iconPrimary,
+    },
   };
+
+  const ListHeader = (
+    <View style={[styles.containerHeaderText, computedStyles.containerHeaderText]}>
+      <TextCustom text="Free" mode={TextModes.Subtitle} style={styles.mark} />
+      <TextCustom text="Pro" mode={TextModes.Subtitle} style={[styles.mark, computedStyles.mark]} />
+    </View>
+  );
 
   return (
     <SafeAreaViewCustom>
       <Header title={t('subscription.header')} />
-      <Carousel
-        ref={ref}
-        data={SUBSCRIPTIONS}
-        width={SCREEN_WIDTH}
-        height={CARD_HEIGHT}
-        mode="parallax"
-        loop={false}
-        containerStyle={styles.carouselContainer}
-        onSnapToItem={index => setActiveIndex(index)}
-        renderItem={({ item }) => (
-          <View style={styles.wrapper}>
-            <LinearGradient
-              colors={gradientMap[item.gradientKey]}
-              style={[styles.linearGradient, { height: CARD_HEIGHT }]}
-              locations={[0, 0.85]}
-            >
-              <TextCustom textColor={colors.gray90} text={t(item.name)} mode={TextModes.Xxl} style={styles.header} />
+      <View style={styles.wrapper}>
+        <View style={styles.container}>
+          <FlatList
+            data={BENEFITS}
+            bounces={false}
+            showsVerticalScrollIndicator={false}
+            stickyHeaderIndices={[0]}
+            ListHeaderComponent={ListHeader}
+            renderItem={({ item, index }) => {
+              const isLast = index === BENEFITS.length - 1;
 
-              <View style={styles.priceContainer}>
-                <TextCustom textColor={colors.gray90} text={item.price} mode={TextModes.Title} />
-                <TextCustom textColor={colors.textTertiary} text={t('subscription.month')} mode={TextModes.Title} />
-              </View>
-
-              <View style={styles.iconContainer}>
-                <item.icon />
-              </View>
-
-              <View style={styles.listContainer}>
-                {item.pros.map((pro, index) => (
-                  <View style={styles.innerListContainer} key={`pro-${index}`}>
-                    <CheckmarkIcon />
-                    <TextCustom
-                      textColor={colors.gray90}
-                      text={t(pro)}
-                      mode={TextModes.Secondary}
-                      style={styles.prosAndConsText}
-                    />
+              return (
+                <View
+                  key={item.text}
+                  style={[computedStyles.benefitRow, styles.benefitRow, isLast && styles.benefitLastRow]}
+                >
+                  <View style={styles.titleContainer}>
+                    <ResizeIcon icon={item.leftIcon} cloneElementProps={resizeIconOptions.leftIcon} />
+                    <TextCustom text={t(item.text)} style={styles.benefitsText} />
                   </View>
-                ))}
 
-                {item.cons.map((con, index) => (
-                  <View style={styles.innerListContainer} key={`con-${index}`}>
-                    <XMarkIcon />
-                    <TextCustom
-                      textColor={colors.gray90}
-                      text={t(con)}
-                      mode={TextModes.Secondary}
-                      style={styles.prosAndConsText}
-                    />
+                  <View style={styles.markContainer}>
+                    <View style={styles.mark}>
+                      <ResizeIcon icon={item.freeIcon} />
+                    </View>
+                    <View style={[styles.mark, computedStyles.mark]}>
+                      <ResizeIcon icon={<CheckmarkRoundedIcon width={24} height={24} />} />
+                    </View>
                   </View>
-                ))}
-              </View>
-            </LinearGradient>
-          </View>
-        )}
-      />
+                </View>
+              );
+            }}
+          />
+        </View>
+      </View>
+
+      <View style={styles.subscriptionButtonsContainer}>
+        <SubscriptionButton
+          title={t('subscription.annual')}
+          price={48}
+          pricePerMonth={4}
+          discount={15}
+          isSelected={selectedSubscription === SubscriptionPlans.Annual}
+          onPress={() => setSelectedSubscription(SubscriptionPlans.Annual)}
+        />
+        <SubscriptionButton
+          title={t('subscription.monthly')}
+          price={48}
+          pricePerMonth={4}
+          isSelected={selectedSubscription === SubscriptionPlans.Monthly}
+          onPress={() => setSelectedSubscription(SubscriptionPlans.Monthly)}
+        />
+      </View>
 
       <Button
         title={t('actions.choose')}
-        containerStyle={styles.button}
         onPress={() => {
-          const selected = SUBSCRIPTIONS[activeIndex];
-          console.log('Selected subscription:', selected);
+          console.log('Selected subscription:');
         }}
       />
     </SafeAreaViewCustom>
@@ -106,42 +118,56 @@ const SubscriptionScreen = () => {
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginHorizontal: SPACING.xs,
+    flex: 1,
+    marginBottom: SPACING.xl,
   },
-  carouselContainer: {
-    marginLeft: -SPACING.xl,
-  },
-  linearGradient: {
-    borderRadius: RADIUS.medium,
+  container: {
+    borderRadius: RADIUS.large,
+    overflow: 'hidden',
     boxShadow: BOX_SHADOW.strong,
   },
-  header: {
-    textAlign: 'center',
-    paddingTop: SPACING.lg,
-  },
-  priceContainer: {
+  containerHeaderText: {
+    flex: 1,
+    justifyContent: 'flex-end',
     flexDirection: 'row',
+  },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    paddingVertical: SPACING.m,
+  },
+  markContainer: {
+    height: '100%',
+    flexDirection: 'row',
+  },
+  mark: {
+    width: 60,
+    paddingVertical: SPACING.xxs,
     justifyContent: 'center',
-    paddingTop: SPACING.xs,
-  },
-  iconContainer: {
     alignItems: 'center',
-    paddingTop: SPACING.m,
-    paddingBottom: SPACING.lg,
+    textAlign: 'center',
   },
-  listContainer: {
-    paddingHorizontal: SPACING.m,
-  },
-  innerListContainer: {
+  benefitRow: {
     flexDirection: 'row',
+    marginLeft: SPACING.m,
+    borderBottomWidth: 1,
     alignItems: 'center',
-    paddingBottom: SPACING.xs,
+    justifyContent: 'space-between',
   },
-  prosAndConsText: {
+  benefitLastRow: {
+    borderBottomWidth: 0,
+  },
+  benefitsText: {
     paddingLeft: SPACING.xs,
+    flexShrink: 1,
   },
-  button: {
-    paddingTop: SPACING.xl,
+  subscriptionButtonsContainer: {
+    flexDirection: 'row',
+    gap: SPACING.m,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingBottom: SPACING.m,
   },
 });
 

@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
-import { CheckmarkIcon, PinIcon, PinIconPinned } from '@/shared/assets/icons';
+import { CheckmarkRoundedIcon, PinIcon, PinIconPinned } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
@@ -52,7 +52,7 @@ const ChatListBar = ({
 
         {isSelected && (
           <Animated.View entering={ZoomIn} exiting={ZoomOut} style={styles.checkMark}>
-            <CheckmarkIcon width={20} height={20} />
+            <CheckmarkRoundedIcon width={20} height={20} />
           </Animated.View>
         )}
       </View>

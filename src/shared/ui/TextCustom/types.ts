@@ -17,4 +17,5 @@ export enum TextModes {
   'ExtraSmall' = 'extra-small',
   Tag = 'tag',
   Xxl = 'xxl',
+  Xl = 'xl',
 }
