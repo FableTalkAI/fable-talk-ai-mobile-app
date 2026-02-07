@@ -145,19 +145,16 @@ export type Translations = {
   subscription: {
     header: string;
     month: string;
-    free: {
-      name: string;
-      pros: string[];
-      cons: string[];
-    };
-    basic: {
-      name: string;
-      pros: string[];
-      cons: string[];
-    };
-    premium: {
-      name: string;
-      pros: string[];
+    monthly: string;
+    annual: string;
+    save: string;
+    benefits: {
+      messaging: string;
+      chats: string;
+      premiumAgents: string;
+      advertisement: string;
+      customization: string;
+      addYourAgents: string;
     };
   };
 

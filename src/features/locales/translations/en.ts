@@ -142,40 +142,17 @@ const en: Translations = {
 
   subscription: {
     header: 'Subscriptions',
-    month: '/month',
-    free: {
-      name: 'Free',
-      pros: [
-        'Completely free',
-        'Access to a basic set of Agents',
-        'Try out the app without any commitment',
-        'Limited but sufficient session time for exploration',
-      ],
-      cons: [
-        'Daily message limit',
-        'Contains Advertising',
-        'Only basic Agents available',
-        'Possible delays during peak hours due to lower server priority',
-      ],
-    },
-    basic: {
-      name: 'Basic',
-      pros: [
-        'Affordable, great for regular use',
-        'Higher message limit',
-        'Access to more Agents',
-        'Faster responses with priority processing',
-      ],
-      cons: ['Small limits on message limit', 'Limited customization'],
-    },
-    premium: {
-      name: 'Premium',
-      pros: [
-        'Unlimited messages and sessions',
-        'Full access to all Agents',
-        'Highest request priority',
-        'Full customization access',
-      ],
+    month: '(${{price}}/month)',
+    monthly: 'Monthly',
+    annual: 'Annual',
+    save: 'Save {{amount}}%',
+    benefits: {
+      messaging: 'Messaging',
+      chats: 'Chats',
+      premiumAgents: 'Premium Agents',
+      advertisement: 'Advertisement',
+      customization: 'Customization',
+      addYourAgents: 'Add Your Agents',
     },
   },
 

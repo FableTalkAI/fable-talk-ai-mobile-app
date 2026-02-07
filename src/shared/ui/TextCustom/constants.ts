@@ -43,6 +43,11 @@ const TEXT_STYLES: Record<TextModes, TextStyle> = {
     lineHeight: 52,
     fontWeight: 700,
   },
+  xl: {
+    fontSize: 36,
+    lineHeight: 42,
+    fontWeight: 700,
+  },
 };
 
 export { TEXT_STYLES };

@@ -7,6 +7,7 @@ export const light = {
   backgroundBase: '#FFFFFF',
   backgroundSecondary: '#FAF9F9',
   backgroundTertiary: '#f0f0f0',
+  backgroundQuaternary: '#D7CFF9',
   backgroundAlt: '#FAF9F9',
   backgroundHover: '#744BA026',
 
