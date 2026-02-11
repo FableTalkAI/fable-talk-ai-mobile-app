@@ -1,20 +1,22 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 
 import { showToast } from '@/shared/lib/toast';
 
 import {
   deleteUserProfile,
+  getUserLimits,
   getUserProfile,
   profileSliceName,
   sendSupportMessage,
   updateUserProfile,
   uploadAvatar,
 } from './thunks.ts';
-import { ProfileState } from './types.ts';
+import { ProfileState, UserLimits } from './types.ts';
 
 const initialState: ProfileState = {
   profile: null,
+  limits: null,
   loading: {
     contactUs: false,
     updateProfile: false,
@@ -26,7 +28,11 @@ const initialState: ProfileState = {
 const profileSlice = createSlice({
   name: profileSliceName,
   initialState,
-  reducers: {},
+  reducers: {
+    setLimits: (state, action: PayloadAction<UserLimits>) => {
+      state.limits = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       //sendSupportMessage
@@ -53,6 +59,11 @@ const profileSlice = createSlice({
       //getUserProfile
       .addCase(getUserProfile.fulfilled, (state, action) => {
         state.profile = action.payload;
+      })
+
+      //getUserLimits
+      .addCase(getUserLimits.fulfilled, (state, action) => {
+        state.limits = action.payload;
       })
 
       //updateUserProfile
@@ -111,6 +122,6 @@ const profileSlice = createSlice({
   },
 });
 
-export const {} = profileSlice.actions;
+export const { setLimits } = profileSlice.actions;
 
 export default profileSlice.reducer;

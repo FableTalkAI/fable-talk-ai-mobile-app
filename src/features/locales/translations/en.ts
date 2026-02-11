@@ -172,6 +172,8 @@ const en: Translations = {
     sameDay: '[Today]',
     nextDay: '[Tomorrow]',
     lastDay: '[Yesterday]',
+    remainingMessages_one: 'Careful, you have last free message left for today.',
+    remainingMessages_other: '{{count}} free messages left for today. Use them wisely!',
   },
 
   validation: {

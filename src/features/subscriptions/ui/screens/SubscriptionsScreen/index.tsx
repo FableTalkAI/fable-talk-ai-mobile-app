@@ -55,6 +55,7 @@ const SubscriptionScreen = () => {
       <View style={styles.wrapper}>
         <View style={styles.container}>
           <FlatList
+            style={styles.list}
             data={BENEFITS}
             bounces={false}
             showsVerticalScrollIndicator={false}
@@ -123,8 +124,10 @@ const styles = StyleSheet.create({
   },
   container: {
     borderRadius: RADIUS.large,
-    overflow: 'hidden',
-    boxShadow: BOX_SHADOW.strong,
+    boxShadow: BOX_SHADOW.intense,
+  },
+  list: {
+    borderRadius: RADIUS.large,
   },
   containerHeaderText: {
     flex: 1,

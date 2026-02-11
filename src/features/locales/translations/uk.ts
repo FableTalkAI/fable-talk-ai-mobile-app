@@ -170,6 +170,8 @@ const uk: Translations = {
     sameDay: '[Сьогодні]',
     nextDay: '[Завтра]',
     lastDay: '[Вчора]',
+    remainingMessages_one: 'Обережно, у вас залишилося останнє безкоштовне повідомлення на сьогодні.',
+    remainingMessages_other: 'На сьогодні залишилося {{count}} безкоштовних повідомлень. Використовуйте їх з розумом!',
   },
 
   validation: {

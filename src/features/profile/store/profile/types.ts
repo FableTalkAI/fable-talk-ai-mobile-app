@@ -1,5 +1,6 @@
 export type ProfileState = {
   profile: User | null;
+  limits: UserLimits | null;
   loading: {
     contactUs: boolean;
     uploadAvatar: boolean;
@@ -23,6 +24,12 @@ export type User = {
   isEmailNotificationEnabled: boolean;
   name: string;
   isOnboardingDone: boolean;
+};
+
+export type UserLimits = {
+  count: number;
+  lastResetDay: string;
+  limit: number;
 };
 
 export type UpdateUserProfileRequest = {

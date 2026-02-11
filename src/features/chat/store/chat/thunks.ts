@@ -1,11 +1,19 @@
 import { CHAT_ROUTE } from '@env';
 
 import { createAxiosAsyncThunk } from '@/app/store/typedCreateAsyncThunk.ts';
+import { setLimits } from '@/features/profile/store/profile';
 import { getUserProfile } from '@/features/profile/store/profile/thunks.ts';
 import { MessageKey } from '@/features/profile/store/profile/types.ts';
 import http from '@/shared/api/http.ts';
 
-import { Chat, deleteChatRequest, GetChatByIdRequest, GetChatByIdResponse, Message } from './types.ts';
+import {
+  Chat,
+  deleteChatRequest,
+  GetChatByIdRequest,
+  GetChatByIdResponse,
+  Message,
+  SendMessageResponse,
+} from './types.ts';
 
 export const chatSliceName = 'chat';
 
@@ -45,9 +53,9 @@ export const getChatById = createAxiosAsyncThunk<GetChatByIdResponse, GetChatByI
   },
 );
 
-export const sendMessage = createAxiosAsyncThunk<Message, string>(
+export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, string>(
   `${chatSliceName}/sendMessage`,
-  async (message, { getState }) => {
+  async (message, { getState, dispatch }) => {
     const profile = getState().profile.profile;
     const selectedChat = getState().chat.selectedChat;
 
@@ -70,6 +78,15 @@ export const sendMessage = createAxiosAsyncThunk<Message, string>(
         params: { chatId: selectedChat.chat.chatId },
       },
     );
+
+    if (!selectedChat.chat.chatId) {
+      await dispatch(getUserProfile());
+      await dispatch(getChatById({ agentId: selectedChat.chat.agentInfo.id }));
+    }
+
+    if (response.data.limits) {
+      dispatch(setLimits(response.data.limits));
+    }
 
     return response.data;
   },

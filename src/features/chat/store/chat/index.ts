@@ -72,9 +72,22 @@ const chatSlice = createSlice({
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
         state.loading.sendMessage = false;
-        if (!state.selectedChat) return;
+        const { limits, ...rest } = action.payload;
 
-        state.selectedChat.messageHistory = [...state.selectedChat.messageHistory, action.payload];
+        if (limits) {
+          const remainingMessages = limits?.limit - limits?.count;
+
+          if (remainingMessages === 5 || remainingMessages === 1) {
+            showToast({
+              visibilityTime: 5000,
+              type: 'warning',
+              text2: i18n.t('chat.remainingMessages', { count: remainingMessages }),
+            });
+          }
+        }
+
+        if (!state.selectedChat) return;
+        state.selectedChat.messageHistory = [...state.selectedChat.messageHistory, rest];
       })
       .addCase(sendMessage.rejected, state => {
         state.loading.sendMessage = false;
