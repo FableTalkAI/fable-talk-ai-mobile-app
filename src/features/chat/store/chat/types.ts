@@ -1,3 +1,5 @@
+import { UserLimits } from '@/features/profile/store/profile/types.ts';
+
 export type ChatState = {
   chats: Required<Chat>[];
   selectedChat: GetChatByIdResponse | null;
@@ -46,3 +48,7 @@ export type Message = {
     avatar: string;
   };
 };
+
+export type SendMessageResponse = {
+  limits?: UserLimits;
+} & Message;

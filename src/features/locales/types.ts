@@ -173,6 +173,8 @@ export type Translations = {
     sameDay: string;
     nextDay: string;
     lastDay: string;
+    remainingMessages_one: string;
+    remainingMessages_other: string;
   };
 
   validation: {

@@ -21,23 +21,23 @@ export const BENEFITS = [
     freeIcon: <WarningIcon />,
   },
   {
-    leftIcon: <PremiumAgentIcon />,
-    text: 'subscription.benefits.premiumAgents',
-    freeIcon: <XMarkIcon />,
-  },
-  {
     leftIcon: <AdIcon />,
     text: 'subscription.benefits.advertisement',
     freeIcon: <XMarkIcon />,
   },
   {
-    leftIcon: <PencilAndStarIcon />,
-    text: 'subscription.benefits.customization',
+    leftIcon: <PremiumAgentIcon />,
+    text: 'subscription.benefits.premiumAgents',
     freeIcon: <XMarkIcon />,
   },
   {
     leftIcon: <AddAgentIcon />,
     text: 'subscription.benefits.addYourAgents',
+    freeIcon: <XMarkIcon />,
+  },
+  {
+    leftIcon: <PencilAndStarIcon />,
+    text: 'subscription.benefits.customization',
     freeIcon: <XMarkIcon />,
   },
 ];

@@ -2,9 +2,10 @@ import { useCallback } from 'react';
 
 import { logoutUser } from '@/features/auth/services/logoutUser.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
-import { isLoadingSelector, profileSelector } from '@/features/profile/store/profile/selectors.ts';
+import { isLoadingSelector, limitsSelector, profileSelector } from '@/features/profile/store/profile/selectors.ts';
 import {
   deleteUserProfile,
+  getUserLimits,
   getUserProfile,
   sendSupportMessage,
   updateUserProfile,
@@ -19,6 +20,7 @@ const useProfileStore = () => {
 
   const isLoading = useAppSelector(isLoadingSelector);
   const profile = useAppSelector(profileSelector);
+  const limits = useAppSelector(limitsSelector);
 
   const sendSupportMessageHandler = useCallback(
     async (message: string) => {
@@ -29,6 +31,10 @@ const useProfileStore = () => {
 
   const getUserProfileHandler = useCallback(async () => {
     await dispatch(getUserProfile()).unwrap();
+  }, [dispatch]);
+
+  const getUserLimitsHandler = useCallback(async () => {
+    await dispatch(getUserLimits()).unwrap();
   }, [dispatch]);
 
   const updateUserProfileHandler = useCallback(
@@ -53,12 +59,14 @@ const useProfileStore = () => {
   return {
     isLoading,
     profile,
+    limits,
 
     sendSupportMessageHandler,
     getUserProfileHandler,
     updateUserProfileHandler,
     uploadAvatarHandler,
     deleteUserProfileHandler,
+    getUserLimitsHandler,
   };
 };
 
