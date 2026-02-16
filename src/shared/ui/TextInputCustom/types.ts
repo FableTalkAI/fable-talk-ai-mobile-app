@@ -11,4 +11,5 @@ export type TextInputCustomProps = {
   wrapperStyle?: StyleProp<ViewStyle>;
   style?: StyleProp<TextStyle>;
   withCharCount?: boolean;
+  borderRadius?: number;
 } & UniqueTextInputCustomProps;

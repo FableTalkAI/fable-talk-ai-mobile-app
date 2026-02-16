@@ -8,6 +8,7 @@ import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import useAgentsStore from '@/features/home/hooks/useAgentsStore.ts';
 import AgentBar from '@/features/home/ui/AgentBar';
+import CreateAgentButton from '@/features/home/ui/CreateAgentButton';
 import SearchInput from '@/features/home/ui/SearchInput';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
@@ -59,7 +60,7 @@ const HomeScreen = () => {
 
   return (
     <>
-      <SafeAreaViewCustom withGradientBackground>
+      <SafeAreaViewCustom withHorizontalPadding={false} withGradientBackground>
         <View style={styles.searchAndIconContainer}>
           <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
             <SearchInput placeholder={t('home.searchInput')} isDisabled onStop={() => null} />
@@ -87,7 +88,7 @@ const HomeScreen = () => {
           data={agents}
           numColumns={2}
           showsVerticalScrollIndicator={false}
-          columnWrapperStyle={styles.flatListContentContainer}
+          columnWrapperStyle={styles.flatListColumnWrapper}
           contentContainerStyle={styles.flatListContentContainer}
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
@@ -105,6 +106,7 @@ const HomeScreen = () => {
         />
       </SafeAreaViewCustom>
 
+      <CreateAgentButton style={styles.createAgentButton} />
       <ScreenLoader isLoading={isLoadingChat.selectedChat} />
     </>
   );
@@ -115,6 +117,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: SPACING.xs,
+    paddingHorizontal: SPACING.lg,
   },
   search: {
     flex: 1,
@@ -137,11 +140,20 @@ const styles = StyleSheet.create({
   flatListContainer: {
     marginTop: SPACING.xl,
   },
+  flatListColumnWrapper: {
+    gap: SPACING.lg,
+  },
   flatListContentContainer: {
     gap: SPACING.lg,
+    paddingHorizontal: SPACING.xl,
   },
   listFooterComponentContainer: {
     padding: SPACING.m,
+  },
+  createAgentButton: {
+    position: 'absolute',
+    bottom: SPACING.m,
+    right: SPACING.m,
   },
 });
 

@@ -71,8 +71,8 @@ const ChatListScreen = () => {
 
   return (
     <>
-      <SafeAreaViewCustom withGradientBackground>
-        <SearchInput placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
+      <SafeAreaViewCustom withHorizontalPadding={false} withGradientBackground>
+        <SearchInput style={styles.search} placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
         <MultiSelectHeader onCrossPress={clear} onBinPress={open} isVisible={isSelectedMode} />
 
         {filteredChats.length === 0 ? (
@@ -108,9 +108,13 @@ const ChatListScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  search: {
+    paddingHorizontal: SPACING.xl,
+  },
   contentContainerStyle: {
     gap: SPACING.lg,
     paddingTop: SPACING.lg,
+    paddingHorizontal: SPACING.xl,
   },
   noResultsContainer: {
     flex: 1,
