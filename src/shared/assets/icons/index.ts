@@ -4,6 +4,7 @@ import ArrowForwardIcon from './arrow-forward.svg';
 import ArrowLinkIcon from './arrow-link.svg';
 import NotificationBellIcon from './bell.svg';
 import ChatIcon from './chat.svg';
+import ChatArrowIcon from './chat-arrow.svg';
 import CheckmarkIcon from './checkmark.svg';
 import CheckmarkRoundedIcon from './checkmark-rounded.svg';
 import EditAvatarIcon from './edit-avatar.svg';
@@ -55,6 +56,7 @@ export {
   AdIcon,
   ArrowForwardIcon,
   ArrowLinkIcon,
+  ChatArrowIcon,
   ChatIcon,
   CheckmarkIcon,
   CheckmarkRoundedIcon,

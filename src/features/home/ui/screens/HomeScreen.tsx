@@ -60,7 +60,7 @@ const HomeScreen = () => {
 
   return (
     <>
-      <SafeAreaViewCustom withHorizontalPadding={false} withGradientBackground>
+      <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
         <View style={styles.searchAndIconContainer}>
           <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
             <SearchInput placeholder={t('home.searchInput')} isDisabled onStop={() => null} />
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     right: 2,
   },
   flatListContainer: {
-    marginTop: SPACING.xl,
+    marginTop: SPACING.lg,
   },
   flatListColumnWrapper: {
     gap: SPACING.lg,

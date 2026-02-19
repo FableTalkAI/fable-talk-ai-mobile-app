@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { TrashBinIcon, XMarkIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
+import { WINDOW_WIDTH } from '@/shared/model/device.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 
@@ -22,6 +23,7 @@ const MultiSelectHeader = ({ isVisible, style, onBinPress, onCrossPress }: Multi
     container: {
       top,
       backgroundColor: colors.backgroundBase,
+      width: WINDOW_WIDTH - SPACING.xl * 2,
     },
   });
 
@@ -42,7 +44,6 @@ const MultiSelectHeader = ({ isVisible, style, onBinPress, onCrossPress }: Multi
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     position: 'absolute',
     height: 48,
     borderRadius: RADIUS.large,

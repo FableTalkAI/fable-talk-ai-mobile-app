@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 
@@ -13,10 +13,11 @@ import MultiSelectHeader from '@/features/chat/ui/MultiSelectHeader';
 import SearchInput from '@/features/home/ui/SearchInput';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
+import { ChatArrowIcon } from '@/shared/assets/icons';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
+import EmptyStub from '@/shared/ui/EmptyStub';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 import ScreenLoader from '@/shared/ui/ScreenLoader';
-import TextCustom from '@/shared/ui/TextCustom';
 
 const ChatListScreen = () => {
   const { t } = useTranslation();
@@ -71,35 +72,37 @@ const ChatListScreen = () => {
 
   return (
     <>
-      <SafeAreaViewCustom withHorizontalPadding={false} withGradientBackground>
+      <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
         <SearchInput style={styles.search} placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
         <MultiSelectHeader onCrossPress={clear} onBinPress={open} isVisible={isSelectedMode} />
 
-        {filteredChats.length === 0 ? (
-          <View style={styles.noResultsContainer}>
-            <TextCustom text={t('common.noResults')} />
-          </View>
-        ) : (
-          <FlatList
-            keyExtractor={item => item.chatId}
-            data={filteredChats}
-            contentContainerStyle={styles.contentContainerStyle}
-            renderItem={({ item }) => (
-              <Animated.View layout={LinearTransition}>
-                <ChatListBar
-                  avatarSource={item.agentInfo.avatarUrl}
-                  agentName={item.agentInfo.name}
-                  lastMessage={item.lastMessage}
-                  onPress={onChatOpenHandler(item.agentInfo.id, item.chatId)}
-                  chatId={item.chatId}
-                  isSelected={multiSelectionsChatIds.includes(item.chatId)}
-                  onLongPress={toggleSelectChat}
-                  isSelectMode={isSelectedMode}
-                />
-              </Animated.View>
-            )}
-          />
-        )}
+        <FlatList
+          ListEmptyComponent={
+            <EmptyStub
+              icon={<ChatArrowIcon />}
+              title={t('empty.chatSearch.title')}
+              subtitle={t('empty.chatSearch.subtitle')}
+            />
+          }
+          keyExtractor={item => item.chatId}
+          data={filteredChats}
+          style={styles.flatList}
+          contentContainerStyle={[styles.contentContainerStyle]}
+          renderItem={({ item }) => (
+            <Animated.View layout={LinearTransition}>
+              <ChatListBar
+                avatarSource={item.agentInfo.avatarUrl}
+                agentName={item.agentInfo.name}
+                lastMessage={item.lastMessage}
+                onPress={onChatOpenHandler(item.agentInfo.id, item.chatId)}
+                chatId={item.chatId}
+                isSelected={multiSelectionsChatIds.includes(item.chatId)}
+                onLongPress={toggleSelectChat}
+                isSelectMode={isSelectedMode}
+              />
+            </Animated.View>
+          )}
+        />
       </SafeAreaViewCustom>
 
       <ScreenLoader isLoading={isLoading.selectedChat} />
@@ -108,18 +111,16 @@ const ChatListScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  flatList: {
+    marginTop: SPACING.lg,
+  },
   search: {
     paddingHorizontal: SPACING.xl,
   },
   contentContainerStyle: {
     gap: SPACING.lg,
-    paddingTop: SPACING.lg,
     paddingHorizontal: SPACING.xl,
-  },
-  noResultsContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    minHeight: '90%',
   },
   selectedModeContainer: {
     width: '100%',

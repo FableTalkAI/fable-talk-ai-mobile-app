@@ -10,13 +10,17 @@ import TextCustom from '@/shared/ui/TextCustom';
 import { TextInputCustomProps } from './types.ts';
 
 const TextInputCustom = forwardRef<TextInput, TextInputCustomProps>(
-  ({ leftIcon, wrapperStyle, style, withCharCount, borderRadius = RADIUS.large, ...textInputProps }, ref) => {
+  (
+    { leftIcon, wrapperStyle, style, withCharCount, borderRadius = RADIUS.large, withShadow = true, ...textInputProps },
+    ref,
+  ) => {
     const { colors } = useTheme();
 
     const computedStyles = StyleSheet.create({
       wrapper: {
         backgroundColor: colors.backgroundSecondary,
         borderRadius,
+        boxShadow: withShadow ? BOX_SHADOW.base : 'none',
       },
       textInput: {
         color: colors.textPrimary,
@@ -60,7 +64,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.m,
     gap: SPACING.xs,
     paddingVertical: SPACING.s,
-    boxShadow: BOX_SHADOW.base,
   },
   iconContainer: {
     width: 24,

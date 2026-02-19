@@ -28,6 +28,21 @@ const en: Translations = {
       'You have reached the maximum number of pinned chats. Unpin a chat or upgrade your subscription plan',
   },
 
+  empty: {
+    agentSearch: {
+      title: 'Ghost town here...',
+      subtitle: 'We’ve looked everywhere, but couldn’t find that agent. Perhaps further dwell dragons?',
+    },
+    chatSearch: {
+      title: 'No matches found',
+      subtitle: 'Your search came up empty. Maybe it’s time to start a new conversation?',
+    },
+    tagSearch: {
+      title: 'Tag? What tag?',
+      subtitle: 'That keyword doesn’t ring a bell. Double-check the spelling or try another one.',
+    },
+  },
+
   tabBar: {
     home: 'Home',
     chat: 'Chat',
@@ -68,6 +83,7 @@ const en: Translations = {
       filter: 'Filter',
       tags: 'Tags',
       selected: 'Selected',
+      tagsEmpty: 'No tags, please select a tag',
     },
     deleteChat: {
       title_one: 'Delete chat',

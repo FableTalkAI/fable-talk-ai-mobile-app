@@ -13,6 +13,7 @@ const SafeAreaViewCustom = ({
   withGradientBackground,
   style,
   withHorizontalPadding = true,
+  ...safeAreaProps
 }: SafeAreaViewCustomProps) => {
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
@@ -35,7 +36,9 @@ const SafeAreaViewCustom = ({
           style={styles.gradient}
         />
       )}
-      <SafeAreaView style={[styles.container, computedStyles.container, style]}>{children}</SafeAreaView>
+      <SafeAreaView style={[styles.container, computedStyles.container, style]} {...safeAreaProps}>
+        {children}
+      </SafeAreaView>
     </>
   );
 };

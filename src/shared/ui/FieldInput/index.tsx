@@ -2,7 +2,7 @@ import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 import { StyleSheet, View } from 'react-native';
 
 import useTheme from '@/shared/hooks/useTheme.ts';
-import { SPACING } from '@/shared/model/sizes.ts';
+import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 import TextInputCustom from '@/shared/ui/TextInputCustom';
@@ -13,6 +13,7 @@ export type FieldInputProps<T extends FieldValues> = {
   name: Path<T>;
   label?: string;
   containerStyle?: object;
+  onChangeHandler?: (text: string) => string;
 } & TextInputCustomProps;
 
 const FieldInput = <T extends FieldValues>({
@@ -21,6 +22,7 @@ const FieldInput = <T extends FieldValues>({
   label,
   containerStyle,
   style,
+  onChangeHandler,
   ...textInputProps
 }: FieldInputProps<T>) => {
   const { colors } = useTheme();
@@ -29,6 +31,9 @@ const FieldInput = <T extends FieldValues>({
     inputWrapper: {
       borderColor: colors.errorBase,
     },
+    container: {
+      gap: SPACING.xxs / 2,
+    },
   });
 
   return (
@@ -36,13 +41,16 @@ const FieldInput = <T extends FieldValues>({
       control={control}
       name={name}
       render={({ field: { onChange, onBlur, value }, fieldState: { error } }) => (
-        <View style={[styles.container, containerStyle]}>
+        <View style={[computedStyles.container, containerStyle]}>
           {label && <TextCustom mode={TextModes.Base} text={label} />}
 
           <TextInputCustom
+            borderRadius={label ? RADIUS.medium : RADIUS.large}
             wrapperStyle={[error ? computedStyles.inputWrapper : undefined, style]}
             onBlur={onBlur}
-            onChangeText={onChange}
+            onChangeText={text => {
+              onChange(onChangeHandler ? onChangeHandler(text) : text);
+            }}
             value={value}
             {...textInputProps}
           />
@@ -53,11 +61,5 @@ const FieldInput = <T extends FieldValues>({
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    gap: SPACING.xxs / 2,
-  },
-});
 
 export default FieldInput;

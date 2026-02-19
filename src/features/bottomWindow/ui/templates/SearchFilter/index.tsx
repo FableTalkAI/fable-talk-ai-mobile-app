@@ -1,8 +1,7 @@
 import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import useAgentsStore from '@/features/home/hooks/useAgentsStore.ts';
@@ -16,6 +15,8 @@ import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import Button from '@/shared/ui/Button';
 import { ButtonModes } from '@/shared/ui/Button/types.ts';
+import EmptyStub from '@/shared/ui/EmptyStub';
+import { EmptyStubSizes } from '@/shared/ui/EmptyStub/types.tsx';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import Select from '@/shared/ui/Select';
 import TextCustom from '@/shared/ui/TextCustom';
@@ -46,9 +47,6 @@ const SearchFilter = ({ close }: SearchFilterProps) => {
   const computedStyles = StyleSheet.create({
     sectionBackground: {
       backgroundColor: colors.backgroundSecondary,
-    },
-    noResults: {
-      color: colors.gray50,
     },
   });
 
@@ -111,7 +109,7 @@ const SearchFilter = ({ close }: SearchFilterProps) => {
 
         <View style={[computedStyles.sectionBackground, styles.sectionBackground]}>
           <View style={styles.searchAndTagsNumberContainer}>
-            <SearchInput placeholder={t('bottomWindows.searchFilter.tags')} onStop={onStopHandler} />
+            <SearchInput withShadow={false} placeholder={t('bottomWindows.searchFilter.tags')} onStop={onStopHandler} />
             <TextCustom text={String(filteredTags.length)} />
           </View>
 
@@ -135,9 +133,13 @@ const SearchFilter = ({ close }: SearchFilterProps) => {
               )}
             />
           ) : (
-            <View style={styles.noResultsContainer}>
-              <TextCustom style={computedStyles.noResults} mode={TextModes.Secondary} text={t('common.noResults')} />
-            </View>
+            <EmptyStub
+              style={styles.empty}
+              size={EmptyStubSizes.Small}
+              icon={<TagSelectedIcon />}
+              title={t('empty.tagSearch.title')}
+              subtitle={t('empty.tagSearch.subtitle')}
+            />
           )}
         </View>
       </View>
@@ -156,6 +158,15 @@ const SearchFilter = ({ close }: SearchFilterProps) => {
           showsHorizontalScrollIndicator={false}
           //TODO: tags into translation
           renderItem={({ item }) => <Tag title={item} forceActive onToggle={onToggle} />}
+          ListEmptyComponent={
+            <Animated.View exiting={FadeOut} entering={FadeIn} style={styles.noResultsContainer}>
+              <TextCustom
+                mode={TextModes.Secondary}
+                textColor={colors.gray50}
+                text={t('bottomWindows.searchFilter.tagsEmpty')}
+              />
+            </Animated.View>
+          }
         />
       </View>
 
@@ -183,6 +194,10 @@ const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
     gap: SPACING.m,
+  },
+  empty: {
+    paddingHorizontal: SPACING.m,
+    height: 180,
   },
   sortContainer: {
     flexDirection: 'row',
@@ -231,6 +246,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.xs,
     gap: SPACING.xxs,
     paddingBottom: SPACING.xs,
+    height: 40,
+    flex: 1,
   },
   buttonWrapper: {
     flexDirection: 'row',
@@ -244,7 +261,7 @@ const styles = StyleSheet.create({
   noResultsContainer: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 180,
+    flex: 1,
   },
   title: {
     marginBottom: SPACING.xs,

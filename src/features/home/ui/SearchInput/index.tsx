@@ -11,7 +11,7 @@ import TextInputCustom from '@/shared/ui/TextInputCustom';
 import { SearchInputProps } from './types.ts';
 
 const SearchInput = forwardRef<TextInput, SearchInputProps>(
-  ({ placeholder, style, navigation, onStop, isDisabled }, ref) => {
+  ({ style, navigation, onStop, isDisabled, ...inputProps }, ref) => {
     const { colors } = useTheme();
 
     const [value, setValue] = useState('');
@@ -31,15 +31,15 @@ const SearchInput = forwardRef<TextInput, SearchInputProps>(
     return (
       <View style={[styles.wrapper, style]} pointerEvents={isDisabled ? 'none' : 'auto'}>
         {navigation && (
-          <PressableCustom onPress={navigation?.goBack} style={styles.backIcon}>
+          <PressableCustom hitSlop={10} onPress={navigation?.goBack} style={styles.backIcon}>
             <ArrowForwardIcon fill={colors.iconPrimary} />
           </PressableCustom>
         )}
 
         <TextInputCustom
           ref={ref}
-          placeholder={placeholder}
           value={value}
+          {...inputProps}
           onChangeText={setValue}
           leftIcon={<SearchIcon />}
           wrapperStyle={styles.textInputWrapper}

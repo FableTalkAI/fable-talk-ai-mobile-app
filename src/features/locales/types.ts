@@ -3,6 +3,11 @@ export enum Languages {
   EN = 'en',
 }
 
+export type Empty = {
+  title: string;
+  subtitle: string;
+};
+
 export type Translations = {
   common: {
     dateOfBirth: string;
@@ -28,6 +33,12 @@ export type Translations = {
     info: string;
     warning: string;
     pinnedWarning: string;
+  };
+
+  empty: {
+    agentSearch: Empty;
+    chatSearch: Empty;
+    tagSearch: Empty;
   };
 
   tabBar: {
@@ -70,6 +81,7 @@ export type Translations = {
       filter: string;
       tags: string;
       selected: string;
+      tagsEmpty: string;
     };
     deleteChat: {
       title_one: string;
