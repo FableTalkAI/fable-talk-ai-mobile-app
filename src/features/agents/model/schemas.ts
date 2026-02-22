@@ -1,9 +1,9 @@
 import { z } from 'zod';
 
 export const createAgentSchema = z.object({
-  username: z.string().min(3, 'Минимум 3 символа').max(20, 'Максимум 20 символов'),
-  email: z.string().email('Введите корректный email'),
-  age: z.string().refine(val => !isNaN(Number(val)) && Number(val) > 18, {
-    message: 'Вам должно быть больше 18 лет',
-  }),
+  avatar: z.string().nonempty('createAgent.avatar.error'),
+  name: z.string().trim().min(1, 'createAgent.name.minError').max(30, 'createAgent.name.maxError'),
+  subtitle: z.string().trim().min(50, 'createAgent.subtitle.minError'),
+  description: z.string().trim().min(250, 'createAgent.description.minError'),
+  tags: z.array(z.string()).min(2, 'createAgent.tags.minError'),
 });

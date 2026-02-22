@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import { EditAvatarIcon, UserIcon } from '@/shared/assets/icons';
+import { EditAvatarIcon, ImagePlusIcon, UserIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
@@ -10,20 +10,12 @@ import PressableCustom from '@/shared/ui/PressableCustom';
 
 import { AvatarProps } from './types.ts';
 
-const Avatar = ({
-  size = 144,
-  isChangeable = true,
-  style,
-  isLoading,
-  uri,
-  onPickImage,
-  placeholderComponent = <UserIcon />,
-}: AvatarProps) => {
+const Avatar = ({ size = 144, isChangeable = true, style, isLoading, uri, onPickImage }: AvatarProps) => {
   const { colors } = useTheme();
 
   const computedStyles = StyleSheet.create({
     container: {
-      backgroundColor: colors.gray10,
+      backgroundColor: colors.backgroundSecondary,
       width: size,
       height: size,
     },
@@ -33,14 +25,18 @@ const Avatar = ({
   });
 
   return (
-    <View style={[computedStyles.container, styles.container, style]}>
+    <PressableCustom disabled={!!uri} onPress={onPickImage} style={[computedStyles.container, styles.container, style]}>
       <View style={styles.imageContainer}>
-        {uri ? <AutoImage source={{ uri }} resizeMode="cover" style={styles.image} /> : placeholderComponent}
+        {uri ? (
+          <AutoImage source={{ uri }} resizeMode="cover" style={styles.image} />
+        ) : (
+          <ImagePlusIcon width={80} height={80} color={colors.gray50} />
+        )}
 
         <ComponentLoader isVisible={isLoading} />
       </View>
 
-      {isChangeable && (
+      {isChangeable && uri && (
         <PressableCustom
           containerStyle={[computedStyles.editContainer, styles.editContainer]}
           hitSlop={10}
@@ -49,7 +45,7 @@ const Avatar = ({
           <EditAvatarIcon fill={colors.iconPrimary} />
         </PressableCustom>
       )}
-    </View>
+    </PressableCustom>
   );
 };
 

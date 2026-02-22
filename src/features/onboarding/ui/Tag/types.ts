@@ -4,6 +4,7 @@ export type TagProps = {
   title: string;
   forceActive?: boolean;
   isSelected?: boolean;
+  disabled?: boolean;
   onToggle?: (title: string) => void;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;

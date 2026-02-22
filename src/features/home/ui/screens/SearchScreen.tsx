@@ -4,6 +4,7 @@ import { Keyboard, StyleSheet, TextInput } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
+import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import useAgentsStore from '@/features/home/hooks/useAgentsStore.ts';
 import SearchBar from '@/features/home/ui/SearchBar';
 import SearchInput from '@/features/home/ui/SearchInput';
@@ -12,6 +13,7 @@ import { RobotIcon } from '@/shared/assets/icons';
 import { SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
+import ScreenLoader from '@/shared/ui/ScreenLoader';
 import SearchResultsSkeleton from '@/shared/ui/Skeleton/templates/SearchResultsSkeleton.tsx';
 
 const SearchScreen = () => {
@@ -20,6 +22,7 @@ const SearchScreen = () => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
   const { getSearchResultsHandler, searchResults, clearSearchResultsHandler, isLoading } = useAgentsStore();
+  const { getChatByIdHandler, isLoading: isLoadingChat } = useChatStore();
 
   const [searchValueLength, setSearchValueLength] = useState(0);
 
@@ -29,6 +32,14 @@ const SearchScreen = () => {
       await getSearchResultsHandler(value);
     },
     [getSearchResultsHandler],
+  );
+
+  const onChatOpenHandler = useCallback(
+    (agentId: string) => async () => {
+      await getChatByIdHandler(agentId);
+      navigation.navigate('ChatScreen');
+    },
+    [getChatByIdHandler, navigation],
   );
 
   useEffect(() => {
@@ -52,7 +63,7 @@ const SearchScreen = () => {
           bounces={false}
           style={styles.flatList}
           contentContainerStyle={styles.flatListContainer}
-          renderItem={({ item }) => <SearchBar title={item.name} onPress={() => {}} />}
+          renderItem={({ item }) => <SearchBar title={item.name} onPress={onChatOpenHandler(item.id)} />}
         />
       );
     }
@@ -60,21 +71,31 @@ const SearchScreen = () => {
     return (
       <EmptyStub icon={<RobotIcon />} title={t('empty.agentSearch.title')} subtitle={t('empty.agentSearch.subtitle')} />
     );
-  }, [isLoading.searchResults, searchResults, searchValueLength, t]);
+  }, [isLoading.searchResults, onChatOpenHandler, searchResults, searchValueLength, t]);
 
   return (
-    <SafeAreaViewCustom>
-      <SearchInput autoFocus ref={inputRef} navigation={navigation} onStop={onStopHandler} />
+    <>
+      <SafeAreaViewCustom>
+        <SearchInput
+          placeholder={t('search.placeholder')}
+          autoFocus
+          ref={inputRef}
+          navigation={navigation}
+          onStop={onStopHandler}
+        />
 
-      <Animated.View
-        entering={FadeIn}
-        exiting={FadeOut}
-        key={+isLoading.searchResults}
-        style={styles.animatedViewContainer}
-      >
-        {content}
-      </Animated.View>
-    </SafeAreaViewCustom>
+        <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+          key={+isLoading.searchResults}
+          style={styles.animatedViewContainer}
+        >
+          {content}
+        </Animated.View>
+      </SafeAreaViewCustom>
+
+      <ScreenLoader isLoading={isLoadingChat.selectedChat} />
+    </>
   );
 };
 

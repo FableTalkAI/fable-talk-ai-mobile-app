@@ -44,7 +44,7 @@ const EmptyStub = ({
   const iconOptions = {
     width: optionSize,
     height: optionSize,
-    fill: colors.gray50,
+    fill: colors.gray40,
     ...cloneElementProps,
   };
 

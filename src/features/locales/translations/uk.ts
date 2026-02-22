@@ -40,6 +40,9 @@ const uk: Translations = {
       title: 'Тег десь забаром',
       subtitle: 'Ми не знайшли нічого схожого. Перевірте, чи немає помилки в слові.',
     },
+    selectedTags: {
+      title: 'Тегів немає, будь ласка, оберіть тег',
+    },
   },
 
   tabBar: {
@@ -62,6 +65,7 @@ const uk: Translations = {
     cancel: 'Скасувати',
     continue: 'Продовжити',
     logout: 'Вихід',
+    create: 'Створити',
   },
 
   bottomWindows: {
@@ -81,14 +85,17 @@ const uk: Translations = {
       sort: 'Сортування',
       filter: 'Фільтрація',
       tags: 'Теги',
-      selected: 'Обрані',
-      tagsEmpty: 'Тегів немає, будь ласка, оберіть тег',
+      selectedTags: 'Обрані теги',
     },
     deleteChat: {
       title_one: 'Видалити чат',
       title_other: 'Видалити чаты',
       subtitle_one: 'Ви впевнені, що хочете видалити цей чат?',
       subtitle_other: 'Ви впевнені, що хочете видалити ці чати?',
+    },
+    tagsSelector: {
+      tags: 'Теги',
+      selectedTags: 'Обрані теги',
     },
   },
 
@@ -120,6 +127,35 @@ const uk: Translations = {
       dateOfBirth: 'Будь ласка, вкажіть дату народження',
       avatar: 'Завантажте аватар, це опціонально*',
       interests: 'Будь ласка, оберіть 2 теги',
+    },
+  },
+
+  createAgent: {
+    header: 'Створити агента',
+    avatar: {
+      error: 'Аватар обов’язковий',
+    },
+    name: {
+      label: 'Ім’я',
+      placeholder: 'Введіть ім’я агента',
+      minError: 'Мінімум 1 символ',
+      maxError: 'Максимум 30 символів',
+    },
+    subtitle: {
+      label: 'Підзаголовок',
+      placeholder: 'Введіть короткий опис',
+      minError: 'Мінімум 50 символів',
+    },
+    description: {
+      label: 'Опис',
+      placeholder: 'Опишіть свого агента\nНаприклад: Кіберпанк-детектив у шкіряному плащу, цинічний і обожнює каву...',
+      minError: 'Мінімум 250 символів',
+    },
+    tags: {
+      label: 'Теги',
+      subtitle: 'Обрані',
+      placeholder: 'Додати теги +',
+      minError: 'Додайте щонайменше два теги',
     },
   },
 

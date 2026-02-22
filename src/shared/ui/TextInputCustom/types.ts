@@ -13,4 +13,5 @@ export type TextInputCustomProps = {
   withCharCount?: boolean;
   withShadow?: boolean;
   borderRadius?: number;
+  height?: number;
 } & UniqueTextInputCustomProps;

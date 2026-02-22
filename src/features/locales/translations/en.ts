@@ -41,6 +41,9 @@ const en: Translations = {
       title: 'Tag? What tag?',
       subtitle: 'That keyword doesn’t ring a bell. Double-check the spelling or try another one.',
     },
+    selectedTags: {
+      title: 'No tags, please select a tag',
+    },
   },
 
   tabBar: {
@@ -63,6 +66,7 @@ const en: Translations = {
     cancel: 'Cancel',
     continue: 'Continue',
     logout: 'Logout',
+    create: 'Create',
   },
 
   bottomWindows: {
@@ -82,14 +86,17 @@ const en: Translations = {
       sort: 'Sort',
       filter: 'Filter',
       tags: 'Tags',
-      selected: 'Selected',
-      tagsEmpty: 'No tags, please select a tag',
+      selectedTags: 'Selected tags',
     },
     deleteChat: {
       title_one: 'Delete chat',
       title_other: 'Delete chats',
       subtitle_one: 'Are you sure you want to delete this chat?',
       subtitle_other: 'Are you sure you want to delete those chats?',
+    },
+    tagsSelector: {
+      tags: 'Tags',
+      selectedTags: 'Selected tags',
     },
   },
 
@@ -121,6 +128,36 @@ const en: Translations = {
       dateOfBirth: 'Please, select your date of birth',
       avatar: "Uploading an avatar, it's optional*",
       interests: 'Please, select 2 tags',
+    },
+  },
+
+  createAgent: {
+    header: 'Create Agent',
+    avatar: {
+      error: 'Avatar is required',
+    },
+    name: {
+      label: 'Name',
+      placeholder: 'Enter agent name',
+      minError: 'Minimum 1 character',
+      maxError: 'Maximum 30 characters',
+    },
+    subtitle: {
+      label: 'Subtitle',
+      placeholder: 'Enter short description',
+      minError: 'Minimum 50 characters',
+    },
+    description: {
+      label: 'Descriptions',
+      placeholder:
+        'Describe your agent\nFor example: A cyberpunk detective in a leather coat, cynical, and coffee-loving...',
+      minError: 'Minimum 250 characters',
+    },
+    tags: {
+      label: 'Tags',
+      subtitle: 'Selected',
+      placeholder: 'Add tags +',
+      minError: 'Add at least two tags',
     },
   },
 

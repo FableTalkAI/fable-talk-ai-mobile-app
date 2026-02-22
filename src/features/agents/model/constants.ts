@@ -1,7 +1,9 @@
-import {CreateAgentValues} from './types.ts';
+import { CreateAgentValues } from './types.ts';
 
 export const DEFAULT_CREATE_AGENT_VALUES: CreateAgentValues = {
-  username: '',
-  email: '',
-  age: ''
+  avatar: '',
+  name: '',
+  subtitle: '',
+  description: '',
+  tags: [],
 };

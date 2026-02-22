@@ -6,16 +6,13 @@ import { KeyboardAvoidingViewCustomProps } from './types.ts';
 
 const KeyboardAvoidingViewCustom = ({ children, style, scrollContentStyle }: KeyboardAvoidingViewCustomProps) => {
   return (
-    <KeyboardAvoidingView
-      behavior={OPTIONS.behavior}
-      style={[styles.flex1, style]}
-      keyboardVerticalOffset={OPTIONS.keyboardVerticalOffset}
-    >
+    <KeyboardAvoidingView behavior={OPTIONS.behavior} style={[styles.flex1, style]}>
       <ScrollView
         style={styles.flex1}
         contentContainerStyle={scrollContentStyle}
         bounces={false}
         showsVerticalScrollIndicator={false}
+        contentInset={OPTIONS.contentInset}
       >
         {children}
       </ScrollView>

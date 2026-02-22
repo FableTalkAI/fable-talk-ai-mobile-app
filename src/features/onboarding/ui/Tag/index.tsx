@@ -9,7 +9,7 @@ import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
 import { TagColorModes, TagProps } from './types.ts';
 
-const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle, style }: TagProps) => {
+const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle, style, disabled }: TagProps) => {
   const { colors } = useTheme();
 
   const currentMode = forceActive || isSelected ? TagColorModes.Active : TagColorModes.Inactive;
@@ -43,6 +43,7 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle,
 
   return (
     <PressableCustom
+      disabled={disabled}
       style={[styles.tags, computedStyles.tags, style]}
       containerStyle={containerStyle}
       hitSlop={5}

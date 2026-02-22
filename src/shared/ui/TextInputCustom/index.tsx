@@ -11,7 +11,16 @@ import { TextInputCustomProps } from './types.ts';
 
 const TextInputCustom = forwardRef<TextInput, TextInputCustomProps>(
   (
-    { leftIcon, wrapperStyle, style, withCharCount, borderRadius = RADIUS.large, withShadow = true, ...textInputProps },
+    {
+      leftIcon,
+      wrapperStyle,
+      style,
+      withCharCount,
+      borderRadius = RADIUS.large,
+      withShadow = true,
+      height = 24,
+      ...textInputProps
+    },
     ref,
   ) => {
     const { colors } = useTheme();
@@ -21,11 +30,11 @@ const TextInputCustom = forwardRef<TextInput, TextInputCustomProps>(
         backgroundColor: colors.backgroundSecondary,
         borderRadius,
         boxShadow: withShadow ? BOX_SHADOW.base : 'none',
+        paddingBottom: withCharCount ? SPACING.xl : undefined,
       },
       textInput: {
         color: colors.textPrimary,
-        minHeight: withCharCount ? 180 : 24,
-        paddingBottom: withCharCount ? SPACING.lg : undefined,
+        height,
       },
     });
 
@@ -62,8 +71,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: SPACING.m,
-    gap: SPACING.xs,
     paddingVertical: SPACING.s,
+    gap: SPACING.xs,
   },
   iconContainer: {
     width: 24,

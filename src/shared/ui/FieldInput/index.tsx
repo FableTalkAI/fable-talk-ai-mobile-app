@@ -1,4 +1,5 @@
 import { Control, Controller, FieldValues, Path } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -26,6 +27,7 @@ const FieldInput = <T extends FieldValues>({
   ...textInputProps
 }: FieldInputProps<T>) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   const computedStyles = StyleSheet.create({
     inputWrapper: {
@@ -55,7 +57,9 @@ const FieldInput = <T extends FieldValues>({
             {...textInputProps}
           />
 
-          {error?.message && <TextCustom mode={TextModes.Caption} textColor={colors.errorBase} text={error.message} />}
+          {error?.message && (
+            <TextCustom mode={TextModes.Caption} textColor={colors.errorBase} text={t(error.message)} />
+          )}
         </View>
       )}
     />

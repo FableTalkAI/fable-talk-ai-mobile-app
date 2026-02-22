@@ -5,7 +5,15 @@ export enum Languages {
 
 export type Empty = {
   title: string;
-  subtitle: string;
+  subtitle?: string;
+};
+
+export type Input = {
+  label?: string;
+  placeholder?: string;
+  error?: string;
+  minError?: string;
+  maxError?: string;
 };
 
 export type Translations = {
@@ -39,6 +47,7 @@ export type Translations = {
     agentSearch: Empty;
     chatSearch: Empty;
     tagSearch: Empty;
+    selectedTags: Empty;
   };
 
   tabBar: {
@@ -61,6 +70,7 @@ export type Translations = {
     cancel: string;
     continue: string;
     logout: string;
+    create: string;
   };
 
   bottomWindows: {
@@ -80,14 +90,17 @@ export type Translations = {
       sort: string;
       filter: string;
       tags: string;
-      selected: string;
-      tagsEmpty: string;
+      selectedTags: string;
     };
     deleteChat: {
       title_one: string;
       title_other: string;
       subtitle_one: string;
       subtitle_other: string;
+    };
+    tagsSelector: {
+      tags: string;
+      selectedTags: string;
     };
   };
 
@@ -119,6 +132,17 @@ export type Translations = {
       dateOfBirth: string;
       avatar: string;
       interests: string;
+    };
+  };
+
+  createAgent: {
+    header: string;
+    avatar: Input;
+    name: Input;
+    subtitle: Input;
+    description: Input;
+    tags: Input & {
+      subtitle: string;
     };
   };
 
