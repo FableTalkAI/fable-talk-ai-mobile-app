@@ -9,6 +9,7 @@ import CheckmarkIcon from './checkmark.svg';
 import CheckmarkRoundedIcon from './checkmark-rounded.svg';
 import EditAvatarIcon from './edit-avatar.svg';
 import FilterIcon from './filter.svg';
+import GearIcon from './gear.svg';
 import GoogleLogoIcon from './google-logo.svg';
 import HeadphonesIcon from './headphones.svg';
 import HomeIcon from './home-icon.svg';
@@ -62,6 +63,7 @@ export {
   CheckmarkRoundedIcon,
   EditAvatarIcon,
   FilterIcon,
+  GearIcon,
   GoogleLogoIcon,
   HeadphonesIcon,
   HomeIcon,

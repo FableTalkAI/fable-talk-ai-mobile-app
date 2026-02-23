@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { SPACING } from '@/shared/model/sizes.ts';

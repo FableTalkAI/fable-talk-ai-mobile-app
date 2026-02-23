@@ -41,6 +41,7 @@ export type Translations = {
     info: string;
     warning: string;
     pinnedWarning: string;
+    onModeration: string;
   };
 
   empty: {

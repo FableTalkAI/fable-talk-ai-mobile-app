@@ -26,6 +26,7 @@ const en: Translations = {
     warning: 'Warning',
     pinnedWarning:
       'You have reached the maximum number of pinned chats. Unpin a chat or upgrade your subscription plan',
+    onModeration: 'On Moderation',
   },
 
   empty: {

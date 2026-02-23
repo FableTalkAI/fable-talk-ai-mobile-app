@@ -1,4 +1,6 @@
 export const dark = {
+  theme: '#151515',
+
   textPrimary: '#cccccc',
   textSecondary: '#6a6a6a',
   textTertiary: '#1c1c1c',
@@ -20,4 +22,6 @@ export const dark = {
 
   agentBubble: '#323235',
   userBubble: '#2E2374',
+
+  premium: '#1d2f77',
 };
