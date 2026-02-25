@@ -23,5 +23,5 @@ export const dark = {
   agentBubble: '#323235',
   userBubble: '#2E2374',
 
-  premium: '#1d2f77',
+  premium: '#22378a',
 };

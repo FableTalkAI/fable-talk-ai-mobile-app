@@ -44,6 +44,10 @@ const uk: Translations = {
     selectedTags: {
       title: 'Тегів немає, будь ласка, оберіть тег',
     },
+    myAgentsList: {
+      title: 'Жодного учасника в групі',
+      subtitle: 'Не вирушайте в дорогу наодинці! Створіть свого першого агента — надійного супутника для ваших пригод',
+    },
   },
 
   tabBar: {
@@ -162,6 +166,8 @@ const uk: Translations = {
 
   home: {
     searchInput: 'Пошук агентів за іменем',
+    all: 'Всі',
+    my: 'Мої',
   },
 
   searchInput: {

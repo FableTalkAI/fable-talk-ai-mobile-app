@@ -104,14 +104,11 @@ const AgentBar = ({
     [avatarSource, computedStyles, description, gradientColors, name, onPress, style, tags],
   );
 
-  if (mode === AgentBarModes.Default) {
-    return baseAgentBar;
-  }
-
   if (mode === AgentBarModes.Premium) {
     return (
       <View>
         {baseAgentBar}
+
         <PremiumAgentIcon style={[styles.primaryAgentIcon, computedStyles.primaryAgentIcon]} fill={colors.premium} />
       </View>
     );
@@ -121,6 +118,7 @@ const AgentBar = ({
     return (
       <View style={[styles.onModerationWrapper, computedStyles.onModerationWrapper]}>
         {baseAgentBar}
+
         <BlurView
           reducedTransparencyFallbackColor="white"
           blurType="light"
@@ -130,6 +128,7 @@ const AgentBar = ({
           <Animated.View style={animatedStyle}>
             <GearIcon />
           </Animated.View>
+
           <TextCustom
             mode={TextModes.Base}
             style={styles.textBlur}
@@ -140,6 +139,8 @@ const AgentBar = ({
       </View>
     );
   }
+
+  return baseAgentBar;
 };
 
 const styles = StyleSheet.create({

@@ -40,10 +40,14 @@ const en: Translations = {
     },
     tagSearch: {
       title: 'Tag? What tag?',
-      subtitle: 'That keyword doesn’t ring a bell. Double-check the spelling or try another one.',
+      subtitle: 'That keyword doesn’t ring a bell. Double-check the spelling or try another one',
     },
     selectedTags: {
       title: 'No tags, please select a tag',
+    },
+    myAgentsList: {
+      title: 'No party members yet',
+      subtitle: 'It’s dangerous to go alone! Recruit your first agent to help you on your quest',
     },
   },
 
@@ -164,6 +168,8 @@ const en: Translations = {
 
   home: {
     searchInput: 'Search agents by name',
+    all: 'All',
+    my: 'My',
   },
 
   searchInput: {

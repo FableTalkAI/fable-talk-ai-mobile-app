@@ -2,6 +2,7 @@ import AdIcon from './ad.svg';
 import AddAgentIcon from './add-agent.svg';
 import ArrowForwardIcon from './arrow-forward.svg';
 import ArrowLinkIcon from './arrow-link.svg';
+import ArrowStickIcon from './arrow-stick.svg';
 import NotificationBellIcon from './bell.svg';
 import ChatIcon from './chat.svg';
 import ChatArrowIcon from './chat-arrow.svg';
@@ -31,6 +32,7 @@ import PlusIcon from './plus.svg';
 import PremiumAgentIcon from './premium-agent.svg';
 import ProfileIcon from './profile.svg';
 import RobotIcon from './robot.svg';
+import RobotFilledIcon from './robot-filled.svg';
 import SearchIcon from './search.svg';
 import SendButtonIcon from './send-button.svg';
 import ShieldUserIcon from './shield-user.svg';
@@ -57,6 +59,7 @@ export {
   AdIcon,
   ArrowForwardIcon,
   ArrowLinkIcon,
+  ArrowStickIcon,
   ChatArrowIcon,
   ChatIcon,
   CheckmarkIcon,
@@ -85,6 +88,7 @@ export {
   PlusIcon,
   PremiumAgentIcon,
   ProfileIcon,
+  RobotFilledIcon,
   RobotIcon,
   SearchIcon,
   SendButtonIcon,

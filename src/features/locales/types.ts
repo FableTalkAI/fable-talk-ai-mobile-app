@@ -49,6 +49,7 @@ export type Translations = {
     chatSearch: Empty;
     tagSearch: Empty;
     selectedTags: Empty;
+    myAgentsList: Empty;
   };
 
   tabBar: {
@@ -149,6 +150,8 @@ export type Translations = {
 
   home: {
     searchInput: string;
+    all: string;
+    my: string;
   };
 
   searchInput: {
