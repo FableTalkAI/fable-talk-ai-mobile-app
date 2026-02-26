@@ -167,7 +167,6 @@ const en: Translations = {
   },
 
   home: {
-    searchInput: 'Search agents by name',
     all: 'All',
     my: 'My',
   },

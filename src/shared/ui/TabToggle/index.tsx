@@ -1,6 +1,6 @@
 import { BlurView } from '@react-native-community/blur';
-import { ReactElement, ReactNode, useMemo, useRef } from 'react';
-import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { useMemo, useRef } from 'react';
+import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   LayoutAnimationConfig,
@@ -13,7 +13,6 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import { SvgProps } from 'react-native-svg';
 
 import { Theme } from '@/features/profile/store/user/types.ts';
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -31,6 +30,8 @@ const TabToggle = ({
   style,
   activeTab,
   onChange,
+  leftIcon,
+  rightIcon,
 }: TabToggleProps) => {
   const { colors, theme } = useTheme();
 
@@ -39,8 +40,8 @@ const TabToggle = ({
 
   const tabWidth = tabContainerWidth / tabs.length;
   const cloneElementProps = {
-    width: 16,
-    height: 16,
+    width: 20,
+    height: 20,
   };
   const [entering, exiting] = useMemo(() => {
     const direction = activeTab > previousIndex.current ? 1 : -1;
@@ -98,8 +99,10 @@ const TabToggle = ({
     });
 
   return (
-    <GestureDetector gesture={pan}>
-      <View style={[styles.flex1, style]}>
+    <View style={[styles.flex1, style]}>
+      <View style={styles.wrapper}>
+        {leftIcon}
+
         <View style={[styles.tabsWrapper, computedStyles.tabsWrapper]}>
           <Animated.View style={[styles.slider, computedStyles.slider, animatedSliderStyle]}>
             <BlurView blurType={theme === Theme.Dark ? 'chromeMaterial' : 'light'} style={styles.blur} />
@@ -125,19 +128,29 @@ const TabToggle = ({
           })}
         </View>
 
+        {rightIcon}
+      </View>
+
+      <GestureDetector gesture={pan}>
         <LayoutAnimationConfig skipEntering>
           <Animated.View key={`tab-${activeTab}`} entering={entering} exiting={exiting} style={styles.flex1}>
             {tabs[activeTab].content}
           </Animated.View>
         </LayoutAnimationConfig>
-      </View>
-    </GestureDetector>
+      </GestureDetector>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   flex1: {
     flex: 1,
+  },
+  wrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: SPACING.xs,
   },
   tabsWrapper: {
     alignSelf: 'center',
@@ -160,7 +173,7 @@ const styles = StyleSheet.create({
     gap: SPACING.xxs,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingVertical: SPACING.xxs,
+    paddingVertical: SPACING.s,
     zIndex: 1,
   },
   blur: {

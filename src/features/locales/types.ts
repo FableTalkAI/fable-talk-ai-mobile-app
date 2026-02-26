@@ -149,7 +149,6 @@ export type Translations = {
   };
 
   home: {
-    searchInput: string;
     all: string;
     my: string;
   };

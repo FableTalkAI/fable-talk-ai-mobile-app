@@ -9,11 +9,11 @@ import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import useAgentsStore from '@/features/home/hooks/useAgentsStore.ts';
 import AgentBar from '@/features/home/ui/AgentBar';
 import CreateAgentButton from '@/features/home/ui/CreateAgentButton';
-import SearchInput from '@/features/home/ui/SearchInput';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
-import { AddAgentIcon, FilterIcon, PlusIcon, RobotFilledIcon } from '@/shared/assets/icons';
+import { AddAgentIcon, FilterIcon, PlusIcon, RobotFilledIcon, SearchIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
+import { WINDOW_WIDTH } from '@/shared/model/device.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
 import PressableCustom from '@/shared/ui/PressableCustom';
@@ -65,33 +65,33 @@ const HomeScreen = () => {
   return (
     <>
       <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
-        <View style={styles.searchAndIconContainer}>
-          <PressableCustom onPress={() => navigation.navigate('SearchScreen')} containerStyle={styles.search}>
-            <SearchInput placeholder={t('home.searchInput')} isDisabled onStop={() => null} />
-          </PressableCustom>
-
-          <PressableCustom onPress={() => open()}>
-            <FilterIcon />
-
-            {!!filter.tags.length && (
-              <View style={[computedStyles.selectedTagsContainer, styles.selectedTagsContainer]}>
-                <TextCustom
-                  text={filter.tags.length > 9 ? 9 : filter.tags.length}
-                  mode={TextModes.ExtraSmall}
-                  style={computedStyles.text}
-                />
-
-                {filter.tags.length > 9 && <PlusIcon style={styles.plusIcon} />}
-              </View>
-            )}
-          </PressableCustom>
-        </View>
-
         <TabToggle
+          leftIcon={
+            <PressableCustom onPress={() => navigation.navigate('SearchScreen')}>
+              <SearchIcon width={30} height={30} fill={colors.primary100} />
+            </PressableCustom>
+          }
+          rightIcon={
+            <PressableCustom onPress={() => open()}>
+              <FilterIcon width={24} />
+
+              {!!filter.tags.length && (
+                <View style={[computedStyles.selectedTagsContainer, styles.selectedTagsContainer]}>
+                  <TextCustom
+                    text={filter.tags.length > 9 ? 9 : filter.tags.length}
+                    mode={TextModes.ExtraSmall}
+                    style={computedStyles.text}
+                  />
+
+                  {filter.tags.length > 9 && <PlusIcon style={styles.plusIcon} />}
+                </View>
+              )}
+            </PressableCustom>
+          }
           activeTab={activeTab}
           onChange={setActiveTab}
           style={styles.tabToggle}
-          tabContainerWidth={250}
+          tabContainerWidth={WINDOW_WIDTH - SPACING.xl * 2 - 24 - 32}
           tabs={[
             {
               icon: <RobotFilledIcon fill={colors.iconPrimary} />,
@@ -167,15 +167,6 @@ const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  searchAndIconContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: SPACING.xs,
-    paddingHorizontal: SPACING.lg,
-  },
-  search: {
-    flex: 1,
-  },
   selectedTagsContainer: {
     position: 'absolute',
     right: -8,
@@ -195,7 +186,7 @@ const styles = StyleSheet.create({
     marginTop: SPACING.xs,
   },
   flatListContainer: {
-    marginTop: SPACING.xs,
+    marginTop: SPACING.m,
   },
   flatListColumnWrapper: {
     gap: SPACING.lg,

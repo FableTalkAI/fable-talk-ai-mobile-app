@@ -165,7 +165,6 @@ const uk: Translations = {
   },
 
   home: {
-    searchInput: 'Пошук агентів за іменем',
     all: 'Всі',
     my: 'Мої',
   },
