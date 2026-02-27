@@ -1,19 +1,37 @@
 import { createSlice } from '@reduxjs/toolkit';
+import i18n from 'i18next';
 
-import { agentsSliceName, getAllUniqueTags, getFilteredAgents, getResultsOfSearch } from './thunks.ts';
+import { showToast } from '@/shared/lib/toast';
+
+import {
+  agentsSliceName,
+  createAgent,
+  getAllUniqueTags,
+  getFilteredAgents,
+  getMyAgents,
+  getResultsOfSearch,
+} from './thunks.ts';
 import { AgentsState } from './types.ts';
 
 const initialState: AgentsState = {
   tags: [],
   agents: [],
+  myAgents: [],
   pagination: {
-    hasMore: true,
+    agents: {
+      hasMore: false,
+    },
+    myAgents: {
+      hasMore: false,
+    },
   },
   searchResults: [],
   loading: {
+    myAgents: false,
     agents: false,
     tags: false,
     searchResults: false,
+    createAgent: false,
   },
 };
 
@@ -39,6 +57,22 @@ const agentsSlice = createSlice({
         state.loading.tags = false;
       })
 
+      //getMyAgents
+      .addCase(getMyAgents.pending, state => {
+        state.loading.myAgents = true;
+      })
+      .addCase(getMyAgents.fulfilled, (state, action) => {
+        state.loading.myAgents = false;
+        const { data, nextCursor, hasMore } = action.payload;
+        const loadMore = action.meta.arg;
+
+        state.myAgents = loadMore ? [...state.agents, ...data] : data;
+        state.pagination.myAgents = { hasMore, nextCursor };
+      })
+      .addCase(getMyAgents.rejected, state => {
+        state.loading.myAgents = false;
+      })
+
       //getFilteredAgents
       .addCase(getFilteredAgents.pending, state => {
         state.loading.agents = true;
@@ -49,7 +83,7 @@ const agentsSlice = createSlice({
         const loadMore = action.meta.arg;
 
         state.agents = loadMore ? [...state.agents, ...data] : data;
-        state.pagination = { hasMore, nextCursor };
+        state.pagination.agents = { hasMore, nextCursor };
       })
       .addCase(getFilteredAgents.rejected, state => {
         state.loading.agents = false;
@@ -65,6 +99,21 @@ const agentsSlice = createSlice({
       })
       .addCase(getResultsOfSearch.rejected, state => {
         state.loading.searchResults = false;
+      })
+
+      //createAgent
+      .addCase(createAgent.pending, state => {
+        state.loading.createAgent = true;
+      })
+      .addCase(createAgent.fulfilled, state => {
+        state.loading.createAgent = false;
+      })
+      .addCase(createAgent.rejected, (state, action) => {
+        state.loading.createAgent = false;
+        showToast({
+          type: 'error',
+          text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
+        });
       });
   },
 });

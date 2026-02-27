@@ -139,6 +139,7 @@ export type Translations = {
 
   createAgent: {
     header: string;
+    agentCreatedSuccess: string;
     avatar: Input;
     name: Input;
     subtitle: Input;
@@ -240,5 +241,7 @@ export type Translations = {
     wrongCode: string;
     chatIdsRequired: string;
     chatDeleted: string;
+    agentRequired: string;
+    agentAlreadyExists: string;
   };
 };

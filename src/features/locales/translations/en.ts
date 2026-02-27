@@ -138,6 +138,7 @@ const en: Translations = {
 
   createAgent: {
     header: 'Create Agent',
+    agentCreatedSuccess: 'Agent successfully created and sent on moderation!',
     avatar: {
       error: 'Avatar is required',
     },
@@ -259,6 +260,8 @@ const en: Translations = {
     wrongCode: 'Wrong code, remaining attempts: {{amount}}',
     chatIdsRequired: 'Please provide chat id',
     chatDeleted: 'Chat deleted!',
+    agentRequired: 'Agent information is missing or invalid',
+    agentAlreadyExists: 'An agent with this name already exists',
   },
 };
 

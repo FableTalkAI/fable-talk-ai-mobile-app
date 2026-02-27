@@ -1,16 +1,19 @@
 import { AGENTS_ROUTE } from '@env';
 
 import { createAxiosAsyncThunk } from '@/app/store/typedCreateAsyncThunk.ts';
-import { SendOtpRequest } from '@/features/auth/store/auth/types.ts';
 import http from '@/shared/api/http.ts';
 
-import { Agent, GetFilteredAgentsResponse, GetResultsOfSearchRequest } from './types.ts';
+import { Agent, CreateAgentRequest, GetFilteredAgentsResponse, GetResultsOfSearchRequest } from './types.ts';
 
 export const agentsSliceName = 'agents';
 
-export const createAgent = createAxiosAsyncThunk<void, SendOtpRequest>(`${agentsSliceName}/createAgent`, async data => {
-  await http.post(`${AGENTS_ROUTE}/create`, data);
-});
+export const createAgent = createAxiosAsyncThunk<Agent, CreateAgentRequest>(
+  `${agentsSliceName}/createAgent`,
+  async data => {
+    const response = await http.post(`${AGENTS_ROUTE}/create`, data);
+    return response.data;
+  },
+);
 
 export const getAllUniqueTags = createAxiosAsyncThunk<string[], void>(
   `${agentsSliceName}/getAllUniqueTags`,
@@ -23,8 +26,19 @@ export const getAllUniqueTags = createAxiosAsyncThunk<string[], void>(
 export const getFilteredAgents = createAxiosAsyncThunk<GetFilteredAgentsResponse, boolean>(
   `${agentsSliceName}/getFilteredAgents`,
   async (loadMore, { getState }) => {
-    const filter = getState().user.filter;
-    const cursor = loadMore ? getState().agents.pagination.nextCursor : undefined;
+    const filter = { ...getState().user.filter, moderationStatus: 'approved' };
+    const cursor = loadMore ? getState().agents.pagination.agents.nextCursor : undefined;
+
+    const response = await http.post(`${AGENTS_ROUTE}/agents`, { ...filter, cursor });
+    return response.data;
+  },
+);
+
+export const getMyAgents = createAxiosAsyncThunk<GetFilteredAgentsResponse, boolean>(
+  `${agentsSliceName}/getMyAgents`,
+  async (loadMore, { getState }) => {
+    const filter = { ...getState().user.filter, isPersonal: true };
+    const cursor = loadMore ? getState().agents.pagination.myAgents.nextCursor : undefined;
 
     const response = await http.post(`${AGENTS_ROUTE}/agents`, { ...filter, cursor });
     return response.data;

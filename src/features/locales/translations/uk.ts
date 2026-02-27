@@ -137,6 +137,7 @@ const uk: Translations = {
 
   createAgent: {
     header: 'Створити агента',
+    agentCreatedSuccess: 'Агента успішно створено та відправлено на модерацію!',
     avatar: {
       error: 'Аватар обов’язковий',
     },
@@ -256,6 +257,8 @@ const uk: Translations = {
     wrongCode: 'Неправильний код, залишилося спроб: {{amount}}',
     chatIdsRequired: 'Будь ласка, надайте айді чату',
     chatDeleted: 'Чат видалено',
+    agentRequired: 'Дані агента обов’язкові для заповнення',
+    agentAlreadyExists: 'Агент з таким ім’ям уже існує',
   },
 };
 

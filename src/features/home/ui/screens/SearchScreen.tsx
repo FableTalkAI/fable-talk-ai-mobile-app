@@ -4,8 +4,8 @@ import { Keyboard, StyleSheet, TextInput } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
+import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
-import useAgentsStore from '@/features/home/hooks/useAgentsStore.ts';
 import SearchBar from '@/features/home/ui/SearchBar';
 import SearchInput from '@/features/home/ui/SearchInput';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';

@@ -81,7 +81,12 @@ const AgentBar = ({
         >
           <AutoImage source={avatarSource} style={styles.avatar} resizeMode="cover" />
 
-          <TextCustom text={name} mode={TextModes.Secondary} style={computedStyles.name} />
+          <TextCustom
+            numberOfLines={1}
+            text={name}
+            mode={TextModes.Secondary}
+            style={[styles.name, computedStyles.name]}
+          />
           <TextCustom
             text={description}
             mode={TextModes.ExtraSmall}
@@ -196,6 +201,10 @@ const styles = StyleSheet.create({
   },
   textBlur: {
     fontWeight: 600,
+  },
+  name: {
+    textAlign: 'center',
+    paddingHorizontal: SPACING.xxs,
   },
 });
 

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { FlatList, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
-import useAgentsStore from '@/features/home/hooks/useAgentsStore.ts';
+import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
 import SearchInput from '@/features/home/ui/SearchInput';
 import Tag from '@/features/onboarding/ui/Tag';
 import { TagSelectedIcon } from '@/shared/assets/icons';
@@ -36,7 +36,7 @@ const TagsSelectorBottomWindow = ({ setTags, previousSelectedTags, close }: Tags
 
   const onStopHandler = useCallback(
     (value: string) => {
-      setFilteredTags(tags.filter(tag => tag.toLowerCase().includes(value.toLowerCase())));
+      setFilteredTags(tags.filter((tag: string) => tag.toLowerCase().includes(value.toLowerCase())));
     },
     [tags],
   );
