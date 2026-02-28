@@ -3,6 +3,7 @@ import { useCallback, useState } from 'react';
 import { clearSearchResults } from '@/features/agents/store/agents';
 import {
   agentsSelector,
+  hasModerationLimitSelector,
   isLoadingSelector,
   myAgentsSelector,
   paginationSelector,
@@ -26,6 +27,7 @@ const useAgentsStore = () => {
   const agents = useAppSelector(agentsSelector);
   const myAgents = useAppSelector(myAgentsSelector);
   const searchResults = useAppSelector(searchResultsSelector);
+  const hasModerationLimit = useAppSelector(hasModerationLimitSelector);
 
   const isLoading = useAppSelector(isLoadingSelector);
   const pagination = useAppSelector(paginationSelector);
@@ -91,6 +93,7 @@ const useAgentsStore = () => {
     myAgentsPagination: pagination.myAgents,
     isRefreshingAgents,
     isRefreshingMyAgents,
+    hasModerationLimit,
 
     getSearchResultsHandler,
     clearSearchResultsHandler,

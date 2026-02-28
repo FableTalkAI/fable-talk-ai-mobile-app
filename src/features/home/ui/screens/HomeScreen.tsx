@@ -1,15 +1,12 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActivityIndicator, RefreshControl, StyleSheet, View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { StyleSheet, View } from 'react-native';
 
 import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
-import { AgentAccessLevel, AgentModerationStatus } from '@/features/agents/store/agents/types.ts';
 import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
 import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
-import { getAgentBarMode } from '@/features/home/services/getAgentBarMode.ts';
-import AgentBar from '@/features/home/ui/AgentBar';
+import AgentList from '@/features/home/ui/AgentList/AgentList.tsx';
 import CreateAgentButton from '@/features/home/ui/CreateAgentButton';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
@@ -40,7 +37,9 @@ const HomeScreen = () => {
     myAgentsPagination,
     isRefreshingAgents,
     isRefreshingMyAgents,
+    hasModerationLimit,
   } = useAgentsStore();
+
   const { filter } = useUserStore();
   const { open } = useBottomWindow(BottomWindowModes.SearchFilter);
   const { getChatByIdHandler, isLoading: isLoadingChat } = useChatStore();
@@ -56,23 +55,9 @@ const HomeScreen = () => {
     },
   });
 
-  const onEndReachedHandler =
-    (hasMore: boolean, loading: boolean, handler: (loadMore?: boolean) => Promise<void>) => () => {
-      if (!hasMore || loading) return;
-      handler(true).catch(console.error);
-    };
-
   const onChatOpenHandler = (agentId: string) => async () => {
     await getChatByIdHandler(agentId);
     navigation.navigate('ChatScreen');
-  };
-
-  const getListFooterComponent = (hasMore: boolean) => () => {
-    return isLoading.agents && hasMore ? (
-      <View style={styles.listFooterComponentContainer}>
-        <ActivityIndicator size="small" />
-      </View>
-    ) : null;
   };
 
   return (
@@ -110,38 +95,14 @@ const HomeScreen = () => {
               icon: <RobotFilledIcon fill={colors.iconPrimary} />,
               name: t('home.all'),
               content: (
-                <FlatList
-                  refreshControl={
-                    <RefreshControl
-                      tintColor={colors.iconPrimary}
-                      progressBackgroundColor={colors.iconPrimary}
-                      refreshing={isRefreshingAgents}
-                      onRefresh={getAgentsHandler}
-                    />
-                  }
-                  style={styles.flatListContainer}
+                <AgentList
                   data={agents}
-                  numColumns={2}
-                  showsVerticalScrollIndicator={false}
-                  columnWrapperStyle={styles.flatListColumnWrapper}
-                  contentContainerStyle={styles.flatListContentContainer}
-                  keyExtractor={item => item.id}
-                  renderItem={({ item }) => (
-                    <AgentBar
-                      mode={getAgentBarMode({
-                        isPremium: item.accessLevel === AgentAccessLevel.Premium,
-                        onModeration: item.moderationStatus === AgentModerationStatus.OnModeration,
-                      })}
-                      name={item.name}
-                      description={item.description}
-                      tags={item.tags}
-                      avatarSource={item.avatarUrl}
-                      onPress={onChatOpenHandler(item.id)}
-                    />
-                  )}
-                  onEndReached={onEndReachedHandler(agentsPagination.hasMore, isLoading.agents, getAgentsHandler)}
-                  onEndReachedThreshold={0.3}
-                  ListFooterComponent={getListFooterComponent(agentsPagination.hasMore)}
+                  isLoading={isLoading.agents}
+                  isRefreshing={isRefreshingAgents}
+                  hasMore={agentsPagination.hasMore}
+                  onRefresh={getAgentsHandler}
+                  onLoadMore={getAgentsHandler}
+                  onAgentPress={onChatOpenHandler}
                 />
               ),
             },
@@ -149,38 +110,14 @@ const HomeScreen = () => {
               icon: <AddAgentIcon fill={colors.iconPrimary} />,
               name: t('home.my'),
               content: (
-                <FlatList
-                  refreshControl={
-                    <RefreshControl
-                      tintColor={colors.iconPrimary}
-                      progressBackgroundColor={colors.iconPrimary}
-                      refreshing={isRefreshingMyAgents}
-                      onRefresh={getMyAgentsHandler}
-                    />
-                  }
-                  style={styles.flatListContainer}
+                <AgentList
                   data={myAgents}
-                  numColumns={2}
-                  showsVerticalScrollIndicator={false}
-                  columnWrapperStyle={styles.flatListColumnWrapper}
-                  contentContainerStyle={styles.flatListContentContainer}
-                  keyExtractor={item => item.id}
-                  renderItem={({ item }) => (
-                    <AgentBar
-                      mode={getAgentBarMode({
-                        isPremium: item.accessLevel === AgentAccessLevel.Premium,
-                        onModeration: item.moderationStatus === AgentModerationStatus.OnModeration,
-                      })}
-                      name={item.name}
-                      description={item.description}
-                      tags={item.tags}
-                      avatarSource={item.avatarUrl}
-                      onPress={onChatOpenHandler(item.id)}
-                    />
-                  )}
-                  onEndReached={onEndReachedHandler(myAgentsPagination.hasMore, isLoading.myAgents, getMyAgentsHandler)}
-                  onEndReachedThreshold={0.3}
-                  ListFooterComponent={getListFooterComponent(myAgentsPagination.hasMore)}
+                  isLoading={isLoading.myAgents}
+                  isRefreshing={isRefreshingMyAgents}
+                  hasMore={myAgentsPagination.hasMore}
+                  onRefresh={getMyAgentsHandler}
+                  onLoadMore={getMyAgentsHandler}
+                  onAgentPress={onChatOpenHandler}
                   ListEmptyComponent={
                     <EmptyStub
                       subtitle={t('empty.myAgentsList.subtitle')}
@@ -195,7 +132,11 @@ const HomeScreen = () => {
         />
       </SafeAreaViewCustom>
 
-      <CreateAgentButton withArrow={!myAgents.length} style={styles.createAgentButton} />
+      <CreateAgentButton
+        withArrow={!myAgents.length}
+        style={styles.createAgentButton}
+        hasModerationLimit={hasModerationLimit}
+      />
       <ScreenLoader isLoading={isLoadingChat.selectedChat} />
     </>
   );
@@ -219,21 +160,6 @@ const styles = StyleSheet.create({
   },
   tabToggle: {
     marginTop: SPACING.xs,
-  },
-  flatListContainer: {
-    marginTop: SPACING.m,
-  },
-  flatListColumnWrapper: {
-    gap: SPACING.lg,
-  },
-  flatListContentContainer: {
-    gap: SPACING.lg,
-    paddingHorizontal: SPACING.xl,
-    paddingBottom: SPACING.m,
-    minHeight: '100%',
-  },
-  listFooterComponentContainer: {
-    padding: SPACING.m,
   },
   createAgentButton: {
     position: 'absolute',

@@ -140,6 +140,7 @@ export type Translations = {
   createAgent: {
     header: string;
     agentCreatedSuccess: string;
+    agentCreateLimit: string;
     avatar: Input;
     name: Input;
     subtitle: Input;

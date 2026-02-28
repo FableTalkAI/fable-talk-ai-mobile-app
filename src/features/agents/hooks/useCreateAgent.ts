@@ -71,6 +71,7 @@ const useCreateAgent = () => {
     showToast({
       type: 'success',
       text2: t('createAgent.agentCreatedSuccess'),
+      visibilityTime: 5000,
     });
 
     navigation.goBack();

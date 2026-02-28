@@ -17,12 +17,13 @@ const initialState: AgentsState = {
   tags: [],
   agents: [],
   myAgents: [],
+  hasModerationLimit: false,
   pagination: {
     agents: {
-      hasMore: false,
+      hasMore: true,
     },
     myAgents: {
-      hasMore: false,
+      hasMore: true,
     },
   },
   searchResults: [],
@@ -63,11 +64,12 @@ const agentsSlice = createSlice({
       })
       .addCase(getMyAgents.fulfilled, (state, action) => {
         state.loading.myAgents = false;
-        const { data, nextCursor, hasMore } = action.payload;
+        const { data, nextCursor, hasMore, hasModerationLimit } = action.payload;
         const loadMore = action.meta.arg;
 
         state.myAgents = loadMore ? [...state.agents, ...data] : data;
         state.pagination.myAgents = { hasMore, nextCursor };
+        state.hasModerationLimit = hasModerationLimit;
       })
       .addCase(getMyAgents.rejected, state => {
         state.loading.myAgents = false;

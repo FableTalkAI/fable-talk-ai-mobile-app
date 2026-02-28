@@ -138,6 +138,7 @@ const uk: Translations = {
   createAgent: {
     header: 'Створити агента',
     agentCreatedSuccess: 'Агента успішно створено та відправлено на модерацію!',
+    agentCreateLimit: 'Ого, полегше! Дочекайся модерації попередніх агентів, перш ніж створювати нових',
     avatar: {
       error: 'Аватар обов’язковий',
     },

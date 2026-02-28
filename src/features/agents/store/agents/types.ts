@@ -13,9 +13,10 @@ export type AgentsState = {
   agents: Agent[];
   myAgents: Agent[];
   searchResults: Agent[];
+  hasModerationLimit: boolean;
   pagination: {
-    agents: Omit<GetFilteredAgentsResponse, 'data'>;
-    myAgents: Omit<GetFilteredAgentsResponse, 'data'>;
+    agents: Pagination;
+    myAgents: Pagination;
   };
   loading: {
     tags: boolean;
@@ -58,4 +59,7 @@ export type GetFilteredAgentsResponse = {
   data: Agent[];
   hasMore: boolean;
   nextCursor?: string;
+  hasModerationLimit: boolean;
 };
+
+export type Pagination = Pick<GetFilteredAgentsResponse, 'hasMore' & 'nextCursor'>;

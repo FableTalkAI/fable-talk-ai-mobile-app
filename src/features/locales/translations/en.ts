@@ -139,6 +139,7 @@ const en: Translations = {
   createAgent: {
     header: 'Create Agent',
     agentCreatedSuccess: 'Agent successfully created and sent on moderation!',
+    agentCreateLimit: 'Slow down! Wait for your pending agents to be moderated before creating more',
     avatar: {
       error: 'Avatar is required',
     },
