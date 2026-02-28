@@ -7,11 +7,10 @@ import { Agent, CreateAgentRequest, GetFilteredAgentsResponse, GetResultsOfSearc
 
 export const agentsSliceName = 'agents';
 
-export const createAgent = createAxiosAsyncThunk<Agent, CreateAgentRequest>(
+export const createAgent = createAxiosAsyncThunk<void, CreateAgentRequest>(
   `${agentsSliceName}/createAgent`,
   async data => {
-    const response = await http.post(`${AGENTS_ROUTE}/create`, data);
-    return response.data;
+    await http.post(`${AGENTS_ROUTE}/create`, data);
   },
 );
 

@@ -70,7 +70,7 @@ const useAgentsStore = () => {
 
   const createAgentHandler = useCallback(
     async (agentData: CreateAgentRequest) => {
-      return await dispatch(createAgent(agentData)).unwrap();
+      await dispatch(createAgent(agentData)).unwrap();
     },
     [dispatch],
   );
