@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActivityIndicator, RefreshControl, StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -30,8 +30,17 @@ const HomeScreen = () => {
   const { colors } = useTheme();
   const { navigation } = useNavigationRoutes();
 
-  const { agents, isLoading, getAgentsHandler, agentsPagination, getMyAgentsHandler, myAgents, myAgentsPagination } =
-    useAgentsStore();
+  const {
+    agents,
+    isLoading,
+    getAgentsHandler,
+    agentsPagination,
+    getMyAgentsHandler,
+    myAgents,
+    myAgentsPagination,
+    isRefreshingAgents,
+    isRefreshingMyAgents,
+  } = useAgentsStore();
   const { filter } = useUserStore();
   const { open } = useBottomWindow(BottomWindowModes.SearchFilter);
   const { getChatByIdHandler, isLoading: isLoadingChat } = useChatStore();
@@ -58,13 +67,13 @@ const HomeScreen = () => {
     navigation.navigate('ChatScreen');
   };
 
-  const listFooterComponent = useMemo(() => {
-    return isLoading.agents ? (
+  const getListFooterComponent = (hasMore: boolean) => () => {
+    return isLoading.agents && hasMore ? (
       <View style={styles.listFooterComponentContainer}>
         <ActivityIndicator size="small" />
       </View>
     ) : null;
-  }, [isLoading.agents]);
+  };
 
   return (
     <>
@@ -106,7 +115,7 @@ const HomeScreen = () => {
                     <RefreshControl
                       tintColor={colors.iconPrimary}
                       progressBackgroundColor={colors.iconPrimary}
-                      refreshing={isLoading.agents}
+                      refreshing={isRefreshingAgents}
                       onRefresh={getAgentsHandler}
                     />
                   }
@@ -132,7 +141,7 @@ const HomeScreen = () => {
                   )}
                   onEndReached={onEndReachedHandler(agentsPagination.hasMore, isLoading.agents, getAgentsHandler)}
                   onEndReachedThreshold={0.3}
-                  ListFooterComponent={listFooterComponent}
+                  ListFooterComponent={getListFooterComponent(agentsPagination.hasMore)}
                 />
               ),
             },
@@ -145,7 +154,7 @@ const HomeScreen = () => {
                     <RefreshControl
                       tintColor={colors.iconPrimary}
                       progressBackgroundColor={colors.iconPrimary}
-                      refreshing={isLoading.myAgents}
+                      refreshing={isRefreshingMyAgents}
                       onRefresh={getMyAgentsHandler}
                     />
                   }
@@ -171,7 +180,7 @@ const HomeScreen = () => {
                   )}
                   onEndReached={onEndReachedHandler(myAgentsPagination.hasMore, isLoading.myAgents, getMyAgentsHandler)}
                   onEndReachedThreshold={0.3}
-                  ListFooterComponent={listFooterComponent}
+                  ListFooterComponent={getListFooterComponent(myAgentsPagination.hasMore)}
                   ListEmptyComponent={
                     <EmptyStub
                       subtitle={t('empty.myAgentsList.subtitle')}

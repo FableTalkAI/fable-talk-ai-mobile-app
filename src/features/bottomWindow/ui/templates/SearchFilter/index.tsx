@@ -28,7 +28,7 @@ const SearchFilter = ({ close }: SearchFilterProps) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
 
-  const { tags, getAgentsHandler } = useAgentsStore();
+  const { tags, getAgentsHandler, getMyAgentsHandler, myAgents } = useAgentsStore();
 
   const { filter, setFilterSortByHandler, setFilterSortHandler, setFilterTagsHandler, clearFilterHandler } =
     useUserStore();
@@ -67,12 +67,18 @@ const SearchFilter = ({ close }: SearchFilterProps) => {
 
   const onApply = () => {
     getAgentsHandler().catch(console.error);
+    if (myAgents) {
+      getMyAgentsHandler().catch(console.error);
+    }
     close();
   };
 
   const onClear = () => {
     clearFilterHandler();
     getAgentsHandler().catch(console.error);
+    if (myAgents) {
+      getMyAgentsHandler().catch(console.error);
+    }
     close();
   };
 

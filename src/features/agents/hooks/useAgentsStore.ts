@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import { clearSearchResults } from '@/features/agents/store/agents';
 import {
@@ -30,6 +30,9 @@ const useAgentsStore = () => {
   const isLoading = useAppSelector(isLoadingSelector);
   const pagination = useAppSelector(paginationSelector);
 
+  const [isRefreshingAgents, setIsRefreshingAgents] = useState(false);
+  const [isRefreshingMyAgents, setIsRefreshingMyAgents] = useState(false);
+
   const getSearchResultsHandler = useCallback(
     async (searchQuery: string) => {
       await dispatch(getResultsOfSearch({ searchQuery })).unwrap();
@@ -39,14 +42,26 @@ const useAgentsStore = () => {
 
   const getAgentsHandler = useCallback(
     async (loadMore: boolean = false) => {
-      await dispatch(getFilteredAgents(loadMore)).unwrap();
+      if (!loadMore) setIsRefreshingAgents(true);
+
+      try {
+        await dispatch(getFilteredAgents(loadMore)).unwrap();
+      } finally {
+        setIsRefreshingAgents(false);
+      }
     },
     [dispatch],
   );
 
   const getMyAgentsHandler = useCallback(
     async (loadMore: boolean = false) => {
-      await dispatch(getMyAgents(loadMore)).unwrap();
+      if (!loadMore) setIsRefreshingMyAgents(true);
+
+      try {
+        await dispatch(getMyAgents(loadMore)).unwrap();
+      } finally {
+        setIsRefreshingMyAgents(false);
+      }
     },
     [dispatch],
   );
@@ -74,6 +89,8 @@ const useAgentsStore = () => {
     searchResults,
     agentsPagination: pagination.agents,
     myAgentsPagination: pagination.myAgents,
+    isRefreshingAgents,
+    isRefreshingMyAgents,
 
     getSearchResultsHandler,
     clearSearchResultsHandler,
