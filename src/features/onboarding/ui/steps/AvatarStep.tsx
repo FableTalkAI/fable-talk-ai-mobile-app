@@ -1,25 +1,27 @@
 import { StyleSheet, View } from 'react-native';
 
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
-import Avatar from '@/features/profile/ui/Avatar';
+import { useUserAvatarPick } from '@/features/profile/hooks/useUserAvatarPick.ts';
+import UserAvatar from '@/features/profile/ui/UserAvatar';
 import { ImagePlusIcon } from '@/shared/assets/icons';
-import { useImagePick } from '@/shared/hooks/useImagePick.ts';
+import useTheme from '@/shared/hooks/useTheme.ts';
 import { WINDOW_WIDTH } from '@/shared/model/device.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 
 const AvatarStep = () => {
+  const { colors } = useTheme();
   const { profile } = useProfileStore();
 
-  const { pickImage } = useImagePick();
+  const { pickImage } = useUserAvatarPick();
 
   return (
     <View style={styles.container}>
       {profile?.avatarUrl ? (
-        <Avatar size={WINDOW_WIDTH * 0.7} isChangeable={false} />
+        <UserAvatar size={WINDOW_WIDTH * 0.7} isChangeable={false} />
       ) : (
         <PressableCustom onPress={pickImage}>
-          <ImagePlusIcon width={WINDOW_WIDTH} height={WINDOW_WIDTH * 0.7} />
+          <ImagePlusIcon width={WINDOW_WIDTH} color={colors.iconPrimary} height={WINDOW_WIDTH * 0.7} />
         </PressableCustom>
       )}
     </View>

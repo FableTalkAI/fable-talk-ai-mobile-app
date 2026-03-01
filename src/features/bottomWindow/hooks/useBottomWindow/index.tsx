@@ -5,6 +5,7 @@ import { openSettings } from 'react-native-permissions';
 import { logoutUser } from '@/features/auth/services/logoutUser.ts';
 import useBottomWindowStore from '@/features/bottomWindow/hooks/useBottomWindowStore.ts';
 import { bottomWindowRef } from '@/features/bottomWindow/services/bottomWindowRef.ts';
+import { CustomRender } from '@/features/bottomWindow/store/bottomWindow/types.ts';
 import Alert from '@/features/bottomWindow/ui/templates/Alert';
 import SearchFilter from '@/features/bottomWindow/ui/templates/SearchFilter';
 import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection.ts';
@@ -18,22 +19,38 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
 
-  const { bottomWindowMode, setBottomWindowModeHandler } = useBottomWindowStore();
+  const { bottomWindowMode, setBottomWindowModeHandler, setCustomContentHandler, customContent } =
+    useBottomWindowStore();
   const { deleteUserProfileHandler, isLoading } = useProfileStore();
   const { deleteHandler, multiSelectionsChatIdsCount, isChatDeleting, clear } = useChatMultiSelection();
 
-  const open = useCallback(() => {
-    setBottomWindowModeHandler(mode);
-    requestAnimationFrame(() => {
-      bottomWindowRef.current?.present();
-    });
-  }, [mode, setBottomWindowModeHandler]);
+  const open = useCallback(
+    (renderFn?: CustomRender) => {
+      if (typeof renderFn === 'function') {
+        setCustomContentHandler(renderFn);
+        setBottomWindowModeHandler(undefined);
+      } else {
+        setBottomWindowModeHandler(mode);
+        setCustomContentHandler(null);
+      }
+
+      requestAnimationFrame(() => {
+        bottomWindowRef.current?.present();
+      });
+    },
+    [mode, setBottomWindowModeHandler, setCustomContentHandler],
+  );
 
   const close = useCallback(() => {
     bottomWindowRef.current?.dismiss();
-  }, []);
+    setCustomContentHandler(null);
+  }, [setCustomContentHandler]);
 
   const templateComponent = useMemo(() => {
+    if (customContent) {
+      return customContent(close);
+    }
+
     switch (bottomWindowMode) {
       case BottomWindowModes.PermissionDenied:
         return (
@@ -132,15 +149,16 @@ const useBottomWindow = (mode?: BottomWindowModes) => {
         return null;
     }
   }, [
-    clear,
+    customContent,
     bottomWindowMode,
-    t,
     close,
+    t,
     isLoading.deleteUserProfile,
     multiSelectionsChatIdsCount,
     isChatDeleting,
     deleteUserProfileHandler,
     navigation,
+    clear,
     deleteHandler,
   ]);
 

@@ -2,12 +2,15 @@ import AdIcon from './ad.svg';
 import AddAgentIcon from './add-agent.svg';
 import ArrowForwardIcon from './arrow-forward.svg';
 import ArrowLinkIcon from './arrow-link.svg';
+import ArrowStickIcon from './arrow-stick.svg';
 import NotificationBellIcon from './bell.svg';
 import ChatIcon from './chat.svg';
+import ChatArrowIcon from './chat-arrow.svg';
 import CheckmarkIcon from './checkmark.svg';
 import CheckmarkRoundedIcon from './checkmark-rounded.svg';
 import EditAvatarIcon from './edit-avatar.svg';
 import FilterIcon from './filter.svg';
+import GearIcon from './gear.svg';
 import GoogleLogoIcon from './google-logo.svg';
 import HeadphonesIcon from './headphones.svg';
 import HomeIcon from './home-icon.svg';
@@ -29,6 +32,7 @@ import PlusIcon from './plus.svg';
 import PremiumAgentIcon from './premium-agent.svg';
 import ProfileIcon from './profile.svg';
 import RobotIcon from './robot.svg';
+import RobotFilledIcon from './robot-filled.svg';
 import SearchIcon from './search.svg';
 import SendButtonIcon from './send-button.svg';
 import ShieldUserIcon from './shield-user.svg';
@@ -48,6 +52,7 @@ import TriangleIcon from './triangle.svg';
 import UserIcon from './user.svg';
 import VerifyCodeIcon from './verify-code.svg';
 import WarningIcon from './warning.svg';
+import WarningTriangleIcon from './warning-triangle.svg';
 import XMarkIcon from './x-mark.svg';
 
 export {
@@ -55,11 +60,14 @@ export {
   AdIcon,
   ArrowForwardIcon,
   ArrowLinkIcon,
+  ArrowStickIcon,
+  ChatArrowIcon,
   ChatIcon,
   CheckmarkIcon,
   CheckmarkRoundedIcon,
   EditAvatarIcon,
   FilterIcon,
+  GearIcon,
   GoogleLogoIcon,
   HeadphonesIcon,
   HomeIcon,
@@ -81,6 +89,7 @@ export {
   PlusIcon,
   PremiumAgentIcon,
   ProfileIcon,
+  RobotFilledIcon,
   RobotIcon,
   SearchIcon,
   SendButtonIcon,
@@ -101,5 +110,6 @@ export {
   UserIcon,
   VerifyCodeIcon,
   WarningIcon,
+  WarningTriangleIcon,
   XMarkIcon,
 };

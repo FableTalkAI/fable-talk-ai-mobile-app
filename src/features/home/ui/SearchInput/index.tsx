@@ -10,43 +10,45 @@ import TextInputCustom from '@/shared/ui/TextInputCustom';
 
 import { SearchInputProps } from './types.ts';
 
-const SearchInput = forwardRef<TextInput, SearchInputProps>(({ placeholder, navigation, onStop, isDisabled }, ref) => {
-  const { colors } = useTheme();
+const SearchInput = forwardRef<TextInput, SearchInputProps>(
+  ({ style, navigation, onStop, isDisabled, ...inputProps }, ref) => {
+    const { colors } = useTheme();
 
-  const [value, setValue] = useState('');
-  const debouncedSearch = useDebounce({ value });
+    const [value, setValue] = useState('');
+    const debouncedSearch = useDebounce({ value });
 
-  const isFirstRun = useRef(true);
+    const isFirstRun = useRef(true);
 
-  useEffect(() => {
-    if (isFirstRun.current) {
-      isFirstRun.current = false;
-      return;
-    }
-    onStop?.(debouncedSearch);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedSearch]);
+    useEffect(() => {
+      if (isFirstRun.current) {
+        isFirstRun.current = false;
+        return;
+      }
+      onStop?.(debouncedSearch);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [debouncedSearch]);
 
-  return (
-    <View style={styles.wrapper} pointerEvents={isDisabled ? 'none' : 'auto'}>
-      {navigation && (
-        <PressableCustom onPress={navigation?.goBack} style={styles.backIcon}>
-          <ArrowForwardIcon fill={colors.iconPrimary} />
-        </PressableCustom>
-      )}
+    return (
+      <View style={[styles.wrapper, style]} pointerEvents={isDisabled ? 'none' : 'auto'}>
+        {navigation && (
+          <PressableCustom hitSlop={10} onPress={navigation?.goBack} style={styles.backIcon}>
+            <ArrowForwardIcon fill={colors.iconPrimary} />
+          </PressableCustom>
+        )}
 
-      <TextInputCustom
-        ref={ref}
-        placeholder={placeholder}
-        value={value}
-        onChangeText={setValue}
-        leftIcon={<SearchIcon />}
-        wrapperStyle={styles.textInputWrapper}
-        numberOfLines={1}
-      />
-    </View>
-  );
-});
+        <TextInputCustom
+          ref={ref}
+          value={value}
+          {...inputProps}
+          onChangeText={setValue}
+          leftIcon={<SearchIcon />}
+          wrapperStyle={styles.textInputWrapper}
+          numberOfLines={1}
+        />
+      </View>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   wrapper: {

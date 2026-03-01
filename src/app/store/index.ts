@@ -4,9 +4,9 @@ import { persistReducer, persistStore } from 'redux-persist';
 import bottomWindowReducer from '@/features/bottomWindow/store/bottomWindow';
 import persistConfig from '@/shared/lib/redux/persist.ts';
 
+import agentsReducer from '../../features/agents/store/agents';
 import authReducer from '../../features/auth/store/auth';
 import chatReducer from '../../features/chat/store/chat';
-import agentsReducer from '../../features/home/store/agents';
 import profileReducer from '../../features/profile/store/profile';
 import userReducer from '../../features/profile/store/user';
 import { ReducersTypes } from './types.ts';

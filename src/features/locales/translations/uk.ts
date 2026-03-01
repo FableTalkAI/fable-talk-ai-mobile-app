@@ -27,6 +27,28 @@ const uk: Translations = {
     pinnedWarning: 'Ви досягли максимального ліміту закріплених чатів. Відкріпіть чат або оновіть свій тарифний план',
   },
 
+  empty: {
+    agentSearch: {
+      title: 'Тут порожньо...',
+      subtitle: 'Ми шукали всюди, але такого агента не знайшли. Схоже, далі живуть тільки дракони.',
+    },
+    chatSearch: {
+      title: 'Жодного збігу',
+      subtitle: 'Цей пошук не дав результатів. Можливо, варто почати новий чат?',
+    },
+    tagSearch: {
+      title: 'Тег десь забаром',
+      subtitle: 'Ми не знайшли нічого схожого. Перевірте, чи немає помилки в слові.',
+    },
+    selectedTags: {
+      title: 'Тегів немає, будь ласка, оберіть тег',
+    },
+    myAgentsList: {
+      title: 'Жодного учасника в групі',
+      subtitle: 'Не вирушайте в дорогу наодинці! Створіть свого першого агента — надійного супутника для ваших пригод',
+    },
+  },
+
   tabBar: {
     home: 'Головна',
     chat: 'Чат',
@@ -47,6 +69,8 @@ const uk: Translations = {
     cancel: 'Скасувати',
     continue: 'Продовжити',
     logout: 'Вихід',
+    create: 'Створити',
+    update: 'Оновити',
   },
 
   bottomWindows: {
@@ -66,13 +90,17 @@ const uk: Translations = {
       sort: 'Сортування',
       filter: 'Фільтрація',
       tags: 'Теги',
-      selected: 'Обрані',
+      selectedTags: 'Обрані теги',
     },
     deleteChat: {
       title_one: 'Видалити чат',
       title_other: 'Видалити чаты',
       subtitle_one: 'Ви впевнені, що хочете видалити цей чат?',
       subtitle_other: 'Ви впевнені, що хочете видалити ці чати?',
+    },
+    tagsSelector: {
+      tags: 'Теги',
+      selectedTags: 'Обрані теги',
     },
   },
 
@@ -107,8 +135,44 @@ const uk: Translations = {
     },
   },
 
+  createAgent: {
+    createHeader: 'Створити агента',
+    updateHeader: 'Оновити агента',
+    agentCreatedSuccessfully: 'Агента успішно створено та відправлено на модерацію!',
+    agentUpdatedSuccessfully: 'Агента успішно оновлено та відправлено на модерацію!',
+    agentCreateLimit: 'Ого, полегше! Дочекайся модерації попередніх агентів, перш ніж створювати нових',
+    avatar: {
+      error: 'Аватар обов’язковий',
+    },
+    name: {
+      label: 'Ім’я',
+      placeholder: 'Введіть ім’я агента',
+      minError: 'Мінімум 1 символ',
+      maxError: 'Максимум 30 символів',
+    },
+    subtitle: {
+      label: 'Підзаголовок',
+      placeholder: 'Введіть короткий опис',
+      minError: 'Мінімум 50 символів',
+    },
+    description: {
+      label: 'Опис',
+      placeholder: 'Опишіть свого агента\nНаприклад: Кіберпанк-детектив у шкіряному плащу, цинічний і обожнює каву...',
+      minError: 'Мінімум 250 символів',
+    },
+    tags: {
+      label: 'Теги',
+      subtitle: 'Обрані',
+      placeholder: 'Додати теги +',
+      minError: 'Додайте щонайменше два теги',
+    },
+  },
+
   home: {
-    searchInput: 'Пошук агентів за іменем',
+    all: 'Всі',
+    my: 'Мої',
+    onModeration: 'На Модерації',
+    needEdit: 'Потребує редагування',
   },
 
   searchInput: {
@@ -198,6 +262,9 @@ const uk: Translations = {
     wrongCode: 'Неправильний код, залишилося спроб: {{amount}}',
     chatIdsRequired: 'Будь ласка, надайте айді чату',
     chatDeleted: 'Чат видалено',
+    agentRequired: 'Дані агента обов’язкові для заповнення',
+    agentAlreadyExists: 'Агент з таким ім’ям уже існує',
+    agentIdRequired: 'Айді Агента обов`язкове',
   },
 };
 

@@ -11,7 +11,7 @@ const initialState: UserState = {
   filter: {
     tags: [],
     sortBy: SortByFilter.DateAdded,
-    sort: SortFilter.ASC,
+    sort: SortFilter.DESC,
   },
   theme: Theme.System,
   notifications: {

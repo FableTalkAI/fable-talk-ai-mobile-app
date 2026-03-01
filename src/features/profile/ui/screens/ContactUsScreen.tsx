@@ -27,15 +27,16 @@ const ContactUsScreen = () => {
   };
 
   return (
-    <SafeAreaViewCustom>
+    <SafeAreaViewCustom withHorizontalPadding={false}>
       <Header title={t('contactUs.header')} />
 
       <TextCustom text={t('contactUs.description')} style={styles.text} />
 
-      <KeyboardAvoidingViewCustom>
+      <KeyboardAvoidingViewCustom scrollContentStyle={styles.scrollContent}>
         <TextInputCustom
           placeholder={t('contactUs.placeholder')}
           multiline
+          height={180}
           maxLength={250}
           withCharCount
           value={message}
@@ -48,7 +49,7 @@ const ContactUsScreen = () => {
         title={t('actions.send')}
         style={styles.button}
         isLoading={isLoading.contactUs}
-        isDisable={!message.length}
+        isDisable={!message.trim().length}
       />
     </SafeAreaViewCustom>
   );
@@ -57,9 +58,14 @@ const ContactUsScreen = () => {
 const styles = StyleSheet.create({
   text: {
     marginBottom: SPACING.xl,
+    marginHorizontal: SPACING.xl,
   },
   button: {
     marginTop: SPACING.m,
+    marginHorizontal: SPACING.xl,
+  },
+  scrollContent: {
+    paddingHorizontal: SPACING.xl,
   },
 });
 

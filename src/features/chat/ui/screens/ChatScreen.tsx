@@ -108,7 +108,7 @@ const ChatScreen = () => {
 
   return (
     <SafeAreaView style={[computedStyles.container, styles.container]}>
-      <Header title={selectedChat.chat.agentInfo.name} style={styles.header} rightIcon={trashBin} />
+      <Header title={selectedChat.chat.agentInfo.name} rightIcon={trashBin} />
       <GiftedChat
         messages={messageHistory}
         onSend={chatMessages => onSend(chatMessages)}
@@ -138,9 +138,6 @@ const ChatScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  header: {
-    paddingHorizontal: SPACING.lg,
   },
 });
 

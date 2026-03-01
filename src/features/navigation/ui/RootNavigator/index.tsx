@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
+import CreateAgentScreen from '@/features/agents/ui/screens/CreateAgentScreen.tsx';
 import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
 import ChatScreen from '@/features/chat/ui/screens/ChatScreen.tsx';
 import SearchScreen from '@/features/home/ui/screens/SearchScreen.tsx';
@@ -30,6 +31,7 @@ const RootNavigator = () => {
       <Stack.Screen name="Onboarding" component={OnboardingScreen} />
       <Stack.Screen name="TabBarNavigator" component={TabBarNavigator} />
       <Stack.Screen name="SearchScreen" component={SearchScreen} />
+      <Stack.Screen name="CreateAgent" component={CreateAgentScreen} />
       <Stack.Screen name="Subscriptions" component={SubscriptionsScreen} />
       <Stack.Screen name="SettingsStack" component={SettingsStack} />
       <Stack.Screen name="ChatScreen" component={ChatScreen} />

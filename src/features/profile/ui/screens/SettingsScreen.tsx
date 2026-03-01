@@ -65,7 +65,7 @@ const SettingsScreen = () => {
   );
 
   return (
-    <SafeAreaViewCustom>
+    <SafeAreaViewCustom withHorizontalPadding={false}>
       <Header title={t('common.settings')} />
 
       <ScrollView
@@ -177,6 +177,7 @@ const SettingsScreen = () => {
 const styles = StyleSheet.create({
   scrollViewContainer: {
     gap: SPACING.m,
+    paddingHorizontal: SPACING.lg,
   },
 });
 

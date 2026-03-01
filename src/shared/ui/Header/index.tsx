@@ -1,3 +1,4 @@
+import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { StyleSheet, View } from 'react-native';
 
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
@@ -14,8 +15,14 @@ const Header = ({ title, onPress, style, rightIcon }: HeaderProps) => {
   const { navigation } = useNavigationRoutes();
   const { colors } = useTheme();
 
+  const computedStyles = StyleSheet.create({
+    container: {
+      width: SCREEN_WIDTH - SPACING.lg * 2,
+    },
+  });
+
   return (
-    <View style={[styles.container, style]}>
+    <View style={[styles.container, computedStyles.container, style]}>
       <PressableCustom containerStyle={styles.side} onPress={onPress ?? navigation.goBack} hitSlop={10}>
         <ArrowForwardIcon style={styles.arrow} fill={colors.iconPrimary} />
       </PressableCustom>
@@ -31,6 +38,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    alignSelf: 'center',
     paddingBottom: SPACING.lg,
   },
   center: {

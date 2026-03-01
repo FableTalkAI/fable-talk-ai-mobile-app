@@ -4,8 +4,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
-import Avatar from '@/features/profile/ui/Avatar';
 import OptionBar from '@/features/profile/ui/OptionBar';
+import UserAvatar from '@/features/profile/ui/UserAvatar';
 import UserInfoBar from '@/features/profile/ui/UserInfoBar';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
@@ -24,9 +24,9 @@ const ProfileScreen = () => {
   });
 
   return (
-    <SafeAreaViewCustom withGradientBackground>
-      <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
-        <Avatar style={styles.avatar} />
+    <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
+      <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false} bounces={false}>
+        <UserAvatar style={styles.avatar} />
 
         <View style={styles.userInfoContainer}>
           <UserInfoBar field="name" isLoading={isLoading.updateProfile} />
@@ -52,6 +52,9 @@ const styles = StyleSheet.create({
   userInfoContainer: {
     gap: SPACING.m,
     marginTop: SPACING.xl,
+  },
+  contentContainer: {
+    paddingHorizontal: SPACING.xl,
   },
   avatar: {
     alignSelf: 'center',

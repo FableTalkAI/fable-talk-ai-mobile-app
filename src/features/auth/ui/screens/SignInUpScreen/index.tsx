@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRoute } from '@react-navigation/native';
 import { useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
@@ -15,12 +15,12 @@ import { MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/shared/assets/icon
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Button from '@/shared/ui/Button';
+import FieldInput from '@/shared/ui/FieldInput';
 import KeyboardAvoidingViewCustom from '@/shared/ui/KeyboardAvoidingViewCustom';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
-import TextInputCustom from '@/shared/ui/TextInputCustom';
 
 import { AuthScreenMode, SignInUpRouteProp } from './types.ts';
 
@@ -36,11 +36,7 @@ const SignInUpScreen = () => {
 
   const authSchema = getAuthSchema(screenMode);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<AuthSchema>({
+  const { control, handleSubmit } = useForm<AuthSchema>({
     resolver: zodResolver(authSchema),
     defaultValues: { name: '', email: '' },
   });
@@ -54,9 +50,6 @@ const SignInUpScreen = () => {
     },
     textLink: {
       color: colors.link,
-    },
-    errorText: {
-      color: colors.errorDark,
     },
   });
 
@@ -75,67 +68,41 @@ const SignInUpScreen = () => {
   };
 
   return (
-    <SafeAreaViewCustom>
+    <SafeAreaViewCustom withHorizontalPadding={false}>
       <Animated.View style={styles.wrapper} exiting={FadeOut} entering={FadeIn} key={screenMode}>
-        <KeyboardAvoidingViewCustom>
+        <KeyboardAvoidingViewCustom scrollContentStyle={styles.scrollContentStyle}>
           <View style={styles.iconContainer}>{screenMode === 'signIn' ? <SignInIcon /> : <SignUpIcon />}</View>
 
           <View>
             <TextCustom text={t(`auth.${screenMode}.header`)} mode={TextModes.Title} />
             <TextCustom text={t(`auth.${screenMode}.subheader`)} mode={TextModes.Caption} style={styles.subheader} />
 
-            {screenMode === 'signUp' && (
-              <Controller
-                control={control}
-                name="name"
-                render={({ field: { onChange, onBlur, value } }) => (
-                  <View style={[styles.inputContainer, styles.firstTextInput]}>
-                    <TextInputCustom
-                      value={value || ''}
-                      maxLength={20}
-                      onChangeText={onChange}
-                      onBlur={onBlur}
-                      placeholder={t('common.name')}
-                      leftIcon={<UserIcon />}
-                    />
-                    {errors.name && (
-                      <TextCustom
-                        style={computedStyles.errorText}
-                        text={errors.name.message || ''}
-                        mode={TextModes.Caption}
-                      />
-                    )}
-                  </View>
-                )}
-              />
-            )}
-            <Controller
-              control={control}
-              name="email"
-              render={({ field: { onChange, onBlur, value } }) => (
-                <View style={styles.inputContainer}>
-                  <TextInputCustom
-                    value={value}
-                    onChangeText={text => onChange(text.toLowerCase())}
-                    onBlur={onBlur}
-                    autoCapitalize="none"
-                    keyboardType="email-address"
-                    autoComplete="email"
-                    textContentType="emailAddress"
-                    autoCorrect={false}
-                    placeholder={t('common.email')}
-                    leftIcon={<MailIcon />}
-                  />
-                  {errors.email && (
-                    <TextCustom
-                      style={computedStyles.errorText}
-                      text={errors.email.message || ''}
-                      mode={TextModes.Caption}
-                    />
-                  )}
-                </View>
+            <View style={styles.inputContainer}>
+              {screenMode === 'signUp' && (
+                <FieldInput
+                  name="name"
+                  control={control}
+                  placeholder={t('common.name')}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  maxLength={20}
+                  leftIcon={<UserIcon />}
+                />
               )}
-            />
+
+              <FieldInput
+                name="email"
+                control={control}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                autoComplete="email"
+                textContentType="emailAddress"
+                autoCorrect={false}
+                placeholder={t('common.email')}
+                leftIcon={<MailIcon />}
+                onChangeHandler={text => text.toLowerCase()}
+              />
+            </View>
           </View>
 
           <View style={styles.continueWithContainer}>
@@ -181,6 +148,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-between',
   },
+  scrollContentStyle: {
+    paddingHorizontal: SPACING.xl,
+  },
   iconContainer: {
     alignItems: 'center',
     paddingBottom: SPACING.lg,
@@ -195,17 +165,15 @@ const styles = StyleSheet.create({
   },
   buttonAndTextContainer: {
     paddingTop: SPACING.s,
+    paddingHorizontal: SPACING.xl,
     gap: SPACING.xs,
   },
   belowButtonContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
-  firstTextInput: {
-    marginBottom: SPACING.lg,
-  },
   inputContainer: {
-    gap: SPACING.xxs,
+    gap: SPACING.m,
   },
 });
 

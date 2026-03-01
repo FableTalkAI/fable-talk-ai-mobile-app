@@ -1,6 +1,6 @@
 import { StyleProp, ViewStyle } from 'react-native';
 
-export type AvatarProps = {
+export type UserAvatarProps = {
   size?: number;
   isChangeable?: boolean;
   style?: StyleProp<ViewStyle>;

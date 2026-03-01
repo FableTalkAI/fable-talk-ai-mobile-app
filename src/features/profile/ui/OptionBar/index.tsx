@@ -93,6 +93,8 @@ const OptionBar = ({
 const styles = StyleSheet.create({
   iconContainer: {
     borderRadius: RADIUS.small,
+    width: 32,
+    height: 32,
   },
   simpleContainer: {
     flexDirection: 'row',

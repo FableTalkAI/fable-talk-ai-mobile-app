@@ -1,9 +1,6 @@
-import { BACKEND_BASE_URL } from '@env';
 import { StyleSheet, View } from 'react-native';
 
-import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
-import { EditAvatarIcon, UserIcon } from '@/shared/assets/icons';
-import { useImagePick } from '@/shared/hooks/useImagePick.ts';
+import { EditAvatarIcon, ImagePlusIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
@@ -13,51 +10,42 @@ import PressableCustom from '@/shared/ui/PressableCustom';
 
 import { AvatarProps } from './types.ts';
 
-const Avatar = ({ size, isChangeable = true, style }: AvatarProps) => {
+const Avatar = ({ size = 144, isChangeable = true, style, isLoading, uri, onPickImage }: AvatarProps) => {
   const { colors } = useTheme();
-  const { profile, isLoading } = useProfileStore();
-
-  const { pickImage } = useImagePick();
 
   const computedStyles = StyleSheet.create({
     container: {
-      backgroundColor: colors.gray10,
-      width: size ?? 144,
-      height: size ?? 144,
+      backgroundColor: colors.backgroundSecondary,
+      width: size,
+      height: size,
     },
     editContainer: {
       backgroundColor: colors.backgroundBase,
     },
   });
 
-  const getAvatarUrl = () => {
-    if (!profile) return '';
-    if (profile.avatarUrl.startsWith('http')) return profile.avatarUrl;
-    return BACKEND_BASE_URL + profile.avatarUrl;
-  };
-
   return (
-    <View style={[computedStyles.container, styles.container, style]}>
+    <PressableCustom disabled={!!uri} onPress={onPickImage} style={[computedStyles.container, styles.container, style]}>
       <View style={styles.imageContainer}>
-        {profile && profile.avatarUrl ? (
-          <AutoImage source={{ uri: getAvatarUrl() }} resizeMode="cover" style={styles.image} />
+        {uri ? (
+          <AutoImage source={{ uri }} resizeMode="cover" style={styles.image} />
         ) : (
-          <UserIcon />
+          <ImagePlusIcon width={80} height={80} color={colors.gray50} />
         )}
 
-        <ComponentLoader isVisible={isLoading.uploadAvatar} />
+        <ComponentLoader isVisible={isLoading} />
       </View>
 
-      {isChangeable && (
+      {isChangeable && uri && (
         <PressableCustom
           containerStyle={[computedStyles.editContainer, styles.editContainer]}
           hitSlop={10}
-          onPress={pickImage}
+          onPress={onPickImage}
         >
           <EditAvatarIcon fill={colors.iconPrimary} />
         </PressableCustom>
       )}
-    </View>
+    </PressableCustom>
   );
 };
 

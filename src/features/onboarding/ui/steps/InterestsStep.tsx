@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import useAgentsStore from '@/features/home/hooks/useAgentsStore.ts';
+import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
 import Tag from '@/features/onboarding/ui/Tag';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { SPACING } from '@/shared/model/sizes.ts';

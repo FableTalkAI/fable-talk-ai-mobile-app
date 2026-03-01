@@ -3,6 +3,19 @@ export enum Languages {
   EN = 'en',
 }
 
+export type Empty = {
+  title: string;
+  subtitle?: string;
+};
+
+export type Input = {
+  label?: string;
+  placeholder?: string;
+  error?: string;
+  minError?: string;
+  maxError?: string;
+};
+
 export type Translations = {
   common: {
     dateOfBirth: string;
@@ -30,6 +43,14 @@ export type Translations = {
     pinnedWarning: string;
   };
 
+  empty: {
+    agentSearch: Empty;
+    chatSearch: Empty;
+    tagSearch: Empty;
+    selectedTags: Empty;
+    myAgentsList: Empty;
+  };
+
   tabBar: {
     home: string;
     chat: string;
@@ -50,6 +71,8 @@ export type Translations = {
     cancel: string;
     continue: string;
     logout: string;
+    create: string;
+    update: string;
   };
 
   bottomWindows: {
@@ -69,13 +92,17 @@ export type Translations = {
       sort: string;
       filter: string;
       tags: string;
-      selected: string;
+      selectedTags: string;
     };
     deleteChat: {
       title_one: string;
       title_other: string;
       subtitle_one: string;
       subtitle_other: string;
+    };
+    tagsSelector: {
+      tags: string;
+      selectedTags: string;
     };
   };
 
@@ -110,8 +137,26 @@ export type Translations = {
     };
   };
 
+  createAgent: {
+    createHeader: string;
+    updateHeader: string;
+    agentCreatedSuccessfully: string;
+    agentUpdatedSuccessfully: string;
+    agentCreateLimit: string;
+    avatar: Input;
+    name: Input;
+    subtitle: Input;
+    description: Input;
+    tags: Input & {
+      subtitle: string;
+    };
+  };
+
   home: {
-    searchInput: string;
+    all: string;
+    my: string;
+    onModeration: string;
+    needEdit: string;
   };
 
   searchInput: {
@@ -201,5 +246,8 @@ export type Translations = {
     wrongCode: string;
     chatIdsRequired: string;
     chatDeleted: string;
+    agentRequired: string;
+    agentAlreadyExists: string;
+    agentIdRequired: string;
   };
 };

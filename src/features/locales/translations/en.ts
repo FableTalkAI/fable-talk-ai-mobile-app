@@ -28,6 +28,28 @@ const en: Translations = {
       'You have reached the maximum number of pinned chats. Unpin a chat or upgrade your subscription plan',
   },
 
+  empty: {
+    agentSearch: {
+      title: 'Ghost town here...',
+      subtitle: 'We’ve looked everywhere, but couldn’t find that agent. Perhaps further dwell dragons?',
+    },
+    chatSearch: {
+      title: 'No matches found',
+      subtitle: 'Your search came up empty. Maybe it’s time to start a new conversation?',
+    },
+    tagSearch: {
+      title: 'Tag? What tag?',
+      subtitle: 'That keyword doesn’t ring a bell. Double-check the spelling or try another one',
+    },
+    selectedTags: {
+      title: 'No tags, please select a tag',
+    },
+    myAgentsList: {
+      title: 'No party members yet',
+      subtitle: 'It’s dangerous to go alone! Recruit your first agent to help you on your quest',
+    },
+  },
+
   tabBar: {
     home: 'Home',
     chat: 'Chat',
@@ -48,6 +70,8 @@ const en: Translations = {
     cancel: 'Cancel',
     continue: 'Continue',
     logout: 'Logout',
+    create: 'Create',
+    update: 'Update',
   },
 
   bottomWindows: {
@@ -67,13 +91,17 @@ const en: Translations = {
       sort: 'Sort',
       filter: 'Filter',
       tags: 'Tags',
-      selected: 'Selected',
+      selectedTags: 'Selected tags',
     },
     deleteChat: {
       title_one: 'Delete chat',
       title_other: 'Delete chats',
       subtitle_one: 'Are you sure you want to delete this chat?',
       subtitle_other: 'Are you sure you want to delete those chats?',
+    },
+    tagsSelector: {
+      tags: 'Tags',
+      selectedTags: 'Selected tags',
     },
   },
 
@@ -108,8 +136,45 @@ const en: Translations = {
     },
   },
 
+  createAgent: {
+    createHeader: 'Create Agent',
+    updateHeader: 'Update Agent',
+    agentCreatedSuccessfully: 'Agent successfully created and sent on moderation!',
+    agentUpdatedSuccessfully: 'Agent successfully updated and sent on moderation!',
+    agentCreateLimit: 'Slow down! Wait for your pending agents to be moderated before creating more',
+    avatar: {
+      error: 'Avatar is required',
+    },
+    name: {
+      label: 'Name',
+      placeholder: 'Enter agent name',
+      minError: 'Minimum 1 character',
+      maxError: 'Maximum 30 characters',
+    },
+    subtitle: {
+      label: 'Subtitle',
+      placeholder: 'Enter short description',
+      minError: 'Minimum 50 characters',
+    },
+    description: {
+      label: 'Descriptions',
+      placeholder:
+        'Describe your agent\nFor example: A cyberpunk detective in a leather coat, cynical, and coffee-loving...',
+      minError: 'Minimum 250 characters',
+    },
+    tags: {
+      label: 'Tags',
+      subtitle: 'Selected',
+      placeholder: 'Add tags +',
+      minError: 'Add at least two tags',
+    },
+  },
+
   home: {
-    searchInput: 'Search agents by name',
+    all: 'All',
+    my: 'My',
+    onModeration: 'On Moderation',
+    needEdit: 'Need Edit',
   },
 
   searchInput: {
@@ -200,6 +265,9 @@ const en: Translations = {
     wrongCode: 'Wrong code, remaining attempts: {{amount}}',
     chatIdsRequired: 'Please provide chat id',
     chatDeleted: 'Chat deleted!',
+    agentRequired: 'Agent information is missing or invalid',
+    agentAlreadyExists: 'An agent with this name already exists',
+    agentIdRequired: 'Agent id is required',
   },
 };
 

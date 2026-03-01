@@ -2,9 +2,9 @@ import auth from '@react-native-firebase/auth';
 import { useEffect, useState } from 'react';
 import { AppState, AppStateStatus } from 'react-native';
 
+import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
 import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
-import useAgentsStore from '@/features/home/hooks/useAgentsStore.ts';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { getMsUntilMidnight } from '@/shared/lib/date.ts';
 import AppStub from '@/shared/ui/AppStub.tsx';
@@ -14,7 +14,7 @@ import { InitialSetupProps } from './types.ts';
 const InitialSetup = ({ children }: InitialSetupProps) => {
   const { setIsLoggedInHandler, isLoggedIn } = useAuthStore();
   const { getUserProfileHandler, getUserLimitsHandler } = useProfileStore();
-  const { getTagsHandler, getAgentsHandler } = useAgentsStore();
+  const { getTagsHandler, getAgentsHandler, getMyAgentsHandler } = useAgentsStore();
   const { getAllChatsHandler } = useChatStore();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +26,7 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
 
         if (user) {
           await getUserProfileHandler();
-          await Promise.all([getTagsHandler(), getAgentsHandler(), getAllChatsHandler()]);
+          await Promise.all([getTagsHandler(), getAgentsHandler(), getAllChatsHandler(), getMyAgentsHandler()]);
         }
       } catch (e) {
         console.error(e);
@@ -34,7 +34,14 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
         setIsLoading(false);
       }
     });
-  }, [getAgentsHandler, getAllChatsHandler, getTagsHandler, getUserProfileHandler, setIsLoggedInHandler]);
+  }, [
+    getAgentsHandler,
+    getAllChatsHandler,
+    getMyAgentsHandler,
+    getTagsHandler,
+    getUserProfileHandler,
+    setIsLoggedInHandler,
+  ]);
 
   // Timer to get actual user limits
   useEffect(() => {

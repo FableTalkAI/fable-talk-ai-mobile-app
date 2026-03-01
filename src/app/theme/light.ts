@@ -1,4 +1,6 @@
 export const light = {
+  theme: '#FFFFFF',
+
   textPrimary: '#212122',
   textSecondary: '#555656',
   textTertiary: '#555656',
@@ -6,7 +8,7 @@ export const light = {
 
   backgroundBase: '#FFFFFF',
   backgroundSecondary: '#FAF9F9',
-  backgroundTertiary: '#f0f0f0',
+  backgroundTertiary: '#f1eeee',
   backgroundQuaternary: '#D7CFF9',
   backgroundAlt: '#FAF9F9',
   backgroundHover: '#744BA026',
@@ -20,4 +22,6 @@ export const light = {
 
   agentBubble: '#343443',
   userBubble: '#523FAE',
+
+  premium: '#E8C563',
 };

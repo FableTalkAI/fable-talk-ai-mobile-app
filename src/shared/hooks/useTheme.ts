@@ -12,13 +12,23 @@ const useTheme = () => {
   const scheme = useColorScheme();
 
   const getThemeColors = () => {
+    const darkMode = {
+      mode: Theme.Dark,
+      colors: dark,
+    };
+
+    const lightMode = {
+      mode: Theme.Light,
+      colors: light,
+    };
+
     switch (theme) {
       case Theme.Dark:
-        return dark;
+        return darkMode;
       case Theme.Light:
-        return light;
+        return lightMode;
       default:
-        return scheme === 'dark' ? dark : light;
+        return scheme === 'dark' ? darkMode : lightMode;
     }
   };
 
@@ -31,7 +41,8 @@ const useTheme = () => {
   };
 
   return {
-    colors: { ...base, ...getThemeColors() },
+    theme: getThemeColors().mode,
+    colors: { ...base, ...getThemeColors().colors },
     setColorOpacity,
   };
 };

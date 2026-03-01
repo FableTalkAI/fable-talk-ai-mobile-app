@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import useAgentsStore from '@/features/home/hooks/useAgentsStore.ts';
+import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import { AvatarStep, InterestsStep } from '@/features/onboarding/ui/steps';
 import DateOfBirthStep from '@/features/onboarding/ui/steps/DateOfBirthStep.tsx';
