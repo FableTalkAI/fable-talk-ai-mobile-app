@@ -5,10 +5,17 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
-import Animated, { Easing, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
+import Animated, {
+  Easing,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from 'react-native-reanimated';
 
 import Tag from '@/features/onboarding/ui/Tag';
-import { GearIcon, PremiumAgentIcon } from '@/shared/assets/icons';
+import { GearIcon, PremiumAgentIcon, WarningTriangleIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
@@ -32,6 +39,7 @@ const AgentBar = ({
   const { t } = useTranslation();
 
   const progress = useSharedValue(0);
+  const shakeAngle = useSharedValue(0);
 
   const isPremiumAgent = mode === AgentBarModes.Premium;
   const gradientColors = useMemo(
@@ -55,22 +63,52 @@ const AgentBar = ({
     primaryAgentIcon: {
       shadowColor: colors.theme,
     },
-    onModerationWrapper: {
+    onModerationBlurWrapper: {
       borderColor: colors.gray40,
+    },
+    rejectBlurWrapper: {
+      borderColor: colors.errorDark,
     },
   });
 
-  const animatedStyle = useAnimatedStyle(() => {
+  const animatedGearStyle = useAnimatedStyle(() => {
     return {
       transform: [{ rotate: `${progress.value * 360}deg` }],
     };
   });
 
-  useEffect(() => {
-    if (mode !== AgentBarModes.OnModeration) return;
+  const animatedWarningStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${shakeAngle.value}deg` }],
+    };
+  });
 
-    progress.value = withRepeat(withTiming(1, { duration: 5000, easing: Easing.bounce }), -1, false);
-  }, [mode, progress]);
+  useEffect(() => {
+    if (mode === AgentBarModes.OnModeration) {
+      progress.value = withRepeat(withTiming(1, { duration: 5000, easing: Easing.bounce }), -1, false);
+    }
+
+    if (mode === AgentBarModes.Rejected) {
+      shakeAngle.value = 0;
+
+      const ANGLE = 4;
+      const SHAKE_DURATION = 100;
+      const PAUSE_DURATION = 1500;
+
+      shakeAngle.value = withRepeat(
+        withSequence(
+          withTiming(ANGLE, { duration: SHAKE_DURATION }),
+          withTiming(-ANGLE, { duration: SHAKE_DURATION }),
+          withTiming(ANGLE, { duration: SHAKE_DURATION }),
+          withTiming(-ANGLE, { duration: SHAKE_DURATION }),
+          withTiming(0, { duration: SHAKE_DURATION }),
+          withTiming(0, { duration: PAUSE_DURATION }),
+        ),
+        -1,
+        false,
+      );
+    }
+  }, [mode, progress, shakeAngle]);
 
   const baseAgentBar = useMemo(
     () => (
@@ -121,27 +159,59 @@ const AgentBar = ({
 
   if (mode === AgentBarModes.OnModeration) {
     return (
-      <View style={[styles.onModerationWrapper, computedStyles.onModerationWrapper]}>
+      <View>
         {baseAgentBar}
 
-        <BlurView
-          reducedTransparencyFallbackColor="white"
-          blurType="light"
-          blurAmount={5}
-          style={[styles.blurContainer, StyleSheet.absoluteFill]}
-        >
-          <Animated.View style={animatedStyle}>
-            <GearIcon />
-          </Animated.View>
+        <View style={[styles.onBlurWrapper, computedStyles.onModerationBlurWrapper, StyleSheet.absoluteFill]}>
+          <BlurView
+            reducedTransparencyFallbackColor="white"
+            blurType="light"
+            blurAmount={5}
+            style={[styles.blurContainer]}
+          >
+            <Animated.View style={animatedGearStyle}>
+              <GearIcon />
+            </Animated.View>
 
-          <TextCustom
-            mode={TextModes.Base}
-            style={styles.textBlur}
-            textColor={colors.textPrimary}
-            text={t('common.onModeration')}
-          />
-        </BlurView>
+            <TextCustom
+              mode={TextModes.Base}
+              style={styles.textBlur}
+              textColor={colors.textPrimary}
+              text={t('home.onModeration')}
+            />
+          </BlurView>
+        </View>
       </View>
+    );
+  }
+
+  if (mode === AgentBarModes.Rejected) {
+    return (
+      <PressableCustom onPress={onPress}>
+        {baseAgentBar}
+
+        <View style={[styles.onBlurWrapper, computedStyles.rejectBlurWrapper, StyleSheet.absoluteFill]}>
+          <BlurView
+            reducedTransparencyFallbackColor="white"
+            blurType="light"
+            blurAmount={5}
+            style={[styles.blurContainer, StyleSheet.absoluteFill]}
+          >
+            <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.errorLight }]} />
+
+            <Animated.View style={animatedWarningStyle}>
+              <WarningTriangleIcon style={styles.warningIcon} width={50} height={50} fill={colors.warningBase} />
+            </Animated.View>
+
+            <TextCustom
+              mode={TextModes.Base}
+              style={styles.textBlur}
+              textColor={colors.textPrimary}
+              text={t('home.needEdit')}
+            />
+          </BlurView>
+        </View>
+      </PressableCustom>
     );
   }
 
@@ -153,12 +223,14 @@ const styles = StyleSheet.create({
     boxShadow: BOX_SHADOW.medium,
     borderRadius: RADIUS.medium,
   },
-  onModerationWrapper: {
-    borderWidth: 2,
-    borderRadius: RADIUS.medium,
+  onBlurWrapper: {
     overflow: 'hidden',
+    borderRadius: RADIUS.medium,
+    borderWidth: 2,
   },
   blurContainer: {
+    width: '100%',
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     gap: SPACING.m,
@@ -199,8 +271,14 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 5,
   },
+  warningIcon: {
+    shadowOpacity: 0.5,
+    shadowRadius: 15,
+    elevation: 5,
+  },
   textBlur: {
     fontWeight: 600,
+    textAlign: 'center',
   },
   name: {
     textAlign: 'center',

@@ -16,8 +16,9 @@ import {
   getFilteredAgents,
   getMyAgents,
   getResultsOfSearch,
+  updateAgent,
 } from '@/features/agents/store/agents/thunks.ts';
-import { CreateAgentRequest } from '@/features/agents/store/agents/types.ts';
+import { CreateAgentRequest, UpdateAgentRequest } from '@/features/agents/store/agents/types.ts';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
 const useAgentsStore = () => {
@@ -75,6 +76,13 @@ const useAgentsStore = () => {
     [dispatch],
   );
 
+  const updateAgentHandler = useCallback(
+    async (agentData: UpdateAgentRequest) => {
+      await dispatch(updateAgent(agentData)).unwrap();
+    },
+    [dispatch],
+  );
+
   const getTagsHandler = useCallback(async () => {
     await dispatch(getAllUniqueTags()).unwrap();
   }, [dispatch]);
@@ -101,6 +109,7 @@ const useAgentsStore = () => {
     getAgentsHandler,
     getMyAgentsHandler,
     getTagsHandler,
+    updateAgentHandler,
   };
 };
 

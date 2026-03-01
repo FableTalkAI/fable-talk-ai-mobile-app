@@ -6,6 +6,7 @@ export enum AgentBarModes {
   Default = 'Default',
   Premium = 'Premium',
   OnModeration = 'OnModeration',
+  Rejected = 'Rejected',
 }
 
 export type AgentBarProps = {

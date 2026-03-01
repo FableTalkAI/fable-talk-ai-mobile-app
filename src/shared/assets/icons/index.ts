@@ -52,6 +52,7 @@ import TriangleIcon from './triangle.svg';
 import UserIcon from './user.svg';
 import VerifyCodeIcon from './verify-code.svg';
 import WarningIcon from './warning.svg';
+import WarningTriangleIcon from './warning-triangle.svg';
 import XMarkIcon from './x-mark.svg';
 
 export {
@@ -109,5 +110,6 @@ export {
   UserIcon,
   VerifyCodeIcon,
   WarningIcon,
+  WarningTriangleIcon,
   XMarkIcon,
 };

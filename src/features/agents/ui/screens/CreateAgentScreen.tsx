@@ -1,3 +1,4 @@
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -6,9 +7,10 @@ import useCreateAgent from '@/features/agents/hooks/useCreateAgent.ts';
 import TagsSelector from '@/features/agents/ui/TagsSelector';
 import TagsSelectorBottomWindow from '@/features/agents/ui/TagsSelectorBottomWindow';
 import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
-import { RobotIcon } from '@/shared/assets/icons';
+import { RootNavigatorParamList } from '@/features/navigation/ui/RootNavigator/types.ts';
+import { RobotIcon, WarningTriangleIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
-import { SPACING } from '@/shared/model/sizes.ts';
+import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import Avatar from '@/shared/ui/Avatar';
 import Button from '@/shared/ui/Button';
 import FieldInput from '@/shared/ui/FieldInput';
@@ -22,9 +24,20 @@ import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 const CreateAgentScreen = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
+  const { params } = useRoute<RouteProp<RootNavigatorParamList, 'CreateAgent'>>();
 
-  const { control, onSubmit, setTags, getValues, pickImage, isLoading } = useCreateAgent();
+  const { control, onSubmit, setTags, getValues, pickImage, isLoading, isButtonDisabled, isEdit, moderationComment } =
+    useCreateAgent({
+      agentId: params?.id,
+    });
   const { open } = useBottomWindow();
+
+  const computedStyles = StyleSheet.create({
+    warningContainer: {
+      backgroundColor: colors.errorLight,
+      borderColor: colors.errorDark,
+    },
+  });
 
   const openTagsSelectBottomWindow = () => {
     open(close => (
@@ -35,7 +48,14 @@ const CreateAgentScreen = () => {
   return (
     <>
       <SafeAreaViewCustom withHorizontalPadding={false}>
-        <Header title={t('createAgent.header')} />
+        <Header title={t(`createAgent.${isEdit ? 'updateHeader' : 'createHeader'}`)} />
+
+        {moderationComment && (
+          <View style={[styles.warningContainer, computedStyles.warningContainer]}>
+            <WarningTriangleIcon width={28} height={28} fill={colors.warningBase} style={styles.warningIcon} />
+            <TextCustom text={moderationComment} />
+          </View>
+        )}
 
         <KeyboardAvoidingViewCustom scrollContentStyle={styles.scrollContent}>
           <Controller
@@ -102,7 +122,12 @@ const CreateAgentScreen = () => {
           </View>
         </KeyboardAvoidingViewCustom>
 
-        <Button title={t('actions.create')} onPress={onSubmit} style={styles.submitButton} />
+        <Button
+          isDisable={isButtonDisabled}
+          title={t(`actions.${isEdit ? 'update' : 'create'}`)}
+          onPress={onSubmit}
+          style={styles.submitButton}
+        />
       </SafeAreaViewCustom>
 
       <ScreenLoader isLoading={isLoading} />
@@ -126,6 +151,21 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     gap: SPACING.lg,
+  },
+  warningIcon: {
+    shadowOpacity: 0.5,
+    shadowRadius: 20,
+    elevation: 5,
+    alignSelf: 'center',
+  },
+  warningContainer: {
+    marginHorizontal: SPACING.xl,
+    borderWidth: 2,
+    borderRadius: RADIUS.medium,
+    paddingHorizontal: SPACING.m,
+    paddingVertical: SPACING.s,
+    marginBottom: SPACING.xs,
+    gap: SPACING.xxs,
   },
 });
 

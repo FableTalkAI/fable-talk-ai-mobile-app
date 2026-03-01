@@ -1,8 +1,10 @@
 import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 
 import { AgentAccessLevel, AgentModerationStatus } from '@/features/agents/store/agents/types.ts';
+import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { getAgentBarMode } from '@/features/home/services/getAgentBarMode.ts';
 import AgentBar from '@/features/home/ui/AgentBar';
+import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 
@@ -15,14 +17,25 @@ const AgentList = ({
   hasMore,
   onRefresh,
   onLoadMore,
-  onAgentPress,
   ListEmptyComponent,
 }: AgentListProps) => {
   const { colors } = useTheme();
+  const { navigation } = useNavigationRoutes();
+
+  const { getChatByIdHandler } = useChatStore();
 
   const onEndReached = () => {
     if (!hasMore || isLoading) return;
     onLoadMore(true).catch(console.error);
+  };
+
+  const onChatOpenHandler = (agentId: string, moderationStatus: AgentModerationStatus) => async () => {
+    if (moderationStatus === 'rejected') {
+      return navigation.navigate('CreateAgent', { id: agentId });
+    }
+
+    await getChatByIdHandler(agentId);
+    navigation.navigate('ChatScreen');
   };
 
   const renderFooter = () => {
@@ -61,13 +74,13 @@ const AgentList = ({
         <AgentBar
           mode={getAgentBarMode({
             isPremium: item.accessLevel === AgentAccessLevel.Premium,
-            onModeration: item.moderationStatus === AgentModerationStatus.OnModeration,
+            moderationStatus: item.moderationStatus,
           })}
           name={item.name}
           description={item.description}
           tags={item.tags}
           avatarSource={item.avatarUrl}
-          onPress={onAgentPress(item.id)}
+          onPress={onChatOpenHandler(item.id, item.moderationStatus)}
         />
       )}
     />

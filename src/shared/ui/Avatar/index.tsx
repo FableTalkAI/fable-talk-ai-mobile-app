@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import { EditAvatarIcon, ImagePlusIcon, UserIcon } from '@/shared/assets/icons';
+import { EditAvatarIcon, ImagePlusIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';

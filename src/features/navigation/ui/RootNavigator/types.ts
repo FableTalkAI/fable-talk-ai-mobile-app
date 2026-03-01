@@ -10,7 +10,7 @@ export type RootNavigatorParamList = {
   TabBarNavigator: NavigatorScreenParams<TabBarNavigatorParamList>;
   SearchScreen: undefined;
   Subscriptions: undefined;
-  CreateAgent: undefined;
+  CreateAgent?: { id?: string };
   SettingsStack: NavigatorScreenParams<SettingsStackParamList>;
   ChatScreen: undefined;
 };

@@ -6,6 +6,7 @@ export enum AgentAccessLevel {
 export enum AgentModerationStatus {
   Approved = 'approved',
   OnModeration = 'onModeration',
+  Rejected = 'rejected',
 }
 
 export type AgentsState = {
@@ -23,7 +24,6 @@ export type AgentsState = {
     agents: boolean;
     myAgents: boolean;
     searchResults: boolean;
-    createAgent: boolean;
   };
 };
 
@@ -38,9 +38,9 @@ export type Agent = {
   name: string;
   nameLower: string;
   tags: string[];
-  ageRestriction: string;
   popularity: number;
   prompt: string;
+  moderationComment?: string;
 };
 
 export type GetResultsOfSearchRequest = {
@@ -55,6 +55,11 @@ export type CreateAgentRequest = {
   avatarBase64: string | null;
 };
 
+export type UpdateAgentRequest = {
+  agentId: string;
+  moderationStatus?: AgentModerationStatus;
+} & Partial<CreateAgentRequest>;
+
 export type GetFilteredAgentsResponse = {
   data: Agent[];
   hasMore: boolean;
@@ -62,4 +67,4 @@ export type GetFilteredAgentsResponse = {
   hasModerationLimit: boolean;
 };
 
-export type Pagination = Pick<GetFilteredAgentsResponse, 'hasMore' & 'nextCursor'>;
+export type Pagination = Pick<GetFilteredAgentsResponse, 'hasMore' | 'nextCursor'>;

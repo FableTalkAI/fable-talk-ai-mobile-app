@@ -25,7 +25,6 @@ const uk: Translations = {
     info: 'Інформація',
     warning: 'Увага',
     pinnedWarning: 'Ви досягли максимального ліміту закріплених чатів. Відкріпіть чат або оновіть свій тарифний план',
-    onModeration: 'На Модерації',
   },
 
   empty: {
@@ -71,6 +70,7 @@ const uk: Translations = {
     continue: 'Продовжити',
     logout: 'Вихід',
     create: 'Створити',
+    update: 'Оновити',
   },
 
   bottomWindows: {
@@ -136,8 +136,10 @@ const uk: Translations = {
   },
 
   createAgent: {
-    header: 'Створити агента',
-    agentCreatedSuccess: 'Агента успішно створено та відправлено на модерацію!',
+    createHeader: 'Створити агента',
+    updateHeader: 'Оновити агента',
+    agentCreatedSuccessfully: 'Агента успішно створено та відправлено на модерацію!',
+    agentUpdatedSuccessfully: 'Агента успішно оновлено та відправлено на модерацію!',
     agentCreateLimit: 'Ого, полегше! Дочекайся модерації попередніх агентів, перш ніж створювати нових',
     avatar: {
       error: 'Аватар обов’язковий',
@@ -169,6 +171,8 @@ const uk: Translations = {
   home: {
     all: 'Всі',
     my: 'Мої',
+    onModeration: 'На Модерації',
+    needEdit: 'Потребує редагування',
   },
 
   searchInput: {
@@ -260,6 +264,7 @@ const uk: Translations = {
     chatDeleted: 'Чат видалено',
     agentRequired: 'Дані агента обов’язкові для заповнення',
     agentAlreadyExists: 'Агент з таким ім’ям уже існує',
+    agentIdRequired: 'Айді Агента обов`язкове',
   },
 };
 

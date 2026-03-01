@@ -1,5 +1,3 @@
-import { ReactElement } from 'react';
-
 export enum BottomWindowModes {
   PermissionDenied = 'permission-denied',
   SearchFilter = 'search-filter',

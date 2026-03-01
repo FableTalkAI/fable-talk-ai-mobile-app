@@ -26,7 +26,6 @@ const en: Translations = {
     warning: 'Warning',
     pinnedWarning:
       'You have reached the maximum number of pinned chats. Unpin a chat or upgrade your subscription plan',
-    onModeration: 'On Moderation',
   },
 
   empty: {
@@ -72,6 +71,7 @@ const en: Translations = {
     continue: 'Continue',
     logout: 'Logout',
     create: 'Create',
+    update: 'Update',
   },
 
   bottomWindows: {
@@ -137,8 +137,10 @@ const en: Translations = {
   },
 
   createAgent: {
-    header: 'Create Agent',
-    agentCreatedSuccess: 'Agent successfully created and sent on moderation!',
+    createHeader: 'Create Agent',
+    updateHeader: 'Update Agent',
+    agentCreatedSuccessfully: 'Agent successfully created and sent on moderation!',
+    agentUpdatedSuccessfully: 'Agent successfully updated and sent on moderation!',
     agentCreateLimit: 'Slow down! Wait for your pending agents to be moderated before creating more',
     avatar: {
       error: 'Avatar is required',
@@ -171,6 +173,8 @@ const en: Translations = {
   home: {
     all: 'All',
     my: 'My',
+    onModeration: 'On Moderation',
+    needEdit: 'Need Edit',
   },
 
   searchInput: {
@@ -263,6 +267,7 @@ const en: Translations = {
     chatDeleted: 'Chat deleted!',
     agentRequired: 'Agent information is missing or invalid',
     agentAlreadyExists: 'An agent with this name already exists',
+    agentIdRequired: 'Agent id is required',
   },
 };
 

@@ -41,7 +41,6 @@ export type Translations = {
     info: string;
     warning: string;
     pinnedWarning: string;
-    onModeration: string;
   };
 
   empty: {
@@ -73,6 +72,7 @@ export type Translations = {
     continue: string;
     logout: string;
     create: string;
+    update: string;
   };
 
   bottomWindows: {
@@ -138,8 +138,10 @@ export type Translations = {
   };
 
   createAgent: {
-    header: string;
-    agentCreatedSuccess: string;
+    createHeader: string;
+    updateHeader: string;
+    agentCreatedSuccessfully: string;
+    agentUpdatedSuccessfully: string;
     agentCreateLimit: string;
     avatar: Input;
     name: Input;
@@ -153,6 +155,8 @@ export type Translations = {
   home: {
     all: string;
     my: string;
+    onModeration: string;
+    needEdit: string;
   };
 
   searchInput: {
@@ -244,5 +248,6 @@ export type Translations = {
     chatDeleted: string;
     agentRequired: string;
     agentAlreadyExists: string;
+    agentIdRequired: string;
   };
 };

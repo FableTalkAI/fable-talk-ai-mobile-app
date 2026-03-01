@@ -3,7 +3,14 @@ import { AGENTS_ROUTE } from '@env';
 import { createAxiosAsyncThunk } from '@/app/store/typedCreateAsyncThunk.ts';
 import http from '@/shared/api/http.ts';
 
-import { Agent, CreateAgentRequest, GetFilteredAgentsResponse, GetResultsOfSearchRequest } from './types.ts';
+import {
+  Agent,
+  AgentModerationStatus,
+  CreateAgentRequest,
+  GetFilteredAgentsResponse,
+  GetResultsOfSearchRequest,
+  UpdateAgentRequest,
+} from './types.ts';
 
 export const agentsSliceName = 'agents';
 
@@ -11,6 +18,17 @@ export const createAgent = createAxiosAsyncThunk<void, CreateAgentRequest>(
   `${agentsSliceName}/createAgent`,
   async data => {
     await http.post(`${AGENTS_ROUTE}/create`, data);
+  },
+);
+
+export const updateAgent = createAxiosAsyncThunk<void, UpdateAgentRequest>(
+  `${agentsSliceName}/updateAgent`,
+  async ({ agentId, ...data }) => {
+    await http.patch(
+      `${AGENTS_ROUTE}/`,
+      { ...data, moderationStatus: AgentModerationStatus.OnModeration },
+      { params: { agentId } },
+    );
   },
 );
 

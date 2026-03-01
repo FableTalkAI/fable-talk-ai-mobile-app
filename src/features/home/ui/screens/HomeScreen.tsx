@@ -42,7 +42,7 @@ const HomeScreen = () => {
 
   const { filter } = useUserStore();
   const { open } = useBottomWindow(BottomWindowModes.SearchFilter);
-  const { getChatByIdHandler, isLoading: isLoadingChat } = useChatStore();
+  const { isLoading: isLoadingChat } = useChatStore();
 
   const [activeTab, setActiveTab] = useState(0);
 
@@ -54,11 +54,6 @@ const HomeScreen = () => {
       color: colors.gray10,
     },
   });
-
-  const onChatOpenHandler = (agentId: string) => async () => {
-    await getChatByIdHandler(agentId);
-    navigation.navigate('ChatScreen');
-  };
 
   return (
     <>
@@ -102,7 +97,6 @@ const HomeScreen = () => {
                   hasMore={agentsPagination.hasMore}
                   onRefresh={getAgentsHandler}
                   onLoadMore={getAgentsHandler}
-                  onAgentPress={onChatOpenHandler}
                 />
               ),
             },
@@ -117,7 +111,6 @@ const HomeScreen = () => {
                   hasMore={myAgentsPagination.hasMore}
                   onRefresh={getMyAgentsHandler}
                   onLoadMore={getMyAgentsHandler}
-                  onAgentPress={onChatOpenHandler}
                   ListEmptyComponent={
                     <EmptyStub
                       subtitle={t('empty.myAgentsList.subtitle')}

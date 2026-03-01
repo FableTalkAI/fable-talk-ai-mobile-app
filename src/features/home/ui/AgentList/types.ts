@@ -9,6 +9,5 @@ export type AgentListProps = {
   hasMore: boolean;
   onRefresh: () => Promise<void>;
   onLoadMore: (loadMore?: boolean) => Promise<void>;
-  onAgentPress: (id: string) => () => Promise<void>;
   ListEmptyComponent?: ReactElement;
 };

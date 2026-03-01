@@ -10,6 +10,7 @@ import {
   getFilteredAgents,
   getMyAgents,
   getResultsOfSearch,
+  updateAgent,
 } from './thunks.ts';
 import { AgentsState } from './types.ts';
 
@@ -32,7 +33,6 @@ const initialState: AgentsState = {
     agents: false,
     tags: false,
     searchResults: false,
-    createAgent: false,
   },
 };
 
@@ -104,14 +104,15 @@ const agentsSlice = createSlice({
       })
 
       //createAgent
-      .addCase(createAgent.pending, state => {
-        state.loading.createAgent = true;
-      })
-      .addCase(createAgent.fulfilled, state => {
-        state.loading.createAgent = false;
-      })
       .addCase(createAgent.rejected, (state, action) => {
-        state.loading.createAgent = false;
+        showToast({
+          type: 'error',
+          text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
+        });
+      })
+
+      //createAgent
+      .addCase(updateAgent.rejected, (state, action) => {
         showToast({
           type: 'error',
           text2: i18n.t(`serverResponses.${action.payload?.messageKey}`),
