@@ -1,11 +1,13 @@
 import { StyleProp, ViewStyle } from 'react-native';
 
+import { Tag } from '@/features/agents/store/agents/types.ts';
+
 export type TagProps = {
-  title: string;
+  tag: Tag;
   forceActive?: boolean;
   isSelected?: boolean;
   disabled?: boolean;
-  onToggle?: (title: string) => void;
+  onToggle?: (title: Tag) => void;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
 };

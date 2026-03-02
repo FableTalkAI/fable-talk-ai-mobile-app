@@ -138,8 +138,8 @@ const AgentBar = ({
             style={styles.flatList}
             contentContainerStyle={styles.flatListContainer}
             showsHorizontalScrollIndicator={false}
-            keyExtractor={item => item}
-            renderItem={({ item }) => <Tag title={item} forceActive />}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => <Tag tag={item} forceActive />}
           />
         </PressableCustom>
       </LinearGradient>

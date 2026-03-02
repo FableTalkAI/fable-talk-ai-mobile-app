@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -9,8 +10,9 @@ import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
 import { TagColorModes, TagProps } from './types.ts';
 
-const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle, style, disabled }: TagProps) => {
+const Tag = ({ tag, forceActive = false, onToggle, isSelected, containerStyle, style, disabled }: TagProps) => {
   const { colors } = useTheme();
+  const { i18n } = useTranslation();
 
   const currentMode = forceActive || isSelected ? TagColorModes.Active : TagColorModes.Inactive;
 
@@ -47,10 +49,10 @@ const Tag = ({ title, forceActive = false, onToggle, isSelected, containerStyle,
       style={[styles.tags, computedStyles.tags, style]}
       containerStyle={containerStyle}
       hitSlop={5}
-      onPress={() => onToggle?.(title)}
+      onPress={() => onToggle?.(tag)}
     >
       <TextCustom
-        text={title}
+        text={tag.locale[i18n.language]}
         mode={TextModes.Tag}
         style={[computedStyles.tagsText, styles.tagsText]}
         numberOfLines={1}

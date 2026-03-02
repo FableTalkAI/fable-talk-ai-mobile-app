@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+import { Tag } from '@/features/agents/store/agents/types.ts';
 import {
   clearFilter,
   setFilterSort,
@@ -30,7 +31,7 @@ const useUserStore = () => {
   const pinnedChatIds = useAppSelector(pinnedChatIdsSelector);
 
   const setFilterTagsHandler = useCallback(
-    (selectedTags: string[]) => {
+    (selectedTags: Tag[]) => {
       dispatch(setFilterTags(selectedTags));
     },
     [dispatch],

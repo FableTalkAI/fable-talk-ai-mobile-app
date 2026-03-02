@@ -1,7 +1,9 @@
+import { Tag } from '@/features/agents/store/agents/types.ts';
+
 export type UserState = {
   onboardingStep: number;
   filter: {
-    tags: string[];
+    tags: Tag[];
     sortBy: SortByFilter;
     sort: SortFilter;
   };
