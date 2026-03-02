@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { DEFAULT_CREATE_AGENT_VALUES } from '@/features/agents/model/constants.ts';
 import { createAgentSchema } from '@/features/agents/model/schemas.ts';
 import { CreateAgentValues } from '@/features/agents/model/types.ts';
-import { Agent, CreateAgentRequest } from '@/features/agents/store/agents/types.ts';
+import { Agent, CreateAgentRequest, Tag } from '@/features/agents/store/agents/types.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { useImagePick } from '@/shared/hooks/useImagePick';
@@ -63,7 +63,7 @@ const useCreateAgent = ({ agentId }: UseCreateAgentParams) => {
     },
   });
 
-  const setTags = (tags: string[]) =>
+  const setTags = (tags: Tag[]) =>
     setValue('tags', tags, {
       shouldValidate: true,
       shouldDirty: true,

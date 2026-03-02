@@ -46,7 +46,7 @@ const TagsSelector = ({ onPress, tags }: TagsSelectorProps) => {
           horizontal
           bounces={false}
           showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <Tag disabled title={item} forceActive />}
+          renderItem={({ item }) => <Tag disabled tag={item} forceActive />}
           ListEmptyComponent={
             <Animated.View exiting={FadeOut} entering={FadeIn} style={styles.noResultsContainer}>
               <TextCustom

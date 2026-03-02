@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 
+import { Tag } from '@/features/agents/store/agents/types.ts';
 import { showToast } from '@/shared/lib/toast';
 
 import { userSliceName } from './thunks.ts';
@@ -24,7 +25,7 @@ const userSlice = createSlice({
   name: userSliceName,
   initialState,
   reducers: {
-    setFilterTags: (state, action: PayloadAction<string[]>) => {
+    setFilterTags: (state, action: PayloadAction<Tag[]>) => {
       state.filter.tags = action.payload;
     },
     setFilterSortBy: (state, action: PayloadAction<SortByFilter>) => {

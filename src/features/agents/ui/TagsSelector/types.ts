@@ -1,4 +1,6 @@
+import { Tag } from '@/features/agents/store/agents/types.ts';
+
 export type TagsSelectorProps = {
-  tags: string[];
+  tags: Tag[];
   onPress: () => void;
 };

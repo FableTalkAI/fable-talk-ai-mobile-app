@@ -4,6 +4,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
+import { Tag as TagType } from '@/features/agents/store/agents/types.ts';
 import SearchInput from '@/features/home/ui/SearchInput';
 import Tag from '@/features/onboarding/ui/Tag';
 import { TagSelectedIcon } from '@/shared/assets/icons';
@@ -20,12 +21,12 @@ import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 import { TagsSelectorBottomWindowProps } from './types.ts';
 
 const TagsSelectorBottomWindow = ({ setTags, previousSelectedTags, close }: TagsSelectorBottomWindowProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors } = useTheme();
 
   const { tags } = useAgentsStore();
 
-  const [selectedTags, setSelectedTags] = useState<string[]>(previousSelectedTags);
+  const [selectedTags, setSelectedTags] = useState(previousSelectedTags);
   const [filteredTags, setFilteredTags] = useState(tags);
 
   const computedStyles = StyleSheet.create({
@@ -36,14 +37,14 @@ const TagsSelectorBottomWindow = ({ setTags, previousSelectedTags, close }: Tags
 
   const onStopHandler = useCallback(
     (value: string) => {
-      setFilteredTags(tags.filter((tag: string) => tag.toLowerCase().includes(value.toLowerCase())));
+      setFilteredTags(tags.filter(tag => tag.locale[i18n.language].includes(value)));
     },
-    [tags],
+    [i18n.language, tags],
   );
 
-  const onToggle = (tag: string) => {
-    if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter(selectedTag => selectedTag !== tag));
+  const onToggle = (tag: TagType) => {
+    if (selectedTags.find(i => i.id === tag.id)) {
+      setSelectedTags(selectedTags.filter(selectedTag => selectedTag.id !== tag.id));
     } else {
       setSelectedTags([...selectedTags, tag]);
     }
@@ -77,11 +78,11 @@ const TagsSelectorBottomWindow = ({ setTags, previousSelectedTags, close }: Tags
           numColumns={2}
           renderItem={({ item }) => (
             <Tag
-              title={item}
+              tag={item}
               containerStyle={styles.tagContainer}
               style={styles.tag}
               onToggle={onToggle}
-              isSelected={selectedTags.includes(item)}
+              isSelected={selectedTags.some(i => i.id === item.id)}
             />
           )}
           ListEmptyComponent={
@@ -108,8 +109,7 @@ const TagsSelectorBottomWindow = ({ setTags, previousSelectedTags, close }: Tags
           horizontal
           bounces={false}
           showsHorizontalScrollIndicator={false}
-          //TODO: tags into translation
-          renderItem={({ item }) => <Tag title={item} forceActive onToggle={onToggle} />}
+          renderItem={({ item }) => <Tag tag={item} forceActive onToggle={onToggle} />}
           ListEmptyComponent={
             <Animated.View exiting={FadeOut} entering={FadeIn} style={styles.noResultsContainer}>
               <TextCustom mode={TextModes.Secondary} textColor={colors.gray50} text={t('empty.selectedTags.title')} />
@@ -187,7 +187,6 @@ const styles = StyleSheet.create({
     gap: SPACING.xxs,
     paddingBottom: SPACING.xs,
     height: 40,
-    flex: 1,
   },
   buttonWrapper: {
     flexDirection: 'row',

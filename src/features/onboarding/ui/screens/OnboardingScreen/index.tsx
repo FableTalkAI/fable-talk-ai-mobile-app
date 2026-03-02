@@ -28,7 +28,11 @@ const OnboardingScreen = () => {
           </>
         )}
 
-        <ScrollView bounces={false} contentContainerStyle={styles.scrollViewContainer}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          contentContainerStyle={styles.scrollViewContainer}
+        >
           <CurrentStep />
         </ScrollView>
       </Animated.View>

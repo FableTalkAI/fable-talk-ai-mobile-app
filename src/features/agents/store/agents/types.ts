@@ -9,8 +9,19 @@ export enum AgentModerationStatus {
   Rejected = 'rejected',
 }
 
+export enum TagCategory {
+  Genres = 'genres',
+  Roles = 'roles',
+  Personality = 'personality',
+  Occupation = 'occupation',
+  Vibe = 'vibe',
+  Utility = 'utility',
+  Relationships = 'relationships',
+  Powers = 'powers',
+}
+
 export type AgentsState = {
-  tags: string[];
+  tags: Tag[];
   agents: Agent[];
   myAgents: Agent[];
   searchResults: Agent[];
@@ -37,7 +48,7 @@ export type Agent = {
   description: string;
   name: string;
   nameLower: string;
-  tags: string[];
+  tags: Tag[];
   popularity: number;
   prompt: string;
   moderationComment?: string;
@@ -50,9 +61,15 @@ export type GetResultsOfSearchRequest = {
 export type CreateAgentRequest = {
   description: string;
   name: string;
-  tags: string[];
+  tags: Tag[];
   prompt: string;
   avatarBase64: string | null;
+};
+
+export type Tag = {
+  id: string;
+  category: TagCategory;
+  locale: Record<string, string>;
 };
 
 export type UpdateAgentRequest = {

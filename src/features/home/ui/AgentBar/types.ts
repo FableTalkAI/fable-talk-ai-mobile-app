@@ -1,5 +1,6 @@
 import { StyleProp, ViewStyle } from 'react-native';
 
+import { Tag } from '@/features/agents/store/agents/types.ts';
 import { AutoImageSource } from '@/shared/ui/AutoImage/types.ts';
 
 export enum AgentBarModes {
@@ -12,7 +13,7 @@ export enum AgentBarModes {
 export type AgentBarProps = {
   name: string;
   description: string;
-  tags: string[];
+  tags: Tag[];
   avatarSource: AutoImageSource;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;

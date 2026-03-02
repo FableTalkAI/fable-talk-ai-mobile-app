@@ -9,6 +9,7 @@ import {
   CreateAgentRequest,
   GetFilteredAgentsResponse,
   GetResultsOfSearchRequest,
+  Tag,
   UpdateAgentRequest,
 } from './types.ts';
 
@@ -32,13 +33,10 @@ export const updateAgent = createAxiosAsyncThunk<void, UpdateAgentRequest>(
   },
 );
 
-export const getAllUniqueTags = createAxiosAsyncThunk<string[], void>(
-  `${agentsSliceName}/getAllUniqueTags`,
-  async () => {
-    const response = await http.get(`${AGENTS_ROUTE}/unique-tags`);
-    return response.data;
-  },
-);
+export const getAllUniqueTags = createAxiosAsyncThunk<Tag[], void>(`${agentsSliceName}/getAllUniqueTags`, async () => {
+  const response = await http.get(`${AGENTS_ROUTE}/unique-tags`);
+  return response.data;
+});
 
 export const getFilteredAgents = createAxiosAsyncThunk<GetFilteredAgentsResponse, boolean>(
   `${agentsSliceName}/getFilteredAgents`,
