@@ -3,12 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
-import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
-import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import AgentList from '@/features/home/ui/AgentList/AgentList.tsx';
 import CreateAgentButton from '@/features/home/ui/CreateAgentButton';
+import SearchFilterBottomWindow from '@/features/home/ui/SearchFilterBottomWindow';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { AddAgentIcon, FilterIcon, PlusIcon, RobotFilledIcon, SearchIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -41,10 +41,14 @@ const HomeScreen = () => {
   } = useAgentsStore();
 
   const { filter } = useUserStore();
-  const { open } = useBottomWindow(BottomWindowModes.SearchFilter);
+  const { open } = useBottomWindow();
   const { isLoading: isLoadingChat } = useChatStore();
 
   const [activeTab, setActiveTab] = useState(0);
+
+  const openSearchFilterBottomWindow = () => {
+    open(close => <SearchFilterBottomWindow close={close} />);
+  };
 
   const computedStyles = StyleSheet.create({
     selectedTagsContainer: {
@@ -65,7 +69,7 @@ const HomeScreen = () => {
             </PressableCustom>
           }
           rightIcon={
-            <PressableCustom onPress={() => open()}>
+            <PressableCustom onPress={openSearchFilterBottomWindow}>
               <FilterIcon width={24} />
 
               {!!filter.tags.length && (
@@ -83,7 +87,6 @@ const HomeScreen = () => {
           }
           activeTab={activeTab}
           onChange={setActiveTab}
-          style={styles.tabToggle}
           tabContainerWidth={WINDOW_WIDTH - SPACING.xl * 2 - 24 - 32}
           tabs={[
             {
@@ -150,9 +153,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 3,
     right: 2,
-  },
-  tabToggle: {
-    marginTop: SPACING.xs,
   },
   createAgentButton: {
     position: 'absolute',

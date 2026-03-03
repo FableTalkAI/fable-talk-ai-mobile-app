@@ -3,12 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
-import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
+import DeleteAccountBottomWindow from '@/features/auth/ui/DeleteAccountBottomWindow';
+import LogoutBottomWindow from '@/features/auth/ui/LogoutBottomWindow';
 import { setAppLanguage } from '@/features/locales/services/setAppLanguage.ts';
 import { Languages } from '@/features/locales/types.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useNotificationPermission from '@/features/notifications/hooks/useNotificationPermission.ts';
+import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { Theme } from '@/features/profile/store/user/types.ts';
@@ -40,9 +41,16 @@ const SettingsScreen = () => {
   const { notifications, theme, setThemeHandler } = useUserStore();
   const { updateUserProfileHandler, profile, isLoading } = useProfileStore();
 
-  const { open: openDeleteAcc } = useBottomWindow(BottomWindowModes.DeleteAccount);
-  const { open: openLogoutAcc } = useBottomWindow(BottomWindowModes.Logout);
+  const { open } = useBottomWindow();
   const { authorizeHandler } = useNotificationPermission();
+
+  const openDeleteAccountBottomWindow = () => {
+    open(close => <DeleteAccountBottomWindow navigation={navigation} close={close} />);
+  };
+
+  const openLogoutBottomWindow = () => {
+    open(close => <LogoutBottomWindow navigation={navigation} close={close} />);
+  };
 
   const emailNotifications = profile ? profile.isEmailNotificationEnabled : false;
 
@@ -153,14 +161,14 @@ const SettingsScreen = () => {
             }
           />
           <OptionBar
-            onPress={openLogoutAcc}
+            onPress={openLogoutBottomWindow}
             title={t('actions.logout')}
             subtitle={t('settings.exitFromAcc')}
             leftIcon={<LogoutIcon />}
             mode={OptionBarModes.Complex}
           />
           <OptionBar
-            onPress={openDeleteAcc}
+            onPress={openDeleteAccountBottomWindow}
             title={t('actions.delete')}
             subtitle={t('settings.removeYourAccount')}
             colorMode={OptionBarColorModes.Red}

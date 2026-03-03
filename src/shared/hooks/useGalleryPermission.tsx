@@ -2,13 +2,16 @@ import { useCallback } from 'react';
 import { Platform } from 'react-native';
 import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
 
-import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
+import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import { IS_ANDROID, IS_IOS } from '@/shared/model/device.ts';
-
-import useBottomWindow from '../../features/bottomWindow/hooks/useBottomWindow';
+import PermissionDeniedBottomWindow from '@/shared/ui/PermissionDeniedBottomWindow';
 
 export const useGalleryPermission = () => {
-  const { open } = useBottomWindow(BottomWindowModes.PermissionDenied);
+  const { open } = useBottomWindow();
+
+  const openPermissionDeniedBottomWindow = useCallback(() => {
+    open(close => <PermissionDeniedBottomWindow close={close} />);
+  }, [open]);
 
   const requestGalleryPermission = useCallback(async (): Promise<boolean> => {
     let permission;
@@ -27,7 +30,7 @@ export const useGalleryPermission = () => {
     const currentStatus = await check(permission);
 
     if (currentStatus === RESULTS.BLOCKED) {
-      open();
+      openPermissionDeniedBottomWindow();
       return false;
     }
 
@@ -38,11 +41,11 @@ export const useGalleryPermission = () => {
     }
 
     if (result === RESULTS.BLOCKED) {
-      open();
+      openPermissionDeniedBottomWindow();
     }
 
     return false;
-  }, [open]);
+  }, [openPermissionDeniedBottomWindow]);
 
   return { requestGalleryPermission };
 };

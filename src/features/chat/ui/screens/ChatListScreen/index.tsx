@@ -4,14 +4,14 @@ import { StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 
-import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
-import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
-import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection.ts';
+import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import ChatListBar from '@/features/chat/ui/ChatListBar';
+import DeleteChatBottomWindow from '@/features/chat/ui/DeleteChatBottomWindow';
 import MultiSelectHeader from '@/features/chat/ui/MultiSelectHeader';
 import SearchInput from '@/features/home/ui/SearchInput';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { ChatArrowIcon } from '@/shared/assets/icons';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
@@ -25,11 +25,17 @@ const ChatListScreen = () => {
 
   const { chats, getChatByIdHandler, isLoading } = useChatStore();
   const { pinnedChatIds } = useUserStore();
-  const { open } = useBottomWindow(BottomWindowModes.DeleteChat);
+  const { open } = useBottomWindow();
 
   const [filteredChats, setFilteredChats] = useState(chats);
   const [sortedChats, setSortedChats] = useState(chats);
   const { multiSelectionsChatIds, toggleSelectChat, clear, isSelectedMode } = useChatMultiSelection();
+
+  const openDeleteChatBottomWindow = () => {
+    open(close => (
+      <DeleteChatBottomWindow multiSelectionsChatIds={multiSelectionsChatIds} clear={clear} close={close} />
+    ));
+  };
 
   const onStopHandler = (value: string) => {
     const lower = value.toLowerCase();
@@ -74,7 +80,7 @@ const ChatListScreen = () => {
     <>
       <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
         <SearchInput style={styles.search} placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
-        <MultiSelectHeader onCrossPress={clear} onBinPress={open} isVisible={isSelectedMode} />
+        <MultiSelectHeader onCrossPress={clear} onBinPress={openDeleteChatBottomWindow} isVisible={isSelectedMode} />
 
         <FlatList
           ListEmptyComponent={

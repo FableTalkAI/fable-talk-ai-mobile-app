@@ -23,9 +23,9 @@ import Select from '@/shared/ui/Select';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
-import { SearchFilterProps } from './types.ts';
+import { SearchFilterBottomWindowProps } from './types.ts';
 
-const SearchFilter = ({ close }: SearchFilterProps) => {
+const SearchFilterBottomWindow = ({ close }: SearchFilterBottomWindowProps) => {
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
 
@@ -189,8 +189,6 @@ const SearchFilter = ({ close }: SearchFilterProps) => {
   );
 };
 
-export default SearchFilter;
-
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
@@ -267,3 +265,5 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.xs,
   },
 });
+
+export default SearchFilterBottomWindow;

@@ -6,12 +6,12 @@ import { StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
-import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
-import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
+import DeleteChatBottomWindow from '@/features/chat/ui/DeleteChatBottomWindow';
 import { Bubble, Composer, InputToolbar, Message, Send } from '@/features/chat/ui/giftedChat';
 import ChatAvatar from '@/features/chat/ui/giftedChat/ChatAvatar.tsx';
+import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { TrashBinIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -27,13 +27,13 @@ const ChatScreen = () => {
 
   const { colors } = useTheme();
   const { t, i18n } = useTranslation();
+  const { navigation } = useNavigationRoutes();
   const insets = useSafeAreaInsets();
 
   const { selectedChat, sendMessageHandler, isLoading, getAllChatsHandler } = useChatStore();
   const { profile } = useProfileStore();
-  const { toggleSelectChat } = useChatMultiSelection();
 
-  const { open } = useBottomWindow(BottomWindowModes.DeleteChat);
+  const { open } = useBottomWindow();
 
   const [messageHistory, setMessageHistory] = useState<IMessage[]>(selectedChat ? selectedChat.messageHistory : []);
 
@@ -73,10 +73,11 @@ const ChatScreen = () => {
     async (selectedChatId?: string) => {
       if (!selectedChatId) return;
 
-      toggleSelectChat(selectedChatId);
-      open();
+      open(close => (
+        <DeleteChatBottomWindow close={close} multiSelectionsChatIds={[selectedChatId]} onDelete={navigation.goBack} />
+      ));
     },
-    [open, toggleSelectChat],
+    [navigation.goBack, open],
   );
 
   useEffect(() => {
