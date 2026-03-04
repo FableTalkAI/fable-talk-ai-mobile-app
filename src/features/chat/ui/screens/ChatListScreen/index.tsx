@@ -14,7 +14,7 @@ import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { ChatArrowIcon } from '@/shared/assets/icons';
-import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
+import { SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 import ScreenLoader from '@/shared/ui/ScreenLoader';
@@ -127,13 +127,6 @@ const styles = StyleSheet.create({
     gap: SPACING.lg,
     paddingHorizontal: SPACING.xl,
     minHeight: '90%',
-  },
-  selectedModeContainer: {
-    width: '100%',
-    position: 'absolute',
-    height: 48,
-    borderRadius: RADIUS.large,
-    left: SPACING.xl,
   },
 });
 

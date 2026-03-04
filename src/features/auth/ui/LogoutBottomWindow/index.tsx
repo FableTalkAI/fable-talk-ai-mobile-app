@@ -1,7 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
 import { logoutUser } from '@/features/auth/services/logoutUser.ts';
-import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import Alert from '@/features/overlay/ui/bottomWindowTemplates/Alert';
 import { ButtonModes } from '@/shared/ui/Button/types.ts';
 

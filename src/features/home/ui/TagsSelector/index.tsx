@@ -180,9 +180,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-  title: {
-    marginBottom: SPACING.xs,
-  },
 });
 
 export default TagsSelector;

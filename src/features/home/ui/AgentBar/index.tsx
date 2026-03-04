@@ -1,6 +1,6 @@
 import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { BlurView } from '@react-native-community/blur';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -89,12 +89,15 @@ const AgentBar = ({
     };
   });
 
-  const onTagLongPress = (tag: TagType) => {
-    setFilterTagsHandler([tag]);
+  const onTagLongPress = useCallback(
+    (tag: TagType) => {
+      setFilterTagsHandler([tag]);
 
-    getAgentsHandler().catch(console.error);
-    getMyAgentsHandler().catch(console.error);
-  };
+      getAgentsHandler().catch(console.error);
+      getMyAgentsHandler().catch(console.error);
+    },
+    [getAgentsHandler, getMyAgentsHandler, setFilterTagsHandler],
+  );
 
   useEffect(() => {
     if (mode === AgentBarModes.OnModeration) {
@@ -158,7 +161,20 @@ const AgentBar = ({
         </PressableCustom>
       </LinearGradient>
     ),
-    [avatarSource, computedStyles, description, gradientColors, name, onPress, style, tags],
+    [
+      avatarSource,
+      computedStyles.description,
+      computedStyles.name,
+      computedStyles.pressableContainer,
+      computedStyles.wrapper,
+      description,
+      gradientColors,
+      name,
+      onPress,
+      onTagLongPress,
+      style,
+      tags,
+    ],
   );
 
   if (mode === AgentBarModes.Premium) {
@@ -181,7 +197,7 @@ const AgentBar = ({
             reducedTransparencyFallbackColor="white"
             blurType="light"
             blurAmount={5}
-            style={[styles.blurContainer]}
+            style={styles.blurContainer}
           >
             <Animated.View style={animatedGearStyle}>
               <GearIcon />

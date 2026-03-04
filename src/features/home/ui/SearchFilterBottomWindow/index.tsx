@@ -111,10 +111,6 @@ const styles = StyleSheet.create({
     flex: 1,
     gap: SPACING.m,
   },
-  empty: {
-    paddingHorizontal: SPACING.m,
-    height: 180,
-  },
   sortContainer: {
     flexDirection: 'row',
     flex: 1,

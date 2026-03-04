@@ -15,9 +15,6 @@ const SettingsContainer = ({ label, children }: SettingsContainerProps) => {
     container: {
       backgroundColor: colors.backgroundSecondary,
     },
-    label: {
-      color: colors.textLight,
-    },
   });
 
   return (
