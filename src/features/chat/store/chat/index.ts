@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 
 import { showToast } from '@/shared/lib/toast/index.ts';
@@ -9,7 +9,6 @@ import { ChatState } from './types.ts';
 const initialState: ChatState = {
   chats: [],
   selectedChat: null,
-  multiSelectionsChatIds: [],
   loading: {
     sendMessage: false,
     chats: false,
@@ -21,22 +20,7 @@ const initialState: ChatState = {
 const chatSlice = createSlice({
   name: chatSliceName,
   initialState,
-  reducers: {
-    toggleChatSelection: (state, action: PayloadAction<string>) => {
-      const chatId = action.payload;
-      const index = state.multiSelectionsChatIds.indexOf(chatId);
-
-      if (index >= 0) {
-        state.multiSelectionsChatIds.splice(index, 1);
-      } else {
-        state.multiSelectionsChatIds.push(chatId);
-      }
-    },
-
-    clearChatSelection: state => {
-      state.multiSelectionsChatIds = [];
-    },
-  },
+  reducers: {},
   extraReducers: builder => {
     builder
       //getAllChats
@@ -113,7 +97,5 @@ const chatSlice = createSlice({
       });
   },
 });
-
-export const { toggleChatSelection, clearChatSelection } = chatSlice.actions;
 
 export default chatSlice.reducer;

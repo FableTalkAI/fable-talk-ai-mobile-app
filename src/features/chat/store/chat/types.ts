@@ -4,7 +4,6 @@ import { UserLimits } from '@/features/profile/store/profile/types.ts';
 export type ChatState = {
   chats: Required<Chat>[];
   selectedChat: GetChatByIdResponse | null;
-  multiSelectionsChatIds: string[];
   loading: {
     chats: boolean;
     selectedChat: boolean;
