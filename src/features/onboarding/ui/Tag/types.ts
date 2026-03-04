@@ -8,6 +8,7 @@ export type TagProps = {
   isSelected?: boolean;
   disabled?: boolean;
   onToggle?: (title: Tag) => void;
+  onLongPress?: (title: Tag) => void;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
 };

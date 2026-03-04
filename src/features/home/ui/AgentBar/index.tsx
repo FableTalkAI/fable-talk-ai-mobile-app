@@ -14,7 +14,10 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
+import { Tag as TagType } from '@/features/agents/store/agents/types.ts';
 import Tag from '@/features/onboarding/ui/Tag';
+import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { GearIcon, PremiumAgentIcon, WarningTriangleIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
@@ -40,6 +43,9 @@ const AgentBar = ({
 
   const progress = useSharedValue(0);
   const shakeAngle = useSharedValue(0);
+
+  const { getAgentsHandler, getMyAgentsHandler } = useAgentsStore();
+  const { setFilterTagsHandler } = useUserStore();
 
   const isPremiumAgent = mode === AgentBarModes.Premium;
   const gradientColors = useMemo(
@@ -82,6 +88,13 @@ const AgentBar = ({
       transform: [{ rotate: `${shakeAngle.value}deg` }],
     };
   });
+
+  const onTagLongPress = (tag: TagType) => {
+    setFilterTagsHandler([tag]);
+
+    getAgentsHandler().catch(console.error);
+    getMyAgentsHandler().catch(console.error);
+  };
 
   useEffect(() => {
     if (mode === AgentBarModes.OnModeration) {
@@ -134,12 +147,13 @@ const AgentBar = ({
 
           <FlatList
             horizontal
+            nestedScrollEnabled
             data={tags}
             style={styles.flatList}
             contentContainerStyle={styles.flatListContainer}
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => <Tag tag={item} forceActive />}
+            renderItem={({ item }) => <Tag onLongPress={onTagLongPress} tag={item} forceActive />}
           />
         </PressableCustom>
       </LinearGradient>

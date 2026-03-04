@@ -1,23 +1,18 @@
 import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
-import { Tag as TagType } from '@/features/agents/store/agents/types.ts';
-import SearchInput from '@/features/home/ui/SearchInput';
-import Tag from '@/features/onboarding/ui/Tag';
+import TagsSelector from '@/features/home/ui/TagsSelector';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { SortByFilter, SortFilter } from '@/features/profile/store/user/types.ts';
-import { SortAscendingIcon, SortDescendingIcon, TagSelectedIcon } from '@/shared/assets/icons';
+import { SortAscendingIcon, SortDescendingIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
-import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
-import { BOX_SHADOW } from '@/shared/model/styles.ts';
+import { SPACING } from '@/shared/model/sizes.ts';
 import Button from '@/shared/ui/Button';
 import { ButtonModes } from '@/shared/ui/Button/types.ts';
-import EmptyStub from '@/shared/ui/EmptyStub';
-import { EmptyStubSizes } from '@/shared/ui/EmptyStub/types.tsx';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import Select from '@/shared/ui/Select';
 import TextCustom from '@/shared/ui/TextCustom';
@@ -26,15 +21,14 @@ import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 import { SearchFilterBottomWindowProps } from './types.ts';
 
 const SearchFilterBottomWindow = ({ close }: SearchFilterBottomWindowProps) => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const { colors } = useTheme();
 
-  const { tags, getAgentsHandler, getMyAgentsHandler, myAgents } = useAgentsStore();
-
+  const { getAgentsHandler, getMyAgentsHandler } = useAgentsStore();
   const { filter, setFilterSortByHandler, setFilterSortHandler, setFilterTagsHandler, clearFilterHandler } =
     useUserStore();
 
-  const [filteredTags, setFilteredTags] = useState(tags);
+  const [selectedTags, setSelectedTags] = useState(filter.tags);
 
   const selectOptions = useMemo(
     () =>
@@ -45,42 +39,20 @@ const SearchFilterBottomWindow = ({ close }: SearchFilterBottomWindowProps) => {
     [t],
   );
 
-  const computedStyles = StyleSheet.create({
-    sectionBackground: {
-      backgroundColor: colors.backgroundSecondary,
-    },
-  });
-
-  const onStopHandler = useCallback(
-    (value: string) => {
-      setFilteredTags(tags.filter(tag => tag.locale[i18n.language].toLowerCase().includes(value.toLowerCase())));
-    },
-    [i18n.language, tags],
-  );
-
-  const onToggle = (tag: TagType) => {
-    if (filter.tags.find(i => i.id === tag.id)) {
-      setFilterTagsHandler(filter.tags.filter(selectedTag => selectedTag.id !== tag.id));
-    } else {
-      setFilterTagsHandler([...filter.tags, tag]);
-    }
+  const getAgents = () => {
+    getAgentsHandler().catch(console.error);
+    getMyAgentsHandler().catch(console.error);
+    close();
   };
 
   const onApply = () => {
-    getAgentsHandler().catch(console.error);
-    if (myAgents) {
-      getMyAgentsHandler().catch(console.error);
-    }
-    close();
+    setFilterTagsHandler(selectedTags);
+    getAgents();
   };
 
   const onClear = () => {
     clearFilterHandler();
-    getAgentsHandler().catch(console.error);
-    if (myAgents) {
-      getMyAgentsHandler().catch(console.error);
-    }
-    close();
+    getAgents();
   };
 
   return (
@@ -113,62 +85,7 @@ const SearchFilterBottomWindow = ({ close }: SearchFilterBottomWindowProps) => {
 
       <View>
         <TextCustom style={styles.title} text={t('bottomWindows.searchFilter.filter')} mode={TextModes.Subtitle} />
-
-        <View style={[computedStyles.sectionBackground, styles.sectionBackground]}>
-          <View style={styles.searchAndTagsNumberContainer}>
-            <SearchInput withShadow={false} placeholder={t('bottomWindows.searchFilter.tags')} onStop={onStopHandler} />
-            <TextCustom text={String(filteredTags.length)} />
-          </View>
-
-          <FlatList
-            data={filteredTags}
-            nestedScrollEnabled
-            showsVerticalScrollIndicator={false}
-            columnWrapperStyle={styles.tagsFlatListWrapper}
-            style={styles.tagsFlatList}
-            contentContainerStyle={styles.tagsFlatListContainer}
-            numColumns={2}
-            renderItem={({ item }) => (
-              <Tag
-                tag={item}
-                containerStyle={styles.tagContainer}
-                style={styles.tag}
-                onToggle={onToggle}
-                isSelected={filter.tags.some(i => i.id === item.id)}
-              />
-            )}
-            ListEmptyComponent={
-              <EmptyStub
-                style={styles.empty}
-                size={EmptyStubSizes.Small}
-                icon={<TagSelectedIcon />}
-                title={t('empty.tagSearch.title')}
-                subtitle={t('empty.tagSearch.subtitle')}
-              />
-            }
-          />
-        </View>
-      </View>
-
-      <View style={[computedStyles.sectionBackground, styles.sectionBackground]}>
-        <View style={styles.selectedTextContainer}>
-          <TagSelectedIcon />
-          <TextCustom text={t('bottomWindows.searchFilter.selectedTags')} />
-        </View>
-
-        <FlatList
-          data={filter.tags}
-          contentContainerStyle={styles.selectedTagsContainer}
-          horizontal
-          bounces={false}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <Tag tag={item} forceActive onToggle={onToggle} />}
-          ListEmptyComponent={
-            <Animated.View exiting={FadeOut} entering={FadeIn} style={styles.noResultsContainer}>
-              <TextCustom mode={TextModes.Secondary} textColor={colors.gray50} text={t('empty.selectedTags.title')} />
-            </Animated.View>
-          }
-        />
+        <TagsSelector selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
       </View>
 
       <View style={styles.buttonWrapper}>
@@ -204,49 +121,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
-  searchAndTagsNumberContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 1,
-    justifyContent: 'space-between',
-    gap: SPACING.xxs,
-    paddingRight: SPACING.xs,
-  },
-  tagContainer: {
-    flex: 1,
-    maxWidth: '50%',
-  },
-  tag: {
-    paddingVertical: SPACING.xs,
-  },
-  selectedTextContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: SPACING.xxs,
-    paddingLeft: SPACING.xs,
-    paddingTop: SPACING.xs,
-  },
-  sectionBackground: {
-    boxShadow: BOX_SHADOW.medium,
-    borderRadius: RADIUS.small,
-  },
-  tagsFlatListContainer: {
-    padding: SPACING.xs,
-  },
-  tagsFlatList: {
-    height: 180,
-  },
-  tagsFlatListWrapper: {
-    paddingVertical: SPACING.xxs,
-    gap: SPACING.xxs,
-  },
-  selectedTagsContainer: {
-    paddingTop: SPACING.xxs,
-    paddingHorizontal: SPACING.xs,
-    gap: SPACING.xxs,
-    paddingBottom: SPACING.xs,
-    height: 40,
-  },
   buttonWrapper: {
     flexDirection: 'row',
     flex: 1,
@@ -254,11 +128,6 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     paddingTop: SPACING.lg,
-    flex: 1,
-  },
-  noResultsContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
   },
   title: {
