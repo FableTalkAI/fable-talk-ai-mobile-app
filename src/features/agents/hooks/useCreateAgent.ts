@@ -82,8 +82,7 @@ const useCreateAgent = ({ agentId }: UseCreateAgentParams) => {
     if (isEdit) {
       const changedData: Partial<CreateAgentRequest> = {};
 
-      (Object.keys(payload) as Array<keyof typeof payload>).forEach(key => {
-        // @ts-ignore
+      (Object.keys(payload) as Array<keyof CreateAgentValues>).forEach(key => {
         if (dirtyFields[key]) {
           // @ts-ignore
           changedData[key] = payload[key];
