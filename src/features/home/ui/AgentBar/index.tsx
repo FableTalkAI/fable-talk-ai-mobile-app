@@ -1,6 +1,6 @@
 import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { BlurView } from '@react-native-community/blur';
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -14,7 +14,10 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
+import { Tag as TagType } from '@/features/agents/store/agents/types.ts';
 import Tag from '@/features/onboarding/ui/Tag';
+import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { GearIcon, PremiumAgentIcon, WarningTriangleIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
@@ -40,6 +43,9 @@ const AgentBar = ({
 
   const progress = useSharedValue(0);
   const shakeAngle = useSharedValue(0);
+
+  const { getAgentsHandler, getMyAgentsHandler } = useAgentsStore();
+  const { setFilterTagsHandler } = useUserStore();
 
   const isPremiumAgent = mode === AgentBarModes.Premium;
   const gradientColors = useMemo(
@@ -82,6 +88,16 @@ const AgentBar = ({
       transform: [{ rotate: `${shakeAngle.value}deg` }],
     };
   });
+
+  const onTagLongPress = useCallback(
+    (tag: TagType) => {
+      setFilterTagsHandler([tag]);
+
+      getAgentsHandler().catch(console.error);
+      getMyAgentsHandler().catch(console.error);
+    },
+    [getAgentsHandler, getMyAgentsHandler, setFilterTagsHandler],
+  );
 
   useEffect(() => {
     if (mode === AgentBarModes.OnModeration) {
@@ -134,17 +150,31 @@ const AgentBar = ({
 
           <FlatList
             horizontal
+            nestedScrollEnabled
             data={tags}
             style={styles.flatList}
             contentContainerStyle={styles.flatListContainer}
             showsHorizontalScrollIndicator={false}
             keyExtractor={item => item.id}
-            renderItem={({ item }) => <Tag tag={item} forceActive />}
+            renderItem={({ item }) => <Tag onLongPress={onTagLongPress} tag={item} forceActive />}
           />
         </PressableCustom>
       </LinearGradient>
     ),
-    [avatarSource, computedStyles, description, gradientColors, name, onPress, style, tags],
+    [
+      avatarSource,
+      computedStyles.description,
+      computedStyles.name,
+      computedStyles.pressableContainer,
+      computedStyles.wrapper,
+      description,
+      gradientColors,
+      name,
+      onPress,
+      onTagLongPress,
+      style,
+      tags,
+    ],
   );
 
   if (mode === AgentBarModes.Premium) {
@@ -167,7 +197,7 @@ const AgentBar = ({
             reducedTransparencyFallbackColor="white"
             blurType="light"
             blurAmount={5}
-            style={[styles.blurContainer]}
+            style={styles.blurContainer}
           >
             <Animated.View style={animatedGearStyle}>
               <GearIcon />

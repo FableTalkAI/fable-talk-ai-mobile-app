@@ -10,7 +10,16 @@ import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
 import { TagColorModes, TagProps } from './types.ts';
 
-const Tag = ({ tag, forceActive = false, onToggle, isSelected, containerStyle, style, disabled }: TagProps) => {
+const Tag = ({
+  tag,
+  forceActive = false,
+  onToggle,
+  onLongPress,
+  isSelected,
+  containerStyle,
+  style,
+  disabled,
+}: TagProps) => {
   const { colors } = useTheme();
   const { i18n } = useTranslation();
 
@@ -50,6 +59,7 @@ const Tag = ({ tag, forceActive = false, onToggle, isSelected, containerStyle, s
       containerStyle={containerStyle}
       hitSlop={5}
       onPress={() => onToggle?.(tag)}
+      onLongPress={() => onLongPress?.(tag)}
     >
       <TextCustom
         text={tag.locale[i18n.language]}

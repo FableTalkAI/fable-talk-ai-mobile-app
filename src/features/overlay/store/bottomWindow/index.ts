@@ -1,28 +1,26 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { BottomWindowModes } from '@/features/bottomWindow/hooks/useBottomWindow/types.ts';
-
 import { bottomWindowSliceName } from './thunks.ts';
 import { BottomWindowState, CustomRender } from './types.ts';
 
 const initialState: BottomWindowState = {
-  bottomWindowMode: null,
   customContent: null,
+  isLocked: false,
 };
 
 const bottomWindowSlice = createSlice({
   name: bottomWindowSliceName,
   initialState,
   reducers: {
-    setBottomWindowMode: (state, action: PayloadAction<BottomWindowModes | null>) => {
-      state.bottomWindowMode = action.payload;
-    },
     setCustomContent: (state, action: PayloadAction<CustomRender>) => {
       state.customContent = action.payload;
+    },
+    setIsLocked: (state, action: PayloadAction<boolean>) => {
+      state.isLocked = action.payload;
     },
   },
 });
 
-export const { setBottomWindowMode, setCustomContent } = bottomWindowSlice.actions;
+export const { setCustomContent, setIsLocked } = bottomWindowSlice.actions;
 
 export default bottomWindowSlice.reducer;

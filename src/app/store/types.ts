@@ -2,8 +2,8 @@ import { Reducer } from '@reduxjs/toolkit';
 
 import { AgentsState } from '@/features/agents/store/agents/types.ts';
 import { AuthState } from '@/features/auth/store/auth/types.ts';
-import { BottomWindowState } from '@/features/bottomWindow/store/bottomWindow/types.ts';
 import { ChatState } from '@/features/chat/store/chat/types.ts';
+import { BottomWindowState } from '@/features/overlay/store/bottomWindow/types.ts';
 import { ProfileState } from '@/features/profile/store/profile/types.ts';
 import { UserState } from '@/features/profile/store/user/types.ts';
 

@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import useCreateAgent from '@/features/agents/hooks/useCreateAgent.ts';
-import TagsSelector from '@/features/agents/ui/TagsSelector';
 import TagsSelectorBottomWindow from '@/features/agents/ui/TagsSelectorBottomWindow';
-import useBottomWindow from '@/features/bottomWindow/hooks/useBottomWindow';
+import TagsSelectorField from '@/features/agents/ui/TagsSelectorField';
 import { RootNavigatorParamList } from '@/features/navigation/ui/RootNavigator/types.ts';
+import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import { RobotIcon, WarningTriangleIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
@@ -111,7 +111,7 @@ const CreateAgentScreen = () => {
               name="tags"
               render={({ field: { value }, fieldState: { error } }) => (
                 <View>
-                  <TagsSelector tags={value} onPress={openTagsSelectBottomWindow} />
+                  <TagsSelectorField tags={value} onPress={openTagsSelectBottomWindow} />
 
                   {error?.message && (
                     <TextCustom mode={TextModes.Caption} textColor={colors.errorBase} text={t(error.message)} />

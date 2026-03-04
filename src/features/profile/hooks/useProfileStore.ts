@@ -1,7 +1,8 @@
+import { StackNavigationProp } from '@react-navigation/stack';
 import { useCallback } from 'react';
 
 import { logoutUser } from '@/features/auth/services/logoutUser.ts';
-import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import { AllNavigationParamList } from '@/features/navigation/hooks/useNavigationRoutes/types.ts';
 import { isLoadingSelector, limitsSelector, profileSelector } from '@/features/profile/store/profile/selectors.ts';
 import {
   deleteUserProfile,
@@ -16,7 +17,6 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
 const useProfileStore = () => {
   const dispatch = useAppDispatch();
-  const { navigation } = useNavigationRoutes();
 
   const isLoading = useAppSelector(isLoadingSelector);
   const profile = useAppSelector(profileSelector);
@@ -51,10 +51,13 @@ const useProfileStore = () => {
     [dispatch],
   );
 
-  const deleteUserProfileHandler = useCallback(async () => {
-    await dispatch(deleteUserProfile()).unwrap();
-    await logoutUser(navigation);
-  }, [dispatch, navigation]);
+  const deleteUserProfileHandler = useCallback(
+    async (navigation: StackNavigationProp<AllNavigationParamList>) => {
+      await dispatch(deleteUserProfile()).unwrap();
+      await logoutUser(navigation);
+    },
+    [dispatch],
+  );
 
   return {
     isLoading,

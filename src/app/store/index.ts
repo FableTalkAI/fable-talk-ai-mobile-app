@@ -1,7 +1,7 @@
 import { Action, combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 
-import bottomWindowReducer from '@/features/bottomWindow/store/bottomWindow';
+import bottomWindowReducer from '@/features/overlay/store/bottomWindow';
 import persistConfig from '@/shared/lib/redux/persist.ts';
 
 import agentsReducer from '../../features/agents/store/agents';

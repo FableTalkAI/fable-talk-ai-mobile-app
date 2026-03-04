@@ -11,9 +11,9 @@ import PressableCustom from '@/shared/ui/PressableCustom';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
-import { TagsSelectorProps } from './types.ts';
+import { TagsSelectorFieldProps } from './types.ts';
 
-const TagsSelector = ({ onPress, tags }: TagsSelectorProps) => {
+const TagsSelectorField = ({ onPress, tags }: TagsSelectorFieldProps) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
 
@@ -35,6 +35,12 @@ const TagsSelector = ({ onPress, tags }: TagsSelectorProps) => {
           <View style={styles.selectedTextContainer}>
             <TagSelectedIcon />
             <TextCustom text={t('createAgent.tags.subtitle')} />
+
+            {!!tags.length && (
+              <Animated.View key={tags.length} exiting={FadeOut} entering={FadeIn}>
+                <TextCustom text={tags.length} />
+              </Animated.View>
+            )}
           </View>
 
           {!!tags.length && <PencilIcon fill={colors.textSecondary} />}
@@ -80,12 +86,12 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.medium,
   },
   selectedTagsContainer: {
-    paddingTop: SPACING.xxs,
+    paddingBottom: SPACING.xxs,
     paddingHorizontal: SPACING.xs,
+    alignItems: 'center',
     gap: SPACING.xxs,
-    paddingBottom: SPACING.xs,
-    height: 40,
-    flex: 1,
+    minWidth: '100%',
+    height: 44,
   },
   noResultsContainer: {
     justifyContent: 'center',
@@ -94,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TagsSelector;
+export default TagsSelectorField;
