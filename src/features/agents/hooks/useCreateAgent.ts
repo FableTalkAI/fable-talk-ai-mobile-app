@@ -22,7 +22,7 @@ type UseCreateAgentParams = {
 const useCreateAgent = ({ agentId }: UseCreateAgentParams) => {
   const { t } = useTranslation();
 
-  const { profile } = useProfileStore();
+  const { profile, getUserProfileHandler } = useProfileStore();
   const { createAgentHandler, getMyAgentsHandler, myAgents, updateAgentHandler } = useAgentsStore();
   const { navigation } = useNavigationRoutes();
 
@@ -100,6 +100,7 @@ const useCreateAgent = ({ agentId }: UseCreateAgentParams) => {
       await createAgentHandler(uploadData);
     }
 
+    if (!profile.isCreatedAgent) await getUserProfileHandler();
     await getMyAgentsHandler();
 
     showToast({

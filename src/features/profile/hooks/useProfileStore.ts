@@ -30,7 +30,7 @@ const useProfileStore = () => {
   );
 
   const getUserProfileHandler = useCallback(async () => {
-    await dispatch(getUserProfile()).unwrap();
+    return await dispatch(getUserProfile()).unwrap();
   }, [dispatch]);
 
   const getUserLimitsHandler = useCallback(async () => {

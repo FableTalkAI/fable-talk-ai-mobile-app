@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
+import { Languages } from '@/features/locales/types.ts';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
@@ -62,7 +63,7 @@ const Tag = ({
       onLongPress={() => onLongPress?.(tag)}
     >
       <TextCustom
-        text={tag.locale[i18n.language]}
+        text={tag.locale[i18n.resolvedLanguage as Languages]}
         mode={TextModes.Tag}
         style={[computedStyles.tagsText, styles.tagsText]}
         numberOfLines={1}

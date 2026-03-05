@@ -138,7 +138,7 @@ const SettingsScreen = () => {
             mode={OptionBarModes.Complex}
             rightComponent={
               <Select
-                key={`theme-${i18n.language}`}
+                key={`theme-${i18n.resolvedLanguage as Languages}`}
                 onChange={setThemeHandler}
                 options={selectThemeOptions}
                 defaultValue={theme}
@@ -153,10 +153,10 @@ const SettingsScreen = () => {
             mode={OptionBarModes.Complex}
             rightComponent={
               <Select
-                key={`language-${i18n.language}`}
+                key={`language-${i18n.resolvedLanguage as Languages}`}
                 onChange={setAppLanguage}
                 options={selectLanguageOptions}
-                defaultValue={i18n.language as Languages}
+                defaultValue={i18n.resolvedLanguage as Languages}
               />
             }
           />

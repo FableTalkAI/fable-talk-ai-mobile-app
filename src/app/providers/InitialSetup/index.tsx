@@ -25,8 +25,10 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
         setIsLoggedInHandler(!!user);
 
         if (user) {
-          await getUserProfileHandler();
-          await Promise.all([getTagsHandler(), getAgentsHandler(), getAllChatsHandler(), getMyAgentsHandler()]);
+          const profile = await getUserProfileHandler();
+
+          if (profile.isCreatedAgent) await getMyAgentsHandler();
+          await Promise.all([getTagsHandler(), getAgentsHandler(), getAllChatsHandler()]);
         }
       } catch (e) {
         console.error(e);

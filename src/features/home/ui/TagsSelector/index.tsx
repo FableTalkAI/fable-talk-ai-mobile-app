@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { FlatList } from 'react-native-gesture-handler';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
 import { Tag as TagType } from '@/features/agents/store/agents/types.ts';
 import SearchInput from '@/features/home/ui/SearchInput';
+import { Languages } from '@/features/locales/types.ts';
 import Tag from '@/features/onboarding/ui/Tag';
 import { TagSelectedIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -34,9 +36,9 @@ const TagsSelector = ({ selectedTags, setSelectedTags }: TagsSelectorProps) => {
 
   const onStopHandler = useCallback(
     (value: string) => {
-      setFilteredTags(tags.filter(tag => tag.locale[i18n.language].includes(value)));
+      setFilteredTags(tags.filter(tag => tag.locale[i18n.resolvedLanguage as Languages].includes(value)));
     },
-    [i18n.language, tags],
+    [i18n.resolvedLanguage, tags],
   );
 
   const onToggle = (tag: TagType) => {

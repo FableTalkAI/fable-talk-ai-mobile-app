@@ -9,6 +9,7 @@ import CreateAgentButton from '@/features/home/ui/CreateAgentButton';
 import SearchFilterBottomWindow from '@/features/home/ui/SearchFilterBottomWindow';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
+import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { AddAgentIcon, FilterIcon, PlusIcon, RobotFilledIcon, SearchIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -41,6 +42,7 @@ const HomeScreen = () => {
   } = useAgentsStore();
 
   const { filter } = useUserStore();
+  const { profile } = useProfileStore();
   const { open } = useBottomWindow();
   const { isLoading: isLoadingChat } = useChatStore();
 
@@ -100,6 +102,13 @@ const HomeScreen = () => {
                   hasMore={agentsPagination.hasMore}
                   onRefresh={getAgentsHandler}
                   onLoadMore={getAgentsHandler}
+                  ListEmptyComponent={
+                    <EmptyStub
+                      subtitle={t('empty.allAgentsList.subtitle')}
+                      title={t('empty.allAgentsList.title')}
+                      icon={<RobotFilledIcon />}
+                    />
+                  }
                 />
               ),
             },
@@ -129,7 +138,7 @@ const HomeScreen = () => {
       </SafeAreaViewCustom>
 
       <CreateAgentButton
-        withArrow={!myAgents.length}
+        withArrow={!profile?.isCreatedAgent && activeTab === 1}
         style={styles.createAgentButton}
         hasModerationLimit={hasModerationLimit}
       />

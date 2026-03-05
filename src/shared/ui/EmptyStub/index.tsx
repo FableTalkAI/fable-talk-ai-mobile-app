@@ -53,7 +53,7 @@ const EmptyStub = ({
       <ResizeIcon cloneElementProps={iconOptions} icon={icon} />
 
       <View style={[styles.textContainer, computedStyles.textContainer]}>
-        <TextCustom text={title} mode={titleMode} />
+        <TextCustom style={styles.text} text={title} mode={titleMode} />
         <TextCustom style={styles.text} text={subtitle} mode={subtitleMode} textColor={colors.textSecondary} />
       </View>
     </Animated.View>

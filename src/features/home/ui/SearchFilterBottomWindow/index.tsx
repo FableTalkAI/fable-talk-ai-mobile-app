@@ -6,6 +6,7 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
 import TagsSelector from '@/features/home/ui/TagsSelector';
+import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { SortByFilter, SortFilter } from '@/features/profile/store/user/types.ts';
 import { SortAscendingIcon, SortDescendingIcon } from '@/shared/assets/icons';
@@ -25,6 +26,7 @@ const SearchFilterBottomWindow = ({ close }: SearchFilterBottomWindowProps) => {
   const { colors } = useTheme();
 
   const { getAgentsHandler, getMyAgentsHandler } = useAgentsStore();
+  const { profile } = useProfileStore();
   const { filter, setFilterSortByHandler, setFilterSortHandler, setFilterTagsHandler, clearFilterHandler } =
     useUserStore();
 
@@ -41,7 +43,7 @@ const SearchFilterBottomWindow = ({ close }: SearchFilterBottomWindowProps) => {
 
   const getAgents = () => {
     getAgentsHandler().catch(console.error);
-    getMyAgentsHandler().catch(console.error);
+    if (profile?.isCreatedAgent) getMyAgentsHandler().catch(console.error);
     close();
   };
 

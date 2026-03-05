@@ -8,6 +8,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import DeleteChatBottomWindow from '@/features/chat/ui/DeleteChatBottomWindow';
+import EmptyChatStub from '@/features/chat/ui/EmptyChatStub';
 import { Bubble, Composer, InputToolbar, Message, Send } from '@/features/chat/ui/giftedChat';
 import ChatAvatar from '@/features/chat/ui/giftedChat/ChatAvatar.tsx';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
@@ -115,7 +116,7 @@ const ChatScreen = () => {
         onSend={chatMessages => onSend(chatMessages)}
         renderAvatar={props => <ChatAvatar {...props} />}
         //@ts-ignore
-        locale={i18n.language}
+        locale={i18n.resolvedLanguage}
         isDayAnimationEnabled={false}
         dateFormatCalendar={dateFormatCalendar}
         dateFormat="D MMMM YYYY"
@@ -131,6 +132,12 @@ const ChatScreen = () => {
         renderInputToolbar={props => <InputToolbar messageLoading={isLoading.sendMessage} {...props} />}
         renderComposer={props => <Composer {...props} />}
         renderSend={props => <Send messageLoading={isLoading.sendMessage} {...props} />}
+        renderChatEmpty={() => (
+          <EmptyChatStub
+            description={selectedChat.chat.agentInfo.description}
+            avatarUrl={selectedChat.chat.agentInfo.avatarUrl}
+          />
+        )}
       />
     </SafeAreaView>
   );
