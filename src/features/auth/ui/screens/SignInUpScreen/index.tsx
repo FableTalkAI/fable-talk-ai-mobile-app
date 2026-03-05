@@ -55,7 +55,7 @@ const SignInUpScreen = () => {
 
   const onSubmit = () => {
     handleSubmit(async (data: AuthSchema) => {
-      const lang: SendOtpLanguages = i18n.language === 'uk' ? 'uk' : 'en';
+      const lang: SendOtpLanguages = i18n.resolvedLanguage === 'uk' ? 'uk' : 'en';
       const dataOptions = {
         email: data.email,
         lang,

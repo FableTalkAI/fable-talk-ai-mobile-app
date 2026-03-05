@@ -21,9 +21,10 @@ export type User = {
   }[];
   dateOfBirth: string;
   email: string;
-  isEmailNotificationEnabled: boolean;
   name: string;
+  isEmailNotificationEnabled: boolean;
   isOnboardingDone: boolean;
+  isCreatedAgent: boolean;
 };
 
 export type UserLimits = {

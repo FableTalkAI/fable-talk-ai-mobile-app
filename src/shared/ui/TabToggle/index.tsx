@@ -105,7 +105,7 @@ const TabToggle = ({
 
         <View style={[styles.tabsWrapper, computedStyles.tabsWrapper]}>
           <Animated.View style={[styles.slider, computedStyles.slider, animatedSliderStyle]}>
-            <BlurView blurType={theme === Theme.Dark ? 'chromeMaterial' : 'light'} style={styles.blur} />
+            <BlurView blurType={theme === Theme.Dark ? 'dark' : 'light'} style={StyleSheet.absoluteFill} />
           </Animated.View>
 
           {tabs.map((tab, i) => {
@@ -175,10 +175,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: SPACING.s,
     zIndex: 1,
-  },
-  blur: {
-    width: '100%',
-    height: '100%',
   },
 });
 

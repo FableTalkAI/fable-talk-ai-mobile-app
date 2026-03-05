@@ -44,6 +44,11 @@ const en: Translations = {
     selectedTags: {
       title: 'No tags, please select a tag',
     },
+    allAgentsList: {
+      title: 'Brewing failed!',
+      subtitle:
+        'With this many ingredients in your filters, the potion went up in smoke. Try a simpler recipe to make the agents reappear',
+    },
     myAgentsList: {
       title: 'No party members yet',
       subtitle: 'It’s dangerous to go alone! Recruit your first agent to help you on your quest',
@@ -166,7 +171,8 @@ const en: Translations = {
       label: 'Tags',
       subtitle: 'Selected',
       placeholder: 'Add tags +',
-      minError: 'Add at least two tags',
+      minError: 'Add at least 2 tags',
+      maxError: 'Maximum 12 tags',
     },
   },
 

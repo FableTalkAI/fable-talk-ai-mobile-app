@@ -48,6 +48,7 @@ export type Translations = {
     chatSearch: Empty;
     tagSearch: Empty;
     selectedTags: Empty;
+    allAgentsList: Empty;
     myAgentsList: Empty;
   };
 
