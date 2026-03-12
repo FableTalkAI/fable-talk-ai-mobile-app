@@ -12,6 +12,7 @@ import {
   GetChatByIdRequest,
   GetChatByIdResponse,
   Message,
+  SendMessageRequest,
   SendMessageResponse,
 } from './types.ts';
 
@@ -25,21 +26,11 @@ export const getAllChats = createAxiosAsyncThunk<Required<Chat>[], void>(`${chat
 export const getChatById = createAxiosAsyncThunk<GetChatByIdResponse, GetChatByIdRequest>(
   `${chatSliceName}/getChatById`,
   async ({ agentId, chatId }, { dispatch, getState }) => {
-    let resolvedChatId;
-    let currentProfile;
-
-    const profile = getState().profile.profile;
+    let resolvedChatId = chatId;
 
     if (!chatId) {
-      if (profile) {
-        currentProfile = profile;
-      } else {
-        currentProfile = await dispatch(getUserProfile()).unwrap();
-      }
-
-      resolvedChatId = currentProfile.chats.find(chat => chat.agentId === agentId)?.chatId;
-    } else {
-      resolvedChatId = chatId;
+      const profile = getState().profile.profile || (await dispatch(getUserProfile()).unwrap());
+      resolvedChatId = profile.chats.find(c => c.agentId === agentId)?.chatId;
     }
 
     const response = await http.post(
@@ -49,19 +40,20 @@ export const getChatById = createAxiosAsyncThunk<GetChatByIdResponse, GetChatByI
         params: { chatId: resolvedChatId },
       },
     );
+
     return response.data;
   },
 );
 
-export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, string>(
+export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessageRequest>(
   `${chatSliceName}/sendMessage`,
-  async (message, { getState, dispatch }) => {
+  async ({ message, agentId }, { getState, dispatch }) => {
     const profile = getState().profile.profile;
-    const selectedChat = getState().chat.selectedChat;
+    const chatData = getState().chat.chatsEntities[agentId]?.chat;
 
-    if (!profile || !selectedChat) return;
+    if (!profile || !chatData) return;
 
-    const lastMessage: Message = {
+    const userMessage: Message = {
       _id: new Date().toISOString(),
       text: message,
       createdAt: Date.now(),
@@ -73,19 +65,19 @@ export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, string>(
 
     const response = await http.put(
       `${CHAT_ROUTE}/`,
-      { lastMessage, agentInfo: selectedChat.chat.agentInfo },
+      { lastMessage: userMessage, agentInfo: chatData.agentInfo },
       {
-        params: { chatId: selectedChat.chat.chatId },
+        params: { chatId: chatData.chatId },
       },
     );
 
-    if (!selectedChat.chat.chatId) {
-      await dispatch(getUserProfile());
-      await dispatch(getChatById({ agentId: selectedChat.chat.agentInfo.id }));
-    }
-
     if (response.data.limits) {
       dispatch(setLimits(response.data.limits));
+    }
+
+    if (!chatData.chatId) {
+      await dispatch(getUserProfile());
+      await dispatch(getChatById({ agentId: chatData.agentInfo.id }));
     }
 
     return response.data;
@@ -94,9 +86,8 @@ export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, string>(
 
 export const deleteChat = createAxiosAsyncThunk<MessageKey, deleteChatRequest>(
   `${chatSliceName}/deleteChat`,
-  async ({ chatIds }, { dispatch }) => {
+  async ({ chatIds }) => {
     const response = await http.delete(`${CHAT_ROUTE}/`, { data: { chatIds } });
-    await dispatch(getAllChats());
     return response.data;
   },
 );

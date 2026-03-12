@@ -1,4 +1,5 @@
 import { Reducer } from '@reduxjs/toolkit';
+import { PersistPartial } from 'redux-persist/lib/persistReducer';
 
 import { AgentsState } from '@/features/agents/store/agents/types.ts';
 import { AuthState } from '@/features/auth/store/auth/types.ts';
@@ -11,7 +12,7 @@ export type ReducersTypes = {
   agents: Reducer<AgentsState>;
   user: Reducer<UserState>;
   bottomWindow: Reducer<BottomWindowState>;
-  chat: Reducer<ChatState>;
+  chat: Reducer<ChatState & PersistPartial>;
   profile: Reducer<ProfileState>;
   auth: Reducer<AuthState>;
 };

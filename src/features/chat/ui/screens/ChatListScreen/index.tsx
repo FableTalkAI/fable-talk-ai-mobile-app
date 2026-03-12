@@ -17,13 +17,12 @@ import { ChatArrowIcon } from '@/shared/assets/icons';
 import { SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
-import ScreenLoader from '@/shared/ui/ScreenLoader';
 
 const ChatListScreen = () => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
 
-  const { chats, getChatByIdHandler, isLoading } = useChatStore();
+  const { chats, getChatByIdHandler } = useChatStore();
   const { pinnedChatIds } = useUserStore();
   const { open } = useBottomWindow();
 
@@ -48,7 +47,7 @@ const ChatListScreen = () => {
       return;
     }
 
-    await getChatByIdHandler(agentId, chatId);
+    getChatByIdHandler(agentId, chatId).catch(console.error);
     navigation.navigate('ChatScreen');
   };
 
@@ -76,43 +75,41 @@ const ChatListScreen = () => {
     return unsubscribe;
   }, [clear, navigation]);
 
+  console.log('chats', chats);
+
   return (
-    <>
-      <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
-        <SearchInput style={styles.search} placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
-        <MultiSelectHeader onCrossPress={clear} onBinPress={openDeleteChatBottomWindow} isVisible={isSelectedMode} />
+    <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
+      <SearchInput style={styles.search} placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
+      <MultiSelectHeader onCrossPress={clear} onBinPress={openDeleteChatBottomWindow} isVisible={isSelectedMode} />
 
-        <FlatList
-          ListEmptyComponent={
-            <EmptyStub
-              icon={<ChatArrowIcon />}
-              title={t('empty.chatSearch.title')}
-              subtitle={t('empty.chatSearch.subtitle')}
+      <FlatList
+        ListEmptyComponent={
+          <EmptyStub
+            icon={<ChatArrowIcon />}
+            title={t('empty.chatSearch.title')}
+            subtitle={t('empty.chatSearch.subtitle')}
+          />
+        }
+        keyExtractor={item => item.chatId}
+        data={filteredChats}
+        style={styles.flatList}
+        contentContainerStyle={[styles.contentContainerStyle]}
+        renderItem={({ item }) => (
+          <Animated.View layout={LinearTransition}>
+            <ChatListBar
+              avatarSource={item.agentInfo.avatarUrl}
+              agentName={item.agentInfo.name}
+              lastMessage={item.lastMessage}
+              onPress={onChatOpenHandler(item.agentInfo.id, item.chatId)}
+              chatId={item.chatId}
+              isSelected={multiSelectionsChatIds.includes(item.chatId)}
+              onLongPress={toggleSelectChat}
+              isSelectMode={isSelectedMode}
             />
-          }
-          keyExtractor={item => item.chatId}
-          data={filteredChats}
-          style={styles.flatList}
-          contentContainerStyle={[styles.contentContainerStyle]}
-          renderItem={({ item }) => (
-            <Animated.View layout={LinearTransition}>
-              <ChatListBar
-                avatarSource={item.agentInfo.avatarUrl}
-                agentName={item.agentInfo.name}
-                lastMessage={item.lastMessage}
-                onPress={onChatOpenHandler(item.agentInfo.id, item.chatId)}
-                chatId={item.chatId}
-                isSelected={multiSelectionsChatIds.includes(item.chatId)}
-                onLongPress={toggleSelectChat}
-                isSelectMode={isSelectedMode}
-              />
-            </Animated.View>
-          )}
-        />
-      </SafeAreaViewCustom>
-
-      <ScreenLoader isLoading={isLoading.selectedChat} />
-    </>
+          </Animated.View>
+        )}
+      />
+    </SafeAreaViewCustom>
   );
 };
 

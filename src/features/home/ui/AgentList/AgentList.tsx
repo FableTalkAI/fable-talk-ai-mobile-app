@@ -34,7 +34,7 @@ const AgentList = ({
       return navigation.navigate('CreateAgent', { id: agentId });
     }
 
-    await getChatByIdHandler(agentId);
+    getChatByIdHandler(agentId).catch(console.error);
     navigation.navigate('ChatScreen');
   };
 

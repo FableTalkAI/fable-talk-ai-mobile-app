@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
-import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import AgentList from '@/features/home/ui/AgentList/AgentList.tsx';
 import CreateAgentButton from '@/features/home/ui/CreateAgentButton';
 import SearchFilterBottomWindow from '@/features/home/ui/SearchFilterBottomWindow';
@@ -18,7 +17,6 @@ import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
-import ScreenLoader from '@/shared/ui/ScreenLoader';
 import TabToggle from '@/shared/ui/TabToggle';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
@@ -44,7 +42,6 @@ const HomeScreen = () => {
   const { filter } = useUserStore();
   const { profile } = useProfileStore();
   const { open } = useBottomWindow();
-  const { isLoading: isLoadingChat } = useChatStore();
 
   const [activeTab, setActiveTab] = useState(0);
 
@@ -142,7 +139,6 @@ const HomeScreen = () => {
         style={styles.createAgentButton}
         hasModerationLimit={hasModerationLimit}
       />
-      <ScreenLoader isLoading={isLoadingChat.selectedChat} />
     </>
   );
 };
