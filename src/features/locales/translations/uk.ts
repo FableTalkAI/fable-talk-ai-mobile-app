@@ -110,9 +110,9 @@ const uk: Translations = {
   },
 
   auth: {
-    splashText: 'Оберіть\nВашого Агента',
+    splashText: 'Просто\nПочни Чат',
     signInButton: 'Увійти',
-    signUpButton: 'Зареєструватися',
+    signUpButton: 'Створити',
     signIn: {
       header: 'Вхід',
       subheader: 'Будь ласка, увійдіть, щоб продовжити',
@@ -267,7 +267,8 @@ const uk: Translations = {
     tooManyAttempts: 'Забагато спроб, увійдіть ще раз',
     wrongCode: 'Неправильний код, залишилося спроб: {{amount}}',
     chatIdsRequired: 'Будь ласка, надайте айді чату',
-    chatDeleted: 'Чат видалено',
+    chatDeleted_one: 'Чат видалено',
+    chatDeleted_other: 'Чати видалено',
     agentRequired: 'Дані агента обов’язкові для заповнення',
     agentAlreadyExists: 'Агент з таким ім’ям уже існує',
     agentIdRequired: 'Айді Агента обов`язкове',

@@ -61,14 +61,15 @@ const ChatScreen = () => {
       if (!chatWasUsed.current) {
         chatWasUsed.current = true;
       }
-      if (selectedChat && selectedChat.chat) {
+      if (selectedChat && selectedChat.chat && profile) {
         await sendMessageHandler({
           message: m[0].text,
           agentId: selectedChat.chat.agentInfo.id,
+          ...profile,
         });
       }
     },
-    [selectedChat, sendMessageHandler],
+    [selectedChat, sendMessageHandler, profile],
   );
 
   const deleteChatButtonHandler = useCallback(

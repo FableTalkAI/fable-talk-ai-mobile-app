@@ -111,7 +111,7 @@ const en: Translations = {
   },
 
   auth: {
-    splashText: 'Choose\nYour Agent',
+    splashText: 'Just Start\nChatting',
     signInButton: 'Sign In',
     signUpButton: 'Sign Up',
     signIn: {
@@ -270,7 +270,8 @@ const en: Translations = {
     tooManyAttempts: 'Too many attempts, login again',
     wrongCode: 'Wrong code, remaining attempts: {{amount}}',
     chatIdsRequired: 'Please provide chat id',
-    chatDeleted: 'Chat deleted!',
+    chatDeleted_one: 'Chat deleted',
+    chatDeleted_other: 'Chats deleted',
     agentRequired: 'Agent information is missing or invalid',
     agentAlreadyExists: 'An agent with this name already exists',
     agentIdRequired: 'Agent id is required',

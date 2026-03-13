@@ -143,7 +143,7 @@ const chatSlice = createSlice({
         state.loading.deleteChat = false;
         showToast({
           type: 'success',
-          text2: i18n.t(`serverResponses.${action.payload.messageKey}`),
+          text2: i18n.t(`serverResponses.${action.payload.messageKey}`, { count: idsToRemove.length }),
         });
       })
       .addCase(deleteChat.rejected, (state, action) => {

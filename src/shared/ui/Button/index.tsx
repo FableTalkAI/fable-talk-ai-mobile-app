@@ -17,6 +17,7 @@ const Button = ({
   isDisable,
   style,
   containerStyle,
+  numberOfLines,
   ...pressableProps
 }: ButtonProps) => {
   const { colors, setColorOpacity } = useTheme();
@@ -76,7 +77,7 @@ const Button = ({
       style={[computedStyles.container, styles.container, style]}
       {...pressableProps}
     >
-      <TextCustom text={title} mode={TextModes.Subtitle} style={computedStyles.text} />
+      <TextCustom numberOfLines={numberOfLines} text={title} mode={TextModes.Subtitle} style={computedStyles.text} />
 
       <ComponentLoader isVisible={isLoading} />
     </PressableCustom>

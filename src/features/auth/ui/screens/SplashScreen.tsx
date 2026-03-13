@@ -54,6 +54,7 @@ const SplashScreen = () => {
 
           <View style={[styles.buttonWrapper, computedStyles.buttonWrapper]}>
             <Button
+              numberOfLines={1}
               containerStyle={styles.button}
               title={t('auth.signInButton')}
               mode={ButtonModes.Light}
@@ -61,6 +62,7 @@ const SplashScreen = () => {
               onPress={() => navigation.navigate('SignInUp', { mode: AuthScreenMode.SignIn })}
             />
             <Button
+              numberOfLines={1}
               containerStyle={styles.button}
               title={t('auth.signUpButton')}
               mode={ButtonModes.Transparent}

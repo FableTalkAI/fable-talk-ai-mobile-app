@@ -20,7 +20,7 @@ const EmptyChatStub = ({ description, avatarUrl }: EmptyChatStubProps) => {
 
   return (
     <Animated.View exiting={FadeOut} style={styles.container}>
-      <Avatar size={80} uri={avatarUrl} isChangeable={false} />
+      <Avatar withEnteringAnimation={false} size={80} uri={avatarUrl} isChangeable={false} />
       <TextCustom mode={TextModes.Secondary} text={description} style={[styles.text, computedStyles.text]} />
     </Animated.View>
   );

@@ -10,6 +10,7 @@ const PressableCustom = ({
   style,
   containerStyle,
   disabled,
+  withEnteringAnimation = true,
   ...pressableProps
 }: PressableCustomProps) => {
   const opacity = useSharedValue(1);
@@ -39,7 +40,7 @@ const PressableCustom = ({
       disabled={disabled}
       {...pressableProps}
     >
-      <Animated.View entering={FadeIn} exiting={FadeOut}>
+      <Animated.View entering={withEnteringAnimation ? FadeIn : undefined} exiting={FadeOut}>
         <Animated.View style={[animatedStyle, style]}>{children}</Animated.View>
       </Animated.View>
     </Pressable>

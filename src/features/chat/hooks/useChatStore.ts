@@ -4,12 +4,11 @@ import { addUserMessage, setSelectedChatId } from '@/features/chat/store/chat';
 import { chatEntitySelector, chatsSelector, isLoadingSelector } from '@/features/chat/store/chat/selectors.ts';
 import { deleteChat, getAllChats, getChatById, sendMessage } from '@/features/chat/store/chat/thunks.ts';
 import { SendMessageRequest } from '@/features/chat/store/chat/types.ts';
-import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
+import { User } from '@/features/profile/store/profile/types.ts';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
 const useChatStore = () => {
   const dispatch = useAppDispatch();
-  const { profile } = useProfileStore();
 
   const isLoading = useAppSelector(isLoadingSelector);
   const chats = useAppSelector(chatsSelector);
@@ -28,13 +27,14 @@ const useChatStore = () => {
   );
 
   const sendMessageHandler = useCallback(
-    async (data: SendMessageRequest) => {
+    async (data: SendMessageRequest & User) => {
+      const { message, agentId, ...profile } = data;
       if (profile) {
         dispatch(addUserMessage({ ...data, ...profile }));
       }
-      return await dispatch(sendMessage(data)).unwrap();
+      return await dispatch(sendMessage({ message, agentId })).unwrap();
     },
-    [dispatch, profile],
+    [dispatch],
   );
 
   const deleteChatHandler = useCallback(

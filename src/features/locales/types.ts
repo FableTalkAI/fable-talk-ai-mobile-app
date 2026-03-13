@@ -246,7 +246,8 @@ export type Translations = {
     tooManyAttempts: string;
     wrongCode: string;
     chatIdsRequired: string;
-    chatDeleted: string;
+    chatDeleted_one: string;
+    chatDeleted_other: string;
     agentRequired: string;
     agentAlreadyExists: string;
     agentIdRequired: string;

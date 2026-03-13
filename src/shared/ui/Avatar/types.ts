@@ -8,5 +8,6 @@ export type AvatarProps = {
   onPickImage?: () => Promise<string | undefined>;
   uri?: string;
   isLoading?: boolean;
+  withEnteringAnimation?: boolean;
   placeholderComponent?: ReactNode;
 };
