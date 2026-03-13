@@ -2,13 +2,20 @@ import { UserLimits } from '@/features/profile/store/profile/types.ts';
 
 export type ChatState = {
   chats: Required<Chat>[];
-  selectedChat: GetChatByIdResponse | null;
+  chatsEntities: Record<string, ChatDetails>;
+  selectedChatId: string | null;
   loading: {
     chats: boolean;
-    selectedChat: boolean;
-    sendMessage: boolean;
     deleteChat: boolean;
   };
+};
+
+export type ChatDetails = {
+  messageHistory: Message[];
+  chat?: Chat;
+  isLoading: boolean;
+  isSending: boolean;
+  error: string | null;
 };
 
 export type GetChatByIdRequest = {
@@ -50,3 +57,8 @@ export type Message = {
 export type SendMessageResponse = {
   limits?: UserLimits;
 } & Message;
+
+export type SendMessageRequest = {
+  message: string;
+  agentId: string;
+};

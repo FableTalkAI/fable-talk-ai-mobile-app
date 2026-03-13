@@ -13,7 +13,6 @@ import { RobotIcon } from '@/shared/assets/icons';
 import { SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
-import ScreenLoader from '@/shared/ui/ScreenLoader';
 import SearchResultsSkeleton from '@/shared/ui/Skeleton/templates/SearchResultsSkeleton.tsx';
 
 const SearchScreen = () => {
@@ -22,7 +21,7 @@ const SearchScreen = () => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
   const { getSearchResultsHandler, searchResults, clearSearchResultsHandler, isLoading } = useAgentsStore();
-  const { getChatByIdHandler, isLoading: isLoadingChat } = useChatStore();
+  const { getChatByIdHandler } = useChatStore();
 
   const [searchValueLength, setSearchValueLength] = useState(0);
 
@@ -35,8 +34,8 @@ const SearchScreen = () => {
   );
 
   const onChatOpenHandler = useCallback(
-    (agentId: string) => async () => {
-      await getChatByIdHandler(agentId);
+    (agentId: string) => () => {
+      getChatByIdHandler(agentId).catch(console.error);
       navigation.navigate('ChatScreen');
     },
     [getChatByIdHandler, navigation],
@@ -74,28 +73,24 @@ const SearchScreen = () => {
   }, [isLoading.searchResults, onChatOpenHandler, searchResults, searchValueLength, t]);
 
   return (
-    <>
-      <SafeAreaViewCustom>
-        <SearchInput
-          placeholder={t('search.placeholder')}
-          autoFocus
-          ref={inputRef}
-          navigation={navigation}
-          onStop={onStopHandler}
-        />
+    <SafeAreaViewCustom>
+      <SearchInput
+        placeholder={t('search.placeholder')}
+        autoFocus
+        ref={inputRef}
+        navigation={navigation}
+        onStop={onStopHandler}
+      />
 
-        <Animated.View
-          entering={FadeIn}
-          exiting={FadeOut}
-          key={+isLoading.searchResults}
-          style={styles.animatedViewContainer}
-        >
-          {content}
-        </Animated.View>
-      </SafeAreaViewCustom>
-
-      <ScreenLoader isLoading={isLoadingChat.selectedChat} />
-    </>
+      <Animated.View
+        entering={FadeIn}
+        exiting={FadeOut}
+        key={+isLoading.searchResults}
+        style={styles.animatedViewContainer}
+      >
+        {content}
+      </Animated.View>
+    </SafeAreaViewCustom>
   );
 };
 

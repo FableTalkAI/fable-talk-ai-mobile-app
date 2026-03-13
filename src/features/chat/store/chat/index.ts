@@ -1,18 +1,25 @@
-import { createSlice } from '@reduxjs/toolkit';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 
+import { User } from '@/features/profile/store/profile/types.ts';
 import { showToast } from '@/shared/lib/toast/index.ts';
 
 import { chatSliceName, deleteChat, getAllChats, getChatById, sendMessage } from './thunks.ts';
-import { ChatState } from './types.ts';
+import { ChatState, Message, SendMessageRequest } from './types.ts';
+
+export const chatPersistConfig = {
+  key: chatSliceName,
+  storage: AsyncStorage,
+  whitelist: ['chatsEntities'],
+};
 
 const initialState: ChatState = {
   chats: [],
-  selectedChat: null,
+  chatsEntities: {},
+  selectedChatId: null,
   loading: {
-    sendMessage: false,
     chats: false,
-    selectedChat: false,
     deleteChat: false,
   },
 };
@@ -20,7 +27,29 @@ const initialState: ChatState = {
 const chatSlice = createSlice({
   name: chatSliceName,
   initialState,
-  reducers: {},
+  reducers: {
+    setSelectedChatId: (state, action: PayloadAction<string | null>) => {
+      state.selectedChatId = action.payload;
+    },
+    addUserMessage: (state, action: PayloadAction<SendMessageRequest & User>) => {
+      const { message, agentId, ...profile } = action.payload;
+      const id = agentId;
+
+      const userMessage: Message = {
+        _id: new Date().toISOString(),
+        text: message,
+        createdAt: Date.now(),
+        user: {
+          _id: profile.email,
+          avatar: profile.avatarUrl,
+        },
+      };
+
+      if (state.chatsEntities[id]) {
+        state.chatsEntities[id].messageHistory.unshift(userMessage);
+      }
+    },
+  },
   extraReducers: builder => {
     builder
       //getAllChats
@@ -36,27 +65,38 @@ const chatSlice = createSlice({
       })
 
       //getChatById
-      .addCase(getChatById.pending, state => {
-        state.loading.selectedChat = true;
+      .addCase(getChatById.pending, (state, action) => {
+        const id = action.meta.arg.agentId;
+        if (!state.chatsEntities[id]) {
+          state.chatsEntities[id] = {
+            messageHistory: [],
+            isLoading: true,
+            isSending: false,
+            error: null,
+          };
+        }
       })
       .addCase(getChatById.fulfilled, (state, action) => {
-        state.loading.selectedChat = false;
-        state.selectedChat = {
-          chat: action.payload.chat,
-          messageHistory: action.payload.messageHistory.reverse(),
-        };
+        const id = action.meta.arg.agentId;
+        state.chatsEntities[id].isLoading = false;
+        state.chatsEntities[id].chat = action.payload.chat;
+        state.chatsEntities[id].messageHistory = action.payload.messageHistory.reverse();
       })
-      .addCase(getChatById.rejected, state => {
-        state.loading.selectedChat = false;
+      .addCase(getChatById.rejected, (state, action) => {
+        const id = action.meta.arg.agentId;
+        if (state.chatsEntities[id]) {
+          state.chatsEntities[id].isLoading = false;
+        }
       })
 
       //sendMessage
-      .addCase(sendMessage.pending, state => {
-        state.loading.sendMessage = true;
+      .addCase(sendMessage.pending, (state, action) => {
+        const id = action.meta.arg.agentId;
+        if (state.chatsEntities[id]) state.chatsEntities[id].isSending = true;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
-        state.loading.sendMessage = false;
-        const { limits, ...rest } = action.payload;
+        const id = action.meta.arg.agentId;
+        const { limits, ...answer } = action.payload;
 
         if (limits) {
           const remainingMessages = limits?.limit - limits?.count;
@@ -70,11 +110,16 @@ const chatSlice = createSlice({
           }
         }
 
-        if (!state.selectedChat) return;
-        state.selectedChat.messageHistory = [...state.selectedChat.messageHistory, rest];
+        if (state.chatsEntities[id]) {
+          state.chatsEntities[id].isSending = false;
+          if (state.chatsEntities[id].messageHistory.length > 2) {
+            state.chatsEntities[id].messageHistory.unshift(answer);
+          }
+        }
       })
-      .addCase(sendMessage.rejected, state => {
-        state.loading.sendMessage = false;
+      .addCase(sendMessage.rejected, (state, action) => {
+        const id = action.meta.arg.agentId;
+        if (state.chatsEntities[id]) state.chatsEntities[id].isSending = false;
       })
 
       //deleteChat
@@ -82,10 +127,23 @@ const chatSlice = createSlice({
         state.loading.deleteChat = true;
       })
       .addCase(deleteChat.fulfilled, (state, action) => {
+        const idsToRemove = action.meta.arg.chatIds;
+
+        idsToRemove.forEach(id => {
+          if (state.chatsEntities[id]) delete state.chatsEntities[id];
+
+          const chatObj = state.chats.find(c => c.chatId === id);
+          if (chatObj?.agentInfo.id && state.chatsEntities[chatObj.agentInfo.id]) {
+            delete state.chatsEntities[chatObj.agentInfo.id];
+          }
+        });
+
+        state.chats = state.chats.filter(chat => !idsToRemove.includes(chat.chatId));
+
         state.loading.deleteChat = false;
         showToast({
           type: 'success',
-          text2: i18n.t(`serverResponses.${action.payload.messageKey}`),
+          text2: i18n.t(`serverResponses.${action.payload.messageKey}`, { count: idsToRemove.length }),
         });
       })
       .addCase(deleteChat.rejected, (state, action) => {
@@ -98,4 +156,5 @@ const chatSlice = createSlice({
   },
 });
 
+export const { setSelectedChatId, addUserMessage } = chatSlice.actions;
 export default chatSlice.reducer;

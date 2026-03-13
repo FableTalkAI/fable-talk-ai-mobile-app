@@ -1,7 +1,8 @@
 import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Flow } from 'react-native-animated-spinkit';
-import { InputToolbar as GiftedChatInputToolBar } from 'react-native-gifted-chat';
+import { IMessage, InputToolbar as GiftedChatInputToolBar } from 'react-native-gifted-chat';
+import { InputToolbarProps as InputToolbarPropsBase } from 'react-native-gifted-chat/src/InputToolbar.tsx';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
@@ -9,9 +10,7 @@ import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import AutoImage from '@/shared/ui/AutoImage';
 
-import { InputToolbarProps } from './types.ts';
-
-const InputToolbar = ({ messageLoading, ...props }: InputToolbarProps) => {
+const InputToolbar = (props: InputToolbarPropsBase<IMessage>) => {
   const { colors } = useTheme();
   const { selectedChat } = useChatStore();
 
@@ -21,11 +20,11 @@ const InputToolbar = ({ messageLoading, ...props }: InputToolbarProps) => {
     },
   });
 
-  const avatarSource = useMemo(() => selectedChat && selectedChat.chat.agentInfo.avatarUrl, [selectedChat]);
+  const avatarSource = useMemo(() => selectedChat && selectedChat.chat?.agentInfo.avatarUrl, [selectedChat]);
 
   return (
     <View>
-      {messageLoading && (
+      {selectedChat?.isSending && (
         <Animated.View entering={FadeIn} style={styles.loadingWrapper}>
           {avatarSource && <AutoImage source={avatarSource} style={styles.agentAvatar} resizeMode="cover" />}
 

@@ -14,7 +14,7 @@ const useOnboardingSteps = () => {
   const { setOnboardingStepIndexHandler, onboardingStepIndex, filter } = useUserStore();
 
   const { profile, updateUserProfileHandler, isLoading: isLoadingProfile } = useProfileStore();
-  const { getAgentsHandler, isLoading: isLoadingAgents } = useAgentsStore();
+  const { getAgentsHandler, getMyAgentsHandler, isLoading: isLoadingAgents } = useAgentsStore();
 
   const stepsData = useMemo(
     () => [
@@ -52,6 +52,8 @@ const useOnboardingSteps = () => {
   const onContinuePress = async () => {
     if (onboardingStepIndex === lastStep) {
       await Promise.all([updateUserProfileHandler({ isOnboardingDone: true }), getAgentsHandler()]);
+      if (profile && profile.isCreatedAgent) await getMyAgentsHandler();
+
       return navigation.reset({
         index: 0,
         routes: [{ name: 'TabBarNavigator', params: { screen: 'Home' } }],

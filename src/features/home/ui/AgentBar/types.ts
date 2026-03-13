@@ -16,6 +16,7 @@ export type AgentBarProps = {
   tags: Tag[];
   avatarSource: AutoImageSource;
   style?: StyleProp<ViewStyle>;
+  wrapperStyle?: StyleProp<ViewStyle>;
   onPress?: () => void;
   mode?: AgentBarModes;
 };

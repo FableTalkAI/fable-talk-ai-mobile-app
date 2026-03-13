@@ -10,7 +10,15 @@ import PressableCustom from '@/shared/ui/PressableCustom';
 
 import { AvatarProps } from './types.ts';
 
-const Avatar = ({ size = 144, isChangeable = true, style, isLoading, uri, onPickImage }: AvatarProps) => {
+const Avatar = ({
+  size = 144,
+  isChangeable = true,
+  style,
+  isLoading,
+  uri,
+  onPickImage,
+  withEnteringAnimation = true,
+}: AvatarProps) => {
   const { colors } = useTheme();
 
   const computedStyles = StyleSheet.create({
@@ -25,7 +33,12 @@ const Avatar = ({ size = 144, isChangeable = true, style, isLoading, uri, onPick
   });
 
   return (
-    <PressableCustom disabled={!!uri} onPress={onPickImage} style={[computedStyles.container, styles.container, style]}>
+    <PressableCustom
+      withEnteringAnimation={withEnteringAnimation}
+      disabled={!!uri}
+      onPress={onPickImage}
+      style={[computedStyles.container, styles.container, style]}
+    >
       <View style={styles.imageContainer}>
         {uri ? (
           <AutoImage source={{ uri }} resizeMode="cover" style={styles.image} />

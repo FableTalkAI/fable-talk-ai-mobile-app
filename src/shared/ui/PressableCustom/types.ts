@@ -9,6 +9,7 @@ export type PressableCustomProps = {
   children?: ReactNode;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+  withEnteringAnimation?: boolean;
   onPressIn?: ((event: GestureResponderEvent) => void) | null;
   onPressOut?: ((event: GestureResponderEvent) => void) | null;
 } & UniquePressableProps;

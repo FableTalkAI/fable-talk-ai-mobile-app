@@ -1,4 +1,7 @@
-import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, View } from 'react-native';
+import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
+import { FlashList } from '@shopify/flash-list';
+import { useCallback } from 'react';
+import { ActivityIndicator, FlexAlignType, RefreshControl, StyleSheet, View } from 'react-native';
 
 import { AgentAccessLevel, AgentModerationStatus } from '@/features/agents/store/agents/types.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
@@ -24,22 +27,35 @@ const AgentList = ({
 
   const { getChatByIdHandler } = useChatStore();
 
+  const computedStyles = StyleSheet.create({
+    agentBarWrapper: {
+      width: (SCREEN_WIDTH - SPACING.xl * 2 - SPACING.m) / 2,
+    },
+  });
+
+  const getAgentBarAlignSelf = (index: number): { alignSelf: FlexAlignType } => ({
+    alignSelf: index % 2 === 0 ? 'flex-start' : 'flex-end',
+  });
+
   const onEndReached = () => {
-    if (!hasMore || isLoading) return;
-    onLoadMore(true).catch(console.error);
+    if (!hasMore || isLoading || !data.length) return;
+    onLoadMore?.(true).catch(console.error);
   };
 
-  const onChatOpenHandler = (agentId: string, moderationStatus: AgentModerationStatus) => async () => {
-    if (moderationStatus === 'rejected') {
-      return navigation.navigate('CreateAgent', { id: agentId });
-    }
+  const onChatOpenHandler = useCallback(
+    (agentId: string, moderationStatus: AgentModerationStatus) => async () => {
+      if (moderationStatus === 'rejected') {
+        return navigation.navigate('CreateAgent', { id: agentId });
+      }
 
-    await getChatByIdHandler(agentId);
-    navigation.navigate('ChatScreen');
-  };
+      getChatByIdHandler(agentId).catch(console.error);
+      navigation.navigate('ChatScreen');
+    },
+    [getChatByIdHandler, navigation],
+  );
 
   const renderFooter = () => {
-    if (isLoading && hasMore) {
+    if (isLoading && hasMore && data.length) {
       return (
         <View style={styles.footer}>
           <ActivityIndicator size="small" color={colors.iconPrimary} />
@@ -50,13 +66,13 @@ const AgentList = ({
   };
 
   return (
-    <FlatList
+    <FlashList
       style={styles.container}
       data={data}
       numColumns={2}
+      drawDistance={500}
       keyExtractor={item => item.id}
       showsVerticalScrollIndicator={false}
-      columnWrapperStyle={styles.columnWrapper}
       contentContainerStyle={styles.contentContainer}
       onEndReached={onEndReached}
       onEndReachedThreshold={0.3}
@@ -70,7 +86,7 @@ const AgentList = ({
           onRefresh={() => onRefresh()}
         />
       }
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <AgentBar
           mode={getAgentBarMode({
             isPremium: item.accessLevel === AgentAccessLevel.Premium,
@@ -81,6 +97,7 @@ const AgentList = ({
           tags={item.tags}
           avatarSource={item.avatarUrl}
           onPress={onChatOpenHandler(item.id, item.moderationStatus)}
+          wrapperStyle={[styles.agentBarWrapper, computedStyles.agentBarWrapper, getAgentBarAlignSelf(index)]}
         />
       )}
     />
@@ -91,11 +108,10 @@ const styles = StyleSheet.create({
   container: {
     marginTop: SPACING.m,
   },
-  columnWrapper: {
-    gap: SPACING.lg,
+  agentBarWrapper: {
+    marginBottom: SPACING.m,
   },
   contentContainer: {
-    gap: SPACING.lg,
     paddingHorizontal: SPACING.xl,
     paddingBottom: SPACING.m,
     minHeight: '100%',

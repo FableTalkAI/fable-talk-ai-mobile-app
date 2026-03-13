@@ -12,6 +12,7 @@ export type ButtonProps = {
   isDisable?: boolean;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+  numberOfLines?: number;
 } & UniquePressableProps;
 
 export enum ButtonModes {

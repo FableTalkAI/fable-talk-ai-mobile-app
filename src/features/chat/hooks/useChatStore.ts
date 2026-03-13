@@ -1,7 +1,10 @@
 import { useCallback } from 'react';
 
-import { chatsSelector, isLoadingSelector, selectedChatSelector } from '@/features/chat/store/chat/selectors.ts';
+import { addUserMessage, setSelectedChatId } from '@/features/chat/store/chat';
+import { chatEntitySelector, chatsSelector, isLoadingSelector } from '@/features/chat/store/chat/selectors.ts';
 import { deleteChat, getAllChats, getChatById, sendMessage } from '@/features/chat/store/chat/thunks.ts';
+import { SendMessageRequest } from '@/features/chat/store/chat/types.ts';
+import { User } from '@/features/profile/store/profile/types.ts';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
 const useChatStore = () => {
@@ -9,7 +12,7 @@ const useChatStore = () => {
 
   const isLoading = useAppSelector(isLoadingSelector);
   const chats = useAppSelector(chatsSelector);
-  const selectedChat = useAppSelector(selectedChatSelector);
+  const selectedChat = useAppSelector(chatEntitySelector);
 
   const getAllChatsHandler = useCallback(async () => {
     await dispatch(getAllChats()).unwrap();
@@ -17,14 +20,19 @@ const useChatStore = () => {
 
   const getChatByIdHandler = useCallback(
     async (agentId: string, chatId?: string) => {
+      dispatch(setSelectedChatId(agentId));
       await dispatch(getChatById({ agentId, chatId })).unwrap();
     },
     [dispatch],
   );
 
   const sendMessageHandler = useCallback(
-    async (message: string) => {
-      return await dispatch(sendMessage(message)).unwrap();
+    async (data: SendMessageRequest & User) => {
+      const { message, agentId, ...profile } = data;
+      if (profile) {
+        dispatch(addUserMessage({ ...data, ...profile }));
+      }
+      return await dispatch(sendMessage({ message, agentId })).unwrap();
     },
     [dispatch],
   );

@@ -8,6 +8,6 @@ export type AgentListProps = {
   isRefreshing: boolean;
   hasMore: boolean;
   onRefresh: () => Promise<void>;
-  onLoadMore: (loadMore?: boolean) => Promise<void>;
+  onLoadMore?: (loadMore?: boolean) => Promise<void>;
   ListEmptyComponent?: ReactElement;
 };
