@@ -42,7 +42,6 @@ export const getFilteredAgents = createAxiosAsyncThunk<GetFilteredAgentsResponse
   `${agentsSliceName}/getFilteredAgents`,
   async (loadMore, { getState }) => {
     const filter = { ...getState().user.filter, moderationStatus: 'approved' };
-    console.log('filtergetFilteredAgents', filter);
     const cursor = loadMore ? getState().agents.pagination.agents.nextCursor : undefined;
 
     const response = await http.post(`${AGENTS_ROUTE}/agents`, { ...filter, cursor });
@@ -54,7 +53,6 @@ export const getMyAgents = createAxiosAsyncThunk<GetFilteredAgentsResponse, bool
   `${agentsSliceName}/getMyAgents`,
   async (loadMore, { getState }) => {
     const filter = { ...getState().user.filter, isPersonal: true };
-    console.log('filter', filter);
     const cursor = loadMore ? getState().agents.pagination.myAgents.nextCursor : undefined;
 
     const response = await http.post(`${AGENTS_ROUTE}/agents`, { ...filter, cursor });
