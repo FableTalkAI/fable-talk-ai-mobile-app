@@ -75,8 +75,6 @@ const ChatListScreen = () => {
     return unsubscribe;
   }, [clear, navigation]);
 
-  console.log('chats', chats);
-
   return (
     <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
       <SearchInput style={styles.search} placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
