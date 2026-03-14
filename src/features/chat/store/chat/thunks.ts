@@ -6,6 +6,7 @@ import { getUserProfile } from '@/features/profile/store/profile/thunks.ts';
 import { MessageKey } from '@/features/profile/store/profile/types.ts';
 import http from '@/shared/api/http.ts';
 
+import { addNewChatToList, updateChatListLastMessage } from './index.ts';
 import {
   Chat,
   deleteChatRequest,
@@ -77,8 +78,11 @@ export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessag
 
     if (!chatData.chatId) {
       await dispatch(getUserProfile());
-      await dispatch(getChatById({ agentId: chatData.agentInfo.id }));
+      const newChat = await dispatch(getChatById({ agentId: chatData.agentInfo.id })).unwrap();
+      dispatch(addNewChatToList(newChat.chat as Required<Chat>));
     }
+
+    dispatch(updateChatListLastMessage({ agentId: chatData.agentInfo.id, message: response.data }));
 
     return response.data;
   },
