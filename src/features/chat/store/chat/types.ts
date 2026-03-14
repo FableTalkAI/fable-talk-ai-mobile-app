@@ -62,3 +62,8 @@ export type SendMessageRequest = {
   message: string;
   agentId: string;
 };
+
+export type UpdateChatListLastMessage = {
+  message: Message;
+  agentId: string;
+};

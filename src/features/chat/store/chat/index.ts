@@ -6,7 +6,7 @@ import { User } from '@/features/profile/store/profile/types.ts';
 import { showToast } from '@/shared/lib/toast/index.ts';
 
 import { chatSliceName, deleteChat, getAllChats, getChatById, sendMessage } from './thunks.ts';
-import { ChatState, Message, SendMessageRequest } from './types.ts';
+import { Chat, ChatState, Message, SendMessageRequest, UpdateChatListLastMessage } from './types.ts';
 
 export const chatPersistConfig = {
   key: chatSliceName,
@@ -48,6 +48,23 @@ const chatSlice = createSlice({
       if (state.chatsEntities[id]) {
         state.chatsEntities[id].messageHistory.unshift(userMessage);
       }
+    },
+    updateChatListLastMessage: (state, action: PayloadAction<UpdateChatListLastMessage>) => {
+      const { agentId, message } = action.payload;
+      const chat = state.chats.find(c => c.agentInfo.id === agentId);
+
+      if (chat) {
+        chat.lastMessage = message;
+
+        const chatIndex = state.chats.indexOf(chat);
+        if (chatIndex > 0) {
+          state.chats.splice(chatIndex, 1);
+          state.chats.unshift(chat);
+        }
+      }
+    },
+    addNewChatToList: (state, action: PayloadAction<Required<Chat>>) => {
+      state.chats.push(action.payload);
     },
   },
   extraReducers: builder => {
@@ -156,5 +173,5 @@ const chatSlice = createSlice({
   },
 });
 
-export const { setSelectedChatId, addUserMessage } = chatSlice.actions;
+export const { setSelectedChatId, addUserMessage, updateChatListLastMessage, addNewChatToList } = chatSlice.actions;
 export default chatSlice.reducer;

@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
-import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
@@ -24,14 +24,12 @@ import ScreenLoader from '@/shared/ui/ScreenLoader';
 dayjs.extend(calendar);
 
 const ChatScreen = () => {
-  const chatWasUsed = useRef(false);
-
   const { colors } = useTheme();
   const { t, i18n } = useTranslation();
   const { navigation } = useNavigationRoutes();
   const insets = useSafeAreaInsets();
 
-  const { selectedChat, sendMessageHandler, getAllChatsHandler } = useChatStore();
+  const { selectedChat, sendMessageHandler } = useChatStore();
   const { profile } = useProfileStore();
 
   const { open } = useBottomWindow();
@@ -58,9 +56,6 @@ const ChatScreen = () => {
 
   const onSend = useCallback(
     async (m: IMessage[] = []) => {
-      if (!chatWasUsed.current) {
-        chatWasUsed.current = true;
-      }
       if (selectedChat && selectedChat.chat && profile) {
         await sendMessageHandler({
           message: m[0].text,
@@ -82,13 +77,6 @@ const ChatScreen = () => {
     },
     [navigation.goBack, open],
   );
-
-  useEffect(() => {
-    return () => {
-      if (!chatWasUsed.current) return;
-      getAllChatsHandler().catch(console.error);
-    };
-  }, [getAllChatsHandler]);
 
   const trashBin = useMemo(() => {
     if (!selectedChat || !selectedChat.chat?.chatId) return null;
