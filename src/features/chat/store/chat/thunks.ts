@@ -1,5 +1,6 @@
 import { CHAT_ROUTE } from '@env';
 
+import { AppDispatch, AppState } from '@/app/store/index.ts';
 import { createAxiosAsyncThunk } from '@/app/store/typedCreateAsyncThunk.ts';
 import { setLimits } from '@/features/profile/store/profile';
 import { getUserProfile } from '@/features/profile/store/profile/thunks.ts';
@@ -26,7 +27,7 @@ export const getAllChats = createAxiosAsyncThunk<Required<Chat>[], void>(`${chat
 
 export const getChatById = createAxiosAsyncThunk<GetChatByIdResponse, GetChatByIdRequest>(
   `${chatSliceName}/getChatById`,
-  async ({ agentId, chatId }, { dispatch, getState }) => {
+  async ({ agentId, chatId, cursor, limit = 10 }, { dispatch, getState }) => {
     let resolvedChatId = chatId;
 
     if (!chatId) {
@@ -36,7 +37,7 @@ export const getChatById = createAxiosAsyncThunk<GetChatByIdResponse, GetChatByI
 
     const response = await http.post(
       `${CHAT_ROUTE}/`,
-      { agentId },
+      { agentId, cursor, limit },
       {
         params: { chatId: resolvedChatId },
       },
@@ -45,6 +46,20 @@ export const getChatById = createAxiosAsyncThunk<GetChatByIdResponse, GetChatByI
     return response.data;
   },
 );
+
+export const loadMoreMessages = (agentId: string) => async (dispatch: AppDispatch, getState: () => AppState) => {
+  const entity = getState().chat.chatsEntities[agentId];
+
+  if (!entity || entity.isLoadingMore || !entity.hasMore || !entity.nextCursor) return;
+
+  await dispatch(
+    getChatById({
+      agentId,
+      chatId: entity.chat?.chatId,
+      cursor: entity.nextCursor,
+    }),
+  );
+};
 
 export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessageRequest>(
   `${chatSliceName}/sendMessage`,

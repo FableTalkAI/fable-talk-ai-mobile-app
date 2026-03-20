@@ -18,7 +18,6 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
   const { getAllChatsHandler } = useChatStore();
 
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     auth().onAuthStateChanged(async user => {
       try {

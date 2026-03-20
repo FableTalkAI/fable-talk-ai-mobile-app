@@ -83,26 +83,55 @@ const chatSlice = createSlice({
 
       //getChatById
       .addCase(getChatById.pending, (state, action) => {
-        const id = action.meta.arg.agentId;
-        if (!state.chatsEntities[id]) {
-          state.chatsEntities[id] = {
+        const { agentId, cursor } = action.meta.arg;
+        if (!state.chatsEntities[agentId]) {
+          state.chatsEntities[agentId] = {
             messageHistory: [],
             isLoading: true,
+            isLoadingMore: false,
             isSending: false,
             error: null,
+            nextCursor: null,
+            hasMore: true,
           };
+        }
+
+        if (cursor) {
+          state.chatsEntities[agentId].isLoadingMore = true;
+        } else {
+          state.chatsEntities[agentId].isLoading = true;
         }
       })
       .addCase(getChatById.fulfilled, (state, action) => {
-        const id = action.meta.arg.agentId;
-        state.chatsEntities[id].isLoading = false;
-        state.chatsEntities[id].chat = action.payload.chat;
-        state.chatsEntities[id].messageHistory = action.payload.messageHistory.reverse();
+        const { agentId, cursor } = action.meta.arg;
+
+        if (cursor) {
+          state.chatsEntities[agentId].isLoadingMore = false;
+          state.chatsEntities[agentId].messageHistory = [
+            ...state.chatsEntities[agentId].messageHistory,
+            ...action.payload.messageHistory,
+          ];
+          state.chatsEntities[agentId].nextCursor = action.payload.nextCursor;
+          state.chatsEntities[agentId].hasMore = action.payload.hasMore;
+        } else {
+          state.chatsEntities[agentId].isLoading = false;
+          if (state.chatsEntities[agentId].messageHistory[0]?._id !== action.payload.messageHistory[0]?._id) {
+            state.chatsEntities[agentId].messageHistory = action.payload.messageHistory;
+          }
+        }
+
+        state.chatsEntities[agentId].chat = action.payload.chat;
       })
       .addCase(getChatById.rejected, (state, action) => {
-        const id = action.meta.arg.agentId;
-        if (state.chatsEntities[id]) {
-          state.chatsEntities[id].isLoading = false;
+        const { agentId, cursor } = action.meta.arg;
+        if (state.chatsEntities[agentId]) {
+          state.chatsEntities[agentId].isLoading = false;
+
+          if (cursor) {
+            state.chatsEntities[agentId].isLoadingMore = false;
+          } else {
+            state.chatsEntities[agentId].isLoading = false;
+          }
         }
       })
 

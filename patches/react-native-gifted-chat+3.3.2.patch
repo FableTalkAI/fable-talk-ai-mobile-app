@@ -10,6 +10,19 @@ index e440951..c03f9be 100644
          return renderComponentOrElement(renderUsername, currentMessage.user)
  
        return (
+diff --git a/node_modules/react-native-gifted-chat/src/GiftedChat/index.tsx b/node_modules/react-native-gifted-chat/src/GiftedChat/index.tsx
+index 2858b6c..acc6735 100644
+--- a/node_modules/react-native-gifted-chat/src/GiftedChat/index.tsx
++++ b/node_modules/react-native-gifted-chat/src/GiftedChat/index.tsx
+@@ -326,7 +326,7 @@ function GiftedChat<TMessage extends IMessage = IMessage> (
+           style={[stylesCommon.fill, styles.contentContainer]}
+           onLayout={onInitialLayoutViewLayout}
+         >
+-          {/* @ts-expect-error */}
++          {/* @ts-ignore */}
+           <KeyboardAvoidingView
+             behavior='translate-with-padding'
+             keyboardVerticalOffset={insets.top}
 diff --git a/node_modules/react-native-gifted-chat/src/MessagesContainer/index.tsx b/node_modules/react-native-gifted-chat/src/MessagesContainer/index.tsx
 index 0d08513..f067221 100644
 --- a/node_modules/react-native-gifted-chat/src/MessagesContainer/index.tsx

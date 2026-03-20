@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 import Animated, { FadeOut } from 'react-native-reanimated';
 
 import useTheme from '@/shared/hooks/useTheme.ts';
+import { IS_ANDROID } from '@/shared/model/device.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import Avatar from '@/shared/ui/Avatar';
 import TextCustom from '@/shared/ui/TextCustom';
@@ -15,6 +16,7 @@ const EmptyChatStub = ({ description, avatarUrl }: EmptyChatStubProps) => {
   const computedStyles = StyleSheet.create({
     text: {
       backgroundColor: colors.backgroundSecondary,
+      transform: IS_ANDROID ? [{ rotateY: '180deg' }] : [],
     },
   });
 
@@ -37,6 +39,7 @@ const styles = StyleSheet.create({
   text: {
     padding: SPACING.s,
     borderRadius: RADIUS.medium,
+    textAlign: 'center',
   },
 });
 
