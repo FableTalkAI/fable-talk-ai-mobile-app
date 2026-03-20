@@ -7,6 +7,7 @@ import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
+import { loadMoreMessages } from '@/features/chat/store/chat/thunks.ts';
 import DeleteChatBottomWindow from '@/features/chat/ui/DeleteChatBottomWindow';
 import EmptyChatStub from '@/features/chat/ui/EmptyChatStub';
 import { Bubble, Composer, InputToolbar, Message, Send } from '@/features/chat/ui/giftedChat';
@@ -15,6 +16,7 @@ import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { TrashBinIcon } from '@/shared/assets/icons';
+import { useAppDispatch } from '@/shared/hooks/reduxHooks.ts';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Header from '@/shared/ui/Header';
@@ -28,6 +30,7 @@ const ChatScreen = () => {
   const { t, i18n } = useTranslation();
   const { navigation } = useNavigationRoutes();
   const insets = useSafeAreaInsets();
+  const dispatch = useAppDispatch();
 
   const { selectedChat, sendMessageHandler } = useChatStore();
   const { profile } = useProfileStore();
@@ -98,6 +101,15 @@ const ChatScreen = () => {
         <>
           <Header title={selectedChat.chat?.agentInfo.name} rightIcon={trashBin} />
           <GiftedChat
+            loadEarlierMessagesProps={{
+              isAvailable: !!selectedChat?.hasMore,
+              isLoading: !!selectedChat?.isLoadingMore,
+              onPress: () => {
+                if (!selectedChat?.chat?.agentInfo.id) return;
+                dispatch(loadMoreMessages(selectedChat.chat.agentInfo.id));
+              },
+              isInfiniteScrollEnabled: true,
+            }}
             messages={selectedChat.messageHistory as IMessage[]}
             onSend={chatMessages => onSend(chatMessages)}
             renderAvatar={props => <ChatAvatar {...props} />}

@@ -14,18 +14,25 @@ export type ChatDetails = {
   messageHistory: Message[];
   chat?: Chat;
   isLoading: boolean;
+  isLoadingMore: boolean;
   isSending: boolean;
   error: string | null;
+  nextCursor: string | null;
+  hasMore: boolean;
 };
 
 export type GetChatByIdRequest = {
   agentId: string;
   chatId?: string;
+  cursor?: string | null;
+  limit?: number;
 };
 
 export type GetChatByIdResponse = {
   chat: Chat;
   messageHistory: Message[];
+  nextCursor: string;
+  hasMore: boolean;
 };
 
 export type deleteChatRequest = {
