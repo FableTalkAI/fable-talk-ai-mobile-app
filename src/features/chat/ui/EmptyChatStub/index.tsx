@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import Animated, { FadeOut } from 'react-native-reanimated';
 
 import useTheme from '@/shared/hooks/useTheme.ts';
-import { IS_ANDROID, IS_IOS } from '@/shared/model/device.ts';
+import { IS_ANDROID } from '@/shared/model/device.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import Avatar from '@/shared/ui/Avatar';
 import TextCustom from '@/shared/ui/TextCustom';
