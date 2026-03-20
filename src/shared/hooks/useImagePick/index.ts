@@ -1,0 +1,60 @@
+import { useCallback } from 'react';
+import { launchImageLibrary } from 'react-native-image-picker';
+
+import { useGalleryPermission } from '@/shared/hooks/useGalleryPermission.tsx';
+import { showToast } from '@/shared/lib/toast';
+
+import { MAX_IMAGE_SIZE_MB } from './constants.ts';
+import { UseImagePickProps } from './types.ts';
+
+export const useImagePick = (props?: UseImagePickProps) => {
+  const { onSuccess } = props || {};
+
+  const { requestGalleryPermission } = useGalleryPermission();
+
+  const pickImage = useCallback(async (): Promise<string | undefined> => {
+    const hasPermission = await requestGalleryPermission();
+
+    if (!hasPermission) return;
+
+    try {
+      const response = await launchImageLibrary({
+        mediaType: 'photo',
+        selectionLimit: 1,
+        includeExtra: true,
+        maxWidth: 2500,
+        maxHeight: 2500,
+        quality: 0.9,
+      });
+
+      if (response.didCancel || response.errorCode) {
+        if (response.errorCode) console.warn('ImagePicker Error:', response.errorMessage);
+        return;
+      }
+
+      const asset = response.assets?.[0];
+      const uri = asset?.uri;
+      const fileSize = asset?.fileSize;
+
+      if (fileSize && fileSize >= MAX_IMAGE_SIZE_MB) {
+        showToast({
+          type: 'error',
+          text2: 'Файл слишком тяжелый для загрузки (макс. 5 МБ)',
+        });
+
+        return;
+      }
+
+      if (uri) {
+        await onSuccess?.(uri);
+        return uri;
+      }
+    } catch (error) {
+      console.error('ImagePicker failed:', error);
+    }
+
+    return undefined;
+  }, [requestGalleryPermission, onSuccess]);
+
+  return { pickImage };
+};

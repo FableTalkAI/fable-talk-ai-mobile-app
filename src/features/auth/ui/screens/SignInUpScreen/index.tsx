@@ -1,0 +1,180 @@
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useRoute } from '@react-navigation/native';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { StyleSheet, View } from 'react-native';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+
+import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
+import { getAuthSchema } from '@/features/auth/lib/zod/schema.ts';
+import { AuthSchema } from '@/features/auth/lib/zod/types.ts';
+import { SendOtpLanguages } from '@/features/auth/store/auth/types.ts';
+import GoogleButton from '@/features/auth/ui/GoogleButton';
+import { MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/shared/assets/icons';
+import useTheme from '@/shared/hooks/useTheme.ts';
+import { SPACING } from '@/shared/model/sizes.ts';
+import Button from '@/shared/ui/Button';
+import FieldInput from '@/shared/ui/FieldInput';
+import KeyboardAvoidingViewCustom from '@/shared/ui/KeyboardAvoidingViewCustom';
+import PressableCustom from '@/shared/ui/PressableCustom';
+import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
+import TextCustom from '@/shared/ui/TextCustom';
+import { TextModes } from '@/shared/ui/TextCustom/types.ts';
+
+import { AuthScreenMode, SignInUpRouteProp } from './types.ts';
+
+const SignInUpScreen = () => {
+  const { t, i18n } = useTranslation();
+  const { colors } = useTheme();
+
+  const route = useRoute<SignInUpRouteProp>();
+  const { sendOtpHandler, setVerifyDataHandler, isLoading } = useAuthStore();
+  const { mode } = route.params;
+
+  const [screenMode, setScreenMode] = useState<AuthScreenMode>(mode);
+
+  const authSchema = getAuthSchema(screenMode);
+
+  const { control, handleSubmit } = useForm<AuthSchema>({
+    resolver: zodResolver(authSchema),
+    defaultValues: { name: '', email: '' },
+  });
+
+  const computedStyles = StyleSheet.create({
+    continueWithText: {
+      color: colors.gray40,
+    },
+    belowButtonText: {
+      color: colors.textSecondary,
+    },
+    textLink: {
+      color: colors.link,
+    },
+  });
+
+  const onSubmit = () => {
+    handleSubmit(async (data: AuthSchema) => {
+      const lang: SendOtpLanguages = i18n.resolvedLanguage === 'uk' ? 'uk' : 'en';
+      const dataOptions = {
+        email: data.email,
+        lang,
+        ...(screenMode === AuthScreenMode.SignUp && { name: data.name }),
+      };
+
+      setVerifyDataHandler(data);
+      await sendOtpHandler(dataOptions);
+    })();
+  };
+
+  return (
+    <SafeAreaViewCustom withHorizontalPadding={false}>
+      <Animated.View style={styles.wrapper} exiting={FadeOut} entering={FadeIn} key={screenMode}>
+        <KeyboardAvoidingViewCustom scrollContentStyle={styles.scrollContentStyle}>
+          <View style={styles.iconContainer}>{screenMode === 'signIn' ? <SignInIcon /> : <SignUpIcon />}</View>
+
+          <View>
+            <TextCustom text={t(`auth.${screenMode}.header`)} mode={TextModes.Title} />
+            <TextCustom text={t(`auth.${screenMode}.subheader`)} mode={TextModes.Caption} style={styles.subheader} />
+
+            <View style={styles.inputContainer}>
+              {screenMode === 'signUp' && (
+                <FieldInput
+                  name="name"
+                  control={control}
+                  placeholder={t('common.name')}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  maxLength={20}
+                  leftIcon={<UserIcon />}
+                />
+              )}
+
+              <FieldInput
+                name="email"
+                control={control}
+                autoCapitalize="none"
+                keyboardType="email-address"
+                autoComplete="email"
+                textContentType="emailAddress"
+                autoCorrect={false}
+                placeholder={t('common.email')}
+                leftIcon={<MailIcon />}
+                onChangeHandler={text => text.toLowerCase()}
+              />
+            </View>
+          </View>
+
+          <View style={styles.continueWithContainer}>
+            <TextCustom
+              text={t('auth.continueWith')}
+              mode={TextModes.Caption}
+              style={computedStyles.continueWithText}
+            />
+
+            <GoogleButton isLoading={isLoading.login} />
+          </View>
+        </KeyboardAvoidingViewCustom>
+
+        <View style={styles.buttonAndTextContainer}>
+          <Button title={t(`auth.${screenMode}Button`)} onPress={onSubmit} isLoading={isLoading.login} />
+
+          <View style={styles.belowButtonContainer}>
+            <TextCustom
+              text={t(`auth.${screenMode}.belowButton`)}
+              mode={TextModes.Caption}
+              style={computedStyles.belowButtonText}
+            />
+            <PressableCustom
+              onPress={() =>
+                setScreenMode(screenMode === AuthScreenMode.SignUp ? AuthScreenMode.SignIn : AuthScreenMode.SignUp)
+              }
+            >
+              <TextCustom
+                text={screenMode === 'signIn' ? t('auth.signUpButton') : t('auth.signInButton')}
+                mode={TextModes.Caption}
+                style={computedStyles.textLink}
+              />
+            </PressableCustom>
+          </View>
+        </View>
+      </Animated.View>
+    </SafeAreaViewCustom>
+  );
+};
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flex: 1,
+    justifyContent: 'space-between',
+  },
+  scrollContentStyle: {
+    paddingHorizontal: SPACING.xl,
+  },
+  iconContainer: {
+    alignItems: 'center',
+    paddingBottom: SPACING.lg,
+  },
+  subheader: {
+    paddingBottom: SPACING.s,
+  },
+  continueWithContainer: {
+    alignItems: 'center',
+    paddingTop: SPACING.m,
+    gap: SPACING.xs,
+  },
+  buttonAndTextContainer: {
+    paddingTop: SPACING.s,
+    paddingHorizontal: SPACING.xl,
+    gap: SPACING.xs,
+  },
+  belowButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  inputContainer: {
+    gap: SPACING.m,
+  },
+});
+
+export default SignInUpScreen;
