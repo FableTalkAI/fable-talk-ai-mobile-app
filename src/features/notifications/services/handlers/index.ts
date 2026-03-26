@@ -4,10 +4,12 @@ import {
   NotificationPayloadMap,
 } from '@/features/notifications/model/types.ts';
 
-import { newMessageHandler } from './newMessageHandler.ts';
+import { agentApprovedHandler } from './agentApprovedHandler.ts';
+import { agentRejectedHandler } from './agentRejectedHandler.ts';
 
 const handlers: NotificationHandlers = {
-  [NotificationEventType.NewMessage]: newMessageHandler,
+  [NotificationEventType.AgentApproved]: agentApprovedHandler,
+  [NotificationEventType.AgentRejected]: agentRejectedHandler,
 };
 
 export const handleNotificationEvent = <T extends NotificationEventType>(

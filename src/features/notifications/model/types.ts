@@ -1,13 +1,15 @@
 export enum NotificationEventType {
-  NewMessage = 'new-message',
+  AgentApproved = 'AgentApproved',
+  AgentRejected = 'AgentRejected',
 }
 
-export type NewMessagePayload = {
+export type AgentModerationPayload = {
   agentId: string;
 };
 
 export type NotificationPayloadMap = {
-  [NotificationEventType.NewMessage]: NewMessagePayload;
+  [NotificationEventType.AgentApproved]: AgentModerationPayload;
+  [NotificationEventType.AgentRejected]: AgentModerationPayload;
 };
 
 export type ParsedNotification<T extends NotificationEventType> = {
