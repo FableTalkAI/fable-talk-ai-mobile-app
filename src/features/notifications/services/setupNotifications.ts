@@ -1,6 +1,7 @@
 import messaging from '@react-native-firebase/messaging';
+import { PermissionsAndroid, Platform } from 'react-native';
 
-import { IS_IOS } from '@/shared/model/device.ts';
+import { IS_ANDROID, IS_IOS } from '@/shared/model/device.ts';
 
 import { syncFCMToken } from './syncFCMToken.ts';
 
@@ -10,6 +11,10 @@ export const setupNotifications = async () => {
       if (!messaging().isDeviceRegisteredForRemoteMessages) {
         await messaging().registerDeviceForRemoteMessages();
       }
+    }
+
+    if (IS_ANDROID && +Platform.Version >= 33) {
+      await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
     }
 
     const authStatus = await messaging().requestPermission();

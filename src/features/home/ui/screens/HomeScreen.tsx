@@ -1,3 +1,4 @@
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -7,6 +8,7 @@ import AgentList from '@/features/home/ui/AgentList/AgentList.tsx';
 import CreateAgentButton from '@/features/home/ui/CreateAgentButton';
 import SearchFilterBottomWindow from '@/features/home/ui/SearchFilterBottomWindow';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import { TabBarNavigatorParamList } from '@/features/navigation/ui/TabBarNavigator/types.ts';
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
@@ -25,6 +27,7 @@ const HomeScreen = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { navigation } = useNavigationRoutes();
+  const route = useRoute<RouteProp<TabBarNavigatorParamList, 'Home'>>();
 
   const {
     agents,
@@ -43,7 +46,7 @@ const HomeScreen = () => {
   const { profile } = useProfileStore();
   const { open } = useBottomWindow();
 
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(route.params?.tabIndex || 0);
 
   const openSearchFilterBottomWindow = () => {
     open(close => <SearchFilterBottomWindow close={close} />);

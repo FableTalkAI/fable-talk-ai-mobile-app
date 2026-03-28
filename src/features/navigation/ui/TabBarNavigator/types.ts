@@ -1,5 +1,5 @@
 export type TabBarNavigatorParamList = {
-  Home: undefined;
+  Home: { tabIndex?: number };
   ChatListScreen: undefined;
   Profile: undefined;
 };
