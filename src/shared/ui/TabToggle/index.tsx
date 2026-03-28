@@ -34,11 +34,11 @@ const TabToggle = ({
   rightIcon,
 }: TabToggleProps) => {
   const { colors, theme } = useTheme();
-
-  const previousIndex = useRef(0);
-  const translateX = useSharedValue(0);
-
   const tabWidth = tabContainerWidth / tabs.length;
+
+  const previousIndex = useRef(activeTab);
+  const translateX = useSharedValue(activeTab * tabWidth);
+
   const cloneElementProps = {
     width: 20,
     height: 20,

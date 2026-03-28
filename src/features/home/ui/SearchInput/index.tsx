@@ -14,8 +14,11 @@ const SearchInput = forwardRef<TextInput, SearchInputProps>(
   ({ style, navigation, onStop, isDisabled, ...inputProps }, ref) => {
     const { colors } = useTheme();
 
+    const onStopRef = useRef(onStop);
+
     const [value, setValue] = useState('');
     const debouncedSearch = useDebounce({ value });
+    onStopRef.current = onStop;
 
     const isFirstRun = useRef(true);
 
@@ -24,8 +27,7 @@ const SearchInput = forwardRef<TextInput, SearchInputProps>(
         isFirstRun.current = false;
         return;
       }
-      onStop?.(debouncedSearch);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      onStopRef.current?.(debouncedSearch);
     }, [debouncedSearch]);
 
     return (

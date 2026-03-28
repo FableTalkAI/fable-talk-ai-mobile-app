@@ -5,6 +5,7 @@ import { AppState, AppStateStatus } from 'react-native';
 import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
 import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
+import { useNotifications } from '@/features/notifications/hooks/useNotifications.ts';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { getMsUntilMidnight } from '@/shared/lib/date.ts';
 import AppStub from '@/shared/ui/AppStub.tsx';
@@ -17,7 +18,10 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
   const { getTagsHandler, getAgentsHandler, getMyAgentsHandler } = useAgentsStore();
   const { getAllChatsHandler } = useChatStore();
 
+  useNotifications();
+
   const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     auth().onAuthStateChanged(async user => {
       try {

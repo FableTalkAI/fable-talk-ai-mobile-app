@@ -27,7 +27,7 @@ const Header = ({ title, onPress, style, rightIcon }: HeaderProps) => {
         <ArrowForwardIcon style={styles.arrow} fill={colors.iconPrimary} />
       </PressableCustom>
 
-      <View style={styles.center}>{title && <TextCustom text={title} mode={TextModes.Title} />}</View>
+      <View style={styles.center}>{title && <TextCustom numberOfLines={1} text={title} mode={TextModes.Title} />}</View>
 
       <View style={styles.side}>{rightIcon}</View>
     </View>

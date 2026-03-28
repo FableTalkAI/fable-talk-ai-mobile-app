@@ -8,7 +8,7 @@ module.exports = {
   parserOptions: { project: 'tsconfig.json' },
   ignorePatterns: ['/*', '!/src', '!node_modules'],
 
-  plugins: ['simple-import-sort', 'import', 'rulesdir'],
+  plugins: ['react-compiler', 'simple-import-sort', 'import', 'rulesdir'],
 
   settings: {
     'import/resolver': {
@@ -18,6 +18,7 @@ module.exports = {
 
   rules: {
     curly: 'off',
+    'react-compiler/react-compiler': 'error',
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
     'import/first': 'error',

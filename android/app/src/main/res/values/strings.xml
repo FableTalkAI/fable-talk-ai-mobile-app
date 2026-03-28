@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FableTalkAI</string>
+    <string name="default_notification_channel_id">fable_talk_default_channel</string>
 </resources>

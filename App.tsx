@@ -15,6 +15,7 @@ import * as Sentry from '@sentry/react-native';
 import { toastConfig } from '@/shared/lib/toast/config.tsx';
 import RootNavigator from '@/features/navigation/ui/RootNavigator';
 import { persistor, store } from '@/app/store';
+import { flushPendingNavigation, navigationRef } from '@/features/navigation/lib/navigationRef.ts';
 
 Sentry.init({
   dsn: 'https://4ffe32896b7fe3269b6f735bd476bbca@o4510449626578944.ingest.de.sentry.io/4510449632411728',
@@ -43,7 +44,7 @@ function App() {
           <GestureHandlerRootView style={styles.flex1}>
             <BottomSheetModalProvider>
               <SafeAreaProvider>
-                <NavigationContainer>
+                <NavigationContainer ref={navigationRef} onReady={flushPendingNavigation}>
                   <BottomWindowProvider>
                     <InitialSetup>
                       <RootNavigator />

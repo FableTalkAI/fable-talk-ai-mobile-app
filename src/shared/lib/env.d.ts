@@ -6,4 +6,5 @@ declare module '@env' {
   export const PROFILE_ROUTE: string;
   export const AGENTS_ROUTE: string;
   export const CONTACT_US_ROUTE: string;
+  export const NOTIFICATIONS_ROUTE: string;
 }
