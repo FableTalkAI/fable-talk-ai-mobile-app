@@ -1,7 +1,3 @@
-import { StackNavigationProp } from '@react-navigation/stack';
-
-import { AllNavigationParamList } from '@/features/navigation/hooks/useNavigationRoutes/types.ts';
-
 export enum NotificationEventType {
   AgentApproved = 'AgentApproved',
   AgentRejected = 'AgentRejected',
