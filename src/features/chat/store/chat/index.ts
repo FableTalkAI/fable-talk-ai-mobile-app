@@ -104,20 +104,19 @@ const chatSlice = createSlice({
       })
       .addCase(getChatById.fulfilled, (state, action) => {
         const { agentId, cursor } = action.meta.arg;
+        const chat = state.chatsEntities[agentId];
 
         if (cursor) {
-          state.chatsEntities[agentId].isLoadingMore = false;
-          state.chatsEntities[agentId].messageHistory = [
-            ...state.chatsEntities[agentId].messageHistory,
-            ...action.payload.messageHistory,
-          ];
-          state.chatsEntities[agentId].nextCursor = action.payload.nextCursor;
-          state.chatsEntities[agentId].hasMore = action.payload.hasMore;
+          chat.isLoadingMore = false;
+          chat.messageHistory = [...chat.messageHistory, ...action.payload.messageHistory];
+          chat.nextCursor = action.payload.nextCursor;
+          chat.hasMore = action.payload.hasMore;
         } else {
-          state.chatsEntities[agentId].isLoading = false;
-          if (state.chatsEntities[agentId].messageHistory[0]?._id !== action.payload.messageHistory[0]?._id) {
-            state.chatsEntities[agentId].messageHistory = action.payload.messageHistory;
+          chat.isLoading = false;
+          if (chat.messageHistory[0]?._id !== action.payload.messageHistory[0]?._id) {
+            chat.messageHistory = action.payload.messageHistory;
           }
+          chat.hasMore = action.payload.hasMore;
         }
 
         state.chatsEntities[agentId].chat = action.payload.chat;

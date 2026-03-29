@@ -7,5 +7,6 @@ export type SafeAreaViewCustomProps = {
   isTransparent?: boolean;
   withGradientBackground?: boolean;
   withHorizontalPadding?: boolean;
+  withBottomPadding?: boolean;
   style?: StyleProp<ViewStyle>;
 } & Omit<SafeAreaViewProps, 'style'>;

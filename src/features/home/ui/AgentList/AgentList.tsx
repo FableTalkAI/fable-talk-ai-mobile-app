@@ -22,7 +22,7 @@ const AgentList = ({
   onLoadMore,
   ListEmptyComponent,
 }: AgentListProps) => {
-  const { colors } = useTheme();
+  const { colors, getInvertedColor } = useTheme();
   const { navigation } = useNavigationRoutes();
 
   const { getChatByIdHandler } = useChatStore();
@@ -82,6 +82,7 @@ const AgentList = ({
         <RefreshControl
           tintColor={colors.iconPrimary}
           progressBackgroundColor={colors.iconPrimary}
+          colors={[getInvertedColor('iconPrimary')]}
           refreshing={isRefreshing}
           onRefresh={() => onRefresh()}
         />
