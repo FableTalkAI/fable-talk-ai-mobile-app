@@ -29,7 +29,7 @@ const ChatScreen = () => {
   const { colors } = useTheme();
   const { t, i18n } = useTranslation();
   const { navigation } = useNavigationRoutes();
-  const insets = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
 
   const { selectedChat, sendMessageHandler } = useChatStore();
@@ -52,8 +52,8 @@ const ChatScreen = () => {
   const computedStyles = StyleSheet.create({
     container: {
       backgroundColor: colors.backgroundTertiary,
-      paddingTop: insets.top > SPACING.m ? 0 : SPACING.m,
-      paddingBottom: insets.bottom > SPACING.m ? 0 : SPACING.m,
+      paddingTop: top > SPACING.m ? 0 : SPACING.m,
+      paddingBottom: bottom > SPACING.m ? 0 : SPACING.m,
     },
   });
 
@@ -95,7 +95,7 @@ const ChatScreen = () => {
 
   return (
     <SafeAreaView style={[computedStyles.container, styles.container]}>
-      {selectedChat.isLoading ? (
+      {selectedChat.isLoading && !selectedChat?.chat?.chatId && !selectedChat?.chat?.agentInfo.id ? (
         <ScreenLoader isLoading />
       ) : (
         <>
@@ -110,6 +110,7 @@ const ChatScreen = () => {
               },
               isInfiniteScrollEnabled: true,
             }}
+            keyboardAvoidingViewProps={{ keyboardVerticalOffset: 78 + bottom }}
             messages={selectedChat.messageHistory as IMessage[]}
             onSend={chatMessages => onSend(chatMessages)}
             renderAvatar={props => <ChatAvatar {...props} />}

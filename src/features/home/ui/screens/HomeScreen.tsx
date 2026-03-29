@@ -63,7 +63,12 @@ const HomeScreen = () => {
 
   return (
     <>
-      <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
+      <SafeAreaViewCustom
+        withBottomPadding={false}
+        edges={['top', 'right', 'left']}
+        withHorizontalPadding={false}
+        withGradientBackground
+      >
         <TabToggle
           leftIcon={
             <PressableCustom onPress={() => navigation.navigate('SearchScreen')}>

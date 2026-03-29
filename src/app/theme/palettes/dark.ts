@@ -1,4 +1,6 @@
-export const dark = {
+import { ThemeColors } from '@/app/theme/types.ts';
+
+export const dark: ThemeColors = {
   theme: '#151515',
 
   textPrimary: '#cccccc',

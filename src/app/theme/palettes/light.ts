@@ -1,4 +1,6 @@
-export const light = {
+import { ThemeColors } from '@/app/theme/types.ts';
+
+export const light: ThemeColors = {
   theme: '#FFFFFF',
 
   textPrimary: '#212122',

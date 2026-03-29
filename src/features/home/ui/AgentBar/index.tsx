@@ -138,8 +138,10 @@ const AgentBar = memo(
               reducedTransparencyFallbackColor="white"
               blurType="light"
               blurAmount={5}
-              style={styles.blurContainer}
-            >
+              style={StyleSheet.absoluteFill}
+            />
+
+            <View style={styles.blurContainer}>
               <Animated.View style={animatedGearStyle}>
                 <GearIcon />
               </Animated.View>
@@ -150,7 +152,7 @@ const AgentBar = memo(
                 textColor={colors.textPrimary}
                 text={t('home.onModeration')}
               />
-            </BlurView>
+            </View>
           </View>
         );
       }
@@ -166,8 +168,10 @@ const AgentBar = memo(
               reducedTransparencyFallbackColor="white"
               blurType="light"
               blurAmount={5}
-              style={styles.blurContainer}
-            >
+              style={StyleSheet.absoluteFill}
+            />
+
+            <View style={styles.blurContainer}>
               <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.errorLight }]} />
 
               <Animated.View style={animatedWarningStyle}>
@@ -180,7 +184,7 @@ const AgentBar = memo(
                 textColor={colors.textPrimary}
                 text={t('home.needEdit')}
               />
-            </BlurView>
+            </View>
           </PressableCustom>
         );
       }
@@ -251,7 +255,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   blurContainer: {
-    width: '100%',
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',

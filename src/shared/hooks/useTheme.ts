@@ -1,8 +1,9 @@
 import { useColorScheme } from 'react-native';
 
-import { base } from '@/app/theme/base.ts';
-import { dark } from '@/app/theme/dark.ts';
-import { light } from '@/app/theme/light.ts';
+import { base } from '@/app/theme/palettes/base.ts';
+import { dark } from '@/app/theme/palettes/dark.ts';
+import { light } from '@/app/theme/palettes/light.ts';
+import { ThemeColors } from '@/app/theme/types.ts';
 import { Theme } from '@/features/profile/store/user/types.ts';
 
 import useUserStore from '../../features/profile/hooks/useUserStore.ts';
@@ -11,18 +12,12 @@ const useTheme = () => {
   const { theme } = useUserStore();
   const scheme = useColorScheme();
 
-  const getThemeColors = () => {
-    const darkMode = {
-      mode: Theme.Dark,
-      colors: dark,
-    };
+  const getThemeColors = (targetTheme?: Theme | null) => {
+    const darkMode = { mode: Theme.Dark, colors: dark };
+    const lightMode = { mode: Theme.Light, colors: light };
+    const activeTheme = targetTheme ?? theme;
 
-    const lightMode = {
-      mode: Theme.Light,
-      colors: light,
-    };
-
-    switch (theme) {
+    switch (activeTheme) {
       case Theme.Dark:
         return darkMode;
       case Theme.Light:
@@ -40,10 +35,21 @@ const useTheme = () => {
     return `${color}${alphaHex}`;
   };
 
+  const getInvertedColor = (colorKey: keyof ThemeColors): string => {
+    const currentMode = getThemeColors().mode;
+    const invertedMode = currentMode === Theme.Dark ? Theme.Light : Theme.Dark;
+    const invertedPalette: Record<keyof ThemeColors, string> = {
+      ...getThemeColors(invertedMode).colors,
+    };
+
+    return invertedPalette[colorKey];
+  };
+
   return {
     theme: getThemeColors().mode,
     colors: { ...base, ...getThemeColors().colors },
     setColorOpacity,
+    getInvertedColor,
   };
 };
 

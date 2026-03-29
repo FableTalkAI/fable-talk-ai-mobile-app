@@ -13,16 +13,17 @@ const SafeAreaViewCustom = ({
   withGradientBackground,
   style,
   withHorizontalPadding = true,
+  withBottomPadding = true,
   ...safeAreaProps
 }: SafeAreaViewCustomProps) => {
-  const insets = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
   const { colors } = useTheme();
 
   const computedStyles = StyleSheet.create({
     container: {
       paddingHorizontal: withHorizontalPadding ? SPACING.xl : 0,
-      paddingTop: insets.top > SPACING.m ? 0 : SPACING.m,
-      paddingBottom: insets.bottom > SPACING.m ? 0 : SPACING.m,
+      paddingTop: top > SPACING.m ? 0 : SPACING.m,
+      paddingBottom: bottom > SPACING.m || !withBottomPadding ? 0 : SPACING.m,
       backgroundColor: isTransparent || withGradientBackground ? 'transparent' : colors.backgroundBase,
     },
   });
