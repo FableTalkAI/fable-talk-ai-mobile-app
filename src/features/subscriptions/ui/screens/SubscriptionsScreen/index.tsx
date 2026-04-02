@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
+import useSubscription from '@/features/subscriptions/hooks/useSubscription.ts';
 import { SubscriptionButton } from '@/features/subscriptions/ui/SubscriptionButton/index.tsx';
 import { CheckmarkRoundedIcon } from '@/shared/assets/icons/index.ts';
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -21,7 +22,7 @@ import { SubscriptionPlans } from './types.ts';
 const SubscriptionScreen = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-
+  useSubscription();
   const [selectedSubscription, setSelectedSubscription] = useState<SubscriptionPlans>(SubscriptionPlans.Annual);
 
   const computedStyles = StyleSheet.create({
@@ -92,16 +93,16 @@ const SubscriptionScreen = () => {
       <View style={styles.subscriptionButtonsContainer}>
         <SubscriptionButton
           title={t('subscription.annual')}
-          price={48}
-          pricePerMonth={4}
+          price={79.99}
+          pricePerMonth={6.66}
           discount={15}
           isSelected={selectedSubscription === SubscriptionPlans.Annual}
           onPress={() => setSelectedSubscription(SubscriptionPlans.Annual)}
         />
         <SubscriptionButton
           title={t('subscription.monthly')}
-          price={48}
-          pricePerMonth={4}
+          price={7.99}
+          pricePerMonth={7.99}
           isSelected={selectedSubscription === SubscriptionPlans.Monthly}
           onPress={() => setSelectedSubscription(SubscriptionPlans.Monthly)}
         />

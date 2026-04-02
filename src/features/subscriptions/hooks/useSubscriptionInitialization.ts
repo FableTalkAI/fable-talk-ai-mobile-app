@@ -10,7 +10,7 @@ const useSubscriptionInitialization = () => {
     if (IS_IOS) {
       Purchases.configure({ apiKey: 'appl_bAYQuLrKcpXzukxnxBqjJuMDeXa' });
     } else {
-      Purchases.configure({ apiKey: '' });
+      Purchases.configure({ apiKey: 'goog_QYhkUeYjuampyvfMebfmyDxlgkB' });
     }
   }, []);
 };

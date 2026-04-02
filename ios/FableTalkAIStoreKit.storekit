@@ -20,7 +20,7 @@
     "_applicationInternalID" : "6761020983",
     "_developerTeamID" : "4XLP3C758M",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 796850607.42435706,
+    "_lastSynchronizedDate" : 796854146.81089699,
     "_storeKitErrors" : [
       {
         "current" : null,
@@ -70,7 +70,81 @@
     ]
   },
   "subscriptionGroups" : [
+    {
+      "id" : "22004790",
+      "localizations" : [
 
+      ],
+      "name" : "premium",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "69.99",
+          "familyShareable" : false,
+          "groupNumber" : 2,
+          "internalID" : "6761380884",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Unlock the full potential of your stories!",
+              "displayName" : "FableTalkAI Premium Annual",
+              "locale" : "en_US"
+            },
+            {
+              "description" : "Розкрий повний потенціал своїх історій!",
+              "displayName" : "FableTalkAI Преміум Рік",
+              "locale" : "uk"
+            }
+          ],
+          "productID" : "annual_79.99",
+          "recurringSubscriptionPeriod" : "P1Y",
+          "referenceName" : "Annual",
+          "subscriptionGroupID" : "22004790",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        },
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "6.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6761380621",
+          "introductoryOffer" : null,
+          "localizations" : [
+            {
+              "description" : "Розкрий повний потенціал своїх історій!",
+              "displayName" : "FableTalkAI Преміум Місяць",
+              "locale" : "en_AU"
+            },
+            {
+              "description" : "Unlock the full potential of your stories!",
+              "displayName" : "FableTalkAI Premium Monthly",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "monthly_7.99",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Monthly",
+          "subscriptionGroupID" : "22004790",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
   ],
   "version" : {
     "major" : 4,

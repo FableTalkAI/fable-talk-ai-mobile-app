@@ -3,7 +3,7 @@ import Purchases from 'react-native-purchases';
 
 const useSubscription = () => {
   useEffect(() => {
-    Purchases.getCustomerInfo().then(info => {
+    Purchases.getOfferings().then(info => {
       console.log(info);
     });
   }, []);
