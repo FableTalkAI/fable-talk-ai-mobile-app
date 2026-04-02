@@ -3,7 +3,11 @@ import axios from 'axios';
 
 import i18n from '@/features/locales/i18n.ts';
 
-const http = axios.create();
+const http = axios.create({
+  headers: {
+    'User-Agent': 'FableTalkAI-App',
+  },
+});
 
 http.interceptors.request.use(
   async config => {
