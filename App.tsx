@@ -17,6 +17,7 @@ import RootNavigator from '@/features/navigation/ui/RootNavigator';
 import { persistor, store } from '@/app/store';
 import { flushPendingNavigation, navigationRef } from '@/features/navigation/lib/navigationRef.ts';
 import { useLayoutEffect } from 'react';
+import useSubscriptionInitialization from '@/features/subscriptions/hooks/useSubscriptionInitialization.ts';
 
 Sentry.init({
   dsn: 'https://4ffe32896b7fe3269b6f735bd476bbca@o4510449626578944.ingest.de.sentry.io/4510449632411728',
@@ -39,6 +40,7 @@ Sentry.init({
 
 function App() {
   useLayoutEffect(() => StatusBar.setTranslucent(true), []);
+  useSubscriptionInitialization();
 
   return (
     <FirebaseProvider>

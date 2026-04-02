@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		2AA78B882F7EF3A200AD3B82 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2AA78B872F7EF3A200AD3B82 /* StoreKit.framework */; };
+		2AA78B8A2F7EF46A00AD3B82 /* FableTalkAIStoreKit.storekit in Resources */ = {isa = PBXBuildFile; fileRef = 2AA78B892F7EF46A00AD3B82 /* FableTalkAIStoreKit.storekit */; };
 		2AD378722E8EE16C005762CE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2AD378712E8EE16C005762CE /* GoogleService-Info.plist */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -22,6 +24,8 @@
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = FableTalkAI/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		1A007493BC7D61521DD9FB0B /* Pods_FableTalkAI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FableTalkAI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A3F45222F7460DA00BDB788 /* FableTalkAI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = FableTalkAI.entitlements; path = FableTalkAI/FableTalkAI.entitlements; sourceTree = "<group>"; };
+		2AA78B872F7EF3A200AD3B82 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		2AA78B892F7EF46A00AD3B82 /* FableTalkAIStoreKit.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = FableTalkAIStoreKit.storekit; sourceTree = "<group>"; };
 		2AD378712E8EE16C005762CE /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-FableTalkAI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FableTalkAI.debug.xcconfig"; path = "Target Support Files/Pods-FableTalkAI/Pods-FableTalkAI.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-FableTalkAI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FableTalkAI.release.xcconfig"; path = "Target Support Files/Pods-FableTalkAI/Pods-FableTalkAI.release.xcconfig"; sourceTree = "<group>"; };
@@ -36,6 +40,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1F0F960C7496EBEE3D707D4 /* Pods_FableTalkAI.framework in Frameworks */,
+				2AA78B882F7EF3A200AD3B82 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +64,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2AA78B872F7EF3A200AD3B82 /* StoreKit.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				1A007493BC7D61521DD9FB0B /* Pods_FableTalkAI.framework */,
 			);
@@ -75,6 +81,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				2AA78B892F7EF46A00AD3B82 /* FableTalkAIStoreKit.storekit */,
 				13B07FAE1A68108700A75B9A /* FableTalkAI */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
@@ -166,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				2AA78B8A2F7EF46A00AD3B82 /* FableTalkAIStoreKit.storekit in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				F600FA12E98427DA76A977D4 /* PrivacyInfo.xcprivacy in Resources */,
 				2AD378722E8EE16C005762CE /* GoogleService-Info.plist in Resources */,
@@ -442,10 +450,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -525,10 +530,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
