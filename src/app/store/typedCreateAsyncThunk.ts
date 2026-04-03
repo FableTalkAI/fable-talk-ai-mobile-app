@@ -32,7 +32,7 @@ export function createAxiosAsyncThunk<Returned, ThunkArg = void, ThunkError = De
   return baseTypedCreateAsyncThunk<Returned, ThunkArg, { rejectValue: ThunkError }>(typePrefix, (arg, thunkAPI) => {
     return Promise.resolve(payloadCreator(arg, thunkAPI)).catch((error: unknown) => {
       const axiosError = error as AxiosError<ThunkError>;
-      const data = axiosError.response?.data;
+      const data = axiosError?.response?.data;
       console.error(error);
 
       return thunkAPI.rejectWithValue(data || ({ messageKey: 'serverError' } as ThunkError));

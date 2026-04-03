@@ -45,11 +45,13 @@ export const SubscriptionButton = ({
       )}
       <TextCustom text={title} mode={TextModes.Subtitle} style={styles.text} />
       <TextCustom text={`$${price}`} mode={TextModes.Xl} style={styles.text} />
-      <TextCustom
-        text={t('subscription.month', { price: pricePerMonth })}
-        style={styles.text}
-        textColor={colors.textSecondary}
-      />
+      {pricePerMonth && (
+        <TextCustom
+          text={t('subscription.month', { price: pricePerMonth })}
+          style={styles.text}
+          textColor={colors.textSecondary}
+        />
+      )}
       {isSelected && <CheckmarkIcon fill={colors.errorDark} style={styles.checkmark} />}
     </PressableCustom>
   );

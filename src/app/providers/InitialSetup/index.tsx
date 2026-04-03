@@ -7,6 +7,7 @@ import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { useNotifications } from '@/features/notifications/hooks/useNotifications.ts';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
+import useSubscriptionInitialization from '@/features/subscriptions/hooks/useSubscriptionInitialization.ts';
 import { getMsUntilMidnight } from '@/shared/lib/date.ts';
 import AppStub from '@/shared/ui/AppStub.tsx';
 
@@ -17,6 +18,7 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
   const { getUserProfileHandler, getUserLimitsHandler } = useProfileStore();
   const { getTagsHandler, getAgentsHandler, getMyAgentsHandler } = useAgentsStore();
   const { getAllChatsHandler } = useChatStore();
+  const { isLoading: isSubscriptionLoading } = useSubscriptionInitialization();
 
   useNotifications();
 
@@ -73,7 +75,7 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
     };
   }, [isLoggedIn, getUserLimitsHandler]);
 
-  if (isLoading) return <AppStub />;
+  if (isLoading || isSubscriptionLoading) return <AppStub />;
 
   return <>{children}</>;
 };

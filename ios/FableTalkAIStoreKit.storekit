@@ -20,7 +20,9 @@
     "_applicationInternalID" : "6761020983",
     "_developerTeamID" : "4XLP3C758M",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 796854146.81089699,
+    "_lastSynchronizedDate" : 796934894.27036905,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
     "_storeKitErrors" : [
       {
         "current" : null,
@@ -126,7 +128,7 @@
             {
               "description" : "Розкрий повний потенціал своїх історій!",
               "displayName" : "FableTalkAI Преміум Місяць",
-              "locale" : "en_AU"
+              "locale" : "uk"
             },
             {
               "description" : "Unlock the full potential of your stories!",

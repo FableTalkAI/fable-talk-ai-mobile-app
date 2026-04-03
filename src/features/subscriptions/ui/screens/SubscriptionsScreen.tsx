@@ -4,26 +4,25 @@ import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import useSubscription from '@/features/subscriptions/hooks/useSubscription.ts';
-import { SubscriptionButton } from '@/features/subscriptions/ui/SubscriptionButton/index.tsx';
-import { CheckmarkRoundedIcon } from '@/shared/assets/icons/index.ts';
+import { SubscriptionButton } from '@/features/subscriptions/ui/SubscriptionButton';
+import { CheckmarkRoundedIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import Button from '@/shared/ui/Button';
 import Header from '@/shared/ui/Header';
-import ResizeIcon from '@/shared/ui/ResizeIcon/index.tsx';
+import ResizeIcon from '@/shared/ui/ResizeIcon';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
-import { BENEFITS } from './constants.tsx';
-import { SubscriptionPlans } from './types.ts';
+import { BENEFITS } from '../../model/constants.tsx';
 
 const SubscriptionScreen = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  useSubscription();
-  const [selectedSubscription, setSelectedSubscription] = useState<SubscriptionPlans>(SubscriptionPlans.Annual);
+  const { packages, discount, subscribe, isLoading } = useSubscription();
+  const [selectedSubscription, setSelectedSubscription] = useState(packages[0]);
 
   const computedStyles = StyleSheet.create({
     benefitRow: {
@@ -91,29 +90,20 @@ const SubscriptionScreen = () => {
       </View>
 
       <View style={styles.subscriptionButtonsContainer}>
-        <SubscriptionButton
-          title={t('subscription.annual')}
-          price={79.99}
-          pricePerMonth={6.66}
-          discount={15}
-          isSelected={selectedSubscription === SubscriptionPlans.Annual}
-          onPress={() => setSelectedSubscription(SubscriptionPlans.Annual)}
-        />
-        <SubscriptionButton
-          title={t('subscription.monthly')}
-          price={7.99}
-          pricePerMonth={7.99}
-          isSelected={selectedSubscription === SubscriptionPlans.Monthly}
-          onPress={() => setSelectedSubscription(SubscriptionPlans.Monthly)}
-        />
+        {packages.map(subscription => (
+          <SubscriptionButton
+            key={subscription.identifier}
+            title={t(`subscription.${subscription.packageType.toLowerCase()}`)}
+            price={subscription.product.price}
+            pricePerMonth={subscription.product.pricePerMonth}
+            discount={subscription.identifier === discount?.identifier ? discount?.value : undefined}
+            isSelected={selectedSubscription.identifier === subscription.identifier}
+            onPress={() => setSelectedSubscription(subscription)}
+          />
+        ))}
       </View>
 
-      <Button
-        title={t('actions.choose')}
-        onPress={() => {
-          console.log('Selected subscription:');
-        }}
-      />
+      <Button title={t('actions.choose')} isLoading={isLoading} onPress={() => subscribe(selectedSubscription)} />
     </SafeAreaViewCustom>
   );
 };

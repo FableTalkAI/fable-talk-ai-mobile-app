@@ -9,6 +9,7 @@ import authReducer from '../../features/auth/store/auth';
 import chatReducer, { chatPersistConfig } from '../../features/chat/store/chat';
 import profileReducer from '../../features/profile/store/profile';
 import userReducer from '../../features/profile/store/user';
+import subscriptionReducer from '../../features/subscriptions/store/subscriptions';
 import { ReducersTypes } from './types.ts';
 
 const appReducer = combineReducers<ReducersTypes>({
@@ -18,6 +19,7 @@ const appReducer = combineReducers<ReducersTypes>({
   chat: persistReducer(chatPersistConfig, chatReducer),
   profile: profileReducer,
   auth: authReducer,
+  subscription: subscriptionReducer,
 });
 
 export const rootReducer = (state: any, action: Action) => {

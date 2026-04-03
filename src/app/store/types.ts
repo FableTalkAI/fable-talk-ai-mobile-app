@@ -7,6 +7,7 @@ import { ChatState } from '@/features/chat/store/chat/types.ts';
 import { BottomWindowState } from '@/features/overlay/store/bottomWindow/types.ts';
 import { ProfileState } from '@/features/profile/store/profile/types.ts';
 import { UserState } from '@/features/profile/store/user/types.ts';
+import { SubscriptionState } from '@/features/subscriptions/store/subscriptions/types.ts';
 
 export type ReducersTypes = {
   agents: Reducer<AgentsState>;
@@ -15,6 +16,7 @@ export type ReducersTypes = {
   chat: Reducer<ChatState & PersistPartial>;
   profile: Reducer<ProfileState>;
   auth: Reducer<AuthState>;
+  subscription: Reducer<SubscriptionState>;
 };
 
 export type ReducersKeys = keyof ReducersTypes;

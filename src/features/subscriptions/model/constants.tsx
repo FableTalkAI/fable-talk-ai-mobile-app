@@ -7,7 +7,7 @@ import {
   PremiumAgentIcon,
   WarningIcon,
   XMarkIcon,
-} from '@/shared/assets/icons/index.ts';
+} from '@/shared/assets/icons';
 
 export const BENEFITS = [
   {
