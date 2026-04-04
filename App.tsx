@@ -8,16 +8,15 @@ import '@/features/locales/i18n.ts';
 
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
-import BottomWindowProvider from '@/app/providers/BottomWindowProvider';
 import FirebaseProvider from '@/app/providers/FirebaseProvider/index.tsx';
 import InitialSetup from '@/app/providers/InitialSetup/index.tsx';
 import * as Sentry from '@sentry/react-native';
-import { toastConfig } from '@/shared/lib/toast/config.tsx';
+import { toastConfig } from '@/features/overlay/lib/toastConfig';
 import RootNavigator from '@/features/navigation/ui/RootNavigator';
 import { persistor, store } from '@/app/store';
 import { flushPendingNavigation, navigationRef } from '@/features/navigation/lib/navigationRef.ts';
 import { useLayoutEffect } from 'react';
-import useSubscriptionInitialization from '@/features/subscriptions/hooks/useSubscriptionInitialization.ts';
+import OverlayProvider from '@/app/providers/OverlayProvider';
 
 Sentry.init({
   dsn: 'https://4ffe32896b7fe3269b6f735bd476bbca@o4510449626578944.ingest.de.sentry.io/4510449632411728',
@@ -49,11 +48,11 @@ function App() {
             <BottomSheetModalProvider>
               <SafeAreaProvider>
                 <NavigationContainer ref={navigationRef} onReady={flushPendingNavigation}>
-                  <BottomWindowProvider>
+                  <OverlayProvider>
                     <InitialSetup>
                       <RootNavigator />
                     </InitialSetup>
-                  </BottomWindowProvider>
+                  </OverlayProvider>
                 </NavigationContainer>
 
                 <Toast config={toastConfig} />

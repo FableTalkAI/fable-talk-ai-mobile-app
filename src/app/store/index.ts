@@ -1,7 +1,7 @@
 import { Action, combineReducers, configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 
-import bottomWindowReducer from '@/features/overlay/store/bottomWindow';
+import overlayReducer from '@/features/overlay/store/overlay';
 import persistConfig from '@/shared/lib/redux/persist.ts';
 
 import agentsReducer from '../../features/agents/store/agents';
@@ -15,7 +15,7 @@ import { ReducersTypes } from './types.ts';
 const appReducer = combineReducers<ReducersTypes>({
   agents: agentsReducer,
   user: userReducer,
-  bottomWindow: bottomWindowReducer,
+  overlay: overlayReducer,
   chat: persistReducer(chatPersistConfig, chatReducer),
   profile: profileReducer,
   auth: authReducer,

@@ -10,6 +10,7 @@ export type PressableCustomProps = {
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   withEnteringAnimation?: boolean;
+  withExitingAnimation?: boolean;
   onPressIn?: ((event: GestureResponderEvent) => void) | null;
   onPressOut?: ((event: GestureResponderEvent) => void) | null;
 } & UniquePressableProps;

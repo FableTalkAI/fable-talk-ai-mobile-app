@@ -1,26 +1,29 @@
 import { useCallback } from 'react';
 
-import { setCustomContent, setIsLocked } from '@/features/overlay/store/bottomWindow';
-import { customContentSelector, isLockedSelector } from '@/features/overlay/store/bottomWindow/selectors.ts';
-import { CustomRender } from '@/features/overlay/store/bottomWindow/types.ts';
+import { setBottomWindowCustomContent, setBottomWindowIsLocked } from '@/features/overlay/store/overlay';
+import {
+  bottomWindowCustomContentSelector,
+  bottomWindowIsLockedSelector,
+} from '@/features/overlay/store/overlay/selectors.ts';
+import { CustomRender } from '@/features/overlay/store/overlay/types.ts';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
 const useBottomWindowStore = () => {
   const dispatch = useAppDispatch();
 
-  const isLocked = useAppSelector(isLockedSelector);
-  const customContent = useAppSelector(customContentSelector);
+  const isLocked = useAppSelector(bottomWindowIsLockedSelector);
+  const customContent = useAppSelector(bottomWindowCustomContentSelector);
 
   const setIsLockedHandler = useCallback(
     (lock: boolean) => {
-      dispatch(setIsLocked(lock));
+      dispatch(setBottomWindowIsLocked(lock));
     },
     [dispatch],
   );
 
   const setCustomContentHandler = useCallback(
     (renderFc: CustomRender) => {
-      dispatch(setCustomContent(renderFc));
+      dispatch(setBottomWindowCustomContent(renderFc));
     },
     [dispatch],
   );

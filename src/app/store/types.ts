@@ -4,7 +4,7 @@ import { PersistPartial } from 'redux-persist/lib/persistReducer';
 import { AgentsState } from '@/features/agents/store/agents/types.ts';
 import { AuthState } from '@/features/auth/store/auth/types.ts';
 import { ChatState } from '@/features/chat/store/chat/types.ts';
-import { BottomWindowState } from '@/features/overlay/store/bottomWindow/types.ts';
+import { OverlayState } from '@/features/overlay/store/overlay/types.ts';
 import { ProfileState } from '@/features/profile/store/profile/types.ts';
 import { UserState } from '@/features/profile/store/user/types.ts';
 import { SubscriptionState } from '@/features/subscriptions/store/subscriptions/types.ts';
@@ -12,7 +12,7 @@ import { SubscriptionState } from '@/features/subscriptions/store/subscriptions/
 export type ReducersTypes = {
   agents: Reducer<AgentsState>;
   user: Reducer<UserState>;
-  bottomWindow: Reducer<BottomWindowState>;
+  overlay: Reducer<OverlayState>;
   chat: Reducer<ChatState & PersistPartial>;
   profile: Reducer<ProfileState>;
   auth: Reducer<AuthState>;

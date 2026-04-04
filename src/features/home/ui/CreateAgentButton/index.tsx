@@ -4,9 +4,9 @@ import { StyleSheet } from 'react-native';
 import Animated, { FadeIn, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import { showToast } from '@/features/overlay/services/showToast.ts';
 import { AddAgentIcon, ArrowStickIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
-import { showToast } from '@/shared/lib/toast';
 import { SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 

@@ -1,7 +1,7 @@
 import { useCallback, useMemo } from 'react';
 
 import { bottomWindowRef } from '@/features/overlay/services/bottomWindowRef.ts';
-import { CustomRender } from '@/features/overlay/store/bottomWindow/types.ts';
+import { CustomRender } from '@/features/overlay/store/overlay/types.ts';
 
 import useBottomWindowStore from './useBottomWindowStore.ts';
 

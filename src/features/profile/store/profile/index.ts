@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 
-import { showToast } from '@/shared/lib/toast';
+import { showToast } from '@/features/overlay/services/showToast.ts';
 
 import {
   deleteUserProfile,

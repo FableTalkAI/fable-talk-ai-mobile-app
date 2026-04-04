@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 
-import ToastCustom from '@/shared/ui/ToastCustom';
-import { ToastCustomProps } from '@/shared/ui/ToastCustom/types.ts';
+import ToastCustom from '@/features/overlay/ui/ToastCustom';
+import { ToastCustomProps } from '@/features/overlay/ui/ToastCustom/types.ts';
 
 export const toastConfig = {
   success: ({ text2 }: ToastCustomProps) => (
