@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#0000007F',
   },
   scroll: {
-    marginVertical: SPACING.xxs,
     flexGrow: 0,
     maxWidth: 500,
   },
