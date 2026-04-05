@@ -109,6 +109,17 @@ const uk: Translations = {
     },
   },
 
+  modal: {
+    premium: {
+      title: 'Станьте Premium!',
+      description:
+        'Бажаєте створювати більше та швидше? З Premium вам не доведеться чекати та дивитися рекламу. Полетіли?',
+      adsDescription: 'Або перегляньте коротке відео, щоб отримати ще 5 повідомлень прямо зараз 🚀',
+      premiumButton: 'Оформити Premium',
+      adsButton: 'Подивитися Рекламу',
+    },
+  },
+
   auth: {
     splashText: 'Просто\nПочни Чат',
     signInButton: 'Увійти',

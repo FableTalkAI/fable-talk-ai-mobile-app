@@ -110,6 +110,17 @@ const en: Translations = {
     },
   },
 
+  modal: {
+    premium: {
+      title: 'Go Premium!',
+      description:
+        'Want to create more and faster? With Premium, you can skip the ads and dive straight into action. Ready for takeoff?',
+      adsDescription: 'Or watch a short video to get 5 extra messages right away 🚀',
+      premiumButton: 'Go Premium',
+      adsButton: 'Watch ad',
+    },
+  },
+
   auth: {
     splashText: 'Just Start\nChatting',
     signInButton: 'Sign In',

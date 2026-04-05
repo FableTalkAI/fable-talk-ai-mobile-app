@@ -33,6 +33,7 @@ import PremiumAgentIcon from './premium-agent.svg';
 import ProfileIcon from './profile.svg';
 import RobotIcon from './robot.svg';
 import RobotFilledIcon from './robot-filled.svg';
+import RocketIcon from './rocket.svg';
 import SearchIcon from './search.svg';
 import SendButtonIcon from './send-button.svg';
 import ShieldUserIcon from './shield-user.svg';
@@ -91,6 +92,7 @@ export {
   ProfileIcon,
   RobotFilledIcon,
   RobotIcon,
+  RocketIcon,
   SearchIcon,
   SendButtonIcon,
   ShieldUserIcon,

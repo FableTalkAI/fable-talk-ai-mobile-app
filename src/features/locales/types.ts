@@ -107,6 +107,16 @@ export type Translations = {
     };
   };
 
+  modal: {
+    premium: {
+      title: string;
+      description: string;
+      adsDescription: string;
+      premiumButton: string;
+      adsButton: string;
+    };
+  };
+
   auth: {
     splashText: string;
     signInButton: string;

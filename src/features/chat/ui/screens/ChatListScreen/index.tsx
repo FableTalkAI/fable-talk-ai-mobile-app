@@ -13,6 +13,7 @@ import SearchInput from '@/features/home/ui/SearchInput';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription.tsx';
 import { ChatArrowIcon } from '@/shared/assets/icons';
 import { SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
@@ -21,6 +22,7 @@ import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 const ChatListScreen = () => {
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
+  const { checkPremiumHandler } = useSubscription();
 
   const { chats, getChatByIdHandler } = useChatStore();
   const { pinnedChatIds } = useUserStore();
@@ -47,8 +49,10 @@ const ChatListScreen = () => {
       return;
     }
 
-    getChatByIdHandler(agentId, chatId).catch(console.error);
-    navigation.navigate('ChatScreen');
+    checkPremiumHandler(() => {
+      getChatByIdHandler(agentId, chatId).catch(console.error);
+      navigation.navigate('ChatScreen');
+    });
   };
 
   useEffect(() => {

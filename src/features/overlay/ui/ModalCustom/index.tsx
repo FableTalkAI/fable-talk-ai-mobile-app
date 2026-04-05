@@ -1,4 +1,5 @@
 import { Modal, Pressable, StyleSheet, View } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
 
 import useModal from '@/features/overlay/hooks/useModal.ts';
 import { XMarkIcon } from '@/shared/assets/icons';
@@ -16,7 +17,7 @@ const ModalCustom = ({ children, title, description }: ModalCustomProps) => {
   const { closeModal } = useModal();
 
   const computedStyles = StyleSheet.create({
-    container: {
+    scrollContainer: {
       backgroundColor: colors.backgroundBase,
     },
   });
@@ -26,7 +27,12 @@ const ModalCustom = ({ children, title, description }: ModalCustomProps) => {
       <SafeAreaViewCustom isTransparent style={styles.wrapper}>
         <Pressable onPress={closeModal} style={[StyleSheet.absoluteFill, styles.overlay]} />
 
-        <View style={[styles.container, computedStyles.container]}>
+        <ScrollView
+          style={styles.scroll}
+          contentContainerStyle={[styles.scrollContainer, computedStyles.scrollContainer]}
+          bounces={false}
+          showsVerticalScrollIndicator={false}
+        >
           <View>
             {title && <TextCustom style={styles.text} text={title} mode={TextModes.Title} />}
             {description && <TextCustom style={styles.text} text={description} textColor={colors.textSecondary} />}
@@ -43,7 +49,7 @@ const ModalCustom = ({ children, title, description }: ModalCustomProps) => {
           >
             <XMarkIcon width={12} height={12} fill={colors.textPrimary} />
           </PressableCustom>
-        </View>
+        </ScrollView>
       </SafeAreaViewCustom>
     </Modal>
   );
@@ -53,8 +59,12 @@ const styles = StyleSheet.create({
   overlay: {
     backgroundColor: '#0000007F',
   },
-  container: {
-    width: '100%',
+  scroll: {
+    marginVertical: SPACING.xxs,
+    flexGrow: 0,
+    maxWidth: 500,
+  },
+  scrollContainer: {
     paddingVertical: SPACING.lg,
     paddingHorizontal: SPACING.lg,
     borderRadius: RADIUS.small,

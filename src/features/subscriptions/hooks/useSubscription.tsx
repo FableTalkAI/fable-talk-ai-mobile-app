@@ -1,12 +1,16 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import Purchases, { PurchasesPackage } from 'react-native-purchases';
 
+import useModal from '@/features/overlay/hooks/useModal.ts';
 import { customerInfoSelector, packagesSelector } from '@/features/subscriptions/store/subscriptions/selectors.ts';
+import PremiumModal from '@/features/subscriptions/ui/PremiumModal/index.tsx';
 import { useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
 const useSubscription = () => {
   const packages = useAppSelector(packagesSelector);
   const customerInfo = useAppSelector(customerInfoSelector);
+
+  const { openModal } = useModal();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -47,6 +51,18 @@ const useSubscription = () => {
     }
   };
 
+  const checkPremiumHandler = useCallback(
+    (func: () => void, withAds?: boolean) => {
+      if (isPremium) {
+        func();
+        return;
+      }
+
+      openModal(<PremiumModal withAds={withAds} />);
+    },
+    [isPremium, openModal],
+  );
+
   return {
     isPremium,
     isLoading,
@@ -55,6 +71,7 @@ const useSubscription = () => {
 
     subscribe,
     restorePurchases,
+    checkPremiumHandler,
   };
 };
 

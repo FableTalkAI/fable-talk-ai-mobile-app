@@ -8,6 +8,7 @@ import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { getAgentBarMode } from '@/features/home/services/getAgentBarMode.ts';
 import AgentBar from '@/features/home/ui/AgentBar';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription.tsx';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 
@@ -24,6 +25,7 @@ const AgentList = ({
 }: AgentListProps) => {
   const { colors, getInvertedColor } = useTheme();
   const { navigation } = useNavigationRoutes();
+  const { checkPremiumHandler } = useSubscription();
 
   const { getChatByIdHandler } = useChatStore();
 
@@ -44,14 +46,16 @@ const AgentList = ({
 
   const onChatOpenHandler = useCallback(
     (agentId: string, moderationStatus: AgentModerationStatus) => async () => {
-      if (moderationStatus === 'rejected') {
-        return navigation.navigate('CreateAgent', { id: agentId });
-      }
+      checkPremiumHandler(() => {
+        if (moderationStatus === 'rejected') {
+          return navigation.navigate('CreateAgent', { id: agentId });
+        }
 
-      getChatByIdHandler(agentId).catch(console.error);
-      navigation.navigate('ChatScreen');
+        getChatByIdHandler(agentId).catch(console.error);
+        navigation.navigate('ChatScreen');
+      });
     },
-    [getChatByIdHandler, navigation],
+    [checkPremiumHandler, getChatByIdHandler, navigation],
   );
 
   const renderFooter = () => {

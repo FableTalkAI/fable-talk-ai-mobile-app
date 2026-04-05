@@ -1,8 +1,10 @@
-import { PressableProps, StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
+
+import { PressableCustomProps } from '@/shared/ui/PressableCustom/types.ts';
 
 type ExcludePressableProps = 'style';
 
-type UniquePressableProps = Omit<PressableProps, ExcludePressableProps>;
+type UniquePressableProps = Omit<PressableCustomProps, ExcludePressableProps>;
 
 export type ButtonProps = {
   title: string;

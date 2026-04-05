@@ -2,7 +2,6 @@ import { StatusBar, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Toast from 'react-native-toast-message';
-import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import '@/features/locales/i18n.ts';
 
@@ -14,9 +13,9 @@ import * as Sentry from '@sentry/react-native';
 import { toastConfig } from '@/features/overlay/lib/toastConfig';
 import RootNavigator from '@/features/navigation/ui/RootNavigator';
 import { persistor, store } from '@/app/store';
-import { flushPendingNavigation, navigationRef } from '@/features/navigation/lib/navigationRef.ts';
 import { useLayoutEffect } from 'react';
 import OverlayProvider from '@/app/providers/OverlayProvider';
+import NavigationProvider from '@/app/providers/NavigationProvider/index.tsx';
 
 Sentry.init({
   dsn: 'https://4ffe32896b7fe3269b6f735bd476bbca@o4510449626578944.ingest.de.sentry.io/4510449632411728',
@@ -47,13 +46,13 @@ function App() {
           <GestureHandlerRootView style={styles.flex1}>
             <BottomSheetModalProvider>
               <SafeAreaProvider>
-                <NavigationContainer ref={navigationRef} onReady={flushPendingNavigation}>
+                <NavigationProvider>
                   <OverlayProvider>
                     <InitialSetup>
                       <RootNavigator />
                     </InitialSetup>
                   </OverlayProvider>
-                </NavigationContainer>
+                </NavigationProvider>
 
                 <Toast config={toastConfig} />
               </SafeAreaProvider>
