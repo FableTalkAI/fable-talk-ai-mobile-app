@@ -1,6 +1,5 @@
 import auth from '@react-native-firebase/auth';
 import { useEffect, useState } from 'react';
-import { AppState, AppStateStatus } from 'react-native';
 
 import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
 import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
@@ -8,14 +7,13 @@ import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { useNotifications } from '@/features/notifications/hooks/useNotifications.ts';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useSubscriptionInitialization from '@/features/subscriptions/hooks/useSubscriptionInitialization.ts';
-import { getMsUntilMidnight } from '@/shared/lib/date.ts';
 import AppStub from '@/shared/ui/AppStub.tsx';
 
 import { InitialSetupProps } from './types.ts';
 
 const InitialSetup = ({ children }: InitialSetupProps) => {
-  const { setIsLoggedInHandler, isLoggedIn } = useAuthStore();
-  const { getUserProfileHandler, getUserLimitsHandler } = useProfileStore();
+  const { setIsLoggedInHandler } = useAuthStore();
+  const { getUserProfileHandler } = useProfileStore();
   const { getTagsHandler, getAgentsHandler, getMyAgentsHandler } = useAgentsStore();
   const { getAllChatsHandler } = useChatStore();
   const { isLoading: isSubscriptionLoading } = useSubscriptionInitialization();
@@ -49,31 +47,6 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
     getUserProfileHandler,
     setIsLoggedInHandler,
   ]);
-
-  // Timer to get actual user limits
-  useEffect(() => {
-    if (!isLoggedIn) return;
-    let refreshTimer: NodeJS.Timeout;
-
-    const syncLimits = async () => {
-      await getUserLimitsHandler();
-      const delay = getMsUntilMidnight();
-      refreshTimer = setTimeout(syncLimits, delay);
-    };
-
-    syncLimits().catch(console.error);
-
-    const subscription = AppState.addEventListener('change', (nextAppState: AppStateStatus) => {
-      if (nextAppState === 'active') {
-        syncLimits().catch(console.error);
-      }
-    });
-
-    return () => {
-      if (refreshTimer) clearTimeout(refreshTimer);
-      subscription.remove();
-    };
-  }, [isLoggedIn, getUserLimitsHandler]);
 
   if (isLoading || isSubscriptionLoading) return <AppStub />;
 

@@ -6,6 +6,7 @@ import { StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { loadMoreMessages } from '@/features/chat/store/chat/thunks.ts';
 import DeleteChatBottomWindow from '@/features/chat/ui/DeleteChatBottomWindow';
@@ -15,6 +16,7 @@ import ChatAvatar from '@/features/chat/ui/giftedChat/ChatAvatar.tsx';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { TrashBinIcon } from '@/shared/assets/icons';
 import { useAppDispatch } from '@/shared/hooks/reduxHooks.ts';
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -33,7 +35,8 @@ const ChatScreen = () => {
   const dispatch = useAppDispatch();
 
   const { selectedChat, sendMessageHandler } = useChatStore();
-  const { profile } = useProfileStore();
+  const { profile, chatsLimitExceeded } = useProfileStore();
+  const { checkPremiumHandler } = useSubscription();
 
   const { open } = useBottomWindow();
 
@@ -58,16 +61,21 @@ const ChatScreen = () => {
   });
 
   const onSend = useCallback(
-    async (m: IMessage[] = []) => {
-      if (selectedChat && selectedChat.chat && profile) {
-        await sendMessageHandler({
-          message: m[0].text,
-          agentId: selectedChat.chat.agentInfo.id,
-          ...profile,
-        });
-      }
-    },
-    [selectedChat, sendMessageHandler, profile],
+    async (m: IMessage[] = []) =>
+      checkPremiumHandler({
+        skipCheck: !chatsLimitExceeded && selectedChat?.chat?.agentInfo.accessLevel === AgentAccessLevel.Free,
+        modalTitleKey: chatsLimitExceeded ? 'limitExceeded' : 'messagePremiumAgent',
+        func: async () => {
+          if (selectedChat && selectedChat.chat && profile) {
+            await sendMessageHandler({
+              message: m[0].text,
+              agentId: selectedChat.chat.agentInfo.id,
+              ...profile,
+            });
+          }
+        },
+      }),
+    [checkPremiumHandler, chatsLimitExceeded, selectedChat, profile, sendMessageHandler],
   );
 
   const deleteChatButtonHandler = useCallback(

@@ -111,7 +111,13 @@ const uk: Translations = {
 
   modal: {
     premium: {
-      title: 'Станьте Premium!',
+      title: {
+        limitExceeded: 'Ліміт повідомлень вичерпано',
+        openPremiumAgent: 'Цей Агент доступний з Premium',
+        messagePremiumAgent: 'Спілкування з Premium Агентом обмежено',
+        activeChatsLimit: 'Досягнуто ліміт активних чатів',
+        createAgentLimit: 'Створення Агентів з Premium',
+      },
       description:
         'Бажаєте створювати більше та швидше? З Premium вам не доведеться чекати та дивитися рекламу. Полетіли?',
       adsDescription: 'Або перегляньте коротке відео, щоб отримати ще 5 повідомлень прямо зараз 🚀',

@@ -22,6 +22,7 @@ const useProfileStore = () => {
   const profile = useAppSelector(profileSelector);
   const limits = useAppSelector(limitsSelector);
 
+  const chatsLimitExceeded = limits && limits.limit === limits.count;
   const sendSupportMessageHandler = useCallback(
     async (message: string) => {
       await dispatch(sendSupportMessage(message)).unwrap();
@@ -63,6 +64,7 @@ const useProfileStore = () => {
     isLoading,
     profile,
     limits,
+    chatsLimitExceeded,
 
     sendSupportMessageHandler,
     getUserProfileHandler,

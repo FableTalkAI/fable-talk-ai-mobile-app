@@ -3,8 +3,10 @@ import Purchases, { PurchasesPackage } from 'react-native-purchases';
 
 import useModal from '@/features/overlay/hooks/useModal.ts';
 import { customerInfoSelector, packagesSelector } from '@/features/subscriptions/store/subscriptions/selectors.ts';
-import PremiumModal from '@/features/subscriptions/ui/PremiumModal/index.tsx';
+import PremiumModal from '@/features/subscriptions/ui/PremiumModal';
 import { useAppSelector } from '@/shared/hooks/reduxHooks.ts';
+
+import { CheckPremiumHandlerParams } from './types.ts';
 
 const useSubscription = () => {
   const packages = useAppSelector(packagesSelector);
@@ -52,13 +54,13 @@ const useSubscription = () => {
   };
 
   const checkPremiumHandler = useCallback(
-    (func: () => void, withAds?: boolean) => {
-      if (isPremium) {
+    ({ func, withAds, modalTitleKey, skipCheck }: CheckPremiumHandlerParams) => {
+      if (isPremium || skipCheck) {
         func();
         return;
       }
 
-      openModal(<PremiumModal withAds={withAds} />);
+      openModal(<PremiumModal withAds={withAds} titleKey={modalTitleKey} />);
     },
     [isPremium, openModal],
   );

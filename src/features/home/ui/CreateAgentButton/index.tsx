@@ -5,7 +5,7 @@ import Animated, { FadeIn, useAnimatedStyle, useSharedValue, withRepeat, withTim
 
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import { showToast } from '@/features/overlay/services/showToast.ts';
-import useSubscription from '@/features/subscriptions/hooks/useSubscription.tsx';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { AddAgentIcon, ArrowStickIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
@@ -22,18 +22,21 @@ const CreateAgentButton = ({ style, withArrow, hasModerationLimit }: CreateAgent
   const translateY = useSharedValue(0);
 
   const navigateToCreateAgentHandler = () => {
-    checkPremiumHandler(() => {
-      if (hasModerationLimit) {
-        showToast({
-          type: 'error',
-          text2: t('createAgent.agentCreateLimit'),
-          position: 'bottom',
-          visibilityTime: 5000,
-        });
-        return;
-      }
+    checkPremiumHandler({
+      modalTitleKey: 'createAgentLimit',
+      func: () => {
+        if (hasModerationLimit) {
+          showToast({
+            type: 'error',
+            text2: t('createAgent.agentCreateLimit'),
+            position: 'bottom',
+            visibilityTime: 5000,
+          });
+          return;
+        }
 
-      navigation.navigate('CreateAgent');
+        navigation.navigate('CreateAgent');
+      },
     });
   };
 

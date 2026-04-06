@@ -11,7 +11,7 @@ import { ButtonModes } from '@/shared/ui/Button/types.ts';
 
 import { PremiumModalProps } from './types.ts';
 
-const PremiumModal = ({ withAds }: PremiumModalProps) => {
+const PremiumModal = ({ withAds, titleKey }: PremiumModalProps) => {
   const { navigation } = useNavigationRoutes();
   const { t } = useTranslation();
 
@@ -26,7 +26,7 @@ const PremiumModal = ({ withAds }: PremiumModalProps) => {
   }, [t, withAds]);
 
   return (
-    <ModalCustom title={t('modal.premium.title')} description={description}>
+    <ModalCustom title={t(`modal.premium.title.${titleKey}`)} description={description}>
       <View style={styles.buttonContainer}>
         <RocketIcon style={{ marginVertical: SPACING.xs }} />
         {/*TODO: adds handling*/}

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
-import useSubscription from '@/features/subscriptions/hooks/useSubscription.tsx';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { SubscriptionButton } from '@/features/subscriptions/ui/SubscriptionButton';
 import { CheckmarkRoundedIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';

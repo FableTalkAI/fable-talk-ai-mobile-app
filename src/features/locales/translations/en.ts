@@ -112,7 +112,13 @@ const en: Translations = {
 
   modal: {
     premium: {
-      title: 'Go Premium!',
+      title: {
+        limitExceeded: 'Message limit reached',
+        openPremiumAgent: 'Agent available with Premium',
+        messagePremiumAgent: 'Premium Agent chat restricted',
+        activeChatsLimit: 'Active chats limit reached',
+        createAgentLimit: 'Create Agents with Premium',
+      },
       description:
         'Want to create more and faster? With Premium, you can skip the ads and dive straight into action. Ready for takeoff?',
       adsDescription: 'Or watch a short video to get 5 extra messages right away 🚀',

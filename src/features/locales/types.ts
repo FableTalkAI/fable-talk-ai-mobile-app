@@ -109,7 +109,13 @@ export type Translations = {
 
   modal: {
     premium: {
-      title: string;
+      title: {
+        limitExceeded: string;
+        openPremiumAgent: string;
+        messagePremiumAgent: string;
+        activeChatsLimit: string;
+        createAgentLimit: string;
+      };
       description: string;
       adsDescription: string;
       premiumButton: string;

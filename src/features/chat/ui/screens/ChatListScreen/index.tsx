@@ -13,7 +13,7 @@ import SearchInput from '@/features/home/ui/SearchInput';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
-import useSubscription from '@/features/subscriptions/hooks/useSubscription.tsx';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { ChatArrowIcon } from '@/shared/assets/icons';
 import { SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
@@ -49,9 +49,12 @@ const ChatListScreen = () => {
       return;
     }
 
-    checkPremiumHandler(() => {
-      getChatByIdHandler(agentId, chatId).catch(console.error);
-      navigation.navigate('ChatScreen');
+    checkPremiumHandler({
+      modalTitleKey: 'activeChatsLimit',
+      func: () => {
+        getChatByIdHandler(agentId, chatId).catch(console.error);
+        navigation.navigate('ChatScreen');
+      },
     });
   };
 
