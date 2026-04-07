@@ -6,6 +6,7 @@ import { setLimits } from '@/features/profile/store/profile';
 import { getUserProfile } from '@/features/profile/store/profile/thunks.ts';
 import { MessageKey } from '@/features/profile/store/profile/types.ts';
 import http from '@/shared/api/http.ts';
+import { getDeviceInfo } from '@/shared/lib/device.ts';
 
 import { addNewChatToList, updateChatListLastMessage } from './index.ts';
 import {
@@ -65,6 +66,7 @@ export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessag
   `${chatSliceName}/sendMessage`,
   async ({ message, agentId }, { getState, dispatch }) => {
     const profile = getState().profile.profile;
+    const profileLimits = getState().profile.limits;
     const chatData = getState().chat.chatsEntities[agentId]?.chat;
 
     if (!profile || !chatData) return;
@@ -79,9 +81,11 @@ export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessag
       },
     };
 
+    const { deviceId } = await getDeviceInfo();
+
     const response = await http.put(
       `${CHAT_ROUTE}/`,
-      { lastMessage: userMessage, agentInfo: chatData.agentInfo },
+      { lastMessage: userMessage, agentInfo: chatData.agentInfo, limits: profileLimits, deviceId },
       {
         params: { chatId: chatData.chatId },
       },

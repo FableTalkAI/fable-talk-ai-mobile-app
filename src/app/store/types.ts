@@ -14,7 +14,7 @@ export type ReducersTypes = {
   user: Reducer<UserState>;
   overlay: Reducer<OverlayState>;
   chat: Reducer<ChatState & PersistPartial>;
-  profile: Reducer<ProfileState>;
+  profile: Reducer<ProfileState & PersistPartial>;
   auth: Reducer<AuthState>;
   subscription: Reducer<SubscriptionState>;
 };

@@ -35,7 +35,7 @@ const ChatScreen = () => {
   const dispatch = useAppDispatch();
 
   const { selectedChat, sendMessageHandler } = useChatStore();
-  const { profile, chatsLimitExceeded } = useProfileStore();
+  const { profile, chatsLimitExceeded, chatsLimitNeedUpdate } = useProfileStore();
   const { checkPremiumHandler } = useSubscription();
 
   const { open } = useBottomWindow();
@@ -63,7 +63,9 @@ const ChatScreen = () => {
   const onSend = useCallback(
     async (m: IMessage[] = []) =>
       checkPremiumHandler({
-        skipCheck: !chatsLimitExceeded && selectedChat?.chat?.agentInfo.accessLevel === AgentAccessLevel.Free,
+        skipCheck:
+          (!chatsLimitExceeded || chatsLimitNeedUpdate) &&
+          selectedChat?.chat?.agentInfo.accessLevel === AgentAccessLevel.Free,
         modalTitleKey: chatsLimitExceeded ? 'limitExceeded' : 'messagePremiumAgent',
         func: async () => {
           if (selectedChat && selectedChat.chat && profile) {
@@ -75,7 +77,7 @@ const ChatScreen = () => {
           }
         },
       }),
-    [checkPremiumHandler, chatsLimitExceeded, selectedChat, profile, sendMessageHandler],
+    [checkPremiumHandler, chatsLimitExceeded, chatsLimitNeedUpdate, selectedChat, profile, sendMessageHandler],
   );
 
   const deleteChatButtonHandler = useCallback(

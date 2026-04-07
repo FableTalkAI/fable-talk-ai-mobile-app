@@ -4,7 +4,7 @@ import { createAxiosAsyncThunk } from '@/app/store/typedCreateAsyncThunk.ts';
 import http from '@/shared/api/http.ts';
 import { convertImageToBase64 } from '@/shared/services/convertImageToBase64.ts';
 
-import { MessageKey, UpdateUserProfileRequest, User, UserLimits } from './types.ts';
+import { MessageKey, UpdateUserProfileRequest, User } from './types.ts';
 
 export const profileSliceName = 'profile';
 
@@ -20,11 +20,6 @@ export const sendSupportMessage = createAxiosAsyncThunk<MessageKey, string>(
 
 export const getUserProfile = createAxiosAsyncThunk<User, void>(`${profileSliceName}/getUserProfile`, async () => {
   const response = await http.get(PROFILE_ROUTE);
-  return response.data;
-});
-
-export const getUserLimits = createAxiosAsyncThunk<UserLimits, void>(`${profileSliceName}/getUserLimits`, async () => {
-  const response = await http.get(`${PROFILE_ROUTE}/limits`);
   return response.data;
 });
 
