@@ -1,5 +1,5 @@
 export type CheckPremiumHandlerParams = {
-  func: () => void;
+  func: () => Promise<void>;
   modalTitleKey: string;
   withAds?: boolean;
   skipCheck?: boolean;

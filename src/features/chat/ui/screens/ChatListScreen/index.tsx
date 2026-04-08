@@ -4,6 +4,7 @@ import { StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 
+import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import ChatListBar from '@/features/chat/ui/ChatListBar';
@@ -43,15 +44,16 @@ const ChatListScreen = () => {
     setFilteredChats(sortedChats.filter(chat => chat.agentInfo.name.toLowerCase().includes(lower)));
   };
 
-  const onChatOpenHandler = (agentId: string, chatId?: string) => async () => {
+  const onChatOpenHandler = (agentId: string, isPremiumAgent: boolean, chatId?: string) => async () => {
     if (isSelectedMode) {
       chatId && toggleSelectChat(chatId);
       return;
     }
 
-    checkPremiumHandler({
-      modalTitleKey: 'activeChatsLimit',
-      func: () => {
+    await checkPremiumHandler({
+      skipCheck: !isPremiumAgent,
+      modalTitleKey: 'openPremiumAgent',
+      func: async () => {
         getChatByIdHandler(agentId, chatId).catch(console.error);
         navigation.navigate('ChatScreen');
       },
@@ -95,6 +97,7 @@ const ChatListScreen = () => {
             subtitle={t('empty.chatSearch.subtitle')}
           />
         }
+        showsVerticalScrollIndicator={false}
         keyExtractor={item => item.chatId}
         data={filteredChats}
         style={styles.flatList}
@@ -105,7 +108,11 @@ const ChatListScreen = () => {
               avatarSource={item.agentInfo.avatarUrl}
               agentName={item.agentInfo.name}
               lastMessage={item.lastMessage}
-              onPress={onChatOpenHandler(item.agentInfo.id, item.chatId)}
+              onPress={onChatOpenHandler(
+                item.agentInfo.id,
+                item.agentInfo.accessLevel === AgentAccessLevel.Premium,
+                item.chatId,
+              )}
               chatId={item.chatId}
               isSelected={multiSelectionsChatIds.includes(item.chatId)}
               onLongPress={toggleSelectChat}

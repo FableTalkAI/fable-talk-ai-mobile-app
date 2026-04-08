@@ -46,10 +46,10 @@ const AgentList = ({
 
   const onChatOpenHandler = useCallback(
     (agentId: string, moderationStatus: AgentModerationStatus, isPremiumAgent: boolean) => async () => {
-      checkPremiumHandler({
+      await checkPremiumHandler({
         skipCheck: !isPremiumAgent,
         modalTitleKey: 'openPremiumAgent',
-        func: () => {
+        func: async () => {
           if (moderationStatus === 'rejected') {
             return navigation.navigate('CreateAgent', { id: agentId });
           }

@@ -8,6 +8,7 @@ import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context'
 
 import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
+import { MAX_FREE_USER_ACTIVE_CHAT_COUNT } from '@/features/chat/model/constants.ts';
 import { loadMoreMessages } from '@/features/chat/store/chat/thunks.ts';
 import DeleteChatBottomWindow from '@/features/chat/ui/DeleteChatBottomWindow';
 import EmptyChatStub from '@/features/chat/ui/EmptyChatStub';
@@ -34,9 +35,9 @@ const ChatScreen = () => {
   const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
 
-  const { selectedChat, sendMessageHandler } = useChatStore();
+  const { selectedChat, sendMessageHandler, chats } = useChatStore();
   const { profile, chatsLimitExceeded, chatsLimitNeedUpdate } = useProfileStore();
-  const { checkPremiumHandler } = useSubscription();
+  const { checkPremiumHandler, isPremium, showPremiumModal } = useSubscription();
 
   const { open } = useBottomWindow();
 
@@ -61,8 +62,16 @@ const ChatScreen = () => {
   });
 
   const onSend = useCallback(
-    async (m: IMessage[] = []) =>
-      checkPremiumHandler({
+    async (m: IMessage[] = []) => {
+      if (
+        !isPremium &&
+        chats.length >= MAX_FREE_USER_ACTIVE_CHAT_COUNT &&
+        !chats.some(i => i.chatId === selectedChat?.chat?.chatId)
+      ) {
+        return showPremiumModal('activeChatsLimit');
+      }
+
+      await checkPremiumHandler({
         skipCheck:
           (!chatsLimitExceeded || chatsLimitNeedUpdate) &&
           selectedChat?.chat?.agentInfo.accessLevel === AgentAccessLevel.Free,
@@ -76,8 +85,19 @@ const ChatScreen = () => {
             });
           }
         },
-      }),
-    [checkPremiumHandler, chatsLimitExceeded, chatsLimitNeedUpdate, selectedChat, profile, sendMessageHandler],
+      });
+    },
+    [
+      isPremium,
+      chats.length,
+      checkPremiumHandler,
+      chatsLimitExceeded,
+      chatsLimitNeedUpdate,
+      selectedChat,
+      showPremiumModal,
+      profile,
+      sendMessageHandler,
+    ],
   );
 
   const deleteChatButtonHandler = useCallback(

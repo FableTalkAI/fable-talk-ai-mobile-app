@@ -21,10 +21,10 @@ const CreateAgentButton = ({ style, withArrow, hasModerationLimit }: CreateAgent
 
   const translateY = useSharedValue(0);
 
-  const navigateToCreateAgentHandler = () => {
-    checkPremiumHandler({
+  const navigateToCreateAgentHandler = async () => {
+    await checkPremiumHandler({
       modalTitleKey: 'createAgentLimit',
-      func: () => {
+      func: async () => {
         if (hasModerationLimit) {
           showToast({
             type: 'error',

@@ -26,7 +26,7 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   response => response,
   error => {
-    return Promise.reject(error.response);
+    return Promise.reject(error);
   },
 );
 

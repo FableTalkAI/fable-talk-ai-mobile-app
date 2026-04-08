@@ -53,16 +53,29 @@ const useSubscription = () => {
     }
   };
 
+  const showPremiumModal = useCallback(
+    (modalTitleKey: string, withAds: boolean = false) => {
+      openModal(<PremiumModal withAds={withAds} titleKey={modalTitleKey} />);
+    },
+    [openModal],
+  );
+
   const checkPremiumHandler = useCallback(
-    ({ func, withAds, modalTitleKey, skipCheck }: CheckPremiumHandlerParams) => {
+    async ({ func, withAds, modalTitleKey, skipCheck }: CheckPremiumHandlerParams) => {
       if (isPremium || skipCheck) {
-        func();
+        try {
+          await func();
+        } catch (error: any) {
+          if (error?.messageKey === 'limitExceeded') {
+            openModal(<PremiumModal withAds={withAds} titleKey="limitExceeded" />);
+          }
+        }
         return;
       }
 
-      openModal(<PremiumModal withAds={withAds} titleKey={modalTitleKey} />);
+      showPremiumModal(modalTitleKey, withAds);
     },
-    [isPremium, openModal],
+    [isPremium, openModal, showPremiumModal],
   );
 
   return {
@@ -74,6 +87,7 @@ const useSubscription = () => {
     subscribe,
     restorePurchases,
     checkPremiumHandler,
+    showPremiumModal,
   };
 };
 

@@ -64,46 +64,54 @@ export const loadMoreMessages = (agentId: string) => async (dispatch: AppDispatc
 
 export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessageRequest>(
   `${chatSliceName}/sendMessage`,
-  async ({ message, agentId }, { getState, dispatch }) => {
-    const profile = getState().profile.profile;
-    const profileLimits = getState().profile.limits;
-    const chatData = getState().chat.chatsEntities[agentId]?.chat;
+  async ({ message, agentId }, { getState, dispatch, rejectWithValue }) => {
+    try {
+      const profile = getState().profile.profile;
+      const profileLimits = getState().profile.limits;
+      const chatData = getState().chat.chatsEntities[agentId]?.chat;
 
-    if (!profile || !chatData) return;
+      if (!profile || !chatData) return;
 
-    const userMessage: Message = {
-      _id: new Date().toISOString(),
-      text: message,
-      createdAt: Date.now(),
-      user: {
-        _id: profile.email,
-        avatar: profile.avatarUrl,
-      },
-    };
+      const userMessage: Message = {
+        _id: new Date().toISOString(),
+        text: message,
+        createdAt: Date.now(),
+        user: {
+          _id: profile.email,
+          avatar: profile.avatarUrl,
+        },
+      };
 
-    const { deviceId } = await getDeviceInfo();
+      const { deviceId } = await getDeviceInfo();
 
-    const response = await http.put(
-      `${CHAT_ROUTE}/`,
-      { lastMessage: userMessage, agentInfo: chatData.agentInfo, limits: profileLimits, deviceId },
-      {
-        params: { chatId: chatData.chatId },
-      },
-    );
+      const response = await http.put(
+        `${CHAT_ROUTE}/`,
+        { lastMessage: userMessage, agentInfo: chatData.agentInfo, limits: profileLimits, deviceId },
+        {
+          params: { chatId: chatData.chatId },
+        },
+      );
 
-    if (response.data.limits) {
-      dispatch(setLimits(response.data.limits));
+      if (response.data.limits) {
+        dispatch(setLimits(response.data.limits));
+      }
+
+      if (!chatData.chatId) {
+        await dispatch(getUserProfile());
+        const newChat = await dispatch(getChatById({ agentId: chatData.agentInfo.id })).unwrap();
+        dispatch(addNewChatToList(newChat.chat as Required<Chat>));
+      }
+
+      dispatch(updateChatListLastMessage({ agentId: chatData.agentInfo.id, message: response.data }));
+
+      return response.data;
+    } catch (e: any) {
+      if (e?.data?.limits) {
+        dispatch(setLimits(e.data.limits));
+      }
+
+      return rejectWithValue(e.data);
     }
-
-    if (!chatData.chatId) {
-      await dispatch(getUserProfile());
-      const newChat = await dispatch(getChatById({ agentId: chatData.agentInfo.id })).unwrap();
-      dispatch(addNewChatToList(newChat.chat as Required<Chat>));
-    }
-
-    dispatch(updateChatListLastMessage({ agentId: chatData.agentInfo.id, message: response.data }));
-
-    return response.data;
   },
 );
 
