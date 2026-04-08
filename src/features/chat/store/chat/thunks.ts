@@ -106,11 +106,11 @@ export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessag
 
       return response.data;
     } catch (e: any) {
-      if (e?.data?.limits) {
-        dispatch(setLimits(e.data.limits));
+      if (e?.response?.data?.limits) {
+        dispatch(setLimits(e?.response?.data?.limits));
       }
 
-      return rejectWithValue(e.data);
+      return rejectWithValue(e?.response?.data);
     }
   },
 );
