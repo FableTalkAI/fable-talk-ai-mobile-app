@@ -1,7 +1,9 @@
 import { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Purchases, { PurchasesPackage } from 'react-native-purchases';
 
 import useModal from '@/features/overlay/hooks/useModal.ts';
+import { showToast } from '@/features/overlay/services/showToast.ts';
 import { customerInfoSelector, packagesSelector } from '@/features/subscriptions/store/subscriptions/selectors.ts';
 import PremiumModal from '@/features/subscriptions/ui/PremiumModal';
 import { useAppSelector } from '@/shared/hooks/reduxHooks.ts';
@@ -9,6 +11,8 @@ import { useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 import { CheckPremiumHandlerParams } from './types.ts';
 
 const useSubscription = () => {
+  const { t } = useTranslation();
+
   const packages = useAppSelector(packagesSelector);
   const customerInfo = useAppSelector(customerInfoSelector);
 
@@ -45,11 +49,19 @@ const useSubscription = () => {
     }
   };
 
-  const restorePurchases = async () => {
+  const restorePurchase = async () => {
     try {
       await Purchases.restorePurchases();
+      showToast({
+        type: 'success',
+        text2: t('subscription.successfullyRestored'),
+      });
     } catch (e) {
       console.error('Restore error:', e);
+      showToast({
+        type: 'error',
+        text2: t('subscription.failedRestored'),
+      });
     }
   };
 
@@ -85,7 +97,7 @@ const useSubscription = () => {
     discount,
 
     subscribe,
-    restorePurchases,
+    restorePurchase,
     checkPremiumHandler,
     showPremiumModal,
   };

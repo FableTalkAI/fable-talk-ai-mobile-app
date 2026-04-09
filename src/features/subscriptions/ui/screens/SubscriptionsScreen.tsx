@@ -11,6 +11,7 @@ import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import Button from '@/shared/ui/Button';
 import Header from '@/shared/ui/Header';
+import PressableCustom from '@/shared/ui/PressableCustom';
 import ResizeIcon from '@/shared/ui/ResizeIcon';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 import TextCustom from '@/shared/ui/TextCustom';
@@ -21,7 +22,7 @@ import { BENEFITS } from '../../model/constants.tsx';
 const SubscriptionScreen = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const { packages, discount, subscribe, isLoading } = useSubscription();
+  const { packages, discount, subscribe, restorePurchase, isLoading } = useSubscription();
   const [selectedSubscription, setSelectedSubscription] = useState(packages[0]);
 
   const computedStyles = StyleSheet.create({
@@ -32,6 +33,9 @@ const SubscriptionScreen = () => {
       backgroundColor: colors.backgroundQuaternary,
     },
     containerHeaderText: {
+      backgroundColor: colors.backgroundQuaternary,
+    },
+    freeHeaderContainer: {
       backgroundColor: colors.backgroundBase,
     },
   });
@@ -44,8 +48,11 @@ const SubscriptionScreen = () => {
 
   const ListHeader = (
     <View style={[styles.containerHeaderText, computedStyles.containerHeaderText]}>
-      <TextCustom text="Free" mode={TextModes.Subtitle} style={styles.mark} />
-      <TextCustom text="Pro" mode={TextModes.Subtitle} style={[styles.mark, computedStyles.mark]} />
+      <TextCustom text="Premium" mode={TextModes.Subtitle} style={styles.headerText} />
+
+      <View style={[styles.freeHeaderContainer, computedStyles.freeHeaderContainer]}>
+        <TextCustom text="Free" mode={TextModes.Subtitle} style={styles.headerText} />
+      </View>
     </View>
   );
 
@@ -94,8 +101,8 @@ const SubscriptionScreen = () => {
           <SubscriptionButton
             key={subscription.identifier}
             title={t(`subscription.${subscription.packageType.toLowerCase()}`)}
-            price={subscription.product.price}
-            pricePerMonth={subscription.product.pricePerMonth}
+            price={subscription.product.priceString}
+            pricePerMonth={subscription.product.pricePerMonthString}
             discount={subscription.identifier === discount?.identifier ? discount?.value : undefined}
             isSelected={selectedSubscription.identifier === subscription.identifier}
             onPress={() => setSelectedSubscription(subscription)}
@@ -104,6 +111,14 @@ const SubscriptionScreen = () => {
       </View>
 
       <Button title={t('actions.choose')} isLoading={isLoading} onPress={() => subscribe(selectedSubscription)} />
+      <PressableCustom onPress={restorePurchase}>
+        <TextCustom
+          text={t('subscription.restorePurchase')}
+          textColor={colors.link}
+          mode={TextModes.Secondary}
+          style={styles.restoreText}
+        />
+      </PressableCustom>
     </SafeAreaViewCustom>
   );
 };
@@ -122,8 +137,17 @@ const styles = StyleSheet.create({
   },
   containerHeaderText: {
     flex: 1,
-    justifyContent: 'flex-end',
-    flexDirection: 'row',
+    textAlign: 'center',
+  },
+  headerText: {
+    textAlign: 'right',
+    paddingRight: SPACING.s,
+    paddingVertical: SPACING.xxs,
+  },
+  freeHeaderContainer: {
+    flex: 1,
+    marginRight: 60,
+    borderTopRightRadius: RADIUS.medium,
   },
   titleContainer: {
     flexDirection: 'row',
@@ -162,6 +186,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingBottom: SPACING.m,
+  },
+  restoreText: {
+    textAlign: 'center',
+    marginTop: SPACING.xxs,
   },
 });
 

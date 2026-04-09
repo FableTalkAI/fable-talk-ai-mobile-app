@@ -89,7 +89,7 @@ const ChatScreen = () => {
     },
     [
       isPremium,
-      chats.length,
+      chats,
       checkPremiumHandler,
       chatsLimitExceeded,
       chatsLimitNeedUpdate,

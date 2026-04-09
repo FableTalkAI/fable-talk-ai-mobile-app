@@ -228,10 +228,14 @@ const uk: Translations = {
 
   subscription: {
     header: 'Підписки',
-    month: '(${{price}}/місяць)',
+    month: '({{price}}/місяць)',
     monthly: 'Місячна',
     annual: 'Річна',
     save: 'Заощадь {{amount}}%',
+    activeSubscriptionStatus: 'Статус Активної Підписки',
+    restorePurchase: 'Відновити Покупку',
+    successfullyRestored: 'Покупки успішно відновлено',
+    failedRestored: 'Не вдалося відновити покупки',
     benefits: {
       messaging: 'Чатінг',
       chats: 'Чати',

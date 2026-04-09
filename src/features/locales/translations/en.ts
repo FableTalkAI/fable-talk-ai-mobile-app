@@ -230,10 +230,14 @@ const en: Translations = {
 
   subscription: {
     header: 'Subscriptions',
-    month: '(${{price}}/month)',
+    month: '({{price}}/month)',
     monthly: 'Monthly',
     annual: 'Annual',
     save: 'Save {{amount}}%',
+    activeSubscriptionStatus: 'Active Subscription Status',
+    restorePurchase: 'Restore Purchase',
+    successfullyRestored: 'Purchases successfully restored',
+    failedRestored: 'Failed to restore purchases',
     benefits: {
       messaging: 'Messaging',
       chats: 'Chats',

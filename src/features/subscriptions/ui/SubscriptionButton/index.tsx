@@ -44,14 +44,18 @@ export const SubscriptionButton = ({
         />
       )}
       <TextCustom text={title} mode={TextModes.Subtitle} style={styles.text} />
-      <TextCustom text={`$${price}`} mode={TextModes.Xl} style={styles.text} />
+
+      <TextCustom numberOfLines={1} adjustsFontSizeToFit text={price} mode={TextModes.Xl} style={styles.text} />
       {pricePerMonth && (
         <TextCustom
+          numberOfLines={1}
+          adjustsFontSizeToFit
           text={t('subscription.month', { price: pricePerMonth })}
           style={styles.text}
           textColor={colors.textSecondary}
         />
       )}
+
       {isSelected && <CheckmarkIcon fill={colors.errorDark} style={styles.checkmark} />}
     </PressableCustom>
   );
@@ -77,6 +81,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
+    lineHeight: 0,
   },
   checkmark: {
     position: 'absolute',

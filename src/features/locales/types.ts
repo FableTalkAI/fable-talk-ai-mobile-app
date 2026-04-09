@@ -210,6 +210,10 @@ export type Translations = {
     monthly: string;
     annual: string;
     save: string;
+    activeSubscriptionStatus: string;
+    restorePurchase: string;
+    successfullyRestored: string;
+    failedRestored: string;
     benefits: {
       messaging: string;
       chats: string;
