@@ -1,11 +1,11 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 
-import { showToast } from '@/shared/lib/toast';
+import { showToast } from '@/features/overlay/services/showToast.ts';
 
 import {
   deleteUserProfile,
-  getUserLimits,
   getUserProfile,
   profileSliceName,
   sendSupportMessage,
@@ -13,6 +13,12 @@ import {
   uploadAvatar,
 } from './thunks.ts';
 import { ProfileState, UserLimits } from './types.ts';
+
+export const profilePersistConfig = {
+  key: profileSliceName,
+  storage: AsyncStorage,
+  whitelist: ['limits'],
+};
 
 const initialState: ProfileState = {
   profile: null,
@@ -59,11 +65,6 @@ const profileSlice = createSlice({
       //getUserProfile
       .addCase(getUserProfile.fulfilled, (state, action) => {
         state.profile = action.payload;
-      })
-
-      //getUserLimits
-      .addCase(getUserLimits.fulfilled, (state, action) => {
-        state.limits = action.payload;
       })
 
       //updateUserProfile

@@ -1,6 +1,6 @@
 import { ToastShowParams } from 'react-native-toast-message';
 
-import { toastConfig } from './config.tsx';
+import { toastConfig } from '@/features/overlay/lib/toastConfig.tsx';
 
 type CustomToastType = keyof typeof toastConfig;
 

@@ -6,7 +6,7 @@ import useTheme from '@/shared/hooks/useTheme.ts';
 import { TEXT_STYLES } from './constants.ts';
 import { TextCustomProps, TextModes } from './types.ts';
 
-const TextCustom = ({ text, mode = TextModes.Base, style, numberOfLines, textColor }: TextCustomProps) => {
+const TextCustom = ({ text, mode = TextModes.Base, style, textColor, ...textProps }: TextCustomProps) => {
   const { colors } = useTheme();
 
   const textStyle = useMemo(() => TEXT_STYLES[mode], [mode]);
@@ -18,7 +18,7 @@ const TextCustom = ({ text, mode = TextModes.Base, style, numberOfLines, textCol
   });
 
   return (
-    <Text style={[computedStyles.text, textStyle, style]} numberOfLines={numberOfLines}>
+    <Text style={[computedStyles.text, textStyle, style]} {...textProps}>
       {text}
     </Text>
   );

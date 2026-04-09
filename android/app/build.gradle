@@ -81,12 +81,33 @@ android {
     compileSdk rootProject.ext.compileSdkVersion
 
     namespace "com.fabletalkai"
+
     defaultConfig {
         applicationId "com.fabletalkai"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.0.03"
+
+        externalNativeBuild {
+            cmake {
+                def cmakeBaseDir = new File("${android.sdkDirectory}/cmake")
+                def cmakeVersionDir = cmakeBaseDir.listFiles()?.find { it.directory }
+
+                if (cmakeVersionDir == null) {
+                    throw new GradleException("No CMake version found in ${cmakeBaseDir}")
+                }
+
+                def cmakeDir = "${cmakeVersionDir}/bin"
+                def ninjaExecutable = org.apache.tools.ant.taskdefs.condition.Os.isFamily(org.apache.tools.ant.taskdefs.condition.Os.FAMILY_WINDOWS) ? "ninja.exe" : "ninja"
+                def ninjaPath = "${cmakeDir}/${ninjaExecutable}".replace("\\", "/")
+
+                arguments "-DCMAKE_MAKE_PROGRAM=${ninjaPath}",
+                          "-DCMAKE_OBJECT_PATH_MAX=1024"
+            }
+        }
+    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -94,7 +115,7 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
-         release {
+        release {
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
                 storeFile file(MYAPP_UPLOAD_STORE_FILE)
                 storePassword MYAPP_UPLOAD_STORE_PASSWORD
@@ -103,32 +124,12 @@ android {
             }
         }
     }
-     externalNativeBuild {
-               cmake {
-                          // Dynamically pick the only installed CMake version
-                          def cmakeBaseDir = new File("${android.sdkDirectory}/cmake")
-                          def cmakeVersionDir = cmakeBaseDir.listFiles()?.find { it.directory }
 
-                          if (cmakeVersionDir == null) {
-                              throw new GradleException("No CMake version found in ${cmakeBaseDir}")
-                          }
-
-                          def cmakeDir = "${cmakeVersionDir}/bin"
-                          def ninjaExecutable = org.apache.tools.ant.taskdefs.condition.Os.isFamily(org.apache.tools.ant.taskdefs.condition.Os.FAMILY_WINDOWS) ? "ninja.exe" : "ninja"
-                          def ninjaPath = "${cmakeDir}/${ninjaExecutable}".replace("\\", "/")
-
-                          arguments "-DCMAKE_MAKE_PROGRAM=${ninjaPath}",
-                                    "-DCMAKE_OBJECT_PATH_MAX=1024"
-                      }
-            }
-        }
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
         }
         release {
-            // Caution! In production, you need to generate your own keystore file.
-            // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

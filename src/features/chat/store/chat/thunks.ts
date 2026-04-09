@@ -6,6 +6,7 @@ import { setLimits } from '@/features/profile/store/profile';
 import { getUserProfile } from '@/features/profile/store/profile/thunks.ts';
 import { MessageKey } from '@/features/profile/store/profile/types.ts';
 import http from '@/shared/api/http.ts';
+import { getDeviceInfo } from '@/shared/lib/device.ts';
 
 import { addNewChatToList, updateChatListLastMessage } from './index.ts';
 import {
@@ -63,43 +64,54 @@ export const loadMoreMessages = (agentId: string) => async (dispatch: AppDispatc
 
 export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessageRequest>(
   `${chatSliceName}/sendMessage`,
-  async ({ message, agentId }, { getState, dispatch }) => {
-    const profile = getState().profile.profile;
-    const chatData = getState().chat.chatsEntities[agentId]?.chat;
+  async ({ message, agentId }, { getState, dispatch, rejectWithValue }) => {
+    try {
+      const profile = getState().profile.profile;
+      const profileLimits = getState().profile.limits;
+      const chatData = getState().chat.chatsEntities[agentId]?.chat;
 
-    if (!profile || !chatData) return;
+      if (!profile || !chatData) return;
 
-    const userMessage: Message = {
-      _id: new Date().toISOString(),
-      text: message,
-      createdAt: Date.now(),
-      user: {
-        _id: profile.email,
-        avatar: profile.avatarUrl,
-      },
-    };
+      const userMessage: Message = {
+        _id: new Date().toISOString(),
+        text: message,
+        createdAt: Date.now(),
+        user: {
+          _id: profile.email,
+          avatar: profile.avatarUrl,
+        },
+      };
 
-    const response = await http.put(
-      `${CHAT_ROUTE}/`,
-      { lastMessage: userMessage, agentInfo: chatData.agentInfo },
-      {
-        params: { chatId: chatData.chatId },
-      },
-    );
+      const { deviceId } = await getDeviceInfo();
 
-    if (response.data.limits) {
-      dispatch(setLimits(response.data.limits));
+      const response = await http.put(
+        `${CHAT_ROUTE}/`,
+        { lastMessage: userMessage, agentInfo: chatData.agentInfo, limits: profileLimits, deviceId },
+        {
+          params: { chatId: chatData.chatId },
+        },
+      );
+
+      if (response.data.limits) {
+        dispatch(setLimits(response.data.limits));
+      }
+
+      if (!chatData.chatId) {
+        await dispatch(getUserProfile());
+        const newChat = await dispatch(getChatById({ agentId: chatData.agentInfo.id })).unwrap();
+        dispatch(addNewChatToList(newChat.chat as Required<Chat>));
+      }
+
+      dispatch(updateChatListLastMessage({ agentId: chatData.agentInfo.id, message: response.data }));
+
+      return response.data;
+    } catch (e: any) {
+      if (e?.response?.data?.limits) {
+        dispatch(setLimits(e?.response?.data?.limits));
+      }
+
+      return rejectWithValue(e?.response?.data);
     }
-
-    if (!chatData.chatId) {
-      await dispatch(getUserProfile());
-      const newChat = await dispatch(getChatById({ agentId: chatData.agentInfo.id })).unwrap();
-      dispatch(addNewChatToList(newChat.chat as Required<Chat>));
-    }
-
-    dispatch(updateChatListLastMessage({ agentId: chatData.agentInfo.id, message: response.data }));
-
-    return response.data;
   },
 );
 

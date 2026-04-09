@@ -7,6 +7,7 @@ import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import OptionBar from '@/features/profile/ui/OptionBar';
 import UserAvatar from '@/features/profile/ui/UserAvatar';
 import UserInfoBar from '@/features/profile/ui/UserInfoBar';
+import ActiveSubscriptionBar from '@/features/subscriptions/ui/ActiveSubscriptionBar.tsx';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
@@ -29,6 +30,8 @@ const ProfileScreen = () => {
         <UserAvatar style={styles.avatar} />
 
         <View style={styles.userInfoContainer}>
+          <ActiveSubscriptionBar />
+
           <UserInfoBar field="name" isLoading={isLoading.updateProfile} />
           <UserInfoBar field="dateOfBirth" isLoading={isLoading.updateProfile} />
         </View>

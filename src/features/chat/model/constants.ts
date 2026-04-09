@@ -1,0 +1,1 @@
+export const MAX_FREE_USER_ACTIVE_CHAT_COUNT = 10;

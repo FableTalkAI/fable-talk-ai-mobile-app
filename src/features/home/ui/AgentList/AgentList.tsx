@@ -8,6 +8,7 @@ import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { getAgentBarMode } from '@/features/home/services/getAgentBarMode.ts';
 import AgentBar from '@/features/home/ui/AgentBar';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 
@@ -24,6 +25,7 @@ const AgentList = ({
 }: AgentListProps) => {
   const { colors, getInvertedColor } = useTheme();
   const { navigation } = useNavigationRoutes();
+  const { checkPremiumHandler } = useSubscription();
 
   const { getChatByIdHandler } = useChatStore();
 
@@ -43,15 +45,21 @@ const AgentList = ({
   };
 
   const onChatOpenHandler = useCallback(
-    (agentId: string, moderationStatus: AgentModerationStatus) => async () => {
-      if (moderationStatus === 'rejected') {
-        return navigation.navigate('CreateAgent', { id: agentId });
-      }
+    (agentId: string, moderationStatus: AgentModerationStatus, isPremiumAgent: boolean) => async () => {
+      await checkPremiumHandler({
+        skipCheck: !isPremiumAgent,
+        modalTitleKey: 'openPremiumAgent',
+        func: async () => {
+          if (moderationStatus === 'rejected') {
+            return navigation.navigate('CreateAgent', { id: agentId });
+          }
 
-      getChatByIdHandler(agentId).catch(console.error);
-      navigation.navigate('ChatScreen');
+          getChatByIdHandler(agentId).catch(console.error);
+          navigation.navigate('ChatScreen');
+        },
+      });
     },
-    [getChatByIdHandler, navigation],
+    [checkPremiumHandler, getChatByIdHandler, navigation],
   );
 
   const renderFooter = () => {
@@ -97,7 +105,7 @@ const AgentList = ({
           description={item.description}
           tags={item.tags}
           avatarSource={item.avatarUrl}
-          onPress={onChatOpenHandler(item.id, item.moderationStatus)}
+          onPress={onChatOpenHandler(item.id, item.moderationStatus, item.accessLevel === AgentAccessLevel.Premium)}
           wrapperStyle={[styles.agentBarWrapper, computedStyles.agentBarWrapper, getAgentBarAlignSelf(index)]}
         />
       )}

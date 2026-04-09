@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { launchImageLibrary } from 'react-native-image-picker';
 
+import { showToast } from '@/features/overlay/services/showToast.ts';
 import { useGalleryPermission } from '@/shared/hooks/useGalleryPermission.tsx';
-import { showToast } from '@/shared/lib/toast';
 
 import { MAX_IMAGE_SIZE_MB } from './constants.ts';
 import { UseImagePickProps } from './types.ts';

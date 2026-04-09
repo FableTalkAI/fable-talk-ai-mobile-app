@@ -1,3 +1,4 @@
+import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import { UserLimits } from '@/features/profile/store/profile/types.ts';
 
 export type ChatState = {
@@ -45,6 +46,7 @@ export type Chat = {
     avatarUrl: string;
     name: string;
     description: string;
+    accessLevel: AgentAccessLevel;
   };
   lastMessage: Message;
   isPinned: boolean;

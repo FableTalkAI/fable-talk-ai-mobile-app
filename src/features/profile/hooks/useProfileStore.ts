@@ -6,7 +6,6 @@ import { AllNavigationParamList } from '@/features/navigation/hooks/useNavigatio
 import { isLoadingSelector, limitsSelector, profileSelector } from '@/features/profile/store/profile/selectors.ts';
 import {
   deleteUserProfile,
-  getUserLimits,
   getUserProfile,
   sendSupportMessage,
   updateUserProfile,
@@ -22,6 +21,11 @@ const useProfileStore = () => {
   const profile = useAppSelector(profileSelector);
   const limits = useAppSelector(limitsSelector);
 
+  const chatsLimitExceeded = limits && limits.limit === limits.count;
+
+  const today = new Date().toISOString().split('T')[0];
+  const chatsLimitNeedUpdate = !!(limits && limits.lastResetDay !== today);
+
   const sendSupportMessageHandler = useCallback(
     async (message: string) => {
       await dispatch(sendSupportMessage(message)).unwrap();
@@ -31,10 +35,6 @@ const useProfileStore = () => {
 
   const getUserProfileHandler = useCallback(async () => {
     return await dispatch(getUserProfile()).unwrap();
-  }, [dispatch]);
-
-  const getUserLimitsHandler = useCallback(async () => {
-    await dispatch(getUserLimits()).unwrap();
   }, [dispatch]);
 
   const updateUserProfileHandler = useCallback(
@@ -63,13 +63,14 @@ const useProfileStore = () => {
     isLoading,
     profile,
     limits,
+    chatsLimitExceeded,
+    chatsLimitNeedUpdate,
 
     sendSupportMessageHandler,
     getUserProfileHandler,
     updateUserProfileHandler,
     uploadAvatarHandler,
     deleteUserProfileHandler,
-    getUserLimitsHandler,
   };
 };
 

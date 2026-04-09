@@ -4,9 +4,10 @@ import { StyleSheet } from 'react-native';
 import Animated, { FadeIn, useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import { showToast } from '@/features/overlay/services/showToast.ts';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { AddAgentIcon, ArrowStickIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
-import { showToast } from '@/shared/lib/toast';
 import { SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 
@@ -16,21 +17,27 @@ const CreateAgentButton = ({ style, withArrow, hasModerationLimit }: CreateAgent
   const { navigation } = useNavigationRoutes();
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const { checkPremiumHandler } = useSubscription();
 
   const translateY = useSharedValue(0);
 
-  const navigateToCreateAgentHandler = () => {
-    if (hasModerationLimit) {
-      showToast({
-        type: 'error',
-        text2: t('createAgent.agentCreateLimit'),
-        position: 'bottom',
-        visibilityTime: 5000,
-      });
-      return;
-    }
+  const navigateToCreateAgentHandler = async () => {
+    await checkPremiumHandler({
+      modalTitleKey: 'createAgentLimit',
+      func: async () => {
+        if (hasModerationLimit) {
+          showToast({
+            type: 'error',
+            text2: t('createAgent.agentCreateLimit'),
+            position: 'bottom',
+            visibilityTime: 5000,
+          });
+          return;
+        }
 
-    navigation.navigate('CreateAgent');
+        navigation.navigate('CreateAgent');
+      },
+    });
   };
 
   useEffect(() => {

@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 
+import { showToast } from '@/features/overlay/services/showToast.ts';
 import { User } from '@/features/profile/store/profile/types.ts';
-import { showToast } from '@/shared/lib/toast/index.ts';
 
 import { chatSliceName, deleteChat, getAllChats, getChatById, sendMessage } from './thunks.ts';
 import { Chat, ChatState, Message, SendMessageRequest, UpdateChatListLastMessage } from './types.ts';

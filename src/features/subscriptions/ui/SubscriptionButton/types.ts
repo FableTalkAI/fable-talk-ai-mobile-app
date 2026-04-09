@@ -1,7 +1,7 @@
 export type SubscriptionButtonProps = {
   title: string;
-  price: number;
-  pricePerMonth: number;
+  price: string;
+  pricePerMonth: string | null;
   discount?: number;
   isSelected?: boolean;
   onPress?: () => void;

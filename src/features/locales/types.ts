@@ -107,6 +107,22 @@ export type Translations = {
     };
   };
 
+  modal: {
+    premium: {
+      title: {
+        limitExceeded: string;
+        openPremiumAgent: string;
+        messagePremiumAgent: string;
+        activeChatsLimit: string;
+        createAgentLimit: string;
+      };
+      description: string;
+      adsDescription: string;
+      premiumButton: string;
+      adsButton: string;
+    };
+  };
+
   auth: {
     splashText: string;
     signInButton: string;
@@ -194,6 +210,10 @@ export type Translations = {
     monthly: string;
     annual: string;
     save: string;
+    activeSubscriptionStatus: string;
+    restorePurchase: string;
+    successfullyRestored: string;
+    failedRestored: string;
     benefits: {
       messaging: string;
       chats: string;

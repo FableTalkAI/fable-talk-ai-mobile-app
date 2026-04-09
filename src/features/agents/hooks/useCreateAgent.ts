@@ -8,9 +8,9 @@ import { createAgentSchema } from '@/features/agents/model/schemas.ts';
 import { CreateAgentValues } from '@/features/agents/model/types.ts';
 import { Agent, CreateAgentRequest, Tag } from '@/features/agents/store/agents/types.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import { showToast } from '@/features/overlay/services/showToast.ts';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { useImagePick } from '@/shared/hooks/useImagePick';
-import { showToast } from '@/shared/lib/toast';
 import { convertImageToBase64 } from '@/shared/services/convertImageToBase64.ts';
 
 import useAgentsStore from './useAgentsStore.ts';

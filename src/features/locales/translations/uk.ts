@@ -109,6 +109,23 @@ const uk: Translations = {
     },
   },
 
+  modal: {
+    premium: {
+      title: {
+        limitExceeded: 'Ліміт повідомлень вичерпано',
+        openPremiumAgent: 'Цей Агент доступний з Premium',
+        messagePremiumAgent: 'Спілкування з Premium Агентом обмежено',
+        activeChatsLimit: 'Досягнуто ліміт активних чатів',
+        createAgentLimit: 'Створення Агентів з Premium',
+      },
+      description:
+        'Бажаєте створювати більше та швидше? З Premium вам не доведеться чекати та дивитися рекламу. Полетіли?',
+      adsDescription: 'Або перегляньте коротке відео, щоб отримати ще 5 повідомлень прямо зараз 🚀',
+      premiumButton: 'Оформити Premium',
+      adsButton: 'Подивитися Рекламу',
+    },
+  },
+
   auth: {
     splashText: 'Просто\nПочни Чат',
     signInButton: 'Увійти',
@@ -211,10 +228,14 @@ const uk: Translations = {
 
   subscription: {
     header: 'Підписки',
-    month: '(${{price}}/місяць)',
+    month: '({{price}}/місяць)',
     monthly: 'Місячна',
     annual: 'Річна',
     save: 'Заощадь {{amount}}%',
+    activeSubscriptionStatus: 'Статус Активної Підписки',
+    restorePurchase: 'Відновити Покупку',
+    successfullyRestored: 'Покупки успішно відновлено',
+    failedRestored: 'Не вдалося відновити покупки',
     benefits: {
       messaging: 'Чатінг',
       chats: 'Чати',

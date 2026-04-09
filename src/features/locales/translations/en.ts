@@ -110,6 +110,23 @@ const en: Translations = {
     },
   },
 
+  modal: {
+    premium: {
+      title: {
+        limitExceeded: 'Message limit reached',
+        openPremiumAgent: 'Agent available with Premium',
+        messagePremiumAgent: 'Premium Agent chat restricted',
+        activeChatsLimit: 'Active chats limit reached',
+        createAgentLimit: 'Create Agents with Premium',
+      },
+      description:
+        'Want to create more and faster? With Premium, you can skip the ads and dive straight into action. Ready for takeoff?',
+      adsDescription: 'Or watch a short video to get 5 extra messages right away 🚀',
+      premiumButton: 'Go Premium',
+      adsButton: 'Watch ad',
+    },
+  },
+
   auth: {
     splashText: 'Just Start\nChatting',
     signInButton: 'Sign In',
@@ -213,10 +230,14 @@ const en: Translations = {
 
   subscription: {
     header: 'Subscriptions',
-    month: '(${{price}}/month)',
+    month: '({{price}}/month)',
     monthly: 'Monthly',
     annual: 'Annual',
     save: 'Save {{amount}}%',
+    activeSubscriptionStatus: 'Active Subscription Status',
+    restorePurchase: 'Restore Purchase',
+    successfullyRestored: 'Purchases successfully restored',
+    failedRestored: 'Failed to restore purchases',
     benefits: {
       messaging: 'Messaging',
       chats: 'Chats',

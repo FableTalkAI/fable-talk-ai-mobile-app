@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import i18n from 'i18next';
 
 import { Tag } from '@/features/agents/store/agents/types.ts';
-import { showToast } from '@/shared/lib/toast';
+import { showToast } from '@/features/overlay/services/showToast.ts';
 
 import { userSliceName } from './thunks.ts';
 import { SortByFilter, SortFilter, Theme, UserState } from './types.ts';

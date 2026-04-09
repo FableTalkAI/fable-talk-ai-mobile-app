@@ -1,12 +1,10 @@
-import { ColorValue, StyleProp, TextStyle } from 'react-native';
+import { ColorValue, TextProps } from 'react-native';
 
 export type TextCustomProps = {
   text: string | number;
   mode?: TextModes;
-  style?: StyleProp<TextStyle>;
-  numberOfLines?: number;
   textColor?: ColorValue;
-};
+} & TextProps;
 
 export enum TextModes {
   Base = 'base',
