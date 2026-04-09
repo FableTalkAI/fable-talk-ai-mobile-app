@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 
 import { CheckmarkIcon } from '@/shared/assets/icons/index.ts';
 import useTheme from '@/shared/hooks/useTheme.ts';
+import { IS_IOS } from '@/shared/model/device.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom/index.tsx';
 import TextCustom from '@/shared/ui/TextCustom/index.tsx';
@@ -69,7 +70,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: RADIUS.small,
     paddingHorizontal: SPACING.xs,
-    paddingVertical: SPACING.m,
+    paddingBottom: SPACING.lg,
+    paddingTop: SPACING.m,
   },
   discountText: {
     borderRadius: RADIUS.small,
@@ -81,7 +83,7 @@ const styles = StyleSheet.create({
   },
   text: {
     textAlign: 'center',
-    lineHeight: 0,
+    lineHeight: undefined,
   },
   checkmark: {
     position: 'absolute',
