@@ -70,7 +70,9 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.small,
     paddingHorizontal: SPACING.xs,
     paddingBottom: SPACING.lg,
+    minHeight: 130,
     paddingTop: SPACING.m,
+    justifyContent: 'space-between',
   },
   discountText: {
     borderRadius: RADIUS.small,
