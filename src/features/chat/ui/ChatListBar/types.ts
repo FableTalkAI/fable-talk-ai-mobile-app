@@ -1,3 +1,4 @@
+import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import { Message } from '@/features/chat/store/chat/types.ts';
 
 export type ChatListBarProps = {
@@ -9,4 +10,5 @@ export type ChatListBarProps = {
   onLongPress?: (chatId: string) => void;
   onPress?: () => void;
   isSelectMode?: boolean;
+  agentAccessLevel?: AgentAccessLevel;
 };

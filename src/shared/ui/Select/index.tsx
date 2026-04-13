@@ -14,7 +14,7 @@ import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 import { MAX_DROPDOWN_HEIGHT, ROW_HEIGHT } from './constants.ts';
 import { SelectProps } from './types.ts';
 
-const Select = <T,>({ defaultValue, options, width = 100, onChange }: SelectProps<T>) => {
+const Select = <T,>({ defaultValue, options, width = 110, onChange }: SelectProps<T>) => {
   const { colors } = useTheme();
 
   const triggerRef = useRef<View>(null);
@@ -28,7 +28,8 @@ const Select = <T,>({ defaultValue, options, width = 100, onChange }: SelectProp
   const optionsTitles = options.map(option => option.title);
 
   const estimatedDropdownH = useMemo(
-    () => Math.min(MAX_DROPDOWN_HEIGHT, options.length * ROW_HEIGHT + 2 * SPACING.xs),
+    () =>
+      Math.min(MAX_DROPDOWN_HEIGHT, options.length * ROW_HEIGHT + (options.length - 1) * SPACING.xs + 2 * SPACING.xs),
     [options],
   );
 
@@ -52,7 +53,7 @@ const Select = <T,>({ defaultValue, options, width = 100, onChange }: SelectProp
     },
     flatList: {
       width,
-      maxHeight: MAX_DROPDOWN_HEIGHT,
+      maxHeight: estimatedDropdownH,
     },
     flatListContainer: {
       width,
@@ -82,7 +83,7 @@ const Select = <T,>({ defaultValue, options, width = 100, onChange }: SelectProp
     <>
       <View ref={triggerRef}>
         <PressableCustom onPress={openHandler} style={[styles.pressable, computedStyles.pressable]}>
-          <TextCustom style={styles.flex1} numberOfLines={1} mode={TextModes.Caption} text={selectedOption.title} />
+          <TextCustom style={styles.flex1} numberOfLines={1} mode={TextModes.Secondary} text={selectedOption.title} />
           <TriangleIcon />
         </PressableCustom>
       </View>
@@ -100,7 +101,7 @@ const Select = <T,>({ defaultValue, options, width = 100, onChange }: SelectProp
               data={optionsTitles}
               renderItem={({ item, index }) => (
                 <PressableCustom onPress={selectOptionHandler(index)}>
-                  <TextCustom mode={TextModes.Caption} text={item} />
+                  <TextCustom mode={TextModes.Secondary} text={item} />
                 </PressableCustom>
               )}
             />
@@ -129,8 +130,7 @@ const styles = StyleSheet.create({
     boxShadow: BOX_SHADOW.strong,
   },
   flatListContainer: {
-    gap: SPACING.xxs,
-    maxHeight: MAX_DROPDOWN_HEIGHT,
+    gap: SPACING.xs,
     borderRadius: RADIUS.small,
     padding: SPACING.xs,
   },

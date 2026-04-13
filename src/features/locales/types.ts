@@ -127,6 +127,10 @@ export type Translations = {
     splashText: string;
     signInButton: string;
     signUpButton: string;
+    agreement: string;
+    termsOfService: string;
+    privacyPolicy: string;
+    and: string;
     signIn: {
       header: string;
       subheader: string;
@@ -186,8 +190,8 @@ export type Translations = {
     account: string;
     pushNotifications: string;
     termsOfService: string;
-    legalInformation: string;
     privacyPolicy: string;
+    legalInformation: string;
     protectYourData: string;
     getHelp: string;
     theme: string;

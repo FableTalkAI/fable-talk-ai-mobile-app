@@ -108,6 +108,7 @@ const ChatListScreen = () => {
               avatarSource={item.agentInfo.avatarUrl}
               agentName={item.agentInfo.name}
               lastMessage={item.lastMessage}
+              agentAccessLevel={item.agentInfo.accessLevel}
               onPress={onChatOpenHandler(
                 item.agentInfo.id,
                 item.agentInfo.accessLevel === AgentAccessLevel.Premium,

@@ -130,6 +130,10 @@ const uk: Translations = {
     splashText: 'Просто\nПочни Чат',
     signInButton: 'Увійти',
     signUpButton: 'Створити',
+    agreement: 'Реєструючись у FableTalkAI, ви погоджуєтеся з нашими',
+    termsOfService: ' Умовами обслуговування',
+    and: ' та ',
+    privacyPolicy: 'Політикою конфіденційності',
     signIn: {
       header: 'Вхід',
       subheader: 'Будь ласка, увійдіть, щоб продовжити',

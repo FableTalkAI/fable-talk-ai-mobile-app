@@ -13,7 +13,12 @@ const Send = (props: SendPropsBase<IMessage>) => {
   const { selectedChat } = useChatStore();
 
   return (
-    <GiftedChatSend {...props} isSendButtonAlwaysVisible={!selectedChat?.isSending} containerStyle={[styles.send]}>
+    <GiftedChatSend
+      {...props}
+      sendButtonProps={{ enabled: !selectedChat?.isSending }}
+      isSendButtonAlwaysVisible={!selectedChat?.isSending}
+      containerStyle={[styles.send]}
+    >
       <Animated.View entering={FadeIn} exiting={FadeOut}>
         <SendButtonIcon fill={colors.iconPrimary} />
       </Animated.View>
