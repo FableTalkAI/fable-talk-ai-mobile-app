@@ -7,4 +7,6 @@ declare module '@env' {
   export const AGENTS_ROUTE: string;
   export const CONTACT_US_ROUTE: string;
   export const NOTIFICATIONS_ROUTE: string;
+  export const APPODEAL_IOS_KEY: string;
+  export const APPODEAL_ANDROID_KEY: string;
 }

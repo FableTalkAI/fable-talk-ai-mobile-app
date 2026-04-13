@@ -1,3 +1,6 @@
+source 'https://github.com/appodeal/CocoaPods.git'
+source 'https://github.com/CocoaPods/Specs.git'
+
 # Resolve react_native_pods.rb with node to allow for hoisting
 def node_require(script)
   # Resolve script with node to allow for hoisting
@@ -25,15 +28,42 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+def appodeal_pods
+   pod 'Appodeal', '3.10.0'
+   pod 'APDAdjustAdapter', '3.10.0.0'
+   pod 'APDAmazonAdapter', '3.10.0.0'
+   pod 'APDAppLovinAdapter', '3.10.0.0'
+   pod 'APDAppLovinMAXAdapter', '3.10.0.0'
+   pod 'APDAppsFlyerAdapter', '3.10.0.0'
+   pod 'APDBidMachineAdapter', '3.10.0.0'
+   pod 'APDBidonAdapter', '3.10.0.0'
+   pod 'APDBigoAdsAdapter', '3.10.0.0'
+   pod 'APDDTExchangeAdapter', '3.10.0.0'
+   pod 'APDFacebookAdapter', '3.10.0.0'
+   pod 'APDGoogleAdMobAdapter', '3.10.0.0'
+   pod 'APDIABAdapter', '3.10.0.0'
+   pod 'APDInMobiAdapter', '3.10.0.0'
+   pod 'APDIronSourceAdapter', '3.10.0.0'
+   pod 'APDLevelPlayAdapter', '3.10.0.0'
+   pod 'APDMetaAudienceNetworkAdapter', '3.10.0.0'
+   pod 'APDMintegralAdapter', '3.10.0.0'
+   pod 'APDMyTargetAdapter', '3.10.0.0'
+   pod 'APDUnityAdapter', '3.10.0.0'
+   pod 'APDVungleAdapter', '3.10.0.0'
+end
+
 target 'FableTalkAI' do
   config = use_native_modules!
+
+  use_frameworks! :linkage => :static
+  $RNFirebaseAsStaticFramework = true
+  use_modular_headers!
 
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
   pod 'Firebase/Messaging'
 
-  use_frameworks! :linkage => :static
-  $RNFirebaseAsStaticFramework = true
+  appodeal_pods
 
   use_react_native!(
     :path => config[:reactNativePath],

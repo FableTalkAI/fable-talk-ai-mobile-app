@@ -16,6 +16,7 @@ import { persistor, store } from '@/app/store';
 import { useLayoutEffect } from 'react';
 import OverlayProvider from '@/app/providers/OverlayProvider';
 import NavigationProvider from '@/app/providers/NavigationProvider/index.tsx';
+import AdsProvider from '@/app/providers/AdsProvider';
 
 Sentry.init({
   dsn: 'https://4ffe32896b7fe3269b6f735bd476bbca@o4510449626578944.ingest.de.sentry.io/4510449632411728',
@@ -49,7 +50,9 @@ function App() {
                 <NavigationProvider>
                   <OverlayProvider>
                     <InitialSetup>
-                      <RootNavigator />
+                      <AdsProvider>
+                        <RootNavigator />
+                      </AdsProvider>
                     </InitialSetup>
                   </OverlayProvider>
                 </NavigationProvider>
