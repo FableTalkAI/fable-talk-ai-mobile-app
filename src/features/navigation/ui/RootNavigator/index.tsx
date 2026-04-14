@@ -38,7 +38,7 @@ const RootNavigator = () => {
         initialRouteName={getInitialRouteName()}
         screenOptions={{ headerShown: false, animation: IS_IOS ? 'default' : 'fade' }}
       >
-        <Stack.Screen options={{}} name="AuthStack" component={AuthStack} />
+        <Stack.Screen name="AuthStack" component={AuthStack} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="TabBarNavigator" component={TabBarNavigator} />
         <Stack.Screen name="SearchScreen" component={SearchScreen} />

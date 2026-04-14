@@ -37,7 +37,9 @@ Sentry.init({
 });
 
 function App() {
-  useLayoutEffect(() => StatusBar.setTranslucent(true), []);
+  useLayoutEffect(() => {
+    StatusBar.setTranslucent(true);
+  }, []);
 
   return (
     <FirebaseProvider>

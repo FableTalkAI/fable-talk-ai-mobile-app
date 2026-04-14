@@ -17,12 +17,12 @@ const Tab = createBottomTabNavigator<TabBarNavigatorParamList>();
 const Index = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const insets = useSafeAreaInsets();
+  const { bottom } = useSafeAreaInsets();
 
   const computedStyles = StyleSheet.create({
     tabBar: {
       backgroundColor: colors.backgroundBase,
-      height: insets.bottom === 0 ? 70 : 90,
+      height: bottom === 0 ? 70 : 90,
     },
   });
 

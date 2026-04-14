@@ -201,6 +201,7 @@ const styles = StyleSheet.create({
   continueWithContainer: {
     alignItems: 'center',
     paddingTop: SPACING.m,
+    paddingBottom: SPACING.s,
     gap: SPACING.xs,
   },
   buttonAndTextContainer: {
