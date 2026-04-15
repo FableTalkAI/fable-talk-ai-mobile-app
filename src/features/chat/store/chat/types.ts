@@ -70,6 +70,7 @@ export type SendMessageResponse = {
 export type SendMessageRequest = {
   message: string;
   agentId: string;
+  isPremium: boolean;
 };
 
 export type UpdateChatListLastMessage = {

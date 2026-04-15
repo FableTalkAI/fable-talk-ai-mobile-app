@@ -64,7 +64,7 @@ export const loadMoreMessages = (agentId: string) => async (dispatch: AppDispatc
 
 export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessageRequest>(
   `${chatSliceName}/sendMessage`,
-  async ({ message, agentId }, { getState, dispatch, rejectWithValue }) => {
+  async ({ message, agentId, isPremium }, { getState, dispatch, rejectWithValue }) => {
     try {
       const profile = getState().profile.profile;
       const profileLimits = getState().profile.limits;
@@ -86,7 +86,7 @@ export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessag
 
       const response = await http.put(
         `${CHAT_ROUTE}/`,
-        { lastMessage: userMessage, agentInfo: chatData.agentInfo, limits: profileLimits, deviceId },
+        { lastMessage: userMessage, agentInfo: chatData.agentInfo, limits: profileLimits, deviceId, isPremium },
         {
           params: { chatId: chatData.chatId },
         },

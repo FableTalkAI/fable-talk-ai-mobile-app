@@ -81,6 +81,7 @@ const ChatScreen = () => {
             await sendMessageHandler({
               message: m[0].text,
               agentId: selectedChat.chat.agentInfo.id,
+              isPremium,
               ...profile,
             });
           }

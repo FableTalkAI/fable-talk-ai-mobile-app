@@ -1,4 +1,3 @@
-import { BlurView } from '@react-native-community/blur';
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -39,7 +38,7 @@ const AgentBar = memo(
     onPress,
     mode = AgentBarModes.Default,
   }: AgentBarProps) => {
-    const { colors } = useTheme();
+    const { colors, setColorOpacity } = useTheme();
     const { t } = useTranslation();
 
     const progress = useSharedValue(0);
@@ -72,6 +71,18 @@ const AgentBar = memo(
       },
       rejectBlurWrapper: {
         borderColor: colors.errorDark,
+      },
+      onModerationBlur: {
+        backgroundColor: setColorOpacity(colors.gray70, 0.85),
+      },
+      rejectBlur: {
+        backgroundColor: setColorOpacity(colors.errorDark, 0.6),
+      },
+      onModerationText: {
+        backgroundColor: colors.gray40,
+      },
+      rejectText: {
+        backgroundColor: colors.errorDark,
       },
     });
 
@@ -134,12 +145,7 @@ const AgentBar = memo(
       if (mode === AgentBarModes.OnModeration) {
         return (
           <View style={[styles.onBlurWrapper, computedStyles.onModerationBlurWrapper, StyleSheet.absoluteFill]}>
-            <BlurView
-              reducedTransparencyFallbackColor="white"
-              blurType="light"
-              blurAmount={5}
-              style={StyleSheet.absoluteFill}
-            />
+            <View style={[StyleSheet.absoluteFill, computedStyles.onModerationBlur]} />
 
             <View style={styles.blurContainer}>
               <Animated.View style={animatedGearStyle}>
@@ -147,9 +153,11 @@ const AgentBar = memo(
               </Animated.View>
 
               <TextCustom
+                numberOfLines={1}
+                adjustsFontSizeToFit
                 mode={TextModes.Base}
-                style={styles.textBlur}
-                textColor={colors.textPrimary}
+                style={[styles.textBlur, computedStyles.onModerationText]}
+                textColor={colors.textLight}
                 text={t('home.onModeration')}
               />
             </View>
@@ -164,24 +172,19 @@ const AgentBar = memo(
             containerStyle={[StyleSheet.absoluteFill]}
             style={[styles.onBlurWrapper, computedStyles.rejectBlurWrapper]}
           >
-            <BlurView
-              reducedTransparencyFallbackColor="white"
-              blurType="light"
-              blurAmount={5}
-              style={StyleSheet.absoluteFill}
-            />
+            <View style={[StyleSheet.absoluteFill, computedStyles.rejectBlur]} />
 
             <View style={styles.blurContainer}>
-              <View style={[StyleSheet.absoluteFill, { backgroundColor: colors.errorLight }]} />
-
               <Animated.View style={animatedWarningStyle}>
                 <WarningTriangleIcon style={styles.warningIcon} width={50} height={50} fill={colors.warningBase} />
               </Animated.View>
 
               <TextCustom
+                numberOfLines={1}
+                adjustsFontSizeToFit
                 mode={TextModes.Base}
-                style={styles.textBlur}
-                textColor={colors.textPrimary}
+                style={[styles.textBlur, computedStyles.rejectText]}
+                textColor={colors.textLight}
                 text={t('home.needEdit')}
               />
             </View>
@@ -193,13 +196,16 @@ const AgentBar = memo(
     }, [
       animatedGearStyle,
       animatedWarningStyle,
-      colors.errorLight,
       colors.premium,
-      colors.textPrimary,
+      colors.textLight,
       colors.warningBase,
+      computedStyles.onModerationBlur,
       computedStyles.onModerationBlurWrapper,
+      computedStyles.onModerationText,
       computedStyles.primaryAgentIcon,
+      computedStyles.rejectBlur,
       computedStyles.rejectBlurWrapper,
+      computedStyles.rejectText,
       mode,
       onPress,
       t,
@@ -304,6 +310,8 @@ const styles = StyleSheet.create({
   textBlur: {
     fontWeight: 600,
     textAlign: 'center',
+    paddingVertical: SPACING.xxs,
+    width: '100%',
   },
   name: {
     textAlign: 'center',

@@ -1,4 +1,3 @@
-import { BlurView } from '@react-native-community/blur';
 import { useMemo, useRef } from 'react';
 import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
@@ -63,6 +62,9 @@ const TabToggle = ({
     slider: {
       backgroundColor: colors.backgroundBase,
     },
+    activeButton: {
+      backgroundColor: theme === Theme.Dark ? colors.gray90 : colors.backgroundBase,
+    },
   });
 
   const animatedSliderStyle = useAnimatedStyle(() => {
@@ -105,7 +107,7 @@ const TabToggle = ({
 
         <View style={[styles.tabsWrapper, computedStyles.tabsWrapper]}>
           <Animated.View style={[styles.slider, computedStyles.slider, animatedSliderStyle]}>
-            <BlurView blurType={theme === Theme.Dark ? 'dark' : 'light'} style={StyleSheet.absoluteFill} />
+            <View style={[StyleSheet.absoluteFill, computedStyles.activeButton]} />
           </Animated.View>
 
           {tabs.map((tab, i) => {
