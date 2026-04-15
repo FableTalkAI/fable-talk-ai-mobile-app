@@ -23,7 +23,7 @@ const Header = ({ title, onPress, style, rightIcon }: HeaderProps) => {
 
   return (
     <View style={[styles.container, computedStyles.container, style]}>
-      <PressableCustom containerStyle={styles.side} onPress={onPress ?? navigation.goBack} hitSlop={10}>
+      <PressableCustom containerStyle={styles.side} onPress={onPress ?? navigation.goBack} hitSlop={15}>
         <ArrowForwardIcon style={styles.arrow} fill={colors.iconPrimary} />
       </PressableCustom>
 
@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: SPACING.m,
   },
   side: {
     minWidth: 12,

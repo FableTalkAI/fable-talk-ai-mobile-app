@@ -23,7 +23,7 @@ const ModalCustom = ({ children, title, description }: ModalCustomProps) => {
   });
 
   return (
-    <Modal animationType="fade" visible transparent>
+    <Modal animationType="fade" visible transparent statusBarTranslucent>
       <SafeAreaViewCustom isTransparent style={styles.wrapper}>
         <Pressable onPress={closeModal} style={[StyleSheet.absoluteFill, styles.overlay]} />
 

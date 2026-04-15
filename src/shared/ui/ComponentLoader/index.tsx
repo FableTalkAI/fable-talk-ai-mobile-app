@@ -2,16 +2,17 @@ import { StyleSheet } from 'react-native';
 import { Chase } from 'react-native-animated-spinkit';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
+import { Theme } from '@/features/profile/store/user/types.ts';
 import useTheme from '@/shared/hooks/useTheme.ts';
 
 import { ComponentLoaderProps } from './types.ts';
 
 const ComponentLoader = ({ isVisible }: ComponentLoaderProps) => {
-  const { colors, setColorOpacity } = useTheme();
+  const { colors, setColorOpacity, theme } = useTheme();
 
   const computedStyles = StyleSheet.create({
     loadingContainer: {
-      backgroundColor: setColorOpacity(colors.grayDisabled, 0.7),
+      backgroundColor: setColorOpacity(theme === Theme.Dark ? colors.gray80 : colors.grayDisabled, 0.7),
     },
   });
 

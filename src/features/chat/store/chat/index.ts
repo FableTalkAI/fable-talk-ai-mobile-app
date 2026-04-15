@@ -140,10 +140,10 @@ const chatSlice = createSlice({
         if (state.chatsEntities[id]) state.chatsEntities[id].isSending = true;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
-        const id = action.meta.arg.agentId;
+        const { agentId: id, isPremium } = action.meta.arg;
         const { limits, ...answer } = action.payload;
 
-        if (limits) {
+        if (limits && !isPremium) {
           const remainingMessages = limits?.limit - limits?.count;
 
           if (remainingMessages === 5 || remainingMessages === 1) {

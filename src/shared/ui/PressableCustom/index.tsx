@@ -45,7 +45,9 @@ const PressableCustom = ({
         entering={withEnteringAnimation ? FadeIn : undefined}
         exiting={withExitingAnimation ? FadeOut : undefined}
       >
-        <Animated.View style={[animatedStyle, style]}>{children}</Animated.View>
+        <Animated.View needsOffscreenAlphaCompositing style={[animatedStyle, style]}>
+          {children}
+        </Animated.View>
       </Animated.View>
     </Pressable>
   );

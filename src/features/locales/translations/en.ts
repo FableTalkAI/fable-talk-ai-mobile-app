@@ -131,6 +131,10 @@ const en: Translations = {
     splashText: 'Just Start\nChatting',
     signInButton: 'Sign In',
     signUpButton: 'Sign Up',
+    agreement: 'By signing up to FableTalkAI, you agree to our',
+    termsOfService: ' Terms of Service',
+    and: ' and ',
+    privacyPolicy: 'Privacy Policy',
     signIn: {
       header: 'Login',
       subheader: 'Please login to continue',

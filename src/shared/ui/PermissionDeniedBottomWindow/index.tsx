@@ -19,6 +19,8 @@ const PermissionDeniedBottomWindow = ({ close }: PermissionDeniedBottomWindowPro
         onPress: close,
       }}
       secondButtonProps={{
+        adjustsFontSizeToFit: true,
+        numberOfLines: 1,
         title: t('common.settings'),
         mode: ButtonModes.Link,
         onPress: () => {
