@@ -278,6 +278,12 @@ const en: Translations = {
     empty: 'Required field',
   },
 
+  update: {
+    title: 'New Version Available',
+    description: 'A new version of the app is available. Update now to get the latest features and improvements',
+    button: 'Update Now',
+  },
+
   serverResponses: {
     emailOrNameRequired: 'Email or name not valid',
     messageRequired: 'Please, enter the message!',
@@ -300,6 +306,7 @@ const en: Translations = {
     agentRequired: 'Agent information is missing or invalid',
     agentAlreadyExists: 'An agent with this name already exists',
     agentIdRequired: 'Agent id is required',
+    undefined: 'Oops, something went wrong, try again later',
   },
 };
 

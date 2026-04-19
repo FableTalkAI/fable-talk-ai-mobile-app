@@ -12,6 +12,7 @@ const PressableCustom = ({
   disabled,
   withEnteringAnimation = true,
   withExitingAnimation = true,
+  needsOffscreenAlphaCompositing = true,
   ...pressableProps
 }: PressableCustomProps) => {
   const opacity = useSharedValue(1);
@@ -45,7 +46,7 @@ const PressableCustom = ({
         entering={withEnteringAnimation ? FadeIn : undefined}
         exiting={withExitingAnimation ? FadeOut : undefined}
       >
-        <Animated.View needsOffscreenAlphaCompositing style={[animatedStyle, style]}>
+        <Animated.View needsOffscreenAlphaCompositing={needsOffscreenAlphaCompositing} style={[animatedStyle, style]}>
           {children}
         </Animated.View>
       </Animated.View>

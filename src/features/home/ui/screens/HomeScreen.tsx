@@ -76,7 +76,7 @@ const HomeScreen = () => {
             </PressableCustom>
           }
           rightIcon={
-            <PressableCustom onPress={openSearchFilterBottomWindow}>
+            <PressableCustom needsOffscreenAlphaCompositing={false} onPress={openSearchFilterBottomWindow}>
               <FilterIcon width={24} />
 
               {!!filter.tags.length && (

@@ -22,7 +22,7 @@ const SafeAreaViewCustom = ({
   const computedStyles = StyleSheet.create({
     container: {
       paddingHorizontal: withHorizontalPadding ? SPACING.xl : 0,
-      paddingTop: top > SPACING.lg ? 0 : SPACING.xs,
+      paddingTop: top > SPACING.lg ? SPACING.xxs : SPACING.xs,
       paddingBottom: bottom > SPACING.m || !withBottomPadding ? 0 : SPACING.m,
       backgroundColor: isTransparent || withGradientBackground ? 'transparent' : colors.backgroundBase,
     },

@@ -275,6 +275,12 @@ const uk: Translations = {
     empty: "Обов'язкове поле",
   },
 
+  update: {
+    title: 'Доступна Нова Версія',
+    description: 'Доступна нова версія додатка. Оновіть зараз, щоб отримати останні функції та покращення',
+    button: 'Оновити Зараз',
+  },
+
   serverResponses: {
     emailOrNameRequired: "Електронна адреса або ім'я недійсні",
     messageRequired: 'Будь ласка, введіть повідомлення!',
@@ -297,6 +303,7 @@ const uk: Translations = {
     agentRequired: 'Дані агента обов’язкові для заповнення',
     agentAlreadyExists: 'Агент з таким ім’ям уже існує',
     agentIdRequired: 'Айді Агента обов`язкове',
+    undefined: 'Ой, щось пішло не так, спробуйте ще раз пізніше',
   },
 };
 
