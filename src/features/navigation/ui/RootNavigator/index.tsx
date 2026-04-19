@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar } from 'react-native';
+import { SystemBars } from 'react-native-edge-to-edge';
 
 import CreateAgentScreen from '@/features/agents/ui/screens/CreateAgentScreen.tsx';
 import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
@@ -9,6 +9,7 @@ import AuthStack from '@/features/navigation/ui/AuthStack';
 import SettingsStack from '@/features/navigation/ui/SettingsStack';
 import TabBarNavigator from '@/features/navigation/ui/TabBarNavigator';
 import OnboardingScreen from '@/features/onboarding/ui/screens/OnboardingScreen';
+import AppUpdateStub from '@/features/overlay/ui/screens/AppUpdateStub.tsx';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { Theme } from '@/features/profile/store/user/types.ts';
 import SubscriptionsScreen from '@/features/subscriptions/ui/screens/SubscriptionsScreen';
@@ -32,13 +33,14 @@ const RootNavigator = () => {
 
   return (
     <>
-      <StatusBar backgroundColor="transparent" barStyle={theme === Theme.Dark ? 'light-content' : 'dark-content'} />
+      <SystemBars hidden={{ navigationBar: true }} style={theme === Theme.Dark ? 'light' : 'dark'} />
 
       <Stack.Navigator
         initialRouteName={getInitialRouteName()}
         screenOptions={{ headerShown: false, animation: IS_IOS ? 'default' : 'fade' }}
       >
         <Stack.Screen name="AuthStack" component={AuthStack} />
+        <Stack.Screen name="AppUpdateStub" component={AppUpdateStub} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="TabBarNavigator" component={TabBarNavigator} />
         <Stack.Screen name="SearchScreen" component={SearchScreen} />

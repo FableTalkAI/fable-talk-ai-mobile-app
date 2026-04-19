@@ -253,6 +253,12 @@ export type Translations = {
     empty: string;
   };
 
+  update: {
+    title: string;
+    description: string;
+    button: string;
+  };
+
   serverResponses: {
     emailOrNameRequired: string;
     messageRequired: string;
@@ -275,5 +281,6 @@ export type Translations = {
     agentRequired: string;
     agentAlreadyExists: string;
     agentIdRequired: string;
+    undefined: string;
   };
 };

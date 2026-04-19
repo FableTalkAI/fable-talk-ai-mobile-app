@@ -13,7 +13,6 @@ import * as Sentry from '@sentry/react-native';
 import { toastConfig } from '@/features/overlay/lib/toastConfig';
 import RootNavigator from '@/features/navigation/ui/RootNavigator';
 import { persistor, store } from '@/app/store';
-import { useLayoutEffect } from 'react';
 import OverlayProvider from '@/app/providers/OverlayProvider';
 import NavigationProvider from '@/app/providers/NavigationProvider/index.tsx';
 
@@ -37,10 +36,6 @@ Sentry.init({
 });
 
 function App() {
-  useLayoutEffect(() => {
-    StatusBar.setTranslucent(true);
-  }, []);
-
   return (
     <FirebaseProvider>
       <Provider store={store}>

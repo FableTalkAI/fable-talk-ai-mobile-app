@@ -1826,35 +1826,6 @@ PODS:
     - React-RCTFBReactNativeSpec
     - ReactCommon/turbomodule/core
     - SocketRocket
-  - react-native-blur (4.4.1):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-hermes
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
   - react-native-image-picker (8.2.1):
     - boost
     - DoubleConversion
@@ -3238,7 +3209,6 @@ DEPENDENCIES:
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
-  - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-keyboard-controller (from `../node_modules/react-native-keyboard-controller`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -3412,8 +3382,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon"
   React-microtasksnativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
-  react-native-blur:
-    :path: "../node_modules/@react-native-community/blur"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
   react-native-keyboard-controller:
@@ -3590,7 +3558,6 @@ SPEC CHECKSUMS:
   React-logger: 2f0d40bc8e648fbb1ff3b6580ad54189a8753290
   React-Mapbuffer: 3b48876922305e68e849b6a3101edfd202cb2ded
   React-microtasksnativemodule: b3bb72ff82cdcfd534733ccf7b16f282d5878aa4
-  react-native-blur: 92cc889e5515dcb0746d5a24207a28eea2f6bb65
   react-native-image-picker: e479ec8884df9d99a62c1f53f2307055ad43ea85
   react-native-keyboard-controller: 1c6c5e267c107b5c0658dbbd6833fc58670d02f4
   react-native-safe-area-context: 27bf762a7eab51f9b36f07088ded6921e73fbc30

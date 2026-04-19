@@ -4,7 +4,7 @@ import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
@@ -21,9 +21,9 @@ import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { TrashBinIcon } from '@/shared/assets/icons';
 import { useAppDispatch } from '@/shared/hooks/reduxHooks.ts';
 import useTheme from '@/shared/hooks/useTheme.ts';
-import { SPACING } from '@/shared/model/sizes.ts';
 import Header from '@/shared/ui/Header';
 import PressableCustom from '@/shared/ui/PressableCustom';
+import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 import ScreenLoader from '@/shared/ui/ScreenLoader';
 
 dayjs.extend(calendar);
@@ -32,7 +32,7 @@ const ChatScreen = () => {
   const { colors } = useTheme();
   const { t, i18n } = useTranslation();
   const { navigation } = useNavigationRoutes();
-  const { top, bottom } = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
 
   const { selectedChat, sendMessageHandler, chats } = useChatStore();
@@ -56,8 +56,6 @@ const ChatScreen = () => {
   const computedStyles = StyleSheet.create({
     container: {
       backgroundColor: colors.backgroundTertiary,
-      paddingTop: top > SPACING.m ? 0 : SPACING.m,
-      paddingBottom: bottom > SPACING.m ? 0 : SPACING.m,
     },
   });
 
@@ -125,7 +123,7 @@ const ChatScreen = () => {
   if (!selectedChat || selectedChat.chat === null || !profile) return null;
 
   return (
-    <SafeAreaView style={[computedStyles.container, styles.container]}>
+    <SafeAreaViewCustom withHorizontalPadding={false} style={computedStyles.container}>
       {selectedChat.isLoading && !selectedChat?.chat?.chatId && !selectedChat?.chat?.agentInfo.id ? (
         <ScreenLoader isLoading />
       ) : (
@@ -141,7 +139,7 @@ const ChatScreen = () => {
               },
               isInfiniteScrollEnabled: true,
             }}
-            keyboardAvoidingViewProps={{ keyboardVerticalOffset: 78 + bottom }}
+            keyboardAvoidingViewProps={{ keyboardVerticalOffset: 56 + top }}
             messages={selectedChat.messageHistory as IMessage[]}
             onSend={chatMessages => onSend(chatMessages)}
             renderAvatar={props => <ChatAvatar {...props} />}
@@ -171,14 +169,8 @@ const ChatScreen = () => {
           />
         </>
       )}
-    </SafeAreaView>
+    </SafeAreaViewCustom>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default ChatScreen;
