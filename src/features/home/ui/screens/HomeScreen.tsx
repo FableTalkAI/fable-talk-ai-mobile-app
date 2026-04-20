@@ -63,7 +63,12 @@ const HomeScreen = () => {
 
   return (
     <>
-      <SafeAreaViewCustom withBottomPadding={false} withHorizontalPadding={false} withGradientBackground>
+      <SafeAreaViewCustom
+        edges={['top']}
+        withBottomPadding={false}
+        withHorizontalPadding={false}
+        withGradientBackground
+      >
         <TabToggle
           leftIcon={
             <PressableCustom onPress={() => navigation.navigate('SearchScreen')}>
@@ -96,7 +101,7 @@ const HomeScreen = () => {
               name: t('home.all'),
               content: (
                 <AgentList
-                  data={[...agents, ...agents]}
+                  data={agents}
                   isLoading={isLoading.agents}
                   isRefreshing={isRefreshingAgents}
                   hasMore={agentsPagination.hasMore}

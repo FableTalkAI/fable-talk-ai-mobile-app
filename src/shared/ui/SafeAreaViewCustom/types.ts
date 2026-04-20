@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
-import { SafeAreaViewProps } from 'react-native-safe-area-context';
+import { Edge } from 'react-native-safe-area-context';
 
 export type SafeAreaViewCustomProps = {
   children: ReactNode;
@@ -9,4 +9,5 @@ export type SafeAreaViewCustomProps = {
   withHorizontalPadding?: boolean;
   withBottomPadding?: boolean;
   style?: StyleProp<ViewStyle>;
-} & Omit<SafeAreaViewProps, 'style'>;
+  edges?: Edge[];
+};

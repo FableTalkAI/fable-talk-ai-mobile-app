@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,16 +15,24 @@ const SafeAreaViewCustom = ({
   style,
   withHorizontalPadding = true,
   withBottomPadding = true,
-  ...safeAreaProps
+  edges = ['top', 'bottom'],
 }: SafeAreaViewCustomProps) => {
-  const { top, bottom } = useSafeAreaInsets();
+  const insets = useSafeAreaInsets();
   const { colors } = useTheme();
+
+  const { top, bottom } = useMemo(
+    () => ({
+      top: edges.includes('top') ? insets.top : 0,
+      bottom: edges.includes('bottom') ? insets.bottom : 0,
+    }),
+    [edges, insets],
+  );
 
   const computedStyles = StyleSheet.create({
     container: {
       paddingHorizontal: withHorizontalPadding ? SPACING.xl : 0,
       paddingTop: top > SPACING.lg ? top + SPACING.xxs : top + SPACING.xs,
-      paddingBottom: bottom > SPACING.m || !withBottomPadding ? 0 : bottom + SPACING.m,
+      paddingBottom: bottom > SPACING.m || !withBottomPadding ? bottom : bottom + SPACING.m,
       backgroundColor: isTransparent || withGradientBackground ? 'transparent' : colors.backgroundBase,
     },
   });
@@ -37,9 +46,7 @@ const SafeAreaViewCustom = ({
           style={styles.gradient}
         />
       )}
-      <View style={[styles.container, computedStyles.container, style]} {...safeAreaProps}>
-        {children}
-      </View>
+      <View style={[styles.container, computedStyles.container, style]}>{children}</View>
     </>
   );
 };

@@ -25,7 +25,7 @@ const ProfileScreen = () => {
   });
 
   return (
-    <SafeAreaViewCustom withHorizontalPadding={false} withGradientBackground>
+    <SafeAreaViewCustom edges={['top']} withHorizontalPadding={false} withGradientBackground>
       <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false} bounces={false}>
         <UserAvatar style={styles.avatar} />
 

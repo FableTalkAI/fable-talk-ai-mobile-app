@@ -85,7 +85,7 @@ const ChatListScreen = () => {
   }, [clear, navigation]);
 
   return (
-    <SafeAreaViewCustom withHorizontalPadding={false} withGradientBackground>
+    <SafeAreaViewCustom edges={['top']} withHorizontalPadding={false} withGradientBackground>
       <SearchInput
         style={styles.search}
         placeholder={t('searchInput.placeholder')}
