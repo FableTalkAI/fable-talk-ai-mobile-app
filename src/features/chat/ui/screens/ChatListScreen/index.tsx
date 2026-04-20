@@ -85,8 +85,13 @@ const ChatListScreen = () => {
   }, [clear, navigation]);
 
   return (
-    <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
-      <SearchInput style={styles.search} placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
+    <SafeAreaViewCustom withHorizontalPadding={false} withGradientBackground>
+      <SearchInput
+        style={styles.search}
+        placeholder={t('searchInput.placeholder')}
+        onStop={onStopHandler}
+        isDisabled={isSelectedMode}
+      />
       <MultiSelectHeader onCrossPress={clear} onBinPress={openDeleteChatBottomWindow} isVisible={isSelectedMode} />
 
       <FlatList

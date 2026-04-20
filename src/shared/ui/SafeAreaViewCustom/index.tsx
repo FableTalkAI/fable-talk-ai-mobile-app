@@ -1,6 +1,6 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import useTheme from '@/shared/hooks/useTheme.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
@@ -22,8 +22,8 @@ const SafeAreaViewCustom = ({
   const computedStyles = StyleSheet.create({
     container: {
       paddingHorizontal: withHorizontalPadding ? SPACING.xl : 0,
-      paddingTop: top > SPACING.lg ? SPACING.xxs : SPACING.xs,
-      paddingBottom: bottom > SPACING.m || !withBottomPadding ? 0 : SPACING.m,
+      paddingTop: top > SPACING.lg ? top + SPACING.xxs : top + SPACING.xs,
+      paddingBottom: bottom > SPACING.m || !withBottomPadding ? 0 : bottom + SPACING.m,
       backgroundColor: isTransparent || withGradientBackground ? 'transparent' : colors.backgroundBase,
     },
   });
@@ -37,9 +37,9 @@ const SafeAreaViewCustom = ({
           style={styles.gradient}
         />
       )}
-      <SafeAreaView style={[styles.container, computedStyles.container, style]} {...safeAreaProps}>
+      <View style={[styles.container, computedStyles.container, style]} {...safeAreaProps}>
         {children}
-      </SafeAreaView>
+      </View>
     </>
   );
 };
