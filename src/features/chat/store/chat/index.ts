@@ -113,9 +113,11 @@ const chatSlice = createSlice({
           chat.hasMore = action.payload.hasMore;
         } else {
           chat.isLoading = false;
-          chat.messageHistory = action.payload.messageHistory;
-          chat.nextCursor = action.payload.nextCursor;
-          chat.hasMore = action.payload.hasMore;
+          if (chat.messageHistory[0]?._id !== action.payload.messageHistory[0]?._id) {
+            chat.messageHistory = action.payload.messageHistory;
+            chat.nextCursor = action.payload.nextCursor;
+            chat.hasMore = action.payload.hasMore;
+          }
         }
 
         state.chatsEntities[agentId].chat = action.payload.chat;
