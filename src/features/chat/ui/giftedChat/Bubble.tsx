@@ -15,7 +15,7 @@ const Bubble = (props: BubbleProps<IMessage>) => {
       backgroundColor: colors.userBubble,
     },
     bubbleText: {
-      color: colors.textLight,
+      color: colors.textPrimary,
     },
   });
 

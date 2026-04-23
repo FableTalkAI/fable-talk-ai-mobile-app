@@ -115,8 +115,9 @@ const chatSlice = createSlice({
           chat.isLoading = false;
           if (chat.messageHistory[0]?._id !== action.payload.messageHistory[0]?._id) {
             chat.messageHistory = action.payload.messageHistory;
+            chat.nextCursor = action.payload.nextCursor;
+            chat.hasMore = action.payload.hasMore;
           }
-          chat.hasMore = action.payload.hasMore;
         }
 
         state.chatsEntities[agentId].chat = action.payload.chat;

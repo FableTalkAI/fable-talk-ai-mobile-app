@@ -57,6 +57,9 @@ const ChatScreen = () => {
     container: {
       backgroundColor: colors.backgroundTertiary,
     },
+    loadMoreButtonStyle: selectedChat?.isLoadingMore ? { display: 'flex' } : { display: `none` },
+    textTimeBubblesLeft: { color: colors.textPrimary },
+    textTimeBubblesRight: { color: colors.textPrimary },
   });
 
   const onSend = useCallback(
@@ -138,12 +141,14 @@ const ChatScreen = () => {
                 dispatch(loadMoreMessages(selectedChat.chat.agentInfo.id));
               },
               isInfiniteScrollEnabled: true,
+              containerStyle: computedStyles.loadMoreButtonStyle,
             }}
             keyboardAvoidingViewProps={{ keyboardVerticalOffset: 56 + top }}
             messages={selectedChat.messageHistory as IMessage[]}
             onSend={chatMessages => onSend(chatMessages)}
             renderAvatar={props => <ChatAvatar {...props} />}
             //@ts-ignore
+            timeTextStyle={{ left: computedStyles.textTimeBubblesLeft, right: computedStyles.textTimeBubblesRight }}
             locale={i18n.resolvedLanguage}
             isDayAnimationEnabled={false}
             dateFormatCalendar={dateFormatCalendar}

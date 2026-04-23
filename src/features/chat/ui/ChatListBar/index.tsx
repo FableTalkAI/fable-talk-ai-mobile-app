@@ -57,6 +57,7 @@ const ChatListBar = ({
         style={styles.pressableContainer}
         onLongPress={() => onLongPress?.(chatId)}
         onPress={onPress}
+        needsOffscreenAlphaCompositing={false}
       >
         <View>
           <AutoImage source={avatarSource} style={styles.avatar} resizeMode="cover" />
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   checkMark: {
     position: 'absolute',
     top: 28,
-    right: -5,
+    right: -8,
   },
 });
 

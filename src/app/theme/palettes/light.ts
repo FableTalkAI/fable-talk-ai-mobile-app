@@ -22,8 +22,8 @@ export const light: ThemeColors = {
 
   iconPrimary: '#2E2374',
 
-  agentBubble: '#343443',
-  userBubble: '#523FAE',
+  agentBubble: '#c0c0cc',
+  userBubble: '#A69BEF',
 
   premium: '#E8C563',
 };
