@@ -64,8 +64,8 @@ const HomeScreen = () => {
   return (
     <>
       <SafeAreaViewCustom
+        edges={['top']}
         withBottomPadding={false}
-        edges={['top', 'right', 'left']}
         withHorizontalPadding={false}
         withGradientBackground
       >

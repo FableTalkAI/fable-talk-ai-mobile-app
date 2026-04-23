@@ -21,7 +21,7 @@ const MultiSelectHeader = ({ isVisible, style, onBinPress, onCrossPress }: Multi
 
   const computedStyles = StyleSheet.create({
     container: {
-      top,
+      top: top + 4,
       backgroundColor: colors.backgroundBase,
       width: WINDOW_WIDTH - SPACING.xl * 2,
     },
