@@ -57,6 +57,7 @@ const ChatScreen = () => {
     container: {
       backgroundColor: colors.backgroundTertiary,
     },
+    loadMoreButtonStyle: selectedChat?.isLoadingMore ? { display: 'flex' } : { display: `none` },
   });
 
   const onSend = useCallback(
@@ -138,6 +139,7 @@ const ChatScreen = () => {
                 dispatch(loadMoreMessages(selectedChat.chat.agentInfo.id));
               },
               isInfiniteScrollEnabled: true,
+              containerStyle: computedStyles.loadMoreButtonStyle,
             }}
             keyboardAvoidingViewProps={{ keyboardVerticalOffset: 56 + top }}
             messages={selectedChat.messageHistory as IMessage[]}

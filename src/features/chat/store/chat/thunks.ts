@@ -50,9 +50,7 @@ export const getChatById = createAxiosAsyncThunk<GetChatByIdResponse, GetChatByI
 
 export const loadMoreMessages = (agentId: string) => async (dispatch: AppDispatch, getState: () => AppState) => {
   const entity = getState().chat.chatsEntities[agentId];
-
   if (!entity || entity.isLoadingMore || !entity.hasMore || !entity.nextCursor) return;
-
   await dispatch(
     getChatById({
       agentId,

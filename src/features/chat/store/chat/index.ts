@@ -113,9 +113,8 @@ const chatSlice = createSlice({
           chat.hasMore = action.payload.hasMore;
         } else {
           chat.isLoading = false;
-          if (chat.messageHistory[0]?._id !== action.payload.messageHistory[0]?._id) {
-            chat.messageHistory = action.payload.messageHistory;
-          }
+          chat.messageHistory = action.payload.messageHistory;
+          chat.nextCursor = action.payload.nextCursor;
           chat.hasMore = action.payload.hasMore;
         }
 
