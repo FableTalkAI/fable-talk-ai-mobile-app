@@ -7,12 +7,14 @@ import { Linking, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
+import useThirdPartyAuth from '@/features/auth/hooks/useThirdPartyAuth.ts';
 import { getAuthSchema } from '@/features/auth/lib/zod/schema.ts';
 import { AuthSchema } from '@/features/auth/lib/zod/types.ts';
 import { SendOtpLanguages } from '@/features/auth/store/auth/types.ts';
-import GoogleButton from '@/features/auth/ui/GoogleButton';
-import { MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/shared/assets/icons';
+import ThirdPartyAuthButton from '@/features/auth/ui/ThirdPartyAuthButton';
+import { AppleLogoIcon, GoogleLogoIcon, MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
+import { IS_IOS } from '@/shared/model/device.ts';
 import { PRIVACY_POLICY, TERMS_OF_SERVICE } from '@/shared/model/links.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Button from '@/shared/ui/Button';
@@ -31,6 +33,7 @@ const SignInUpScreen = () => {
 
   const route = useRoute<SignInUpRouteProp>();
   const { sendOtpHandler, setVerifyDataHandler, isLoading } = useAuthStore();
+  const { onGoogleButtonPress, onAppleButtonPress } = useThirdPartyAuth();
   const { mode } = route.params;
 
   const [screenMode, setScreenMode] = useState<AuthScreenMode>(mode);
@@ -152,7 +155,21 @@ const SignInUpScreen = () => {
               <View style={[styles.line, computedStyles.line]} />
             </View>
 
-            <GoogleButton isLoading={isLoading.login} />
+            <View style={styles.thirdPartyAuthContainer}>
+              <ThirdPartyAuthButton
+                onPress={onGoogleButtonPress}
+                icon={<GoogleLogoIcon />}
+                isLoading={isLoading.login}
+              />
+
+              {IS_IOS && (
+                <ThirdPartyAuthButton
+                  onPress={onAppleButtonPress}
+                  icon={<AppleLogoIcon width={34} height={34} />}
+                  isLoading={isLoading.login}
+                />
+              )}
+            </View>
           </View>
         </KeyboardAvoidingViewCustom>
 
@@ -229,6 +246,10 @@ const styles = StyleSheet.create({
   line: {
     flex: 1,
     height: 1,
+  },
+  thirdPartyAuthContainer: {
+    flexDirection: 'row',
+    gap: SPACING.xs,
   },
 });
 

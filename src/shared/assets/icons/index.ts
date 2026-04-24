@@ -1,5 +1,6 @@
 import AdIcon from './ad.svg';
 import AddAgentIcon from './add-agent.svg';
+import AppleLogoIcon from './apple-logo.svg';
 import ArrowForwardIcon from './arrow-forward.svg';
 import ArrowLinkIcon from './arrow-link.svg';
 import ArrowStickIcon from './arrow-stick.svg';
@@ -59,6 +60,7 @@ import XMarkIcon from './x-mark.svg';
 export {
   AddAgentIcon,
   AdIcon,
+  AppleLogoIcon,
   ArrowForwardIcon,
   ArrowLinkIcon,
   ArrowStickIcon,
