@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 import useAuthStore from './useAuthStore.ts';
 
 const useThirdPartyAuth = () => {
-  const { upsertGoogleHandler } = useAuthStore();
+  const { upsertThirdPartyHandler } = useAuthStore();
 
   const onGoogleButtonPress = async () => {
     await GoogleSignin.signOut();
@@ -23,7 +23,7 @@ const useThirdPartyAuth = () => {
       photo: user.photo,
     };
 
-    await upsertGoogleHandler({ data, credential });
+    await upsertThirdPartyHandler({ data, credential });
   };
 
   async function onAppleButtonPress() {
@@ -55,7 +55,7 @@ const useThirdPartyAuth = () => {
           photo: null,
         };
 
-        await upsertGoogleHandler({ data, credential });
+        await upsertThirdPartyHandler({ data, credential });
       }
     } catch (error) {
       console.error('Apple Auth Error:', error);

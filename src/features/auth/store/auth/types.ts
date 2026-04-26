@@ -29,7 +29,7 @@ export type VerifyOtpRequest = {
   name?: string;
 };
 
-export type UpsertGoogleRequest = {
+export type UpsertThirdPartyRequest = {
   credential: AuthCredential;
   data: {
     email: string;

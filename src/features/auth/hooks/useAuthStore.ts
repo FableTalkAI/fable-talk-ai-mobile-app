@@ -2,8 +2,13 @@ import { useCallback } from 'react';
 
 import { setIsLoggedIn, setVerifyData } from '@/features/auth/store/auth';
 import { isLoadingSelector, isLoggedInSelector, verifyDataSelector } from '@/features/auth/store/auth/selectors.ts';
-import { sendOtp, upsertGoogle, verifyOtp } from '@/features/auth/store/auth/thunks.ts';
-import { SendOtpRequest, UpsertGoogleRequest, VerifyData, VerifyOtpRequest } from '@/features/auth/store/auth/types.ts';
+import { sendOtp, upsertThirdParty, verifyOtp } from '@/features/auth/store/auth/thunks.ts';
+import {
+  SendOtpRequest,
+  UpsertThirdPartyRequest,
+  VerifyData,
+  VerifyOtpRequest,
+} from '@/features/auth/store/auth/types.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
@@ -56,9 +61,9 @@ const useAuthStore = () => {
     [dispatch, navigation],
   );
 
-  const upsertGoogleHandler = useCallback(
-    async (data: UpsertGoogleRequest) => {
-      const profile = await dispatch(upsertGoogle(data)).unwrap();
+  const upsertThirdPartyHandler = useCallback(
+    async (data: UpsertThirdPartyRequest) => {
+      const profile = await dispatch(upsertThirdParty(data)).unwrap();
 
       if (profile && profile.isOnboardingDone) {
         return navigation.reset({
@@ -82,7 +87,7 @@ const useAuthStore = () => {
 
     sendOtpHandler,
     verifyOtpHandler,
-    upsertGoogleHandler,
+    upsertThirdPartyHandler,
     setVerifyDataHandler,
     setIsLoggedInHandler,
   };

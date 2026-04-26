@@ -1,1 +1,4 @@
 android/app/google-services.json
+vendor/
+node_modules/
+ios/Pods/

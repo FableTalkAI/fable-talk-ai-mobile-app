@@ -3,7 +3,7 @@ import i18n from 'i18next';
 
 import { showToast } from '@/features/overlay/services/showToast.ts';
 
-import { authSliceName, sendOtp, upsertGoogle, verifyOtp } from './thunks.ts';
+import { authSliceName, sendOtp, upsertThirdParty, verifyOtp } from './thunks.ts';
 import { AuthState, VerifyData } from './types.ts';
 
 const initialState: AuthState = {
@@ -59,14 +59,14 @@ const authSlice = createSlice({
         });
       })
 
-      //upsertGoogle
-      .addCase(upsertGoogle.pending, state => {
+      //upsertThirdParty
+      .addCase(upsertThirdParty.pending, state => {
         state.loading.login = true;
       })
-      .addCase(upsertGoogle.fulfilled, state => {
+      .addCase(upsertThirdParty.fulfilled, state => {
         state.loading.login = false;
       })
-      .addCase(upsertGoogle.rejected, (state, action) => {
+      .addCase(upsertThirdParty.rejected, (state, action) => {
         state.loading.login = false;
         showToast({
           type: 'error',
