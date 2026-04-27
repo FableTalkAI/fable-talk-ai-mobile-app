@@ -7,7 +7,7 @@ import Avatar from '@/shared/ui/Avatar';
 import { UserAvatarProps } from './types.ts';
 
 const UserAvatar = ({ size = 144, isChangeable = true, style }: UserAvatarProps) => {
-  const { profile, isLoading } = useProfileStore();
+  const { profile, isLoading, userAvatarFrame } = useProfileStore();
 
   const { pickImage } = useUserAvatarPick();
 
@@ -20,6 +20,7 @@ const UserAvatar = ({ size = 144, isChangeable = true, style }: UserAvatarProps)
   return (
     <Avatar
       isLoading={isLoading.uploadAvatar}
+      frameUri={userAvatarFrame}
       uri={profile && profile.avatarUrl ? getAvatarUrl() : ''}
       onPickImage={pickImage}
       isChangeable={isChangeable}
