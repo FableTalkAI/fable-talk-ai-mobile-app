@@ -1,9 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   LayoutAnimationConfig,
-  runOnJS,
   SlideInLeft,
   SlideInRight,
   SlideOutLeft,
@@ -90,16 +88,6 @@ const TabToggle = ({
     });
   };
 
-  const pan = Gesture.Pan()
-    .activeOffsetX([-20, 20])
-    .onEnd(e => {
-      if (e.translationX < -50 && activeTab < tabs.length - 1) {
-        runOnJS(updateIndex)(activeTab + 1);
-      } else if (e.translationX > 50 && activeTab > 0) {
-        runOnJS(updateIndex)(activeTab - 1);
-      }
-    });
-
   return (
     <View style={[styles.flex1, style]}>
       <View style={styles.wrapper}>
@@ -133,13 +121,11 @@ const TabToggle = ({
         {rightIcon}
       </View>
 
-      <GestureDetector gesture={pan}>
-        <LayoutAnimationConfig skipEntering>
-          <Animated.View key={`tab-${activeTab}`} entering={entering} exiting={exiting} style={styles.flex1}>
-            {tabs[activeTab].content}
-          </Animated.View>
-        </LayoutAnimationConfig>
-      </GestureDetector>
+      <LayoutAnimationConfig skipEntering>
+        <Animated.View key={`tab-${activeTab}`} entering={entering} exiting={exiting} style={styles.flex1}>
+          {tabs[activeTab].content}
+        </Animated.View>
+      </LayoutAnimationConfig>
     </View>
   );
 };
