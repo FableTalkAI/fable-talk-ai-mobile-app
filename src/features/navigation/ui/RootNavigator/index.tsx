@@ -4,6 +4,7 @@ import { SystemBars } from 'react-native-edge-to-edge';
 import CreateAgentScreen from '@/features/agents/ui/screens/CreateAgentScreen.tsx';
 import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
 import ChatScreen from '@/features/chat/ui/screens/ChatScreen.tsx';
+import CustomizationScreen from '@/features/customization/ui/screens/CustomizationScreen.tsx';
 import SearchScreen from '@/features/home/ui/screens/SearchScreen.tsx';
 import AuthStack from '@/features/navigation/ui/AuthStack';
 import SettingsStack from '@/features/navigation/ui/SettingsStack';
@@ -46,6 +47,7 @@ const RootNavigator = () => {
         <Stack.Screen name="SearchScreen" component={SearchScreen} />
         <Stack.Screen name="CreateAgent" component={CreateAgentScreen} />
         <Stack.Screen name="Subscriptions" component={SubscriptionsScreen} />
+        <Stack.Screen name="Customization" component={CustomizationScreen} />
         <Stack.Screen name="SettingsStack" component={SettingsStack} />
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
       </Stack.Navigator>

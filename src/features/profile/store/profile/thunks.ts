@@ -53,11 +53,3 @@ export const deleteUserProfile = createAxiosAsyncThunk<MessageKey, void>(
     return response.data;
   },
 );
-
-export const getAvatarFrames = createAxiosAsyncThunk<AvatarFrames, void>(
-  `${profileSliceName}/getAvatarFrames`,
-  async () => {
-    const response = await http.get(`${PROFILE_ROUTE}/avatar-frames`);
-    return response.data;
-  },
-);

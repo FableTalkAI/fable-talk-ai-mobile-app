@@ -3,16 +3,9 @@ import { useCallback } from 'react';
 
 import { logoutUser } from '@/features/auth/services/logoutUser.ts';
 import { AllNavigationParamList } from '@/features/navigation/hooks/useNavigationRoutes/types.ts';
-import {
-  avatarFramesSelector,
-  isLoadingSelector,
-  limitsSelector,
-  profileSelector,
-  userAvatarFrameSelector,
-} from '@/features/profile/store/profile/selectors.ts';
+import { isLoadingSelector, limitsSelector, profileSelector } from '@/features/profile/store/profile/selectors.ts';
 import {
   deleteUserProfile,
-  getAvatarFrames,
   getUserProfile,
   sendSupportMessage,
   updateUserProfile,
@@ -27,8 +20,6 @@ const useProfileStore = () => {
   const isLoading = useAppSelector(isLoadingSelector);
   const profile = useAppSelector(profileSelector);
   const limits = useAppSelector(limitsSelector);
-  const avatarFrames = useAppSelector(avatarFramesSelector);
-  const userAvatarFrame = useAppSelector(userAvatarFrameSelector);
 
   const chatsLimitExceeded = limits && limits.limit === limits.count;
 
@@ -68,25 +59,18 @@ const useProfileStore = () => {
     [dispatch],
   );
 
-  const getAvatarFramesHandler = useCallback(async () => {
-    return await dispatch(getAvatarFrames()).unwrap();
-  }, [dispatch]);
-
   return {
     isLoading,
     profile,
     limits,
     chatsLimitExceeded,
     chatsLimitNeedUpdate,
-    avatarFrames,
-    userAvatarFrame,
 
     sendSupportMessageHandler,
     getUserProfileHandler,
     updateUserProfileHandler,
     uploadAvatarHandler,
     deleteUserProfileHandler,
-    getAvatarFramesHandler,
   };
 };
 

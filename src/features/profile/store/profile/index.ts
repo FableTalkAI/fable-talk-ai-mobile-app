@@ -6,7 +6,6 @@ import { showToast } from '@/features/overlay/services/showToast.ts';
 
 import {
   deleteUserProfile,
-  getAvatarFrames,
   getUserProfile,
   profileSliceName,
   sendSupportMessage,
@@ -18,20 +17,17 @@ import { ProfileState, UserLimits } from './types.ts';
 export const profilePersistConfig = {
   key: profileSliceName,
   storage: AsyncStorage,
-  whitelist: ['limits', 'userAvatarFrame'],
+  whitelist: ['limits'],
 };
 
 const initialState: ProfileState = {
   profile: null,
   limits: null,
-  userAvatarFrame: undefined,
-  avatarFrames: null,
   loading: {
     contactUs: false,
     updateProfile: false,
     uploadAvatar: false,
     deleteUserProfile: false,
-    avatarFrames: false,
   },
 };
 
@@ -41,9 +37,6 @@ const profileSlice = createSlice({
   reducers: {
     setLimits: (state, action: PayloadAction<UserLimits>) => {
       state.limits = action.payload;
-    },
-    setUserAvatarFrame: (state, action: PayloadAction<string | undefined>) => {
-      state.userAvatarFrame = action.payload;
     },
   },
   extraReducers: builder => {
@@ -126,22 +119,10 @@ const profileSlice = createSlice({
       })
       .addCase(deleteUserProfile.rejected, state => {
         state.loading.deleteUserProfile = false;
-      })
-
-      //getAvatarFrames getAvatarFrames
-      .addCase(getAvatarFrames.pending, state => {
-        state.loading.avatarFrames = true;
-      })
-      .addCase(getAvatarFrames.fulfilled, (state, action) => {
-        state.loading.avatarFrames = false;
-        state.avatarFrames = action.payload;
-      })
-      .addCase(getAvatarFrames.rejected, state => {
-        state.loading.avatarFrames = false;
       });
   },
 });
 
-export const { setLimits, setUserAvatarFrame } = profileSlice.actions;
+export const { setLimits } = profileSlice.actions;
 
 export default profileSlice.reducer;

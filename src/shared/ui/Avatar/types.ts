@@ -4,7 +4,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 export type AvatarProps = {
   size?: number;
   isChangeable?: boolean;
-  frameUri?: string;
+  frameUri: string | null;
   style?: StyleProp<ViewStyle>;
   onPickImage?: () => Promise<string | undefined>;
   uri?: string;
