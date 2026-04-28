@@ -27,7 +27,7 @@ const CustomizationScreen = () => {
     <SafeAreaViewCustom withHorizontalPadding={false}>
       <Header title={t('common.customization')} />
       <View style={styles.wrapper}>
-        <UserAvatar style={styles.avatar} />
+        <UserAvatar style={styles.avatar} isChangeable={false} />
 
         <FlatList
           data={avatarFrames?.uris || []}
