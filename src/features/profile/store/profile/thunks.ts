@@ -4,7 +4,7 @@ import { createAxiosAsyncThunk } from '@/app/store/typedCreateAsyncThunk.ts';
 import http from '@/shared/api/http.ts';
 import { convertImageToBase64 } from '@/shared/services/convertImageToBase64.ts';
 
-import { MessageKey, UpdateUserProfileRequest, User } from './types.ts';
+import { AvatarFrames, MessageKey, UpdateUserProfileRequest, User } from './types.ts';
 
 export const profileSliceName = 'profile';
 
@@ -50,6 +50,14 @@ export const deleteUserProfile = createAxiosAsyncThunk<MessageKey, void>(
   `${profileSliceName}/deleteUserProfile`,
   async () => {
     const response = await http.delete(`${PROFILE_ROUTE}`);
+    return response.data;
+  },
+);
+
+export const getAvatarFrames = createAxiosAsyncThunk<AvatarFrames, void>(
+  `${profileSliceName}/getAvatarFrames`,
+  async () => {
+    const response = await http.get(`${PROFILE_ROUTE}/avatar-frames`);
     return response.data;
   },
 );

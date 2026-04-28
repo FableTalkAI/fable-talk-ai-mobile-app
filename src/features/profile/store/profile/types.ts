@@ -1,11 +1,14 @@
 export type ProfileState = {
   profile: User | null;
   limits: UserLimits | null;
+  userAvatarFrame?: string;
+  avatarFrames: AvatarFrames | null;
   loading: {
     contactUs: boolean;
     uploadAvatar: boolean;
     updateProfile: boolean;
     deleteUserProfile: boolean;
+    avatarFrames: boolean;
   };
 };
 
@@ -36,4 +39,8 @@ export type UserLimits = {
 export type UpdateUserProfileRequest = {
   user: Partial<User>;
   showToast?: boolean;
+};
+
+export type AvatarFrames = {
+  uris: string[];
 };

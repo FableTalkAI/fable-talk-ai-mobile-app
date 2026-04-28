@@ -1,4 +1,5 @@
 import { StyleSheet, View } from 'react-native';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import { EditAvatarIcon, ImagePlusIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme.ts';
@@ -13,6 +14,7 @@ import { AvatarProps } from './types.ts';
 const Avatar = ({
   size = 144,
   isChangeable = true,
+  frameUri,
   style,
   isLoading,
   uri,
@@ -20,6 +22,11 @@ const Avatar = ({
   withEnteringAnimation = true,
 }: AvatarProps) => {
   const { colors } = useTheme();
+
+  const frameScale = 1.2;
+  const frameSize = size * frameScale;
+
+  const frameOffset = ((frameSize - size) / 2) * -1;
 
   const computedStyles = StyleSheet.create({
     container: {
@@ -49,6 +56,24 @@ const Avatar = ({
         <ComponentLoader isVisible={isLoading} />
       </View>
 
+      {frameUri && (
+        <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+          key={frameUri}
+          style={[styles.frameImage, { top: frameOffset, left: frameOffset }]}
+        >
+          <AutoImage
+            source={frameUri}
+            style={{
+              width: frameSize,
+              height: frameSize,
+            }}
+            pointerEvents="none"
+          />
+        </Animated.View>
+      )}
+
       {isChangeable && uri && (
         <PressableCustom
           containerStyle={[computedStyles.editContainer, styles.editContainer]}
@@ -67,6 +92,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: RADIUS.circle,
+    marginTop: SPACING.lg,
   },
   imageContainer: {
     width: '100%',
@@ -76,12 +102,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  frameImage: {
+    position: 'absolute',
+    zIndex: 4,
+    resizeMode: 'contain',
+  },
   editContainer: {
     width: 30,
     height: 30,
     position: 'absolute',
     bottom: 0,
     right: 10,
+    zIndex: 5,
     borderRadius: RADIUS.circle,
     paddingVertical: SPACING.xs,
     paddingLeft: SPACING.xs,

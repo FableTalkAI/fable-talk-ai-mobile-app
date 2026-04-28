@@ -1,34 +1,20 @@
 import { memo } from 'react';
-import { StyleSheet } from 'react-native';
-import FastImage from 'react-native-fast-image';
 import { AvatarProps, IMessage } from 'react-native-gifted-chat';
 
 import { getChatAvatarUri } from '@/features/chat/services/getChatAvatarUri';
+import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
+import Avatar from '@/shared/ui/Avatar/index.tsx';
 
 const ChatAvatar = memo(({ currentMessage }: AvatarProps<IMessage>) => {
   const uri = getChatAvatarUri(currentMessage);
+  const { profile, userAvatarFrame } = useProfileStore();
 
   if (!uri) return null;
 
-  return (
-    <FastImage
-      source={{
-        uri,
-        cache: FastImage.cacheControl.immutable,
-        priority: FastImage.priority.normal,
-      }}
-      style={styles.avatar}
-      resizeMode={FastImage.resizeMode.cover}
-    />
-  );
-});
+  const isMe = currentMessage?.user._id === profile?.email;
+  const frameSrc = isMe ? userAvatarFrame : undefined;
 
-const styles = StyleSheet.create({
-  avatar: {
-    width: 36,
-    height: 36,
-    borderRadius: 36 / 2,
-  },
+  return <Avatar uri={uri} size={36} isChangeable={false} frameUri={frameSrc} />;
 });
 
 export default ChatAvatar;
