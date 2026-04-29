@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
+import useCustomizationStore from '@/features/customization/hooks/useCustomizationStore.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import OptionBar from '@/features/profile/ui/OptionBar';
@@ -18,12 +19,18 @@ const ProfileScreen = () => {
   const { navigation } = useNavigationRoutes();
 
   const { isLoading } = useProfileStore();
+  const { getAvatarFramesHandler } = useCustomizationStore();
 
   const computedStyles = StyleSheet.create({
     separator: {
       backgroundColor: colors.gray20,
     },
   });
+
+  const onCustomizationNavigateHandler = () => {
+    getAvatarFramesHandler().catch(console.error);
+    navigation.navigate('Customization');
+  };
 
   return (
     <SafeAreaViewCustom edges={['top']} withHorizontalPadding={false} withGradientBackground>
@@ -41,7 +48,7 @@ const ProfileScreen = () => {
 
         <View style={styles.optionsContainer}>
           <OptionBar title={t('common.subscription')} onPress={() => navigation.navigate('Subscriptions')} />
-          <OptionBar title={t('common.customization')} onPress={() => navigation.navigate('Customization')} />
+          <OptionBar title={t('common.customization')} onPress={onCustomizationNavigateHandler} />
           <OptionBar
             title={t('common.settings')}
             onPress={() => navigation.navigate('SettingsStack', { screen: 'Settings' })}

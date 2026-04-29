@@ -25,10 +25,12 @@ const TabToggle = ({
   tabs,
   tabContainerWidth = WINDOW_WIDTH - SPACING.xl * 2,
   style,
+  buttonStyle,
   activeTab,
   onChange,
   leftIcon,
   rightIcon,
+  contentPosition = 'bottom',
 }: TabToggleProps) => {
   const { colors, theme } = useTheme();
   const tabWidth = tabContainerWidth / tabs.length;
@@ -90,7 +92,15 @@ const TabToggle = ({
 
   return (
     <View style={[styles.flex1, style]}>
-      <View style={styles.wrapper}>
+      {contentPosition === 'top' && (
+        <LayoutAnimationConfig skipEntering>
+          <Animated.View key={`tab-${activeTab}`} entering={entering} exiting={exiting} style={styles.flex1}>
+            {tabs[activeTab].content}
+          </Animated.View>
+        </LayoutAnimationConfig>
+      )}
+
+      <View style={[styles.wrapper, buttonStyle]}>
         {leftIcon}
 
         <View style={[styles.tabsWrapper, computedStyles.tabsWrapper]}>
@@ -121,11 +131,13 @@ const TabToggle = ({
         {rightIcon}
       </View>
 
-      <LayoutAnimationConfig skipEntering>
-        <Animated.View key={`tab-${activeTab}`} entering={entering} exiting={exiting} style={styles.flex1}>
-          {tabs[activeTab].content}
-        </Animated.View>
-      </LayoutAnimationConfig>
+      {contentPosition === 'bottom' && (
+        <LayoutAnimationConfig skipEntering>
+          <Animated.View key={`tab-${activeTab}`} entering={entering} exiting={exiting} style={styles.flex1}>
+            {tabs[activeTab].content}
+          </Animated.View>
+        </LayoutAnimationConfig>
+      )}
     </View>
   );
 };

@@ -1,53 +1,50 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
 
-import useCustomizationStore from '@/features/customization/hooks/useCustomizationStore.ts';
-import AvatarSelectorItem from '@/features/customization/ui/AvatarSelectorItem';
-import useBottomWindow from '@/features/overlay/hooks/useBottomWindow.ts';
-import UserAvatar from '@/features/profile/ui/UserAvatar';
-import Button from '@/shared/ui/Button';
+import AvatarFrameCustomize from '@/features/customization/ui/AvatarFrameCustomize';
+import { ChatGearIcon, UserGearIcon } from '@/shared/assets/icons';
+import useTheme from '@/shared/hooks/useTheme.ts';
+import { SPACING } from '@/shared/model/sizes.ts';
 import Header from '@/shared/ui/Header';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
+import TabToggle from '@/shared/ui/TabToggle';
 
 const CustomizationScreen = () => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
 
-  const { avatarFrames, setUserAvatarFrameHandler, getAvatarFramesHandler } = useCustomizationStore();
-
-  const openAvatarFrameBottomWindow = () => {
-    getAvatarFramesHandler().catch(console.error);
-  };
-
-  const onApply = (uri: string) => () => {
-    setUserAvatarFrameHandler(uri);
-  };
+  const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <SafeAreaViewCustom withHorizontalPadding={false}>
+    <SafeAreaViewCustom>
       <Header title={t('common.customization')} />
-      <View style={styles.wrapper}>
-        <UserAvatar style={styles.avatar} isChangeable={false} />
 
-        <FlatList
-          data={avatarFrames?.uris || []}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={({ item }) => <AvatarSelectorItem item={item} onPress={onApply(item)} />}
-        />
-        <Button title="few" onPress={openAvatarFrameBottomWindow} />
-      </View>
+      <TabToggle
+        contentPosition="top"
+        activeTab={activeTab}
+        onChange={setActiveTab}
+        buttonStyle={styles.buttonStyle}
+        tabs={[
+          {
+            name: 'Avatar',
+            icon: <UserGearIcon fill={colors.iconPrimary} />,
+            content: <AvatarFrameCustomize />,
+          },
+          {
+            name: 'Chat',
+            icon: <ChatGearIcon fill={colors.iconPrimary} />,
+            content: <AvatarFrameCustomize />,
+          },
+        ]}
+      />
     </SafeAreaViewCustom>
   );
 };
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  avatar: {
-    alignSelf: 'center',
+  buttonStyle: {
+    marginTop: SPACING.m,
   },
 });
 
