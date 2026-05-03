@@ -6,12 +6,13 @@ import { InputToolbarProps as InputToolbarPropsBase } from 'react-native-gifted-
 import Animated, { FadeIn } from 'react-native-reanimated';
 
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
+import { UseThemeParams } from '@/shared/hooks/useTheme/types.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import AutoImage from '@/shared/ui/AutoImage';
 
-const InputToolbar = (props: InputToolbarPropsBase<IMessage>) => {
-  const { colors } = useTheme();
+const InputToolbar = ({ themeMode, ...props }: InputToolbarPropsBase<IMessage> & UseThemeParams) => {
+  const { colors } = useTheme({ themeMode });
   const { selectedChat } = useChatStore();
 
   const computedStyles = StyleSheet.create({

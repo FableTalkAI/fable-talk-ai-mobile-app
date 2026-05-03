@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import useModal from '@/features/overlay/hooks/useModal.ts';
 import { XMarkIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';

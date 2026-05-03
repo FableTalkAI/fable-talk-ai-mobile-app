@@ -4,10 +4,11 @@ import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import useCustomizationStore from '@/features/customization/hooks/useCustomizationStore.ts';
-import AvatarFrameItem from '@/features/customization/ui/AvatarFrameItem';
 import UserAvatar from '@/features/profile/ui/UserAvatar';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import Skeleton from '@/shared/ui/Skeleton';
+
+import AvatarFrameItem from './AvatarFrameItem';
 
 const AvatarFrameCustomize = () => {
   const flatListRef = useRef<FlatList>(null);

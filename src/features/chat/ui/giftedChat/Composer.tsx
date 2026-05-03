@@ -2,21 +2,27 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { ComposerProps } from 'react-native-gifted-chat';
 
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
+import { UseThemeParams } from '@/shared/hooks/useTheme/types.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import TextInputCustom from '@/shared/ui/TextInputCustom';
+import { TextInputCustomProps } from '@/shared/ui/TextInputCustom/types.ts';
 
-const Composer = ({ text, textInputProps, ...props }: ComposerProps) => {
-  const { colors } = useTheme();
+const Composer = ({
+  text,
+  textInputProps,
+  style,
+  wrapperStyle,
+  themeMode,
+  ...props
+}: ComposerProps & TextInputCustomProps & UseThemeParams) => {
+  const { colors } = useTheme({ themeMode });
   const { t } = useTranslation();
 
   const computedStyles = StyleSheet.create({
     composer: {
       backgroundColor: colors.backgroundSecondary,
       paddingRight: SPACING.lg * 2,
-    },
-    wrapper: {
-      backgroundColor: colors.backgroundTertiary,
     },
   });
 
@@ -25,8 +31,8 @@ const Composer = ({ text, textInputProps, ...props }: ComposerProps) => {
       {...props}
       value={text}
       onChangeText={textInputProps?.onChangeText}
-      style={[computedStyles.composer, styles.composer]}
-      wrapperStyle={[computedStyles.wrapper, styles.wrapper]}
+      style={[computedStyles.composer, styles.composer, style]}
+      wrapperStyle={[styles.wrapper, wrapperStyle]}
       placeholder={t('chat.placeholder')}
       multiline
     />
@@ -44,6 +50,10 @@ const styles = StyleSheet.create({
   },
   wrapper: {
     borderRadius: 0,
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: 'transparent',
+    width: '100%',
   },
 });
 

@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
 import AvatarFrameCustomize from '@/features/customization/ui/AvatarFrameCustomize';
+import ChatCustomize from '@/features/customization/ui/ChatCustomize.tsx';
 import { ChatGearIcon, UserGearIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Header from '@/shared/ui/Header';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
@@ -27,14 +28,14 @@ const CustomizationScreen = () => {
         buttonStyle={styles.buttonStyle}
         tabs={[
           {
-            name: 'Avatar',
+            name: t('customization.avatar'),
             icon: <UserGearIcon fill={colors.iconPrimary} />,
             content: <AvatarFrameCustomize />,
           },
           {
-            name: 'Chat',
+            name: t('customization.chat'),
             icon: <ChatGearIcon fill={colors.iconPrimary} />,
-            content: <AvatarFrameCustomize />,
+            content: <ChatCustomize />,
           },
         ]}
       />

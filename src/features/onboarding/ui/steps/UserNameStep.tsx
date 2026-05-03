@@ -5,7 +5,7 @@ import { StyleSheet, View } from 'react-native';
 
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { UserIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import ComponentLoader from '@/shared/ui/ComponentLoader';
 import TextCustom from '@/shared/ui/TextCustom';

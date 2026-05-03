@@ -2,12 +2,14 @@ import { memo } from 'react';
 import { AvatarProps, IMessage } from 'react-native-gifted-chat';
 
 import { getChatAvatarUri } from '@/features/chat/services/getChatAvatarUri';
+import useCustomizationStore from '@/features/customization/hooks/useCustomizationStore.ts';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import Avatar from '@/shared/ui/Avatar/index.tsx';
 
 const ChatAvatar = memo(({ currentMessage }: AvatarProps<IMessage>) => {
   const uri = getChatAvatarUri(currentMessage);
-  const { profile, userAvatarFrame } = useProfileStore();
+  const { profile } = useProfileStore();
+  const { userAvatarFrame } = useCustomizationStore();
 
   if (!uri) return null;
 

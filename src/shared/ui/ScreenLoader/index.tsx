@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { Chase } from 'react-native-animated-spinkit';
 import Animated, { FadeIn } from 'react-native-reanimated';
 
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 
 import { ScreenLoaderProps } from './types.ts';
 

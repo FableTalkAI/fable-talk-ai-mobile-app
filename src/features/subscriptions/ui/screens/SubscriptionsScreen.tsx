@@ -6,7 +6,7 @@ import { FlatList } from 'react-native-gesture-handler';
 import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { SubscriptionButton } from '@/features/subscriptions/ui/SubscriptionButton';
 import { CheckmarkRoundedIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import Button from '@/shared/ui/Button';
@@ -110,7 +110,7 @@ const SubscriptionScreen = () => {
         ))}
       </View>
 
-      <Button title={t('actions.choose')} isLoading={isLoading} onPress={() => subscribe(selectedSubscription)} />
+      <Button title={t('actions.subscribe')} isLoading={isLoading} onPress={() => subscribe(selectedSubscription)} />
       <PressableCustom onPress={restorePurchase}>
         <TextCustom
           text={t('subscription.restorePurchase')}

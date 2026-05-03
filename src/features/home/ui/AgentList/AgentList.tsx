@@ -9,7 +9,7 @@ import { getAgentBarMode } from '@/features/home/services/getAgentBarMode.ts';
 import AgentBar from '@/features/home/ui/AgentBar';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useSubscription from '@/features/subscriptions/hooks/useSubscription';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 
 import { AgentListProps } from './types.ts';

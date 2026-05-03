@@ -4,7 +4,7 @@ import { createAxiosAsyncThunk } from '@/app/store/typedCreateAsyncThunk.ts';
 import http from '@/shared/api/http.ts';
 import { convertImageToBase64 } from '@/shared/services/convertImageToBase64.ts';
 
-import { AvatarFrames, MessageKey, UpdateUserProfileRequest, User } from './types.ts';
+import { MessageKey, UpdateUserProfileRequest, User } from './types.ts';
 
 export const profileSliceName = 'profile';
 

@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
 
-import { setUserAvatarFrame } from '@/features/customization/store/customization';
+import { setChatBackground, setUserAvatarFrame } from '@/features/customization/store/customization';
 import {
   avatarFramesSelector,
+  chatBackgroundSelector,
   isLoadingSelector,
   userAvatarFrameSelector,
 } from '@/features/customization/store/customization/selectors.ts';
@@ -14,6 +15,7 @@ const useCustomizationStore = () => {
   const dispatch = useAppDispatch();
 
   const avatarFrames = useAppSelector(avatarFramesSelector);
+  const chatBackground = useAppSelector(chatBackgroundSelector);
   const userAvatarFrame = useAppSelector(userAvatarFrameSelector);
   const isLoading = useAppSelector(isLoadingSelector);
 
@@ -26,13 +28,20 @@ const useCustomizationStore = () => {
     [dispatch],
   );
 
+  const setChatBackgroundHandler = useCallback(
+    (data: CustomizationState['chatBackground']) => dispatch(setChatBackground(data)),
+    [dispatch],
+  );
+
   return {
     isLoading,
     avatarFrames,
     userAvatarFrame,
+    chatBackground,
 
     getAvatarFramesHandler,
     setUserAvatarFrameHandler,
+    setChatBackgroundHandler,
   };
 };
 

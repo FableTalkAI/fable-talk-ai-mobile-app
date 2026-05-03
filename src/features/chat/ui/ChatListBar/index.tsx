@@ -6,7 +6,7 @@ import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanima
 import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { CheckmarkRoundedIcon, PinIcon, PinIconPinned } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import AutoImage from '@/shared/ui/AutoImage';

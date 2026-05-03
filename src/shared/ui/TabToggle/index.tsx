@@ -12,7 +12,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Theme } from '@/features/profile/store/user/types.ts';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { WINDOW_WIDTH } from '@/shared/model/device.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
@@ -55,6 +55,7 @@ const TabToggle = ({
     tabsWrapper: {
       width: tabContainerWidth,
       backgroundColor: colors.backgroundBase,
+      boxShadow: theme === Theme.Dark ? BOX_SHADOW.intense : BOX_SHADOW.medium,
     },
     tabButton: {
       width: tabWidth,
@@ -157,7 +158,6 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.circle,
     flexDirection: 'row',
     position: 'relative',
-    boxShadow: BOX_SHADOW.medium,
   },
   slider: {
     position: 'absolute',

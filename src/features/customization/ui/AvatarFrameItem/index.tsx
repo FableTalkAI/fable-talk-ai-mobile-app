@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import { CheckmarkRoundedIcon } from '@/shared/assets/icons/index.ts';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS } from '@/shared/model/sizes.ts';
 import AutoImage from '@/shared/ui/AutoImage';
 import PressableCustom from '@/shared/ui/PressableCustom';

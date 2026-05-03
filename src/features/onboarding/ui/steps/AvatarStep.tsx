@@ -4,7 +4,7 @@ import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { useUserAvatarPick } from '@/features/profile/hooks/useUserAvatarPick.ts';
 import UserAvatar from '@/features/profile/ui/UserAvatar';
 import { ImagePlusIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { WINDOW_WIDTH } from '@/shared/model/device.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';

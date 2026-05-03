@@ -64,10 +64,15 @@ export type Translations = {
     en: string;
   };
 
+  image: {
+    pickerSizeError: string;
+  };
+
   actions: {
     apply: string;
     clear: string;
-    choose: string;
+    select: string;
+    subscribe: string;
     send: string;
     delete: string;
     cancel: string;
@@ -116,6 +121,7 @@ export type Translations = {
         messagePremiumAgent: string;
         activeChatsLimit: string;
         createAgentLimit: string;
+        customization: string;
       };
       description: string;
       adsDescription: string;
@@ -183,6 +189,16 @@ export type Translations = {
 
   searchInput: {
     placeholder: string;
+  };
+
+  customization: {
+    wallpaper: string;
+    avatar: string;
+    chat: string;
+    messages: {
+      agent: string;
+      you: string;
+    };
   };
 
   settings: {

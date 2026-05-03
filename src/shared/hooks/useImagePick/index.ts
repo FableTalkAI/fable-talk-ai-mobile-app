@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { launchImageLibrary } from 'react-native-image-picker';
 
 import { showToast } from '@/features/overlay/services/showToast.ts';
@@ -9,6 +10,7 @@ import { UseImagePickProps } from './types.ts';
 
 export const useImagePick = (props?: UseImagePickProps) => {
   const { onSuccess } = props || {};
+  const { t } = useTranslation();
 
   const { requestGalleryPermission } = useGalleryPermission();
 
@@ -39,7 +41,7 @@ export const useImagePick = (props?: UseImagePickProps) => {
       if (fileSize && fileSize >= MAX_IMAGE_SIZE_MB) {
         showToast({
           type: 'error',
-          text2: 'Файл слишком тяжелый для загрузки (макс. 5 МБ)',
+          text2: t('image.pickerSizeError'),
         });
 
         return;
@@ -54,7 +56,7 @@ export const useImagePick = (props?: UseImagePickProps) => {
     }
 
     return undefined;
-  }, [requestGalleryPermission, onSuccess]);
+  }, [requestGalleryPermission, t, onSuccess]);
 
   return { pickImage };
 };

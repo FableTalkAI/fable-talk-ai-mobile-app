@@ -15,7 +15,7 @@ import Animated, {
 
 import { RootNavigatorParamList } from '@/features/navigation/ui/RootNavigator/types.ts';
 import { RocketIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import Button from '@/shared/ui/Button';
 import { ButtonModes } from '@/shared/ui/Button/types.ts';

@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View } from 'react-native';
 
 import { ArrowForwardIcon, SearchIcon } from '@/shared/assets/icons';
 import { useDebounce } from '@/shared/hooks/useDebounce';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import TextInputCustom from '@/shared/ui/TextInputCustom';

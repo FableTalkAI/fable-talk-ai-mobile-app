@@ -1,12 +1,12 @@
 import { Pressable, StyleSheet } from 'react-native';
 import Animated, { LinearTransition, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS } from '@/shared/model/sizes.ts';
 
 import { ToggleProps } from './types.ts';
 
-const Toggle = ({ isActive, setIsActive }: ToggleProps) => {
+const Toggle = ({ isActive, setIsActive, style }: ToggleProps) => {
   const { colors } = useTheme();
 
   const computedStyles = StyleSheet.create({
@@ -26,7 +26,12 @@ const Toggle = ({ isActive, setIsActive }: ToggleProps) => {
   };
 
   return (
-    <Pressable disabled={setIsActive === undefined} hitSlop={5} onPress={() => setIsActive?.(prev => !prev)}>
+    <Pressable
+      style={style}
+      disabled={setIsActive === undefined}
+      hitSlop={5}
+      onPress={() => setIsActive?.(prev => !prev)}
+    >
       <Animated.View style={[styles.container, computedStyles.container, animatedStyles.container]}>
         <Animated.View layout={LinearTransition} style={[styles.dot, animatedStyles.dot]} />
       </Animated.View>

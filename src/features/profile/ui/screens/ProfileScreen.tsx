@@ -8,8 +8,9 @@ import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import OptionBar from '@/features/profile/ui/OptionBar';
 import UserAvatar from '@/features/profile/ui/UserAvatar';
 import UserInfoBar from '@/features/profile/ui/UserInfoBar';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import ActiveSubscriptionBar from '@/features/subscriptions/ui/ActiveSubscriptionBar.tsx';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 
@@ -17,6 +18,7 @@ const ProfileScreen = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const { navigation } = useNavigationRoutes();
+  const { checkPremiumHandler } = useSubscription();
 
   const { isLoading } = useProfileStore();
   const { getAvatarFramesHandler } = useCustomizationStore();
@@ -27,13 +29,18 @@ const ProfileScreen = () => {
     },
   });
 
-  const onCustomizationNavigateHandler = () => {
-    getAvatarFramesHandler().catch(console.error);
-    navigation.navigate('Customization');
+  const onCustomizationNavigateHandler = async () => {
+    await checkPremiumHandler({
+      modalTitleKey: 'customization',
+      func: async () => {
+        getAvatarFramesHandler().catch(console.error);
+        navigation.navigate('Customization');
+      },
+    });
   };
 
   return (
-    <SafeAreaViewCustom edges={['top']} withHorizontalPadding={false} withGradientBackground>
+    <SafeAreaViewCustom edges={['top']} withBottomPadding={false} withHorizontalPadding={false} withGradientBackground>
       <ScrollView contentContainerStyle={styles.contentContainer} showsVerticalScrollIndicator={false} bounces={false}>
         <UserAvatar style={styles.avatar} />
 

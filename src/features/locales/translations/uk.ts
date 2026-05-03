@@ -66,10 +66,15 @@ const uk: Translations = {
     en: 'Англійська',
   },
 
+  image: {
+    pickerSizeError: 'Файл занадто великий для завантаження (макс. 5 МБ)',
+  },
+
   actions: {
     apply: 'Застосувати',
     clear: 'Очистити',
-    choose: 'Обрати',
+    select: 'Обрати',
+    subscribe: 'Підписатися',
     send: 'Відправити',
     delete: 'Видалити',
     cancel: 'Скасувати',
@@ -118,6 +123,7 @@ const uk: Translations = {
         messagePremiumAgent: 'Спілкування з Premium Агентом обмежено',
         activeChatsLimit: 'Досягнуто ліміт активних чатів',
         createAgentLimit: 'Створення Агентів з Premium',
+        customization: 'Кастомізація з Premium',
       },
       description:
         'Бажаєте створювати більше та швидше? З Premium вам не доведеться чекати та дивитися рекламу. Полетіли?',
@@ -205,6 +211,16 @@ const uk: Translations = {
 
   searchInput: {
     placeholder: 'Пошук у чаті за іменем агента',
+  },
+
+  customization: {
+    wallpaper: 'Фон чату',
+    avatar: 'Аватар',
+    chat: 'Чат',
+    messages: {
+      agent: 'Повідомлення агента',
+      you: 'Ваше повідомлення',
+    },
   },
 
   settings: {

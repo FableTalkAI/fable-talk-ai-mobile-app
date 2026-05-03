@@ -6,6 +6,7 @@ import { CustomizationState } from './types.ts';
 const initialState: CustomizationState = {
   avatarFrames: null,
   userAvatarFrame: null,
+  chatBackground: undefined,
   loading: {
     avatarFrames: false,
   },
@@ -17,6 +18,9 @@ const customizationSlice = createSlice({
   reducers: {
     setUserAvatarFrame: (state, action: PayloadAction<CustomizationState['userAvatarFrame']>) => {
       state.userAvatarFrame = action.payload;
+    },
+    setChatBackground: (state, action: PayloadAction<CustomizationState['chatBackground']>) => {
+      state.chatBackground = action.payload;
     },
   },
   extraReducers: builder => {
@@ -36,6 +40,6 @@ const customizationSlice = createSlice({
   },
 });
 
-export const { setUserAvatarFrame } = customizationSlice.actions;
+export const { setUserAvatarFrame, setChatBackground } = customizationSlice.actions;
 
 export default customizationSlice.reducer;

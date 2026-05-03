@@ -14,7 +14,7 @@ import AppUpdateStub from '@/features/overlay/ui/screens/AppUpdateStub.tsx';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { Theme } from '@/features/profile/store/user/types.ts';
 import SubscriptionsScreen from '@/features/subscriptions/ui/screens/SubscriptionsScreen';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { IS_IOS } from '@/shared/model/device.ts';
 
 import { RootNavigatorParamList } from './types.ts';
