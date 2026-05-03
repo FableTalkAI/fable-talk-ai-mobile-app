@@ -1,5 +1,3 @@
-import { AvatarFrames } from '@/features/profile/store/profile/types.ts';
-
 export type CustomizationState = {
   userAvatarFrame: string | null;
   avatarFrames: AvatarFrames | null;
@@ -7,4 +5,8 @@ export type CustomizationState = {
   loading: {
     avatarFrames: boolean;
   };
+};
+
+export type AvatarFrames = {
+  uris: string[];
 };

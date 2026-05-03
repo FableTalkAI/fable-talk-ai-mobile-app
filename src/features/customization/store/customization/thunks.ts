@@ -1,8 +1,9 @@
 import { PROFILE_ROUTE } from '@env';
 
 import { createAxiosAsyncThunk } from '@/app/store/typedCreateAsyncThunk.ts';
-import { AvatarFrames } from '@/features/profile/store/profile/types.ts';
 import http from '@/shared/api/http.ts';
+
+import { AvatarFrames } from './types.ts';
 
 export const customizationSliceName = 'customization';
 

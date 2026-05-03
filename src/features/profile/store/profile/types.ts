@@ -37,7 +37,3 @@ export type UpdateUserProfileRequest = {
   user: Partial<User>;
   showToast?: boolean;
 };
-
-export type AvatarFrames = {
-  uris: string[];
-};
