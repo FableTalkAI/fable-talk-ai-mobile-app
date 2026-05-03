@@ -10,7 +10,7 @@ import SearchInput from '@/features/home/ui/SearchInput';
 import { Languages } from '@/features/locales/types.ts';
 import Tag from '@/features/onboarding/ui/Tag';
 import { TagSelectedIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';

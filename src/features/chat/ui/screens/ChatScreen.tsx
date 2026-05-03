@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
 import { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { ImageBackground, StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -14,13 +14,14 @@ import DeleteChatBottomWindow from '@/features/chat/ui/DeleteChatBottomWindow';
 import EmptyChatStub from '@/features/chat/ui/EmptyChatStub';
 import { Bubble, Composer, InputToolbar, Message, Send } from '@/features/chat/ui/giftedChat';
 import ChatAvatar from '@/features/chat/ui/giftedChat/ChatAvatar.tsx';
+import useCustomizationStore from '@/features/customization/hooks/useCustomizationStore.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { TrashBinIcon } from '@/shared/assets/icons';
 import { useAppDispatch } from '@/shared/hooks/reduxHooks.ts';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import Header from '@/shared/ui/Header';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
@@ -32,12 +33,13 @@ const ChatScreen = () => {
   const { colors } = useTheme();
   const { t, i18n } = useTranslation();
   const { navigation } = useNavigationRoutes();
-  const { top } = useSafeAreaInsets();
+  const { top, bottom } = useSafeAreaInsets();
   const dispatch = useAppDispatch();
 
   const { selectedChat, sendMessageHandler, chats } = useChatStore();
   const { profile, chatsLimitExceeded, chatsLimitNeedUpdate } = useProfileStore();
   const { checkPremiumHandler, isPremium, showPremiumModal } = useSubscription();
+  const { chatBackground } = useCustomizationStore();
 
   const { open } = useBottomWindow();
 
@@ -60,6 +62,10 @@ const ChatScreen = () => {
     loadMoreButtonStyle: selectedChat?.isLoadingMore ? { display: 'flex' } : { display: `none` },
     textTimeBubblesLeft: { color: colors.textPrimary },
     textTimeBubblesRight: { color: colors.textPrimary },
+    imageBackground: {
+      marginBottom: -bottom,
+      paddingBottom: bottom,
+    },
   });
 
   const onSend = useCallback(
@@ -126,56 +132,71 @@ const ChatScreen = () => {
   if (!selectedChat || selectedChat.chat === null || !profile) return null;
 
   return (
-    <SafeAreaViewCustom withHorizontalPadding={false} style={computedStyles.container}>
+    <SafeAreaViewCustom withBottomPadding={false} withHorizontalPadding={false} style={computedStyles.container}>
       {selectedChat.isLoading && !selectedChat?.chat?.chatId && !selectedChat?.chat?.agentInfo.id ? (
         <ScreenLoader isLoading />
       ) : (
         <>
           <Header title={selectedChat.chat?.agentInfo.name} rightIcon={trashBin} />
-          <GiftedChat
-            loadEarlierMessagesProps={{
-              isAvailable: !!selectedChat?.hasMore,
-              isLoading: !!selectedChat?.isLoadingMore,
-              onPress: () => {
-                if (!selectedChat?.chat?.agentInfo.id) return;
-                dispatch(loadMoreMessages(selectedChat.chat.agentInfo.id));
-              },
-              isInfiniteScrollEnabled: true,
-              containerStyle: computedStyles.loadMoreButtonStyle,
-            }}
-            keyboardAvoidingViewProps={{ keyboardVerticalOffset: 56 + top }}
-            messages={selectedChat.messageHistory as IMessage[]}
-            onSend={chatMessages => onSend(chatMessages)}
-            renderAvatar={props => <ChatAvatar {...props} />}
-            //@ts-ignore
-            timeTextStyle={{ left: computedStyles.textTimeBubblesLeft, right: computedStyles.textTimeBubblesRight }}
-            locale={i18n.resolvedLanguage}
-            isDayAnimationEnabled={false}
-            dateFormatCalendar={dateFormatCalendar}
-            dateFormat="D MMMM YYYY"
-            timeFormat="HH:mm"
-            isUserAvatarVisible
-            isSendButtonAlwaysVisible
-            user={{
-              _id: profile.email,
-              avatar: profile.avatarUrl,
-            }}
-            renderBubble={props => <Bubble {...props} />}
-            renderMessage={props => <Message {...props} />}
-            renderInputToolbar={props => <InputToolbar {...props} />}
-            renderComposer={props => <Composer {...props} />}
-            renderSend={props => <Send {...props} />}
-            renderChatEmpty={() => (
-              <EmptyChatStub
-                description={selectedChat.chat?.agentInfo.description || ''}
-                avatarUrl={selectedChat.chat?.agentInfo.avatarUrl || ''}
-              />
-            )}
-          />
+
+          <ImageBackground
+            style={[styles.imageBackground, computedStyles.imageBackground]}
+            source={{ uri: chatBackground }}
+          >
+            <GiftedChat
+              loadEarlierMessagesProps={{
+                isAvailable: !!selectedChat?.hasMore,
+                isLoading: !!selectedChat?.isLoadingMore,
+                onPress: () => {
+                  if (!selectedChat?.chat?.agentInfo.id) return;
+                  dispatch(loadMoreMessages(selectedChat.chat.agentInfo.id));
+                },
+                isInfiniteScrollEnabled: true,
+                containerStyle: computedStyles.loadMoreButtonStyle,
+              }}
+              keyboardAvoidingViewProps={{ keyboardVerticalOffset: 56 + top }}
+              messages={selectedChat.messageHistory as IMessage[]}
+              onSend={chatMessages => onSend(chatMessages)}
+              renderAvatar={props => <ChatAvatar {...props} />}
+              messagesContainerStyle={styles.messagesContainer}
+              timeTextStyle={{ left: computedStyles.textTimeBubblesLeft, right: computedStyles.textTimeBubblesRight }}
+              locale={i18n.resolvedLanguage}
+              isDayAnimationEnabled={false}
+              dateFormatCalendar={dateFormatCalendar}
+              dateFormat="D MMMM YYYY"
+              timeFormat="HH:mm"
+              isUserAvatarVisible
+              isSendButtonAlwaysVisible
+              user={{
+                _id: profile.email,
+                avatar: profile.avatarUrl,
+              }}
+              renderBubble={props => <Bubble {...props} />}
+              renderMessage={props => <Message {...props} />}
+              renderInputToolbar={props => <InputToolbar {...props} />}
+              renderComposer={props => <Composer {...props} />}
+              renderSend={props => <Send {...props} />}
+              renderChatEmpty={() => (
+                <EmptyChatStub
+                  description={selectedChat.chat?.agentInfo.description || ''}
+                  avatarUrl={selectedChat.chat?.agentInfo.avatarUrl || ''}
+                />
+              )}
+            />
+          </ImageBackground>
         </>
       )}
     </SafeAreaViewCustom>
   );
 };
+
+const styles = StyleSheet.create({
+  messagesContainer: {
+    paddingBottom: 86,
+  },
+  imageBackground: {
+    flex: 1,
+  },
+});
 
 export default ChatScreen;

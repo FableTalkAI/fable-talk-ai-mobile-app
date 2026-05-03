@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import { LogoIcon, SplashRobotIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Button from '@/shared/ui/Button';
 import { ButtonModes, ButtonRadius } from '@/shared/ui/Button/types.ts';

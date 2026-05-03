@@ -13,7 +13,7 @@ import { AuthSchema } from '@/features/auth/lib/zod/types.ts';
 import { SendOtpLanguages } from '@/features/auth/store/auth/types.ts';
 import ThirdPartyAuthButton from '@/features/auth/ui/ThirdPartyAuthButton';
 import { AppleLogoIcon, GoogleLogoIcon, MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { IS_IOS } from '@/shared/model/device.ts';
 import { PRIVACY_POLICY, TERMS_OF_SERVICE } from '@/shared/model/links.ts';
 import { SPACING } from '@/shared/model/sizes.ts';

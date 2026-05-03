@@ -1,8 +1,8 @@
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
 import { OnboardingRobotIcon } from '@/shared/assets/icons';
+import { SCREEN_WIDTH } from '@/shared/model/constants.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';

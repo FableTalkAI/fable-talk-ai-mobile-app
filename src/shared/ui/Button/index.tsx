@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import ComponentLoader from '@/shared/ui/ComponentLoader';
 import PressableCustom from '@/shared/ui/PressableCustom';

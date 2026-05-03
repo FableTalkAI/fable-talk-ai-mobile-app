@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { Pulse } from 'react-native-animated-spinkit';
 
 import { LogoIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 
 import TextCustom from './TextCustom';
 import { TextModes } from './TextCustom/types.ts';

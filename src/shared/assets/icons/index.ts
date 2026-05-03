@@ -7,6 +7,7 @@ import ArrowStickIcon from './arrow-stick.svg';
 import NotificationBellIcon from './bell.svg';
 import ChatIcon from './chat.svg';
 import ChatArrowIcon from './chat-arrow.svg';
+import ChatGearIcon from './chat-gear.svg';
 import CheckmarkIcon from './checkmark.svg';
 import CheckmarkRoundedIcon from './checkmark-rounded.svg';
 import EditAvatarIcon from './edit-avatar.svg';
@@ -52,6 +53,7 @@ import ToggleTrueIcon from './toggle-true.svg';
 import TrashBinIcon from './trash-bin.svg';
 import TriangleIcon from './triangle.svg';
 import UserIcon from './user.svg';
+import UserGearIcon from './user-gear.svg';
 import VerifyCodeIcon from './verify-code.svg';
 import WarningIcon from './warning.svg';
 import WarningTriangleIcon from './warning-triangle.svg';
@@ -65,6 +67,7 @@ export {
   ArrowLinkIcon,
   ArrowStickIcon,
   ChatArrowIcon,
+  ChatGearIcon,
   ChatIcon,
   CheckmarkIcon,
   CheckmarkRoundedIcon,
@@ -111,6 +114,7 @@ export {
   ToggleTrueIcon,
   TrashBinIcon,
   TriangleIcon,
+  UserGearIcon,
   UserIcon,
   VerifyCodeIcon,
   WarningIcon,

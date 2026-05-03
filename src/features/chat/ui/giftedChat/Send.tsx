@@ -5,11 +5,12 @@ import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { SendButtonIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
+import { UseThemeParams } from '@/shared/hooks/useTheme/types.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 
-const Send = (props: SendPropsBase<IMessage>) => {
-  const { colors } = useTheme();
+const Send = ({ themeMode, ...props }: SendPropsBase<IMessage> & UseThemeParams) => {
+  const { colors } = useTheme({ themeMode });
   const { selectedChat } = useChatStore();
 
   return (

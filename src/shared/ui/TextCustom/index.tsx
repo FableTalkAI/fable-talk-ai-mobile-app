@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 
 import { TEXT_STYLES } from './constants.ts';
 import { TextCustomProps, TextModes } from './types.ts';

@@ -7,6 +7,7 @@ import persistConfig from '@/shared/lib/redux/persist.ts';
 import agentsReducer from '../../features/agents/store/agents';
 import authReducer from '../../features/auth/store/auth';
 import chatReducer, { chatPersistConfig } from '../../features/chat/store/chat';
+import customizationReducer from '../../features/customization/store/customization';
 import profileReducer, { profilePersistConfig } from '../../features/profile/store/profile';
 import userReducer from '../../features/profile/store/user';
 import subscriptionReducer from '../../features/subscriptions/store/subscriptions';
@@ -20,6 +21,7 @@ const appReducer = combineReducers<ReducersTypes>({
   profile: persistReducer(profilePersistConfig, profileReducer),
   auth: authReducer,
   subscription: subscriptionReducer,
+  customization: customizationReducer,
 });
 
 export const rootReducer = (state: any, action: Action) => {

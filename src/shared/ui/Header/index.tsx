@@ -1,9 +1,9 @@
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { StyleSheet, View } from 'react-native';
 
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import { ArrowForwardIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
+import { SCREEN_WIDTH } from '@/shared/model/constants.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import TextCustom from '@/shared/ui/TextCustom';

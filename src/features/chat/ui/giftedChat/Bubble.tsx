@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
 import { Bubble as GiftedChatBubble, BubbleProps, IMessage } from 'react-native-gifted-chat';
 
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
+import { UseThemeParams } from '@/shared/hooks/useTheme/types.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 
-const Bubble = (props: BubbleProps<IMessage>) => {
-  const { colors } = useTheme();
+const Bubble = ({ wrapperStyle, textStyle, themeMode, ...props }: BubbleProps<IMessage> & UseThemeParams) => {
+  const { colors } = useTheme({ themeMode });
 
   const computedStyles = StyleSheet.create({
     leftBubbleWrapper: {
@@ -23,12 +24,12 @@ const Bubble = (props: BubbleProps<IMessage>) => {
     <GiftedChatBubble
       {...props}
       wrapperStyle={{
-        left: computedStyles.leftBubbleWrapper,
-        right: [styles.rightBubbleWrapper, computedStyles.rightBubbleWrapper],
+        left: [computedStyles.leftBubbleWrapper, wrapperStyle?.left],
+        right: [styles.rightBubbleWrapper, computedStyles.rightBubbleWrapper, wrapperStyle?.right],
       }}
       textStyle={{
-        left: computedStyles.bubbleText,
-        right: computedStyles.bubbleText,
+        left: [computedStyles.bubbleText, textStyle?.left],
+        right: [computedStyles.bubbleText, textStyle?.right],
       }}
     />
   );

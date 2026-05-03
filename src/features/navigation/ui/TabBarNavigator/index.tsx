@@ -6,7 +6,7 @@ import ChatListScreen from '@/features/chat/ui/screens/ChatListScreen';
 import HomeScreen from '@/features/home/ui/screens/HomeScreen.tsx';
 import ProfileScreen from '@/features/profile/ui/screens/ProfileScreen.tsx';
 import { ChatIcon, HomeIcon, ProfileIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { TEXT_STYLES } from '@/shared/ui/TextCustom/constants.ts';
 
 import { TabBarNavigatorParamList } from './types.ts';
