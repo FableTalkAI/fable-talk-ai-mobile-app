@@ -1,4 +1,3 @@
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { FlashList } from '@shopify/flash-list';
 import { useCallback } from 'react';
 import { ActivityIndicator, FlexAlignType, RefreshControl, StyleSheet, View } from 'react-native';
@@ -10,6 +9,7 @@ import AgentBar from '@/features/home/ui/AgentBar';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import useTheme from '@/shared/hooks/useTheme';
+import { SCREEN_WIDTH } from '@/shared/model/constants.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 
 import { AgentListProps } from './types.ts';

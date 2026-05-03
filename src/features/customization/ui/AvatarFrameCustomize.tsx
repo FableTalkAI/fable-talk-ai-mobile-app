@@ -1,10 +1,10 @@
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { useEffect, useMemo, useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
 import useCustomizationStore from '@/features/customization/hooks/useCustomizationStore.ts';
 import UserAvatar from '@/features/profile/ui/UserAvatar';
+import { SCREEN_WIDTH } from '@/shared/model/constants.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import Skeleton from '@/shared/ui/Skeleton';
 

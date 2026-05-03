@@ -1,10 +1,10 @@
-import { SCREEN_HEIGHT } from '@gorhom/bottom-sheet';
 import { useMemo, useRef, useState } from 'react';
 import { Modal, Pressable, StyleSheet, View } from 'react-native';
 import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { TriangleIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme';
+import { SCREEN_HEIGHT } from '@/shared/model/constants.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
