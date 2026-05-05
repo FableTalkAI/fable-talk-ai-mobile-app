@@ -18,7 +18,7 @@ const AvatarFrameCustomize = () => {
 
   const getItemLayoutHandler = (_: ArrayLike<any> | null | undefined, index: number) => ({
     length: 100 + SPACING.m,
-    offset: 100 * index + SPACING.xl,
+    offset: (100 + SPACING.m) * index + SPACING.lg,
     index,
   });
 
