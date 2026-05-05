@@ -1,6 +1,6 @@
+import FastImage from '@d11/react-native-fast-image';
 import { memo, useMemo } from 'react';
 import { Image } from 'react-native';
-import FastImage from 'react-native-fast-image';
 
 import { WINDOW_WIDTH } from '@/shared/model/device.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
