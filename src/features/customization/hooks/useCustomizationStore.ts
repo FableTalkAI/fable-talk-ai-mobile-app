@@ -9,10 +9,12 @@ import {
 } from '@/features/customization/store/customization/selectors.ts';
 import { getAvatarFrames } from '@/features/customization/store/customization/thunks.ts';
 import { CustomizationState } from '@/features/customization/store/customization/types.ts';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks.ts';
 
 const useCustomizationStore = () => {
   const dispatch = useAppDispatch();
+  const { isPremium } = useSubscription();
 
   const avatarFrames = useAppSelector(avatarFramesSelector);
   const chatBackground = useAppSelector(chatBackgroundSelector);
@@ -36,8 +38,8 @@ const useCustomizationStore = () => {
   return {
     isLoading,
     avatarFrames,
-    userAvatarFrame,
-    chatBackground,
+    userAvatarFrame: isPremium ? userAvatarFrame : null,
+    chatBackground: isPremium ? chatBackground : null,
 
     getAvatarFramesHandler,
     setUserAvatarFrameHandler,
