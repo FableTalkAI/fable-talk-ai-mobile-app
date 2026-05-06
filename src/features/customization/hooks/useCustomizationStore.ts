@@ -38,8 +38,8 @@ const useCustomizationStore = () => {
   return {
     isLoading,
     avatarFrames,
-    userAvatarFrame: isPremium ? userAvatarFrame : null,
-    chatBackground: isPremium ? chatBackground : null,
+    userAvatarFrame: isPremium ? userAvatarFrame : undefined,
+    chatBackground: isPremium ? chatBackground : undefined,
 
     getAvatarFramesHandler,
     setUserAvatarFrameHandler,

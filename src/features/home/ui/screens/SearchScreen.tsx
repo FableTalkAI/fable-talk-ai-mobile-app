@@ -36,7 +36,7 @@ const SearchScreen = () => {
   const onChatOpenHandler = useCallback(
     (agentId: string) => () => {
       getChatByIdHandler(agentId).catch(console.error);
-      navigation.navigate('ChatScreen');
+      navigation.navigate('Chat');
     },
     [getChatByIdHandler, navigation],
   );

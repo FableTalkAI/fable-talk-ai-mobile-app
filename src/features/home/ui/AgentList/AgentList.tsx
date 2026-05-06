@@ -55,7 +55,7 @@ const AgentList = ({
           }
 
           getChatByIdHandler(agentId).catch(console.error);
-          navigation.navigate('ChatScreen');
+          navigation.navigate('Chat');
         },
       });
     },

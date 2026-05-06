@@ -55,7 +55,7 @@ const ChatListScreen = () => {
       modalTitleKey: 'openPremiumAgent',
       func: async () => {
         getChatByIdHandler(agentId, chatId).catch(console.error);
-        navigation.navigate('ChatScreen');
+        navigation.navigate('Chat');
       },
     });
   };

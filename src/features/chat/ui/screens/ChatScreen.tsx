@@ -1,6 +1,7 @@
+import { RouteProp, useRoute } from '@react-navigation/native';
 import dayjs from 'dayjs';
 import calendar from 'dayjs/plugin/calendar';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ImageBackground, StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
@@ -16,6 +17,7 @@ import { Bubble, Composer, InputToolbar, Message, Send } from '@/features/chat/u
 import ChatAvatar from '@/features/chat/ui/giftedChat/ChatAvatar.tsx';
 import useCustomizationStore from '@/features/customization/hooks/useCustomizationStore.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import { RootNavigatorParamList } from '@/features/navigation/ui/RootNavigator/types.ts';
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useSubscription from '@/features/subscriptions/hooks/useSubscription';
@@ -34,9 +36,11 @@ const ChatScreen = () => {
   const { t, i18n } = useTranslation();
   const { navigation } = useNavigationRoutes();
   const { top, bottom } = useSafeAreaInsets();
+
+  const { params } = useRoute<RouteProp<RootNavigatorParamList, 'Chat'>>();
   const dispatch = useAppDispatch();
 
-  const { selectedChat, sendMessageHandler, chats } = useChatStore();
+  const { selectedChat, sendMessageHandler, chats, getChatByIdHandler } = useChatStore();
   const { profile, chatsLimitExceeded, chatsLimitNeedUpdate } = useProfileStore();
   const { checkPremiumHandler, isPremium, showPremiumModal } = useSubscription();
   const { chatBackground } = useCustomizationStore();
@@ -128,6 +132,12 @@ const ChatScreen = () => {
       </PressableCustom>
     );
   }, [deleteChatButtonHandler, selectedChat]);
+
+  useEffect(() => {
+    if (params?.agentId) {
+      getChatByIdHandler(params.agentId).catch(console.error);
+    }
+  }, [getChatByIdHandler, params?.agentId]);
 
   if (!selectedChat || selectedChat.chat === null || !profile) return null;
 
