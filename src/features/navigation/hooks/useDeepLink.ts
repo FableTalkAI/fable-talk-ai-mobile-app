@@ -17,9 +17,11 @@ export const useDeepLink = () => {
   const handleUrl = useCallback(
     (url: string) => {
       if (!url) return;
+      const state = navigation.getState();
+      const currentRoute = state.routes[state.index];
 
       const blockedRoute = getInitialRouteName(!!(isLoggedIn && profile), !!profile?.isOnboardingDone, false);
-      if (blockedRoute) return;
+      if (blockedRoute || currentRoute.name === 'AppUpdateStub') return;
 
       const path = url.includes('://') ? url.split('://')[1] : url;
       const route = parseNavigationPath(path);
