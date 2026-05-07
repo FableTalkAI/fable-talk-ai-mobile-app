@@ -23,6 +23,7 @@ import LogoutIcon from './logout.svg';
 import MailIcon from './mail.svg';
 import MailDotIcon from './mail-dot.svg';
 import MessageIcon from './message.svg';
+import MoreIcon from './more.svg';
 import OnboardingRobotIcon from './onboarding-robot.svg';
 import PaletteIcon from './palette.svg';
 import PaperInfoIcon from './paper-info.svg';
@@ -84,6 +85,7 @@ export {
   MailDotIcon,
   MailIcon,
   MessageIcon,
+  MoreIcon,
   NotificationBellIcon,
   OnboardingRobotIcon,
   PaletteIcon,

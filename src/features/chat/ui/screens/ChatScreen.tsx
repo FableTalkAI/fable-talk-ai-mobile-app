@@ -24,8 +24,9 @@ import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { TrashBinIcon } from '@/shared/assets/icons';
 import { useAppDispatch } from '@/shared/hooks/reduxHooks.ts';
 import useTheme from '@/shared/hooks/useTheme';
+import { SPACING } from '@/shared/model/sizes.ts';
+import Dropdown from '@/shared/ui/Dropdown';
 import Header from '@/shared/ui/Header';
-import PressableCustom from '@/shared/ui/PressableCustom';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 import ScreenLoader from '@/shared/ui/ScreenLoader';
 
@@ -69,6 +70,9 @@ const ChatScreen = () => {
     imageBackground: {
       marginBottom: -bottom,
       paddingBottom: bottom,
+    },
+    header: {
+      borderBottomColor: colors.textSecondary,
     },
   });
 
@@ -127,11 +131,17 @@ const ChatScreen = () => {
     if (!selectedChat || !selectedChat.chat?.chatId) return null;
 
     return (
-      <PressableCustom onPress={() => deleteChatButtonHandler(selectedChat.chat?.chatId)}>
-        <TrashBinIcon width={20} height={20} />
-      </PressableCustom>
+      <Dropdown
+        data={[
+          {
+            icon: <TrashBinIcon />,
+            title: t('actions.delete'),
+            onPress: () => deleteChatButtonHandler(selectedChat.chat?.chatId),
+          },
+        ]}
+      />
     );
-  }, [deleteChatButtonHandler, selectedChat]);
+  }, [deleteChatButtonHandler, selectedChat, t]);
 
   useEffect(() => {
     if (params?.agentId) {
@@ -147,7 +157,11 @@ const ChatScreen = () => {
         <ScreenLoader isLoading />
       ) : (
         <>
-          <Header title={selectedChat.chat?.agentInfo.name} rightIcon={trashBin} />
+          <Header
+            style={[styles.header, computedStyles.header]}
+            title={selectedChat.chat?.agentInfo.name}
+            rightIcon={trashBin}
+          />
 
           <ImageBackground
             style={[styles.imageBackground, computedStyles.imageBackground]}
@@ -206,6 +220,11 @@ const styles = StyleSheet.create({
   },
   imageBackground: {
     flex: 1,
+  },
+  header: {
+    borderBottomWidth: 0.5,
+    width: '100%',
+    paddingHorizontal: SPACING.lg,
   },
 });
 
