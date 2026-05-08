@@ -1,45 +1,29 @@
-import { useMemo, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Modal, Pressable, StyleSheet, View } from 'react-native';
 import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { TriangleIcon } from '@/shared/assets/icons';
+import { useDropdownLayout } from '@/shared/hooks/useDropdownLayout.ts';
 import useTheme from '@/shared/hooks/useTheme';
-import { SCREEN_HEIGHT } from '@/shared/model/constants.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
-import { MAX_DROPDOWN_HEIGHT, ROW_HEIGHT } from './constants.ts';
 import { SelectProps } from './types.ts';
 
 const Select = <T,>({ defaultValue, options, width = 110, onChange }: SelectProps<T>) => {
   const { colors } = useTheme();
 
-  const triggerRef = useRef<View>(null);
-  const defaultIndex = options.findIndex(option => option.value === defaultValue);
+  const { top, estimatedDropdownH, openHandler, isOpen, triggerRef, triggerLayout, closeHandler } = useDropdownLayout(
+    options.length,
+  );
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [shouldOpenDown, setShouldOpenDown] = useState(true);
+  const defaultIndex = options.findIndex(option => option.value === defaultValue);
   const [selectedOption, setSelectedOption] = useState(defaultIndex !== -1 ? options[defaultIndex] : options[0]);
-  const [triggerLayout, setTriggerLayout] = useState({ x: 0, y: 0, w: 0, h: 0 });
 
   const optionsTitles = options.map(option => option.title);
-
-  const estimatedDropdownH = useMemo(
-    () =>
-      Math.min(MAX_DROPDOWN_HEIGHT, options.length * ROW_HEIGHT + (options.length - 1) * SPACING.xs + 2 * SPACING.xs),
-    [options],
-  );
-
-  const top = useMemo(
-    () =>
-      shouldOpenDown
-        ? triggerLayout.y + triggerLayout.h + SPACING.xxs
-        : triggerLayout.y - (triggerLayout.h + ROW_HEIGHT + SPACING.xs + SPACING.xxs),
-    [shouldOpenDown, triggerLayout.h, triggerLayout.y],
-  );
 
   const computedStyles = StyleSheet.create({
     pressable: {
@@ -64,19 +48,7 @@ const Select = <T,>({ defaultValue, options, width = 110, onChange }: SelectProp
   const selectOptionHandler = (index: number) => () => {
     setSelectedOption(options[index]);
     onChange(options[index].value);
-    setIsOpen(false);
-  };
-
-  const openHandler = () => {
-    requestAnimationFrame(() => {
-      triggerRef.current?.measureInWindow?.((x, y, w, h) => {
-        const spaceBelow = SCREEN_HEIGHT - (y + h);
-
-        setTriggerLayout({ x, y, w, h });
-        setShouldOpenDown(spaceBelow >= (estimatedDropdownH + SPACING.xxs) * 1.5);
-        setIsOpen(true);
-      });
-    });
+    closeHandler();
   };
 
   return (
@@ -90,7 +62,7 @@ const Select = <T,>({ defaultValue, options, width = 110, onChange }: SelectProp
 
       <Modal transparent visible={isOpen} animationType="fade">
         <GestureHandlerRootView style={styles.flex1}>
-          <Pressable onPressIn={() => setIsOpen(false)} style={StyleSheet.absoluteFill} />
+          <Pressable onPressIn={closeHandler} style={StyleSheet.absoluteFill} />
 
           <View style={[styles.flatListWrapper, computedStyles.flatListWrapper]}>
             <FlatList

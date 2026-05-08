@@ -1,4 +1,0 @@
-const ROW_HEIGHT = 20;
-const MAX_DROPDOWN_HEIGHT = 92;
-
-export { MAX_DROPDOWN_HEIGHT, ROW_HEIGHT };
