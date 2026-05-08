@@ -25,16 +25,18 @@ const currentVersionCode = parseInt(versionCodeMatch[1], 10);
 
 console.log(`Current version: ${currentVersionName} (code: ${currentVersionCode})`);
 
-// Parse version (format: X.X.X.X)
-const versionParts = currentVersionName.split('.').map(Number);
-if (versionParts.length !== 4) {
-  console.error('❌ Version must be in format X.X.X.X');
-  process.exit(1);
+let versionParts = currentVersionName.split('.').map(Number);
+
+if (versionParts[2] >= 99) {
+  versionParts[2] = 1;
+  versionParts[1] += 1;
+} else {
+  versionParts[2] += 1;
 }
 
-// Increment last digit
-versionParts[3] += 1;
-const newVersionName = versionParts.join('.');
+const patchFormatted = versionParts[2].toString().padStart(2, '0');
+const newVersionName = `${versionParts[0]}.${versionParts[1]}.${patchFormatted}`;
+
 const newVersionCode = currentVersionCode + 1;
 
 console.log(`New version: ${newVersionName} (code: ${newVersionCode})`);
