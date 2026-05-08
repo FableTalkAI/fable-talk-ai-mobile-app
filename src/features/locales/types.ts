@@ -80,6 +80,12 @@ export type Translations = {
     logout: string;
     create: string;
     update: string;
+    share: string;
+  };
+
+  share: {
+    chat_message: string;
+    subject: string;
   };
 
   bottomWindows: {

@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { ImageBackground, StyleSheet } from 'react-native';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import ViewShot from 'react-native-view-shot';
 
 import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
@@ -21,8 +22,9 @@ import { RootNavigatorParamList } from '@/features/navigation/ui/RootNavigator/t
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useSubscription from '@/features/subscriptions/hooks/useSubscription';
-import { TrashBinIcon } from '@/shared/assets/icons';
+import { ShareIcon, TrashBinIcon } from '@/shared/assets/icons';
 import { useAppDispatch } from '@/shared/hooks/reduxHooks.ts';
+import { useScreenshotShare } from '@/shared/hooks/useScreenshotShare';
 import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Dropdown from '@/shared/ui/Dropdown';
@@ -47,6 +49,7 @@ const ChatScreen = () => {
   const { chatBackground } = useCustomizationStore();
 
   const { open } = useBottomWindow();
+  const { viewRef, captureAndShare } = useScreenshotShare();
 
   const dateFormatCalendar = useMemo(
     () => ({
@@ -132,7 +135,17 @@ const ChatScreen = () => {
 
     return (
       <Dropdown
+        width={120}
         data={[
+          {
+            icon: <ShareIcon fill={colors.link} />,
+            title: t('actions.share'),
+            onPress: () =>
+              captureAndShare({
+                path: `/Chat/${selectedChat.chat?.agentInfo.id}`,
+                message: t('share.chat_message', { agentName: selectedChat.chat?.agentInfo.name }),
+              }),
+          },
           {
             icon: <TrashBinIcon />,
             title: t('actions.delete'),
@@ -141,7 +154,7 @@ const ChatScreen = () => {
         ]}
       />
     );
-  }, [deleteChatButtonHandler, selectedChat, t]);
+  }, [captureAndShare, colors.link, deleteChatButtonHandler, selectedChat, t]);
 
   useEffect(() => {
     if (params?.agentId) {
@@ -156,7 +169,7 @@ const ChatScreen = () => {
       {selectedChat.isLoading && !selectedChat?.chat?.chatId && !selectedChat?.chat?.agentInfo.id ? (
         <ScreenLoader isLoading />
       ) : (
-        <>
+        <ViewShot style={{ flex: 1, backgroundColor: colors.backgroundTertiary }} ref={viewRef}>
           <Header
             style={[styles.header, computedStyles.header]}
             title={selectedChat.chat?.agentInfo.name}
@@ -208,7 +221,7 @@ const ChatScreen = () => {
               )}
             />
           </ImageBackground>
-        </>
+        </ViewShot>
       )}
     </SafeAreaViewCustom>
   );

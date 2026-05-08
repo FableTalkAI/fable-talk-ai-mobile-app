@@ -39,6 +39,7 @@ import RobotFilledIcon from './robot-filled.svg';
 import RocketIcon from './rocket.svg';
 import SearchIcon from './search.svg';
 import SendButtonIcon from './send-button.svg';
+import ShareIcon from './share.svg';
 import ShieldUserIcon from './shield-user.svg';
 import SignInIcon from './sign-in.svg';
 import SignUpIcon from './sign-up.svg';
@@ -102,6 +103,7 @@ export {
   RocketIcon,
   SearchIcon,
   SendButtonIcon,
+  ShareIcon,
   ShieldUserIcon,
   SignInIcon,
   SignUpIcon,

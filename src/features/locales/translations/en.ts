@@ -83,6 +83,12 @@ const en: Translations = {
     logout: 'Logout',
     create: 'Create',
     update: 'Update',
+    share: 'Share',
+  },
+
+  share: {
+    chat_message: 'Check out my chat with {{agentName}}!😱\nChat yourself here:',
+    subject: 'FableTalkAI: Interactive Story',
   },
 
   bottomWindows: {
