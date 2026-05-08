@@ -169,17 +169,14 @@ const ChatScreen = () => {
       {selectedChat.isLoading && !selectedChat?.chat?.chatId && !selectedChat?.chat?.agentInfo.id ? (
         <ScreenLoader isLoading />
       ) : (
-        <ViewShot style={{ flex: 1, backgroundColor: colors.backgroundTertiary }} ref={viewRef}>
+        <ViewShot style={[styles.flex1, computedStyles.container]} ref={viewRef}>
           <Header
             style={[styles.header, computedStyles.header]}
             title={selectedChat.chat?.agentInfo.name}
             rightIcon={trashBin}
           />
 
-          <ImageBackground
-            style={[styles.imageBackground, computedStyles.imageBackground]}
-            source={{ uri: chatBackground }}
-          >
+          <ImageBackground style={[styles.flex1, computedStyles.imageBackground]} source={{ uri: chatBackground }}>
             <GiftedChat
               loadEarlierMessagesProps={{
                 isAvailable: !!selectedChat?.hasMore,
@@ -231,7 +228,7 @@ const styles = StyleSheet.create({
   messagesContainer: {
     paddingBottom: 86,
   },
-  imageBackground: {
+  flex1: {
     flex: 1,
   },
   header: {
