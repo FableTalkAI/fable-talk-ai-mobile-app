@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import useAgentsStore from '@/features/agents/hooks/useAgentsStore.ts';
 import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
-import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
+import { navigate } from '@/features/navigation/lib/navigationRef.ts';
 import { useNotifications } from '@/features/notifications/hooks/useNotifications.ts';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useSubscriptionInitialization from '@/features/subscriptions/hooks/useSubscriptionInitialization.ts';
@@ -14,8 +14,6 @@ import AppStub from '@/shared/ui/AppStub.tsx';
 import { InitialSetupProps } from './types.ts';
 
 const InitialSetup = ({ children }: InitialSetupProps) => {
-  const { navigation } = useNavigationRoutes();
-
   const { setIsLoggedInHandler } = useAuthStore();
   const { getUserProfileHandler } = useProfileStore();
   const { getTagsHandler, getAgentsHandler, getMyAgentsHandler } = useAgentsStore();
@@ -33,10 +31,7 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
       const appVersion = await checkUpdate();
 
       if (appVersion.needsUpdate) {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'AppUpdateStub', params: { url: appVersion.url } }],
-        });
+        navigate('AppUpdateStub', { url: appVersion.url }, 'replace');
       }
     })();
 
@@ -63,7 +58,6 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
     getMyAgentsHandler,
     getTagsHandler,
     getUserProfileHandler,
-    navigation,
     setIsLoggedInHandler,
   ]);
 

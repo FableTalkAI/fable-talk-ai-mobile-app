@@ -82,6 +82,12 @@ const uk: Translations = {
     logout: 'Вихід',
     create: 'Створити',
     update: 'Оновити',
+    share: 'Поділитися',
+  },
+
+  share: {
+    chat_message: 'Заціни, мій чат з {{agentName}}!😱\nПоспілкуйся особисто тут:',
+    subject: 'FableTalkAI: Інтерактивні історії',
   },
 
   bottomWindows: {

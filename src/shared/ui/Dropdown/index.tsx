@@ -1,38 +1,30 @@
-import { useState } from 'react';
 import { Modal, Pressable, StyleSheet, View } from 'react-native';
 import { FlatList, GestureHandlerRootView } from 'react-native-gesture-handler';
 
-import { TriangleIcon } from '@/shared/assets/icons';
+import { MoreIcon } from '@/shared/assets/icons';
 import { useDropdownLayout } from '@/shared/hooks/useDropdownLayout.ts';
 import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
+import ResizeIcon from '@/shared/ui/ResizeIcon';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
-import { SelectProps } from './types.ts';
+import { DropdownProps } from './types.ts';
 
-const Select = <T,>({ defaultValue, options, width = 110, onChange }: SelectProps<T>) => {
+const Dropdown = ({ data, width = 110 }: DropdownProps) => {
   const { colors } = useTheme();
 
   const { top, estimatedDropdownH, openHandler, isOpen, triggerRef, triggerLayout, closeHandler } = useDropdownLayout(
-    options.length,
+    data.length,
   );
-
-  const defaultIndex = options.findIndex(option => option.value === defaultValue);
-  const [selectedOption, setSelectedOption] = useState(defaultIndex !== -1 ? options[defaultIndex] : options[0]);
-
-  const optionsTitles = options.map(option => option.title);
+  const cloneElementProps = { width: 16, height: 16 };
 
   const computedStyles = StyleSheet.create({
-    pressable: {
-      width,
-      backgroundColor: colors.backgroundHover,
-    },
     flatListWrapper: {
       top,
-      left: triggerLayout.x,
+      left: triggerLayout.x - width + 20,
       width,
     },
     flatList: {
@@ -45,18 +37,16 @@ const Select = <T,>({ defaultValue, options, width = 110, onChange }: SelectProp
     },
   });
 
-  const selectOptionHandler = (index: number) => () => {
-    setSelectedOption(options[index]);
-    onChange(options[index].value);
+  const onPressHandler = (index: number) => () => {
+    data[index].onPress();
     closeHandler();
   };
 
   return (
     <>
       <View ref={triggerRef}>
-        <PressableCustom onPress={openHandler} style={[styles.pressable, computedStyles.pressable]}>
-          <TextCustom style={styles.flex1} numberOfLines={1} mode={TextModes.Secondary} text={selectedOption.title} />
-          <TriangleIcon />
+        <PressableCustom hitSlop={10} onPress={openHandler} style={styles.pressable}>
+          <MoreIcon fill={colors.iconPrimary} />
         </PressableCustom>
       </View>
 
@@ -70,10 +60,11 @@ const Select = <T,>({ defaultValue, options, width = 110, onChange }: SelectProp
               contentContainerStyle={[styles.flatListContainer, computedStyles.flatListContainer]}
               bounces={false}
               showsVerticalScrollIndicator={false}
-              data={optionsTitles}
+              data={data}
               renderItem={({ item, index }) => (
-                <PressableCustom onPress={selectOptionHandler(index)}>
-                  <TextCustom mode={TextModes.Secondary} text={item} />
+                <PressableCustom style={styles.pressableItem} onPress={onPressHandler(index)}>
+                  <ResizeIcon icon={item.icon} cloneElementProps={cloneElementProps} />
+                  <TextCustom mode={TextModes.Secondary} text={item.title} />
                 </PressableCustom>
               )}
             />
@@ -106,6 +97,11 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.small,
     padding: SPACING.xs,
   },
+  pressableItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: SPACING.xs,
+  },
 });
 
-export default Select;
+export default Dropdown;

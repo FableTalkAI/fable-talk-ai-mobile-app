@@ -55,7 +55,7 @@ const ChatListScreen = () => {
       modalTitleKey: 'openPremiumAgent',
       func: async () => {
         getChatByIdHandler(agentId, chatId).catch(console.error);
-        navigation.navigate('ChatScreen');
+        navigation.navigate('Chat');
       },
     });
   };
@@ -106,7 +106,7 @@ const ChatListScreen = () => {
         keyExtractor={item => item.chatId}
         data={filteredChats}
         style={styles.flatList}
-        contentContainerStyle={[styles.contentContainerStyle]}
+        contentContainerStyle={styles.contentContainerStyle}
         renderItem={({ item }) => (
           <Animated.View layout={LinearTransition}>
             <ChatListBar
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.xl,
   },
   contentContainerStyle: {
-    gap: SPACING.lg,
+    gap: SPACING.s,
     paddingHorizontal: SPACING.xl,
     minHeight: '90%',
   },

@@ -14,5 +14,5 @@ export type RootNavigatorParamList = {
   Subscriptions: undefined;
   CreateAgent?: { id?: string };
   SettingsStack: NavigatorScreenParams<SettingsStackParamList>;
-  ChatScreen: undefined;
+  Chat?: { agentId?: string };
 };

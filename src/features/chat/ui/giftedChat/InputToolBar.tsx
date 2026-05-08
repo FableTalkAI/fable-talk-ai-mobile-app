@@ -48,6 +48,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: SPACING.xs,
     gap: SPACING.xs,
+    paddingBottom: 104,
+    marginTop: -104,
   },
   loadingContainer: {
     paddingHorizontal: SPACING.m,

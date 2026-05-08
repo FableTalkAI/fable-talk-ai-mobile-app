@@ -6,6 +6,8 @@ import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
 import ChatScreen from '@/features/chat/ui/screens/ChatScreen.tsx';
 import CustomizationScreen from '@/features/customization/ui/screens/CustomizationScreen.tsx';
 import SearchScreen from '@/features/home/ui/screens/SearchScreen.tsx';
+import { useDeepLink } from '@/features/navigation/hooks/useDeepLink.ts';
+import { getInitialRouteName } from '@/features/navigation/services/getInitialRouteName.ts';
 import AuthStack from '@/features/navigation/ui/AuthStack';
 import SettingsStack from '@/features/navigation/ui/SettingsStack';
 import TabBarNavigator from '@/features/navigation/ui/TabBarNavigator';
@@ -26,18 +28,16 @@ const RootNavigator = () => {
   const { isLoggedIn } = useAuthStore();
   const { profile } = useProfileStore();
 
-  const getInitialRouteName = () => {
-    if (!isLoggedIn || !profile) return 'AuthStack';
-    if (!profile.isOnboardingDone) return 'Onboarding';
-    return 'TabBarNavigator';
-  };
+  useDeepLink();
+
+  const initialRouteName = getInitialRouteName(!!(isLoggedIn && profile), !!profile?.isOnboardingDone);
 
   return (
     <>
       <SystemBars hidden={{ navigationBar: true }} style={theme === Theme.Dark ? 'light' : 'dark'} />
 
       <Stack.Navigator
-        initialRouteName={getInitialRouteName()}
+        initialRouteName={initialRouteName}
         screenOptions={{ headerShown: false, animation: IS_IOS ? 'default' : 'fade' }}
       >
         <Stack.Screen name="AuthStack" component={AuthStack} />
@@ -49,7 +49,7 @@ const RootNavigator = () => {
         <Stack.Screen name="Subscriptions" component={SubscriptionsScreen} />
         <Stack.Screen name="Customization" component={CustomizationScreen} />
         <Stack.Screen name="SettingsStack" component={SettingsStack} />
-        <Stack.Screen name="ChatScreen" component={ChatScreen} />
+        <Stack.Screen name="Chat" component={ChatScreen} />
       </Stack.Navigator>
     </>
   );

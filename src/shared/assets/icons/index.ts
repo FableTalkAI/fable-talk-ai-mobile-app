@@ -23,6 +23,7 @@ import LogoutIcon from './logout.svg';
 import MailIcon from './mail.svg';
 import MailDotIcon from './mail-dot.svg';
 import MessageIcon from './message.svg';
+import MoreIcon from './more.svg';
 import OnboardingRobotIcon from './onboarding-robot.svg';
 import PaletteIcon from './palette.svg';
 import PaperInfoIcon from './paper-info.svg';
@@ -38,6 +39,7 @@ import RobotFilledIcon from './robot-filled.svg';
 import RocketIcon from './rocket.svg';
 import SearchIcon from './search.svg';
 import SendButtonIcon from './send-button.svg';
+import ShareIcon from './share.svg';
 import ShieldUserIcon from './shield-user.svg';
 import SignInIcon from './sign-in.svg';
 import SignUpIcon from './sign-up.svg';
@@ -84,6 +86,7 @@ export {
   MailDotIcon,
   MailIcon,
   MessageIcon,
+  MoreIcon,
   NotificationBellIcon,
   OnboardingRobotIcon,
   PaletteIcon,
@@ -100,6 +103,7 @@ export {
   RocketIcon,
   SearchIcon,
   SendButtonIcon,
+  ShareIcon,
   ShieldUserIcon,
   SignInIcon,
   SignUpIcon,

@@ -30,6 +30,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>fabletalkai</string>
 				<string>com.googleusercontent.apps.434907128053-m0g2rj4jrq434v8b7gut1r70bra5jm9g</string>
 			</array>
 		</dict>

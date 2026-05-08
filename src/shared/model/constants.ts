@@ -6,3 +6,6 @@ const WINDOW_WIDTH = Dimensions.get('window').width;
 const WINDOW_HEIGHT = Dimensions.get('window').height;
 
 export { SCREEN_HEIGHT, SCREEN_WIDTH, WINDOW_HEIGHT, WINDOW_WIDTH };
+
+export const DROPDOWN_ROW_HEIGHT = 20;
+export const DROPDOWN_MAX_DROPDOWN_HEIGHT = 92;
