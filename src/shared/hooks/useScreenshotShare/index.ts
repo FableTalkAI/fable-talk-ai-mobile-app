@@ -20,7 +20,7 @@ export const useScreenshotShare = () => {
           result: 'tmpfile',
         });
 
-        const appLink = `https://fabletalkai.work${options?.path}`;
+        const appLink = `https://fabletalkai.work/dl${options?.path}`;
         const message = `${options?.message || 'FableTalkAI'}\n${appLink}`;
 
         const shareOptions = {

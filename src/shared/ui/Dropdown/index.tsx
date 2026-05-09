@@ -9,7 +9,6 @@ import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import ResizeIcon from '@/shared/ui/ResizeIcon';
 import TextCustom from '@/shared/ui/TextCustom';
-import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
 import { DropdownProps } from './types.ts';
 
