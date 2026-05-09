@@ -9,7 +9,6 @@ import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import ResizeIcon from '@/shared/ui/ResizeIcon';
 import TextCustom from '@/shared/ui/TextCustom';
-import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
 import { DropdownProps } from './types.ts';
 
@@ -64,7 +63,7 @@ const Dropdown = ({ data, width = 110 }: DropdownProps) => {
               renderItem={({ item, index }) => (
                 <PressableCustom style={styles.pressableItem} onPress={onPressHandler(index)}>
                   <ResizeIcon icon={item.icon} cloneElementProps={cloneElementProps} />
-                  <TextCustom mode={TextModes.Secondary} text={item.title} />
+                  <TextCustom text={item.title} />
                 </PressableCustom>
               )}
             />
