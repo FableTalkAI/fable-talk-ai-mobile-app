@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 
@@ -16,16 +16,18 @@ import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { ChatArrowIcon } from '@/shared/assets/icons';
+import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 
 const ChatListScreen = () => {
   const { t } = useTranslation();
+  const { colors, getInvertedColor } = useTheme();
   const { navigation } = useNavigationRoutes();
   const { checkPremiumHandler } = useSubscription();
 
-  const { chats, getChatByIdHandler } = useChatStore();
+  const { chats, isLoading, getChatByIdHandler, getAllChatsHandler } = useChatStore();
   const { pinnedChatIds } = useUserStore();
   const { open } = useBottomWindow();
 
@@ -107,6 +109,15 @@ const ChatListScreen = () => {
         data={filteredChats}
         style={styles.flatList}
         contentContainerStyle={styles.contentContainerStyle}
+        refreshControl={
+          <RefreshControl
+            tintColor={colors.iconPrimary}
+            progressBackgroundColor={colors.iconPrimary}
+            colors={[getInvertedColor('iconPrimary')]}
+            refreshing={isLoading.chats}
+            onRefresh={getAllChatsHandler}
+          />
+        }
         renderItem={({ item }) => (
           <Animated.View layout={LinearTransition}>
             <ChatListBar

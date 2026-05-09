@@ -284,7 +284,7 @@ const uk: Translations = {
   },
 
   chat: {
-    placeholder: 'Напишіть ваше повідомлення...',
+    placeholder: 'Повідомлення...',
     sameDay: '[Сьогодні]',
     nextDay: '[Завтра]',
     lastDay: '[Вчора]',

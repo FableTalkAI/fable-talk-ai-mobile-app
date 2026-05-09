@@ -4,7 +4,11 @@ type NavigationRoute = {
 };
 
 export const parseNavigationPath = (path: string): NavigationRoute | null => {
-  const segments = path.split('/').filter(Boolean);
+  if (!path) return null;
+
+  const cleanPath = path.replace(/^(https?:\/\/)?(www\.)?fabletalkai\.work\/?/i, '').replace(/^fabletalkai:\/\//i, '');
+  const segments = cleanPath.split('/').filter(Boolean);
+
   if (segments.length === 0) return null;
 
   const parseSegment = (index: number): NavigationRoute => {

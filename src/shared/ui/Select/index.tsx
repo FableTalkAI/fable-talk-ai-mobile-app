@@ -73,7 +73,7 @@ const Select = <T,>({ defaultValue, options, width = 110, onChange }: SelectProp
               data={optionsTitles}
               renderItem={({ item, index }) => (
                 <PressableCustom onPress={selectOptionHandler(index)}>
-                  <TextCustom mode={TextModes.Secondary} text={item} />
+                  <TextCustom text={item} />
                 </PressableCustom>
               )}
             />

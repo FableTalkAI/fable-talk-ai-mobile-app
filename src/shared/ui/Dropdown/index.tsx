@@ -64,7 +64,7 @@ const Dropdown = ({ data, width = 110 }: DropdownProps) => {
               renderItem={({ item, index }) => (
                 <PressableCustom style={styles.pressableItem} onPress={onPressHandler(index)}>
                   <ResizeIcon icon={item.icon} cloneElementProps={cloneElementProps} />
-                  <TextCustom mode={TextModes.Secondary} text={item.title} />
+                  <TextCustom text={item.title} />
                 </PressableCustom>
               )}
             />

@@ -50,13 +50,19 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
 
-        <intent-filter android:label="filter_view_example">
+        <intent-filter android:autoVerify="true" android:label="FableTalkAI">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="https" android:host="fabletalkai.work" />
+        </intent-filter>
+
+        <intent-filter android:label="FableTalkAI">
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="fabletalkai" />
-            <data android:scheme="https" android:host="fabletalkai.work" />
-      </intent-filter>
+        </intent-filter>
       </activity>
     </application>
 </manifest>

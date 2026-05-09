@@ -135,14 +135,14 @@ const ChatScreen = () => {
 
     return (
       <Dropdown
-        width={120}
+        width={130}
         data={[
           {
             icon: <ShareIcon fill={colors.link} />,
             title: t('actions.share'),
             onPress: () =>
               captureAndShare({
-                path: `/Chat/${selectedChat.chat?.agentInfo.id}`,
+                path: `/Chat?agentId=${selectedChat.chat?.agentInfo.id}`,
                 message: t('share.chat_message', { agentName: selectedChat.chat?.agentInfo.name }),
               }),
           },

@@ -92,7 +92,7 @@ const AgentList = ({
           progressBackgroundColor={colors.iconPrimary}
           colors={[getInvertedColor('iconPrimary')]}
           refreshing={isRefreshing}
-          onRefresh={() => onRefresh()}
+          onRefresh={onRefresh}
         />
       }
       renderItem={({ item, index }) => (
