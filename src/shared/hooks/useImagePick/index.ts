@@ -4,6 +4,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 
 import { showToast } from '@/features/overlay/services/showToast.ts';
 import { useGalleryPermission } from '@/shared/hooks/useGalleryPermission.tsx';
+import { IS_IOS } from '@/shared/model/device.ts';
 
 import { MAX_IMAGE_SIZE_MB } from './constants.ts';
 import { UseImagePickProps } from './types.ts';
@@ -15,9 +16,10 @@ export const useImagePick = (props?: UseImagePickProps) => {
   const { requestGalleryPermission } = useGalleryPermission();
 
   const pickImage = useCallback(async (): Promise<string | undefined> => {
-    const hasPermission = await requestGalleryPermission();
-
-    if (!hasPermission) return;
+    if (IS_IOS) {
+      const hasPermission = await requestGalleryPermission();
+      if (!hasPermission) return;
+    }
 
     try {
       const response = await launchImageLibrary({
