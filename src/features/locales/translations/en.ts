@@ -26,6 +26,7 @@ const en: Translations = {
     warning: 'Warning',
     pinnedWarning:
       'You have reached the maximum number of pinned chats. Unpin a chat or upgrade your subscription plan',
+    customization: 'Customization',
   },
 
   empty: {
@@ -66,10 +67,15 @@ const en: Translations = {
     en: 'English',
   },
 
+  image: {
+    pickerSizeError: 'The file is too large to upload (max 5 MB)',
+  },
+
   actions: {
     apply: 'Apply',
     clear: 'Clear',
-    choose: 'Choose',
+    select: 'Select',
+    subscribe: 'Subscribe',
     send: 'Send',
     delete: 'Delete',
     cancel: 'Cancel',
@@ -77,6 +83,12 @@ const en: Translations = {
     logout: 'Logout',
     create: 'Create',
     update: 'Update',
+    share: 'Share',
+  },
+
+  share: {
+    chat_message: 'Check out my chat with {{agentName}}!😱\nChat yourself here:',
+    subject: 'FableTalkAI: Interactive Story',
   },
 
   bottomWindows: {
@@ -118,6 +130,7 @@ const en: Translations = {
         messagePremiumAgent: 'Premium Agent chat restricted',
         activeChatsLimit: 'Active chats limit reached',
         createAgentLimit: 'Create Agents with Premium',
+        customization: 'Customization with Premium',
       },
       description:
         'Want to create more and faster? With Premium, you can skip the ads and dive straight into action. Ready for takeoff?',
@@ -131,6 +144,10 @@ const en: Translations = {
     splashText: 'Just Start\nChatting',
     signInButton: 'Sign In',
     signUpButton: 'Sign Up',
+    agreement: 'By signing up to FableTalkAI, you agree to our',
+    termsOfService: ' Terms of Service',
+    and: ' and ',
+    privacyPolicy: 'Privacy Policy',
     signIn: {
       header: 'Login',
       subheader: 'Please login to continue',
@@ -204,6 +221,16 @@ const en: Translations = {
     placeholder: 'Search chat by agent name',
   },
 
+  customization: {
+    wallpaper: 'Wallpaper',
+    avatar: 'Avatar',
+    chat: 'Chat',
+    messages: {
+      agent: 'Agent message',
+      you: 'Your message',
+    },
+  },
+
   settings: {
     notifications: 'Notifications',
     about: 'About',
@@ -274,6 +301,12 @@ const en: Translations = {
     empty: 'Required field',
   },
 
+  update: {
+    title: 'New Version Available',
+    description: 'A new version of the app is available. Update now to get the latest features and improvements',
+    button: 'Update Now',
+  },
+
   serverResponses: {
     emailOrNameRequired: 'Email or name not valid',
     messageRequired: 'Please, enter the message!',
@@ -296,6 +329,7 @@ const en: Translations = {
     agentRequired: 'Agent information is missing or invalid',
     agentAlreadyExists: 'An agent with this name already exists',
     agentIdRequired: 'Agent id is required',
+    undefined: 'Oops, something went wrong, try again later',
   },
 };
 

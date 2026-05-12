@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import ComponentLoader from '@/shared/ui/ComponentLoader';
 import PressableCustom from '@/shared/ui/PressableCustom';
@@ -18,6 +18,7 @@ const Button = ({
   style,
   containerStyle,
   numberOfLines,
+  adjustsFontSizeToFit,
   ...pressableProps
 }: ButtonProps) => {
   const { colors, setColorOpacity } = useTheme();
@@ -77,7 +78,13 @@ const Button = ({
       style={[computedStyles.container, styles.container, style]}
       {...pressableProps}
     >
-      <TextCustom numberOfLines={numberOfLines} text={title} mode={TextModes.Subtitle} style={computedStyles.text} />
+      <TextCustom
+        adjustsFontSizeToFit={adjustsFontSizeToFit}
+        numberOfLines={numberOfLines}
+        text={title}
+        mode={TextModes.Subtitle}
+        style={computedStyles.text}
+      />
 
       <ComponentLoader isVisible={isLoading} />
     </PressableCustom>

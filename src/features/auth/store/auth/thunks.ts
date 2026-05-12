@@ -6,7 +6,7 @@ import { getUserProfile } from '@/features/profile/store/profile/thunks.ts';
 import { User } from '@/features/profile/store/profile/types.ts';
 import http from '@/shared/api/http.ts';
 
-import { SendOtpRequest, UpsertGoogleRequest, VerifyOtpRequest } from './types.ts';
+import { SendOtpRequest, UpsertThirdPartyRequest, VerifyOtpRequest } from './types.ts';
 
 export const authSliceName = 'auth';
 
@@ -31,10 +31,10 @@ export const verifyOtp = createAxiosAsyncThunk<User, VerifyOtpRequest>(
   },
 );
 
-export const upsertGoogle = createAxiosAsyncThunk<User, UpsertGoogleRequest>(
-  `${authSliceName}/upsertGoogle`,
+export const upsertThirdParty = createAxiosAsyncThunk<User, UpsertThirdPartyRequest>(
+  `${authSliceName}/upsertThirdParty`,
   async ({ data, credential }, { dispatch }) => {
-    await http.post(`${AUTH_ROUTE}/google`, data);
+    await http.post(`${AUTH_ROUTE}/third-party`, data);
 
     await auth().signInWithCredential(credential);
     return await dispatch(getUserProfile()).unwrap();

@@ -115,8 +115,9 @@ const chatSlice = createSlice({
           chat.isLoading = false;
           if (chat.messageHistory[0]?._id !== action.payload.messageHistory[0]?._id) {
             chat.messageHistory = action.payload.messageHistory;
+            chat.nextCursor = action.payload.nextCursor;
+            chat.hasMore = action.payload.hasMore;
           }
-          chat.hasMore = action.payload.hasMore;
         }
 
         state.chatsEntities[agentId].chat = action.payload.chat;
@@ -140,10 +141,10 @@ const chatSlice = createSlice({
         if (state.chatsEntities[id]) state.chatsEntities[id].isSending = true;
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
-        const id = action.meta.arg.agentId;
+        const { agentId: id, isPremium } = action.meta.arg;
         const { limits, ...answer } = action.payload;
 
-        if (limits) {
+        if (limits && !isPremium) {
           const remainingMessages = limits?.limit - limits?.count;
 
           if (remainingMessages === 5 || remainingMessages === 1) {

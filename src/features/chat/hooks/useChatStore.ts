@@ -28,11 +28,11 @@ const useChatStore = () => {
 
   const sendMessageHandler = useCallback(
     async (data: SendMessageRequest & User) => {
-      const { message, agentId, ...profile } = data;
+      const { message, agentId, isPremium, ...profile } = data;
       if (profile) {
         dispatch(addUserMessage({ ...data, ...profile }));
       }
-      return await dispatch(sendMessage({ message, agentId })).unwrap();
+      return await dispatch(sendMessage({ message, agentId, isPremium })).unwrap();
     },
     [dispatch],
   );

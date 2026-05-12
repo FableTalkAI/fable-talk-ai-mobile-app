@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { StyleSheet, TextInput, View } from 'react-native';
 
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import ResizeIcon from '@/shared/ui/ResizeIcon';

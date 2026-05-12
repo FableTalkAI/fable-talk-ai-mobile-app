@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { RefreshControl, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 
@@ -16,16 +16,18 @@ import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { ChatArrowIcon } from '@/shared/assets/icons';
+import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 
 const ChatListScreen = () => {
   const { t } = useTranslation();
+  const { colors, getInvertedColor } = useTheme();
   const { navigation } = useNavigationRoutes();
   const { checkPremiumHandler } = useSubscription();
 
-  const { chats, getChatByIdHandler } = useChatStore();
+  const { chats, isLoading, getChatByIdHandler, getAllChatsHandler } = useChatStore();
   const { pinnedChatIds } = useUserStore();
   const { open } = useBottomWindow();
 
@@ -55,7 +57,7 @@ const ChatListScreen = () => {
       modalTitleKey: 'openPremiumAgent',
       func: async () => {
         getChatByIdHandler(agentId, chatId).catch(console.error);
-        navigation.navigate('ChatScreen');
+        navigation.navigate('Chat');
       },
     });
   };
@@ -85,8 +87,13 @@ const ChatListScreen = () => {
   }, [clear, navigation]);
 
   return (
-    <SafeAreaViewCustom edges={['top', 'right', 'left']} withHorizontalPadding={false} withGradientBackground>
-      <SearchInput style={styles.search} placeholder={t('searchInput.placeholder')} onStop={onStopHandler} />
+    <SafeAreaViewCustom edges={['top']} withBottomPadding={false} withHorizontalPadding={false} withGradientBackground>
+      <SearchInput
+        style={styles.search}
+        placeholder={t('searchInput.placeholder')}
+        onStop={onStopHandler}
+        isDisabled={isSelectedMode}
+      />
       <MultiSelectHeader onCrossPress={clear} onBinPress={openDeleteChatBottomWindow} isVisible={isSelectedMode} />
 
       <FlatList
@@ -101,13 +108,23 @@ const ChatListScreen = () => {
         keyExtractor={item => item.chatId}
         data={filteredChats}
         style={styles.flatList}
-        contentContainerStyle={[styles.contentContainerStyle]}
+        contentContainerStyle={styles.contentContainerStyle}
+        refreshControl={
+          <RefreshControl
+            tintColor={colors.iconPrimary}
+            progressBackgroundColor={colors.iconPrimary}
+            colors={[getInvertedColor('iconPrimary')]}
+            refreshing={isLoading.chats}
+            onRefresh={getAllChatsHandler}
+          />
+        }
         renderItem={({ item }) => (
           <Animated.View layout={LinearTransition}>
             <ChatListBar
               avatarSource={item.agentInfo.avatarUrl}
               agentName={item.agentInfo.name}
               lastMessage={item.lastMessage}
+              agentAccessLevel={item.agentInfo.accessLevel}
               onPress={onChatOpenHandler(
                 item.agentInfo.id,
                 item.agentInfo.accessLevel === AgentAccessLevel.Premium,
@@ -133,7 +150,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.xl,
   },
   contentContainerStyle: {
-    gap: SPACING.lg,
+    gap: SPACING.s,
     paddingHorizontal: SPACING.xl,
     minHeight: '90%',
   },

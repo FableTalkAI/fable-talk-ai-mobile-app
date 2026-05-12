@@ -12,6 +12,8 @@ export type TabToggleProps = {
   onChange: (index: number) => void;
   tabContainerWidth?: number;
   style?: StyleProp<ViewStyle>;
+  buttonStyle?: StyleProp<ViewStyle>;
   leftIcon?: ReactNode;
   rightIcon?: ReactNode;
+  contentPosition?: 'top' | 'bottom';
 };

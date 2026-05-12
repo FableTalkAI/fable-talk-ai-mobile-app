@@ -1,8 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import { CheckmarkIcon } from '@/shared/assets/icons/index.ts';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom/index.tsx';
 import TextCustom from '@/shared/ui/TextCustom/index.tsx';
@@ -31,32 +31,30 @@ export const SubscriptionButton = ({
   });
 
   return (
-    <PressableCustom
-      onPress={onPress}
-      style={[styles.container, computedStyles.container]}
-      containerStyle={styles.wrapper}
-    >
-      {discount && (
-        <TextCustom
-          text={t('subscription.save', { amount: discount })}
-          style={[styles.discountText, computedStyles.discountText]}
-          textColor={colors.textLight}
-        />
-      )}
-      <TextCustom text={title} mode={TextModes.Subtitle} style={styles.text} />
+    <PressableCustom onPress={onPress} style={styles.pressable} containerStyle={styles.wrapper}>
+      <View style={[styles.container, computedStyles.container]}>
+        {discount && (
+          <TextCustom
+            text={t('subscription.save', { amount: discount })}
+            style={[styles.discountText, computedStyles.discountText]}
+            textColor={colors.textLight}
+          />
+        )}
+        <TextCustom text={title} mode={TextModes.Subtitle} style={styles.text} />
 
-      <TextCustom numberOfLines={1} adjustsFontSizeToFit text={price} mode={TextModes.Xl} style={styles.text} />
-      {pricePerMonth && (
-        <TextCustom
-          numberOfLines={1}
-          adjustsFontSizeToFit
-          text={t('subscription.month', { price: pricePerMonth })}
-          style={styles.text}
-          textColor={colors.textSecondary}
-        />
-      )}
+        <TextCustom numberOfLines={1} adjustsFontSizeToFit text={price} mode={TextModes.Xl} style={styles.text} />
+        {pricePerMonth && (
+          <TextCustom
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            text={t('subscription.month', { price: pricePerMonth })}
+            style={styles.text}
+            textColor={colors.textSecondary}
+          />
+        )}
 
-      {isSelected && <CheckmarkIcon fill={colors.errorDark} style={styles.checkmark} />}
+        {isSelected && <CheckmarkIcon fill={colors.errorDark} style={styles.checkmark} />}
+      </View>
     </PressableCustom>
   );
 };
@@ -64,6 +62,9 @@ export const SubscriptionButton = ({
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+  },
+  pressable: {
+    paddingTop: SPACING.s,
   },
   container: {
     borderWidth: 1,
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: SPACING.s,
     textAlign: 'center',
     position: 'absolute',
-    top: -12,
+    top: -SPACING.s,
     alignSelf: 'center',
   },
   text: {

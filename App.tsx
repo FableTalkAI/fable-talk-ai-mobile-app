@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet } from 'react-native';
+import {  StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Toast from 'react-native-toast-message';
@@ -13,33 +13,18 @@ import * as Sentry from '@sentry/react-native';
 import { toastConfig } from '@/features/overlay/lib/toastConfig';
 import RootNavigator from '@/features/navigation/ui/RootNavigator';
 import { persistor, store } from '@/app/store';
-import { useLayoutEffect } from 'react';
 import OverlayProvider from '@/app/providers/OverlayProvider';
 import NavigationProvider from '@/app/providers/NavigationProvider/index.tsx';
 import AdsProvider from '@/app/providers/AdsProvider';
 
+
 Sentry.init({
   dsn: 'https://4ffe32896b7fe3269b6f735bd476bbca@o4510449626578944.ingest.de.sentry.io/4510449632411728',
-
-  // Adds more context data to events (IP address, cookies, user, etc.)
-  // For more information, visit: https://docs.sentry.io/platforms/react-native/data-management/data-collected/
   sendDefaultPii: true,
-
-  // Enable Logs
   enableLogs: true,
-
-  // Configure Session Replay
-  replaysSessionSampleRate: 0.1,
-  replaysOnErrorSampleRate: 1,
-  integrations: [Sentry.mobileReplayIntegration()],
-
-  // uncomment the line below to enable Spotlight (https://spotlightjs.com)
-  // spotlight: __DEV__,
 });
 
 function App() {
-  useLayoutEffect(() => StatusBar.setTranslucent(true), []);
-
   return (
     <FirebaseProvider>
       <Provider store={store}>

@@ -7,7 +7,7 @@ import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes
 import { showToast } from '@/features/overlay/services/showToast.ts';
 import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { AddAgentIcon, ArrowStickIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 

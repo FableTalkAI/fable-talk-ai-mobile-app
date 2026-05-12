@@ -13,7 +13,7 @@ import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { AddAgentIcon, FilterIcon, PlusIcon, RobotFilledIcon, SearchIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { WINDOW_WIDTH } from '@/shared/model/device.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import EmptyStub from '@/shared/ui/EmptyStub';
@@ -64,8 +64,8 @@ const HomeScreen = () => {
   return (
     <>
       <SafeAreaViewCustom
+        edges={['top']}
         withBottomPadding={false}
-        edges={['top', 'right', 'left']}
         withHorizontalPadding={false}
         withGradientBackground
       >
@@ -76,7 +76,7 @@ const HomeScreen = () => {
             </PressableCustom>
           }
           rightIcon={
-            <PressableCustom onPress={openSearchFilterBottomWindow}>
+            <PressableCustom needsOffscreenAlphaCompositing={false} onPress={openSearchFilterBottomWindow}>
               <FilterIcon width={24} />
 
               {!!filter.tags.length && (

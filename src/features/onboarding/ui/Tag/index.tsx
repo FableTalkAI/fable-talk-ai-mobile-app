@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
 import { Languages } from '@/features/locales/types.ts';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import TextCustom from '@/shared/ui/TextCustom';

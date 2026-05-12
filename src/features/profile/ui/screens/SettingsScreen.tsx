@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet } from 'react-native';
+import { Linking, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import DeleteAccountBottomWindow from '@/features/auth/ui/DeleteAccountBottomWindow';
@@ -28,6 +28,7 @@ import {
   TrashBinIcon,
   XMarkIcon,
 } from '@/shared/assets/icons';
+import { PRIVACY_POLICY, TERMS_OF_SERVICE } from '@/shared/model/links.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Header from '@/shared/ui/Header';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
@@ -107,14 +108,14 @@ const SettingsScreen = () => {
 
         <SettingsContainer label={t('settings.about')}>
           <OptionBar
-            onPress={() => navigation.navigate('TermsAndConditions')}
+            onPress={() => Linking.openURL(TERMS_OF_SERVICE)}
             title={t('settings.termsOfService')}
             subtitle={t('settings.legalInformation')}
             leftIcon={<ShieldUserIcon />}
             mode={OptionBarModes.Complex}
           />
           <OptionBar
-            onPress={() => navigation.navigate('PrivacyPolicy')}
+            onPress={() => Linking.openURL(PRIVACY_POLICY)}
             title={t('settings.privacyPolicy')}
             subtitle={t('settings.protectYourData')}
             leftIcon={<PaperInfoIcon />}

@@ -1,10 +1,7 @@
-import { BlurView } from '@react-native-community/blur';
 import { useMemo, useRef } from 'react';
 import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   LayoutAnimationConfig,
-  runOnJS,
   SlideInLeft,
   SlideInRight,
   SlideOutLeft,
@@ -15,7 +12,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { Theme } from '@/features/profile/store/user/types.ts';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { WINDOW_WIDTH } from '@/shared/model/device.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
@@ -28,10 +25,12 @@ const TabToggle = ({
   tabs,
   tabContainerWidth = WINDOW_WIDTH - SPACING.xl * 2,
   style,
+  buttonStyle,
   activeTab,
   onChange,
   leftIcon,
   rightIcon,
+  contentPosition = 'bottom',
 }: TabToggleProps) => {
   const { colors, theme } = useTheme();
   const tabWidth = tabContainerWidth / tabs.length;
@@ -56,12 +55,16 @@ const TabToggle = ({
     tabsWrapper: {
       width: tabContainerWidth,
       backgroundColor: colors.backgroundBase,
+      boxShadow: theme === Theme.Dark ? BOX_SHADOW.intense : BOX_SHADOW.medium,
     },
     tabButton: {
       width: tabWidth,
     },
     slider: {
       backgroundColor: colors.backgroundBase,
+    },
+    activeButton: {
+      backgroundColor: theme === Theme.Dark ? colors.gray90 : colors.backgroundBase,
     },
   });
 
@@ -88,24 +91,22 @@ const TabToggle = ({
     });
   };
 
-  const pan = Gesture.Pan()
-    .activeOffsetX([-20, 20])
-    .onEnd(e => {
-      if (e.translationX < -50 && activeTab < tabs.length - 1) {
-        runOnJS(updateIndex)(activeTab + 1);
-      } else if (e.translationX > 50 && activeTab > 0) {
-        runOnJS(updateIndex)(activeTab - 1);
-      }
-    });
-
   return (
     <View style={[styles.flex1, style]}>
-      <View style={styles.wrapper}>
+      {contentPosition === 'top' && (
+        <LayoutAnimationConfig skipEntering>
+          <Animated.View key={`tab-${activeTab}`} entering={entering} exiting={exiting} style={styles.flex1}>
+            {tabs[activeTab].content}
+          </Animated.View>
+        </LayoutAnimationConfig>
+      )}
+
+      <View style={[styles.wrapper, buttonStyle]}>
         {leftIcon}
 
         <View style={[styles.tabsWrapper, computedStyles.tabsWrapper]}>
           <Animated.View style={[styles.slider, computedStyles.slider, animatedSliderStyle]}>
-            <BlurView blurType={theme === Theme.Dark ? 'dark' : 'light'} style={StyleSheet.absoluteFill} />
+            <View style={[StyleSheet.absoluteFill, computedStyles.activeButton]} />
           </Animated.View>
 
           {tabs.map((tab, i) => {
@@ -131,13 +132,13 @@ const TabToggle = ({
         {rightIcon}
       </View>
 
-      <GestureDetector gesture={pan}>
+      {contentPosition === 'bottom' && (
         <LayoutAnimationConfig skipEntering>
           <Animated.View key={`tab-${activeTab}`} entering={entering} exiting={exiting} style={styles.flex1}>
             {tabs[activeTab].content}
           </Animated.View>
         </LayoutAnimationConfig>
-      </GestureDetector>
+      )}
     </View>
   );
 };
@@ -157,7 +158,6 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.circle,
     flexDirection: 'row',
     position: 'relative',
-    boxShadow: BOX_SHADOW.medium,
   },
   slider: {
     position: 'absolute',

@@ -1,7 +1,7 @@
 import { ColorValue, TextProps } from 'react-native';
 
 export type TextCustomProps = {
-  text: string | number;
+  text?: string | number;
   mode?: TextModes;
   textColor?: ColorValue;
 } & TextProps;

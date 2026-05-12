@@ -41,6 +41,7 @@ export type Translations = {
     info: string;
     warning: string;
     pinnedWarning: string;
+    customization: string;
   };
 
   empty: {
@@ -63,10 +64,15 @@ export type Translations = {
     en: string;
   };
 
+  image: {
+    pickerSizeError: string;
+  };
+
   actions: {
     apply: string;
     clear: string;
-    choose: string;
+    select: string;
+    subscribe: string;
     send: string;
     delete: string;
     cancel: string;
@@ -74,6 +80,12 @@ export type Translations = {
     logout: string;
     create: string;
     update: string;
+    share: string;
+  };
+
+  share: {
+    chat_message: string;
+    subject: string;
   };
 
   bottomWindows: {
@@ -115,6 +127,7 @@ export type Translations = {
         messagePremiumAgent: string;
         activeChatsLimit: string;
         createAgentLimit: string;
+        customization: string;
       };
       description: string;
       adsDescription: string;
@@ -127,6 +140,10 @@ export type Translations = {
     splashText: string;
     signInButton: string;
     signUpButton: string;
+    agreement: string;
+    termsOfService: string;
+    privacyPolicy: string;
+    and: string;
     signIn: {
       header: string;
       subheader: string;
@@ -180,14 +197,24 @@ export type Translations = {
     placeholder: string;
   };
 
+  customization: {
+    wallpaper: string;
+    avatar: string;
+    chat: string;
+    messages: {
+      agent: string;
+      you: string;
+    };
+  };
+
   settings: {
     notifications: string;
     about: string;
     account: string;
     pushNotifications: string;
     termsOfService: string;
-    legalInformation: string;
     privacyPolicy: string;
+    legalInformation: string;
     protectYourData: string;
     getHelp: string;
     theme: string;
@@ -249,6 +276,12 @@ export type Translations = {
     empty: string;
   };
 
+  update: {
+    title: string;
+    description: string;
+    button: string;
+  };
+
   serverResponses: {
     emailOrNameRequired: string;
     messageRequired: string;
@@ -271,5 +304,6 @@ export type Translations = {
     agentRequired: string;
     agentAlreadyExists: string;
     agentIdRequired: string;
+    undefined: string;
   };
 };

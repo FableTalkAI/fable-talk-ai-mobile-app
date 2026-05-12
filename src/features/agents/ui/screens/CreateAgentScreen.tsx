@@ -9,7 +9,7 @@ import TagsSelectorField from '@/features/agents/ui/TagsSelectorField';
 import { RootNavigatorParamList } from '@/features/navigation/ui/RootNavigator/types.ts';
 import useBottomWindow from '@/features/overlay/hooks/useBottomWindow';
 import { RobotIcon, WarningTriangleIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import Avatar from '@/shared/ui/Avatar';
 import Button from '@/shared/ui/Button';

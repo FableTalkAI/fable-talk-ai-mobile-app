@@ -3,7 +3,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 import useModal from '@/features/overlay/hooks/useModal.ts';
 import { XMarkIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
@@ -23,7 +23,7 @@ const ModalCustom = ({ children, title, description }: ModalCustomProps) => {
   });
 
   return (
-    <Modal animationType="fade" visible transparent>
+    <Modal animationType="fade" visible transparent statusBarTranslucent>
       <SafeAreaViewCustom isTransparent style={styles.wrapper}>
         <Pressable onPress={closeModal} style={[StyleSheet.absoluteFill, styles.overlay]} />
 

@@ -1,5 +1,5 @@
+import FastImage, { FastImageProps } from '@d11/react-native-fast-image';
 import { ComponentProps } from 'react';
-import FastImage, { FastImageProps } from 'react-native-fast-image';
 
 export type AutoImageResizeMode = keyof typeof FastImage.resizeMode;
 

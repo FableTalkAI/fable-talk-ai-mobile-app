@@ -1,4 +1,3 @@
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
@@ -10,7 +9,8 @@ import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { SortByFilter, SortFilter } from '@/features/profile/store/user/types.ts';
 import { SortAscendingIcon, SortDescendingIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
+import { SCREEN_WIDTH } from '@/shared/model/constants.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Button from '@/shared/ui/Button';
 import { ButtonModes } from '@/shared/ui/Button/types.ts';

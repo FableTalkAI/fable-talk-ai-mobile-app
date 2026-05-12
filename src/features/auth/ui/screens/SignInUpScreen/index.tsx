@@ -3,16 +3,19 @@ import { useRoute } from '@react-navigation/native';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { StyleSheet, View } from 'react-native';
+import { Linking, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 
 import useAuthStore from '@/features/auth/hooks/useAuthStore.ts';
+import useThirdPartyAuth from '@/features/auth/hooks/useThirdPartyAuth.ts';
 import { getAuthSchema } from '@/features/auth/lib/zod/schema.ts';
 import { AuthSchema } from '@/features/auth/lib/zod/types.ts';
 import { SendOtpLanguages } from '@/features/auth/store/auth/types.ts';
-import GoogleButton from '@/features/auth/ui/GoogleButton';
-import { MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import ThirdPartyAuthButton from '@/features/auth/ui/ThirdPartyAuthButton';
+import { AppleLogoIcon, GoogleLogoIcon, MailIcon, SignInIcon, SignUpIcon, UserIcon } from '@/shared/assets/icons';
+import useTheme from '@/shared/hooks/useTheme';
+import { IS_IOS } from '@/shared/model/device.ts';
+import { PRIVACY_POLICY, TERMS_OF_SERVICE } from '@/shared/model/links.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Button from '@/shared/ui/Button';
 import FieldInput from '@/shared/ui/FieldInput';
@@ -30,6 +33,7 @@ const SignInUpScreen = () => {
 
   const route = useRoute<SignInUpRouteProp>();
   const { sendOtpHandler, setVerifyDataHandler, isLoading } = useAuthStore();
+  const { onGoogleButtonPress, onAppleButtonPress } = useThirdPartyAuth();
   const { mode } = route.params;
 
   const [screenMode, setScreenMode] = useState<AuthScreenMode>(mode);
@@ -48,8 +52,14 @@ const SignInUpScreen = () => {
     belowButtonText: {
       color: colors.textSecondary,
     },
+    tosText: {
+      color: colors.textSecondary,
+    },
     textLink: {
       color: colors.link,
+    },
+    line: {
+      backgroundColor: colors.textSecondary,
     },
   });
 
@@ -72,7 +82,6 @@ const SignInUpScreen = () => {
       <Animated.View style={styles.wrapper} exiting={FadeOut} entering={FadeIn} key={screenMode}>
         <KeyboardAvoidingViewCustom scrollContentStyle={styles.scrollContentStyle}>
           <View style={styles.iconContainer}>{screenMode === 'signIn' ? <SignInIcon /> : <SignUpIcon />}</View>
-
           <View>
             <TextCustom text={t(`auth.${screenMode}.header`)} mode={TextModes.Title} />
             <TextCustom text={t(`auth.${screenMode}.subheader`)} mode={TextModes.Caption} style={styles.subheader} />
@@ -103,16 +112,64 @@ const SignInUpScreen = () => {
                 onChangeHandler={text => text.toLowerCase()}
               />
             </View>
+
+            <TextCustom
+              numberOfLines={2}
+              adjustsFontSizeToFit
+              mode={TextModes.Caption}
+              style={[styles.tosText, computedStyles.tosText]}
+            >
+              {t('auth.agreement')}
+              <TextCustom
+                suppressHighlighting={true}
+                android_hyphenationFrequency="none"
+                onPress={() => Linking.openURL(TERMS_OF_SERVICE)}
+                mode={TextModes.Caption}
+                style={[styles.tosText, computedStyles.textLink]}
+              >
+                {t('auth.termsOfService')}
+              </TextCustom>
+              {t('auth.and')}
+              <TextCustom
+                suppressHighlighting={true}
+                android_hyphenationFrequency="none"
+                onPress={() => Linking.openURL(PRIVACY_POLICY)}
+                mode={TextModes.Caption}
+                style={[styles.tosText, computedStyles.textLink]}
+              >
+                {t('auth.privacyPolicy')}
+              </TextCustom>
+            </TextCustom>
           </View>
 
           <View style={styles.continueWithContainer}>
-            <TextCustom
-              text={t('auth.continueWith')}
-              mode={TextModes.Caption}
-              style={computedStyles.continueWithText}
-            />
+            <View style={styles.separatorContainer}>
+              <View style={[styles.line, computedStyles.line]} />
 
-            <GoogleButton isLoading={isLoading.login} />
+              <TextCustom
+                text={t('auth.continueWith')}
+                mode={TextModes.Caption}
+                style={computedStyles.continueWithText}
+              />
+
+              <View style={[styles.line, computedStyles.line]} />
+            </View>
+
+            <View style={styles.thirdPartyAuthContainer}>
+              <ThirdPartyAuthButton
+                onPress={onGoogleButtonPress}
+                icon={<GoogleLogoIcon />}
+                isLoading={isLoading.login}
+              />
+
+              {IS_IOS && (
+                <ThirdPartyAuthButton
+                  onPress={onAppleButtonPress}
+                  icon={<AppleLogoIcon width={34} height={34} />}
+                  isLoading={isLoading.login}
+                />
+              )}
+            </View>
           </View>
         </KeyboardAvoidingViewCustom>
 
@@ -161,6 +218,7 @@ const styles = StyleSheet.create({
   continueWithContainer: {
     alignItems: 'center',
     paddingTop: SPACING.m,
+    paddingBottom: SPACING.s,
     gap: SPACING.xs,
   },
   buttonAndTextContainer: {
@@ -174,6 +232,24 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     gap: SPACING.m,
+  },
+  tosText: {
+    marginTop: SPACING.xs,
+    textAlign: 'center',
+  },
+  separatorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    gap: SPACING.s,
+  },
+  line: {
+    flex: 1,
+    height: 1,
+  },
+  thirdPartyAuthContainer: {
+    flexDirection: 'row',
+    gap: SPACING.xs,
   },
 });
 

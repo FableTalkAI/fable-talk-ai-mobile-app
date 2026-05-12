@@ -4,13 +4,17 @@ import { base } from '@/app/theme/palettes/base.ts';
 import { dark } from '@/app/theme/palettes/dark.ts';
 import { light } from '@/app/theme/palettes/light.ts';
 import { ThemeColors } from '@/app/theme/types.ts';
+import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { Theme } from '@/features/profile/store/user/types.ts';
 
-import useUserStore from '../../features/profile/hooks/useUserStore.ts';
+import { UseThemeParams } from './types.ts';
 
-const useTheme = () => {
-  const { theme } = useUserStore();
+const useTheme = (props?: UseThemeParams) => {
+  const { themeMode } = props || {};
+
+  const { theme: userTheme } = useUserStore();
   const scheme = useColorScheme();
+  const theme = themeMode || userTheme;
 
   const getThemeColors = (targetTheme?: Theme | null) => {
     const darkMode = { mode: Theme.Dark, colors: dark };
@@ -35,8 +39,8 @@ const useTheme = () => {
     return `${color}${alphaHex}`;
   };
 
-  const getInvertedColor = (colorKey: keyof ThemeColors): string => {
-    const currentMode = getThemeColors().mode;
+  const getInvertedColor = (colorKey: keyof ThemeColors, currentThemeMode?: Theme): string => {
+    const currentMode = currentThemeMode || getThemeColors().mode;
     const invertedMode = currentMode === Theme.Dark ? Theme.Light : Theme.Dark;
     const invertedPalette: Record<keyof ThemeColors, string> = {
       ...getThemeColors(invertedMode).colors,

@@ -1,9 +1,12 @@
+import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import Animated, { FadeIn, FadeOut, ZoomIn, ZoomOut } from 'react-native-reanimated';
 
+import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import useUserStore from '@/features/profile/hooks/useUserStore.ts';
 import { CheckmarkRoundedIcon, PinIcon, PinIconPinned } from '@/shared/assets/icons';
-import useTheme from '@/shared/hooks/useTheme.ts';
+import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import AutoImage from '@/shared/ui/AutoImage';
@@ -22,15 +25,22 @@ const ChatListBar = ({
   onLongPress,
   isSelected,
   isSelectMode,
+  agentAccessLevel = AgentAccessLevel.Free,
 }: ChatListBarProps) => {
   const { colors } = useTheme();
   const { pinnedChatIds, updatePinnedChatIdsHandler } = useUserStore();
 
   const isPinned = pinnedChatIds.includes(chatId);
 
+  const isPremiumAgent = agentAccessLevel === AgentAccessLevel.Premium;
+  const gradientColors = useMemo(
+    () => (isPremiumAgent ? [colors.backgroundBase, colors.premium] : [colors.backgroundBase, colors.backgroundBase]),
+    [colors.backgroundBase, colors.premium, isPremiumAgent],
+  );
+
   const computedStyles = StyleSheet.create({
     wrapper: {
-      backgroundColor: colors.backgroundBase,
+      borderColor: isPremiumAgent ? colors.premium : 'transparent',
     },
     agentName: {
       color: colors.textPrimary,
@@ -41,50 +51,57 @@ const ChatListBar = ({
   });
 
   return (
-    <PressableCustom
-      containerStyle={[styles.wrapper, computedStyles.wrapper]}
-      style={styles.pressableContainer}
-      onLongPress={() => onLongPress?.(chatId)}
-      onPress={onPress}
-    >
-      <View>
-        <AutoImage source={avatarSource} style={styles.avatar} resizeMode="cover" />
+    <LinearGradient colors={gradientColors} locations={[0.2, 1]} style={styles.gradientWrapper}>
+      <PressableCustom
+        containerStyle={[styles.wrapper, computedStyles.wrapper]}
+        style={styles.pressableContainer}
+        onLongPress={() => onLongPress?.(chatId)}
+        onPress={onPress}
+        needsOffscreenAlphaCompositing={false}
+      >
+        <View>
+          <AutoImage source={avatarSource} style={styles.avatar} resizeMode="cover" />
 
-        {isSelected && (
-          <Animated.View entering={ZoomIn} exiting={ZoomOut} style={styles.checkMark}>
-            <CheckmarkRoundedIcon width={20} height={20} />
-          </Animated.View>
-        )}
-      </View>
-
-      <View style={styles.messageContainer}>
-        <View style={styles.nameAndPinContainer}>
-          <TextCustom text={agentName} style={computedStyles.agentName} />
-
-          <PressableCustom disabled={isSelectMode} onPress={() => updatePinnedChatIdsHandler(chatId)} hitSlop={10}>
-            <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>
-              {isPinned ? <PinIconPinned fill={colors.iconPrimary} /> : <PinIcon fill={colors.textPrimary} />}
+          {isSelected && (
+            <Animated.View entering={ZoomIn} exiting={ZoomOut} style={styles.checkMark}>
+              <CheckmarkRoundedIcon width={20} height={20} />
             </Animated.View>
-          </PressableCustom>
+          )}
         </View>
 
-        <TextCustom
-          text={lastMessage.text}
-          numberOfLines={2}
-          mode={TextModes.Secondary}
-          style={computedStyles.lastMessage}
-        />
-      </View>
-    </PressableCustom>
+        <View style={styles.messageContainer}>
+          <View style={styles.nameAndPinContainer}>
+            <TextCustom text={agentName} style={computedStyles.agentName} />
+
+            <PressableCustom disabled={isSelectMode} onPress={() => updatePinnedChatIdsHandler(chatId)} hitSlop={10}>
+              <Animated.View exiting={FadeOut} entering={FadeIn} key={`pin-icon-${isPinned}`}>
+                {isPinned ? <PinIconPinned fill={colors.iconPrimary} /> : <PinIcon fill={colors.textPrimary} />}
+              </Animated.View>
+            </PressableCustom>
+          </View>
+
+          <TextCustom
+            text={lastMessage.text}
+            numberOfLines={2}
+            mode={TextModes.Secondary}
+            style={computedStyles.lastMessage}
+          />
+        </View>
+      </PressableCustom>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  gradientWrapper: {
+    borderRadius: RADIUS.medium,
+    boxShadow: BOX_SHADOW.medium,
+  },
   wrapper: {
     paddingHorizontal: SPACING.m,
     paddingVertical: SPACING.m,
     borderRadius: RADIUS.medium,
-    boxShadow: BOX_SHADOW.medium,
+    borderWidth: 2,
   },
   pressableContainer: {
     flexDirection: 'row',
@@ -105,7 +122,7 @@ const styles = StyleSheet.create({
   checkMark: {
     position: 'absolute',
     top: 28,
-    right: -5,
+    right: -8,
   },
 });
 

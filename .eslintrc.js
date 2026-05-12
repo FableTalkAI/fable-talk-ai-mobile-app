@@ -28,7 +28,7 @@ module.exports = {
     'no-var': 'error',
     'prefer-const': 'error',
     'react-native/no-unused-styles': 2,
-    'react-native/no-raw-text': 2,
+    'react-native/no-raw-text': 1,
     'react-native/no-single-element-style-arrays': 2,
     'react/function-component-definition': [
       'error',

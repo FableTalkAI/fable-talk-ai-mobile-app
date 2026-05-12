@@ -11,6 +11,7 @@ export type PressableCustomProps = {
   containerStyle?: StyleProp<ViewStyle>;
   withEnteringAnimation?: boolean;
   withExitingAnimation?: boolean;
+  needsOffscreenAlphaCompositing?: boolean;
   onPressIn?: ((event: GestureResponderEvent) => void) | null;
   onPressOut?: ((event: GestureResponderEvent) => void) | null;
 } & UniquePressableProps;

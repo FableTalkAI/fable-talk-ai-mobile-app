@@ -1,11 +1,13 @@
 import AdIcon from './ad.svg';
 import AddAgentIcon from './add-agent.svg';
+import AppleLogoIcon from './apple-logo.svg';
 import ArrowForwardIcon from './arrow-forward.svg';
 import ArrowLinkIcon from './arrow-link.svg';
 import ArrowStickIcon from './arrow-stick.svg';
 import NotificationBellIcon from './bell.svg';
 import ChatIcon from './chat.svg';
 import ChatArrowIcon from './chat-arrow.svg';
+import ChatGearIcon from './chat-gear.svg';
 import CheckmarkIcon from './checkmark.svg';
 import CheckmarkRoundedIcon from './checkmark-rounded.svg';
 import EditAvatarIcon from './edit-avatar.svg';
@@ -21,6 +23,7 @@ import LogoutIcon from './logout.svg';
 import MailIcon from './mail.svg';
 import MailDotIcon from './mail-dot.svg';
 import MessageIcon from './message.svg';
+import MoreIcon from './more.svg';
 import OnboardingRobotIcon from './onboarding-robot.svg';
 import PaletteIcon from './palette.svg';
 import PaperInfoIcon from './paper-info.svg';
@@ -36,6 +39,7 @@ import RobotFilledIcon from './robot-filled.svg';
 import RocketIcon from './rocket.svg';
 import SearchIcon from './search.svg';
 import SendButtonIcon from './send-button.svg';
+import ShareIcon from './share.svg';
 import ShieldUserIcon from './shield-user.svg';
 import SignInIcon from './sign-in.svg';
 import SignUpIcon from './sign-up.svg';
@@ -51,6 +55,7 @@ import ToggleTrueIcon from './toggle-true.svg';
 import TrashBinIcon from './trash-bin.svg';
 import TriangleIcon from './triangle.svg';
 import UserIcon from './user.svg';
+import UserGearIcon from './user-gear.svg';
 import VerifyCodeIcon from './verify-code.svg';
 import WarningIcon from './warning.svg';
 import WarningTriangleIcon from './warning-triangle.svg';
@@ -59,10 +64,12 @@ import XMarkIcon from './x-mark.svg';
 export {
   AddAgentIcon,
   AdIcon,
+  AppleLogoIcon,
   ArrowForwardIcon,
   ArrowLinkIcon,
   ArrowStickIcon,
   ChatArrowIcon,
+  ChatGearIcon,
   ChatIcon,
   CheckmarkIcon,
   CheckmarkRoundedIcon,
@@ -79,6 +86,7 @@ export {
   MailDotIcon,
   MailIcon,
   MessageIcon,
+  MoreIcon,
   NotificationBellIcon,
   OnboardingRobotIcon,
   PaletteIcon,
@@ -95,6 +103,7 @@ export {
   RocketIcon,
   SearchIcon,
   SendButtonIcon,
+  ShareIcon,
   ShieldUserIcon,
   SignInIcon,
   SignUpIcon,
@@ -109,6 +118,7 @@ export {
   ToggleTrueIcon,
   TrashBinIcon,
   TriangleIcon,
+  UserGearIcon,
   UserIcon,
   VerifyCodeIcon,
   WarningIcon,
