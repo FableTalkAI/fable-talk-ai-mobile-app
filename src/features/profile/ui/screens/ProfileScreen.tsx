@@ -45,16 +45,14 @@ const ProfileScreen = () => {
         <UserAvatar style={styles.avatar} />
 
         <View style={styles.userInfoContainer}>
-          <ActiveSubscriptionBar />
-
           <UserInfoBar field="name" isLoading={isLoading.updateProfile} />
           <UserInfoBar field="dateOfBirth" isLoading={isLoading.updateProfile} />
+          <ActiveSubscriptionBar />
         </View>
 
         <View style={[styles.separator, computedStyles.separator]} />
 
         <View style={styles.optionsContainer}>
-          <OptionBar title={t('common.subscription')} onPress={() => navigation.navigate('Subscriptions')} />
           <OptionBar title={t('common.customization')} onPress={onCustomizationNavigateHandler} />
           <OptionBar
             title={t('common.settings')}
