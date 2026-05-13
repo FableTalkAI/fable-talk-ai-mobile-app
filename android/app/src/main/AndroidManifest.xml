@@ -53,6 +53,7 @@
             <category android:name="android.intent.category.DEFAULT" />
             <category android:name="android.intent.category.BROWSABLE" />
             <data android:scheme="https" android:host="fabletalkai.work" />
+            <data android:pathPrefix="/dl" />  
         </intent-filter>
 
         <intent-filter android:label="FableTalkAI">
