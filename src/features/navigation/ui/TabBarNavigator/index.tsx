@@ -7,6 +7,7 @@ import HomeScreen from '@/features/home/ui/screens/HomeScreen.tsx';
 import ProfileScreen from '@/features/profile/ui/screens/ProfileScreen.tsx';
 import { ChatIcon, HomeIcon, ProfileIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme';
+import { SCREEN_WIDTH } from '@/shared/model/constants.ts';
 import { TEXT_STYLES } from '@/shared/ui/TextCustom/constants.ts';
 
 import { TabBarNavigatorParamList } from './types.ts';
@@ -21,6 +22,9 @@ const Index = () => {
     tabBar: {
       backgroundColor: colors.backgroundBase,
     },
+    tabBarItem: {
+      width: SCREEN_WIDTH / 3,
+    },
   });
 
   return (
@@ -32,7 +36,8 @@ const Index = () => {
         tabBarInactiveTintColor: colors.gray40,
         tabBarLabelStyle: TEXT_STYLES.base,
         tabBarIndicatorStyle: styles.tabBarIndicator,
-        tabBarItemStyle: [computedStyles.tabBar, styles.tabBar],
+        tabBarItemStyle: [styles.tabBarItem, computedStyles.tabBarItem],
+        tabBarStyle: computedStyles.tabBar,
       }}
     >
       <Tab.Screen
@@ -67,7 +72,7 @@ const Index = () => {
 };
 
 const styles = StyleSheet.create({
-  tabBar: {
+  tabBarItem: {
     paddingTop: 20,
     height: 80,
   },

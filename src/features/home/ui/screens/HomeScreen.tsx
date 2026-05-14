@@ -54,7 +54,7 @@ const HomeScreen = () => {
 
   const computedStyles = StyleSheet.create({
     selectedTagsContainer: {
-      backgroundColor: colors.errorDark,
+      backgroundColor: colors.link,
     },
     text: {
       color: colors.gray10,

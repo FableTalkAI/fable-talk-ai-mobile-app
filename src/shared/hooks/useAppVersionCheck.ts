@@ -8,7 +8,6 @@ const useAppVersionCheck = () => {
     setIsChecking(true);
     try {
       const version = await checkVersion.checkVersion();
-
       return {
         needsUpdate: !!version?.needsUpdate,
         url: version?.url || '',
