@@ -32,8 +32,13 @@ target 'FableTalkAI' do
   pod 'Firebase/Auth'
   pod 'Firebase/Messaging'
 
+  pod 'GoogleMobileAdsMediationUnity'
+  pod 'GoogleMobileAdsMediationIronSource'
+  pod 'GoogleMobileAdsMediationFacebook'
+
   use_frameworks! :linkage => :static
   $RNFirebaseAsStaticFramework = true
+  $RNGoogleMobileAdsAsStaticFramework = true
 
   use_react_native!(
     :path => config[:reactNativePath],

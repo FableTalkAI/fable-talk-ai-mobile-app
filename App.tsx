@@ -1,4 +1,4 @@
-import { StatusBar, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import Toast from 'react-native-toast-message';
@@ -15,7 +15,7 @@ import RootNavigator from '@/features/navigation/ui/RootNavigator';
 import { persistor, store } from '@/app/store';
 import OverlayProvider from '@/app/providers/OverlayProvider';
 import NavigationProvider from '@/app/providers/NavigationProvider/index.tsx';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AdsProvider from '@/app/providers/AdsProvider';
 
 Sentry.init({
   dsn: 'https://4ffe32896b7fe3269b6f735bd476bbca@o4510449626578944.ingest.de.sentry.io/4510449632411728',
@@ -34,7 +34,9 @@ function App() {
                 <NavigationProvider>
                   <OverlayProvider>
                     <InitialSetup>
-                      <RootNavigator />
+                      <AdsProvider>
+                        <RootNavigator />
+                      </AdsProvider>
                     </InitialSetup>
                   </OverlayProvider>
                 </NavigationProvider>

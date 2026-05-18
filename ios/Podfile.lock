@@ -14,6 +14,7 @@ PODS:
     - React-Core
   - DoubleConversion (1.1.6)
   - fast_float (8.0.0)
+  - FBAudienceNetwork (6.21.1)
   - FBLazyVector (0.80.1)
   - Firebase/Auth (12.10.0):
     - Firebase/CoreOnly
@@ -97,6 +98,8 @@ PODS:
     - nanopb (~> 3.30910.0)
   - fmt (11.0.2)
   - glog (0.3.5)
+  - Google-Mobile-Ads-SDK (13.1.0):
+    - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleAdsOnDeviceConversion (3.3.0):
     - GoogleUtilities/Environment (~> 8.1)
     - GoogleUtilities/Logger (~> 8.1)
@@ -127,11 +130,21 @@ PODS:
   - GoogleDataTransport (10.1.0):
     - nanopb (~> 3.30910.0)
     - PromisesObjC (~> 2.4)
+  - GoogleMobileAdsMediationFacebook (6.21.1.0):
+    - FBAudienceNetwork (= 6.21.1)
+    - Google-Mobile-Ads-SDK (~> 13.0)
+  - GoogleMobileAdsMediationIronSource (9.4.1.0.0):
+    - Google-Mobile-Ads-SDK (~> 13.0)
+    - IronSourceSDK (= 9.4.1.0)
+  - GoogleMobileAdsMediationUnity (4.17.0.0):
+    - Google-Mobile-Ads-SDK (~> 13.0)
+    - UnityAds (= 4.17.0)
   - GoogleSignIn (9.1.0):
     - AppAuth (~> 2.0)
     - AppCheckCore (~> 11.0)
     - GTMAppAuth (~> 5.0)
     - GTMSessionFetcher/Core (~> 3.3)
+  - GoogleUserMessagingPlatform (3.1.0)
   - GoogleUtilities/AppDelegateSwizzler (8.1.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -166,6 +179,13 @@ PODS:
   - hermes-engine (0.80.1):
     - hermes-engine/Pre-built (= 0.80.1)
   - hermes-engine/Pre-built (0.80.1)
+  - IronSourceAdQualitySDK (9.5.1)
+  - IronSourceSDK (9.4.1.0):
+    - IronSourceSDK/AdQuality (= 9.4.1.0)
+    - IronSourceSDK/Ads (= 9.4.1.0)
+  - IronSourceSDK/AdQuality (9.4.1.0):
+    - IronSourceAdQualitySDK (~> 9.5.0)
+  - IronSourceSDK/Ads (9.4.1.0)
   - libavif/core (0.11.1)
   - libavif/libdav1d (0.11.1):
     - libavif/core
@@ -2916,6 +2936,37 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - RNGoogleMobileAds (16.3.3):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - Google-Mobile-Ads-SDK (= 13.1.0)
+    - GoogleUserMessagingPlatform (= 3.1.0)
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - RNGoogleSignin (16.1.2):
     - boost
     - DoubleConversion
@@ -3293,6 +3344,7 @@ PODS:
   - Sentry/HybridSDK (8.58.0)
   - SocketRocket (0.7.1)
   - SwiftUIIntrospect (1.3.0)
+  - UnityAds (4.17.0)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -3306,6 +3358,9 @@ DEPENDENCIES:
   - Firebase/Messaging
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - GoogleMobileAdsMediationFacebook
+  - GoogleMobileAdsMediationIronSource
+  - GoogleMobileAdsMediationUnity
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
@@ -3390,6 +3445,7 @@ DEPENDENCIES:
   - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNGoogleMobileAds (from `../node_modules/react-native-google-mobile-ads`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNLocalize (from `../node_modules/react-native-localize`)
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
@@ -3406,6 +3462,7 @@ SPEC REPOS:
   trunk:
     - AppAuth
     - AppCheckCore
+    - FBAudienceNetwork
     - Firebase
     - FirebaseAnalytics
     - FirebaseAppCheckInterop
@@ -3416,13 +3473,20 @@ SPEC REPOS:
     - FirebaseCoreInternal
     - FirebaseInstallations
     - FirebaseMessaging
+    - Google-Mobile-Ads-SDK
     - GoogleAdsOnDeviceConversion
     - GoogleAppMeasurement
     - GoogleDataTransport
+    - GoogleMobileAdsMediationFacebook
+    - GoogleMobileAdsMediationIronSource
+    - GoogleMobileAdsMediationUnity
     - GoogleSignIn
+    - GoogleUserMessagingPlatform
     - GoogleUtilities
     - GTMAppAuth
     - GTMSessionFetcher
+    - IronSourceAdQualitySDK
+    - IronSourceSDK
     - libavif
     - libdav1d
     - libwebp
@@ -3438,6 +3502,7 @@ SPEC REPOS:
     - Sentry
     - SocketRocket
     - SwiftUIIntrospect
+    - UnityAds
 
 EXTERNAL SOURCES:
   boost:
@@ -3621,6 +3686,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNGoogleMobileAds:
+    :path: "../node_modules/react-native-google-mobile-ads"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
   RNLocalize:
@@ -3649,6 +3716,7 @@ SPEC CHECKSUMS:
   BVLinearGradient: 880f91a7854faff2df62518f0281afb1c60d49a3
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
+  FBAudienceNetwork: 85d18a65c9e35bc426bd4664cf3ae2a1172d7b60
   FBLazyVector: 09f03e4b6f42f955734b64a118f86509cc719427
   Firebase: 99f203d3a114c6ba591f3b32263a9626e450af65
   FirebaseAnalytics: ef2970f65f3a2807e8f47a49cf3b8719d53e9fce
@@ -3662,14 +3730,21 @@ SPEC CHECKSUMS:
   FirebaseMessaging: ed18fb50634e6e85b5d3e77e628c21e2c928cc53
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
+  Google-Mobile-Ads-SDK: 8429bef6ee1a4e322b0a5571b64217ed8317a3d5
   GoogleAdsOnDeviceConversion: b25c8d714e457fe2ceae3d3bdc102b6cf9677afb
   GoogleAppMeasurement: 57270ccc2b77472d7e85c4cbe45972564eff78bb
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
+  GoogleMobileAdsMediationFacebook: c28fe93a3e6ba02c3a7e09fa9c45682ad9b1e9c6
+  GoogleMobileAdsMediationIronSource: 01656af1b7d2eba4fbf74d6f63ce0a8ca085fc17
+  GoogleMobileAdsMediationUnity: aa0eaab93dbb5d9a05526ef1778b5f0cdd861cf9
   GoogleSignIn: fcee2257188d5eda57a5e2b6a715550ffff9206d
+  GoogleUserMessagingPlatform: befe603da6501006420c206222acd449bba45a9c
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
   GTMAppAuth: 217a876b249c3c585a54fd6f73e6b58c4f5c4238
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
   hermes-engine: 4f07404533b808de66cf48ac4200463068d0e95a
+  IronSourceAdQualitySDK: d3f89c7eb4afc6b6c45fc3d83d64789a9977148f
+  IronSourceSDK: d12f8939bf36dd4e28bb4f6134bcde9a53af15db
   libavif: 84bbb62fb232c3018d6f1bab79beea87e35de7b7
   libdav1d: 23581a4d8ec811ff171ed5e2e05cd27bad64c39f
   libwebp: 02b23773aedb6ff1fd38cec7a77b81414c6842a8
@@ -3760,6 +3835,7 @@ SPEC CHECKSUMS:
   RNFBMessaging: 01d526a089ae4b22198ada9c85e6df6c0f969154
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: e58df127c4aa2f19c09ada5b8b8c95f44f76cd66
+  RNGoogleMobileAds: 8956f5bbd69cf875266efbf2c5764edd433db032
   RNGoogleSignin: d8fc7e5408ce64157b448be94575ec98c0b5a851
   RNLocalize: d942551e26526f79ccefca79ccb23b3c442d8e26
   RNNotifee: 4a6ee5c7deaf00e005050052d73ee6315dff7ec9
@@ -3776,8 +3852,9 @@ SPEC CHECKSUMS:
   Sentry: d587a8fe91ca13503ecd69a1905f3e8a0fcf61be
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftUIIntrospect: fee9aa07293ee280373a591e1824e8ddc869ba5d
+  UnityAds: adbe0d522fd14b8298c5e159164fc43396165843
   Yoga: 2b7a0cd38b4b0b4fdd7f353017fde11914148f98
 
-PODFILE CHECKSUM: 8daddf01f45cbac735b1fa7d0646c9db957748b6
+PODFILE CHECKSUM: ec3ae39d07bac2b13e3de8464e86f46d64c1dab2
 
 COCOAPODS: 1.16.2
