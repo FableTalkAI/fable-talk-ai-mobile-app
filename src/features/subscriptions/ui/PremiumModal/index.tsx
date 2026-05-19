@@ -2,8 +2,12 @@ import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
+import useAdRewarded from '@/features/ads/hooks/useAdRewarded';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes/index.ts';
+import useModal from '@/features/overlay/hooks/useModal.ts';
+import { showToast } from '@/features/overlay/services/showToast.ts';
 import ModalCustom from '@/features/overlay/ui/ModalCustom/index.tsx';
+import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { RocketIcon } from '@/shared/assets/icons/index.ts';
 import { SPACING } from '@/shared/model/sizes.ts';
 import Button from '@/shared/ui/Button/index.tsx';
@@ -14,6 +18,20 @@ import { PremiumModalProps } from './types.ts';
 const PremiumModal = ({ withAds, titleKey }: PremiumModalProps) => {
   const { navigation } = useNavigationRoutes();
   const { t } = useTranslation();
+
+  const { closeModal } = useModal();
+
+  const { setLimitsCountHandler } = useProfileStore();
+  const { showRewardedAd } = useAdRewarded({
+    onRewardEarned: () => setLimitsCountHandler(5, 'decrement'),
+    onClosed: () => {
+      closeModal();
+      showToast({
+        type: 'success',
+        text2: t('modal.premium.successToast'),
+      });
+    },
+  });
 
   const subscriptionNavigationHandling = () => navigation.navigate('Subscriptions');
 
@@ -29,15 +47,17 @@ const PremiumModal = ({ withAds, titleKey }: PremiumModalProps) => {
     <ModalCustom title={t(`modal.premium.title.${titleKey}`)} description={description}>
       <View style={styles.buttonContainer}>
         <RocketIcon style={{ marginVertical: SPACING.xs }} />
-        {/*TODO: adds handling*/}
+
         {withAds && (
           <Button
             title={t('modal.premium.adsButton')}
             containerStyle={styles.button}
             numberOfLines={1}
             withExitingAnimation={false}
+            onPress={showRewardedAd}
           />
         )}
+
         <Button
           withExitingAnimation={false}
           title={t('modal.premium.premiumButton')}

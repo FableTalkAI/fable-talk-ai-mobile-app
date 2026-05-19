@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RefreshControl, StyleSheet } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import { BannerAdSize } from 'react-native-google-mobile-ads';
 import Animated, { LinearTransition } from 'react-native-reanimated';
 
+import AdBanner from '@/features/ads/ui/AdBanner';
 import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import useChatMultiSelection from '@/features/chat/hooks/useChatMultiSelection';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
@@ -94,6 +96,9 @@ const ChatListScreen = () => {
         onStop={onStopHandler}
         isDisabled={isSelectedMode}
       />
+
+      <AdBanner size={BannerAdSize.BANNER} style={styles.banner} />
+
       <MultiSelectHeader onCrossPress={clear} onBinPress={openDeleteChatBottomWindow} isVisible={isSelectedMode} />
 
       <FlatList
@@ -144,14 +149,18 @@ const ChatListScreen = () => {
 
 const styles = StyleSheet.create({
   flatList: {
-    marginTop: SPACING.lg,
+    marginTop: SPACING.s,
   },
   search: {
     paddingHorizontal: SPACING.xl,
   },
+  banner: {
+    marginTop: SPACING.s,
+  },
   contentContainerStyle: {
     gap: SPACING.s,
     paddingHorizontal: SPACING.xl,
+    paddingBottom: SPACING.m,
     minHeight: '90%',
   },
 });

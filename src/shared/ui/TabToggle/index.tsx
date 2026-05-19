@@ -1,5 +1,6 @@
 import { useMemo, useRef } from 'react';
 import { StyleProp, StyleSheet, TextStyle, TouchableOpacity, View } from 'react-native';
+import { BannerAdSize } from 'react-native-google-mobile-ads';
 import Animated, {
   LayoutAnimationConfig,
   SlideInLeft,
@@ -11,6 +12,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 
+import AdBanner from '@/features/ads/ui/AdBanner';
 import { Theme } from '@/features/profile/store/user/types.ts';
 import useTheme from '@/shared/hooks/useTheme';
 import { WINDOW_WIDTH } from '@/shared/model/device.ts';
@@ -101,35 +103,39 @@ const TabToggle = ({
         </LayoutAnimationConfig>
       )}
 
-      <View style={[styles.wrapper, buttonStyle]}>
-        {leftIcon}
+      <View style={styles.wrapper}>
+        <View style={[styles.container, buttonStyle]}>
+          {leftIcon}
 
-        <View style={[styles.tabsWrapper, computedStyles.tabsWrapper]}>
-          <Animated.View style={[styles.slider, computedStyles.slider, animatedSliderStyle]}>
-            <View style={[StyleSheet.absoluteFill, computedStyles.activeButton]} />
-          </Animated.View>
+          <View style={[styles.tabsWrapper, computedStyles.tabsWrapper]}>
+            <Animated.View style={[styles.slider, computedStyles.slider, animatedSliderStyle]}>
+              <View style={[StyleSheet.absoluteFill, computedStyles.activeButton]} />
+            </Animated.View>
 
-          {tabs.map((tab, i) => {
-            const textStyles: StyleProp<TextStyle> = {
-              color: activeTab === i ? colors.textPrimary : colors.gray40,
-              fontWeight: activeTab === i ? '600' : '400',
-            };
+            {tabs.map((tab, i) => {
+              const textStyles: StyleProp<TextStyle> = {
+                color: activeTab === i ? colors.textPrimary : colors.gray40,
+                fontWeight: activeTab === i ? '600' : '400',
+              };
 
-            return (
-              <TouchableOpacity
-                key={i}
-                activeOpacity={0.7}
-                onPress={() => updateIndex(i)}
-                style={[styles.tabButton, computedStyles.tabButton]}
-              >
-                <ResizeIcon icon={tab.icon} cloneElementProps={cloneElementProps} />
-                <TextCustom text={tab.name} style={textStyles} />
-              </TouchableOpacity>
-            );
-          })}
+              return (
+                <TouchableOpacity
+                  key={i}
+                  activeOpacity={0.7}
+                  onPress={() => updateIndex(i)}
+                  style={[styles.tabButton, computedStyles.tabButton]}
+                >
+                  <ResizeIcon icon={tab.icon} cloneElementProps={cloneElementProps} />
+                  <TextCustom text={tab.name} style={textStyles} />
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+
+          {rightIcon}
         </View>
 
-        {rightIcon}
+        <AdBanner size={BannerAdSize.BANNER} />
       </View>
 
       {contentPosition === 'bottom' && (
@@ -147,10 +153,13 @@ const styles = StyleSheet.create({
   flex1: {
     flex: 1,
   },
-  wrapper: {
+  container: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    gap: SPACING.xs,
+  },
+  wrapper: {
     gap: SPACING.xs,
   },
   tabsWrapper: {

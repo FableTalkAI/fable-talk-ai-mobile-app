@@ -8,6 +8,7 @@ import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import ViewShot from 'react-native-view-shot';
 
+import AdBanner from '@/features/ads/ui/AdBanner';
 import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { MAX_FREE_USER_ACTIVE_CHAT_COUNT } from '@/features/chat/model/constants.ts';
@@ -77,6 +78,9 @@ const ChatScreen = () => {
     header: {
       borderBottomColor: colors.textSecondary,
     },
+    messagesContainer: {
+      paddingBottom: selectedChat?.isSending ? 104 : 86,
+    },
   });
 
   const onSend = useCallback(
@@ -104,6 +108,7 @@ const ChatScreen = () => {
             });
           }
         },
+        withAds: true,
       });
     },
     [
@@ -176,6 +181,8 @@ const ChatScreen = () => {
             rightIcon={trashBin}
           />
 
+          <AdBanner />
+
           <ImageBackground style={[styles.flex1, computedStyles.imageBackground]} source={{ uri: chatBackground }}>
             <GiftedChat
               loadEarlierMessagesProps={{
@@ -192,7 +199,7 @@ const ChatScreen = () => {
               messages={selectedChat.messageHistory as IMessage[]}
               onSend={chatMessages => onSend(chatMessages)}
               renderAvatar={props => <ChatAvatar {...props} />}
-              messagesContainerStyle={styles.messagesContainer}
+              messagesContainerStyle={computedStyles.messagesContainer}
               timeTextStyle={{ left: computedStyles.textTimeBubblesLeft, right: computedStyles.textTimeBubblesRight }}
               locale={i18n.resolvedLanguage}
               isDayAnimationEnabled={false}
@@ -225,9 +232,6 @@ const ChatScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  messagesContainer: {
-    paddingBottom: 86,
-  },
   flex1: {
     flex: 1,
   },

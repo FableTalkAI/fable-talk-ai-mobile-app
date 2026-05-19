@@ -77,7 +77,10 @@ const SubscriptionScreen = () => {
                   style={[computedStyles.benefitRow, styles.benefitRow, isLast && styles.benefitLastRow]}
                 >
                   <View style={styles.titleContainer}>
-                    <ResizeIcon icon={item.leftIcon} cloneElementProps={resizeIconOptions.leftIcon} />
+                    <View style={styles.iconContainer}>
+                      <ResizeIcon icon={item.leftIcon} cloneElementProps={resizeIconOptions.leftIcon} />
+                    </View>
+
                     <TextCustom text={t(item.text)} style={styles.benefitsText} />
                   </View>
 
@@ -190,6 +193,9 @@ const styles = StyleSheet.create({
   restoreText: {
     textAlign: 'center',
     marginTop: SPACING.xxs,
+  },
+  iconContainer: {
+    width: 24,
   },
 });
 

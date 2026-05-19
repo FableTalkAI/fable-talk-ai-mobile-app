@@ -86,8 +86,8 @@ android {
         applicationId "com.fabletalkai"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
-        versionName "1.0.10"
+        versionCode 12
+        versionName "1.0.12"
 
         externalNativeBuild {
             cmake {
@@ -144,6 +144,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.android.gms:play-services-auth:20.7.0'
+
+    implementation 'com.google.android.gms:play-services-ads:25.2.0'
+    implementation 'com.google.ads.mediation:unity:4.18.0.0'
+    implementation 'com.google.ads.mediation:ironsource:9.4.2.0'
+    implementation 'com.google.ads.mediation:facebook:6.21.0.3'
 
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")

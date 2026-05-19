@@ -137,6 +137,7 @@ const en: Translations = {
       adsDescription: 'Or watch a short video to get 5 extra messages right away 🚀',
       premiumButton: 'Go Premium',
       adsButton: 'Watch ad',
+      successToast: 'You’ve earned 5 bonus messages!',
     },
   },
 
@@ -269,7 +270,7 @@ const en: Translations = {
       messaging: 'Messaging',
       chats: 'Chats',
       premiumAgents: 'Premium Agents',
-      advertisement: 'Advertisement',
+      advertisement: 'No Advertisement',
       customization: 'Customization',
       addYourAgents: 'Add Your Agents',
     },

@@ -136,6 +136,7 @@ const uk: Translations = {
       adsDescription: 'Або перегляньте коротке відео, щоб отримати ще 5 повідомлень прямо зараз 🚀',
       premiumButton: 'Оформити Premium',
       adsButton: 'Подивитися Рекламу',
+      successToast: 'Вам нараховано 5 бонусних повідомлень!',
     },
   },
 
@@ -267,7 +268,7 @@ const uk: Translations = {
       messaging: 'Чатінг',
       chats: 'Чати',
       premiumAgents: 'Преміум Агенти',
-      advertisement: 'Реклама',
+      advertisement: 'Без Реклами',
       customization: 'Кастомізація',
       addYourAgents: 'Додавання Власних Агентів',
     },

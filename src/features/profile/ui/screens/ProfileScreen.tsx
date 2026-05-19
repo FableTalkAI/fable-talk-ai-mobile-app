@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
+import { BannerAdSize } from 'react-native-google-mobile-ads';
 
+import AdBanner from '@/features/ads/ui/AdBanner';
 import useCustomizationStore from '@/features/customization/hooks/useCustomizationStore.ts';
 import useNavigationRoutes from '@/features/navigation/hooks/useNavigationRoutes';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
@@ -48,6 +50,7 @@ const ProfileScreen = () => {
           <UserInfoBar field="name" isLoading={isLoading.updateProfile} />
           <UserInfoBar field="dateOfBirth" isLoading={isLoading.updateProfile} />
           <ActiveSubscriptionBar />
+          <AdBanner size={BannerAdSize.LARGE_BANNER} />
         </View>
 
         <View style={[styles.separator, computedStyles.separator]} />
@@ -71,6 +74,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingHorizontal: SPACING.xl,
+    paddingBottom: SPACING.m,
   },
   avatar: {
     alignSelf: 'center',
