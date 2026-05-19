@@ -1,39 +1,51 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useRewardedAd } from 'react-native-google-mobile-ads';
 
 import { AD_UNITS } from '@/features/ads/model/constants.ts';
 
 import { UseAdRewardedProps } from './types.ts';
 
-const useAdRewarded = ({ onRewardEarned }: UseAdRewardedProps) => {
-  const { isLoaded, isEarnedReward, reward, load, show } = useRewardedAd(AD_UNITS.REWARDED, {
+const useAdRewarded = ({ onRewardEarned, onClosed }: UseAdRewardedProps) => {
+  const rewardHandledRef = useRef(true);
+  const loadedRef = useRef(false);
+
+  const { isLoaded, isEarnedReward, load, show, isClosed } = useRewardedAd(AD_UNITS.REWARDED, {
     requestNonPersonalizedAdsOnly: false,
   });
+
+  useEffect(() => {
+    loadedRef.current = isLoaded;
+  }, [isLoaded]);
 
   useEffect(() => {
     load();
   }, [load]);
 
   useEffect(() => {
-    if (isEarnedReward && reward) {
-      onRewardEarned({
-        amount: reward.amount,
-        type: reward.type,
-      });
+    if (isEarnedReward && !rewardHandledRef.current) {
+      rewardHandledRef.current = true;
+      onRewardEarned?.();
     }
-  }, [isEarnedReward, reward, onRewardEarned]);
+  }, [isEarnedReward, onRewardEarned]);
+
+  useEffect(() => {
+    if (isClosed && rewardHandledRef.current) {
+      onClosed?.();
+    }
+  }, [isClosed, onClosed]);
 
   const showRewardedAd = useCallback(() => {
-    if (isLoaded) {
+    if (loadedRef.current) {
+      rewardHandledRef.current = false;
       show();
-    } else {
-      console.error('Failed to show rewarded ad: ad is not loaded');
-      load();
+      return;
     }
-  }, [isLoaded, show, load]);
+
+    load();
+  }, [show, load]);
 
   return {
-    isAdReady: isLoaded,
+    isAdReady: loadedRef.current,
     showRewardedAd,
     reloadAd: load,
   };

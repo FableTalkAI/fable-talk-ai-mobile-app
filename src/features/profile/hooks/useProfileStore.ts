@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 
 import { logoutUser } from '@/features/auth/services/logoutUser.ts';
 import { AllNavigationParamList } from '@/features/navigation/hooks/useNavigationRoutes/types.ts';
+import { setLimits } from '@/features/profile/store/profile';
 import { isLoadingSelector, limitsSelector, profileSelector } from '@/features/profile/store/profile/selectors.ts';
 import {
   deleteUserProfile,
@@ -59,6 +60,19 @@ const useProfileStore = () => {
     [dispatch],
   );
 
+  const setLimitsCountHandler = useCallback(
+    (count: number, mode: 'increment' | 'decrement') => {
+      if (limits)
+        dispatch(
+          setLimits({
+            ...limits,
+            count: mode === 'decrement' ? limits.count - count : limits.count + count,
+          }),
+        );
+    },
+    [dispatch, limits],
+  );
+
   return {
     isLoading,
     profile,
@@ -66,6 +80,7 @@ const useProfileStore = () => {
     chatsLimitExceeded,
     chatsLimitNeedUpdate,
 
+    setLimitsCountHandler,
     sendSupportMessageHandler,
     getUserProfileHandler,
     updateUserProfileHandler,

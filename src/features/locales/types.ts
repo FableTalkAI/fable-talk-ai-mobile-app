@@ -133,6 +133,7 @@ export type Translations = {
       adsDescription: string;
       premiumButton: string;
       adsButton: string;
+      successToast: string;
     };
   };
 

@@ -3,17 +3,19 @@ import { StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 
 import { AD_UNITS } from '@/features/ads/model/constants.ts';
-import { SPACING } from '@/shared/model/sizes.ts';
+import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 
 import { AdBannerProps } from './types.ts';
 
-const AdBanner = ({ size = BannerAdSize.INLINE_ADAPTIVE_BANNER }: AdBannerProps) => {
+const AdBanner = ({ size = BannerAdSize.FULL_BANNER, style }: AdBannerProps) => {
+  const { isPremium } = useSubscription();
+
   const [isAdVisible, setIsAdVisible] = useState(true);
 
-  if (!isAdVisible) return null;
+  if (!isAdVisible || isPremium) return null;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <BannerAd
         unitId={AD_UNITS.BANNER}
         size={size}
@@ -35,7 +37,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'transparent',
-    paddingVertical: SPACING.xxs,
   },
 });
 

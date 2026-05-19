@@ -115,7 +115,7 @@ const AgentList = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: SPACING.m,
+    marginTop: SPACING.xs,
   },
   agentBarWrapper: {
     marginBottom: SPACING.m,
