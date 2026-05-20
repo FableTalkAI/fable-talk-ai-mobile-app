@@ -195,7 +195,7 @@ const ChatScreen = () => {
                 isInfiniteScrollEnabled: true,
                 containerStyle: computedStyles.loadMoreButtonStyle,
               }}
-              keyboardAvoidingViewProps={{ keyboardVerticalOffset: 56 + top }}
+              keyboardAvoidingViewProps={{ keyboardVerticalOffset: +top + (isPremium ? 56 : 116) }}
               messages={selectedChat.messageHistory as IMessage[]}
               onSend={chatMessages => onSend(chatMessages)}
               renderAvatar={props => <ChatAvatar {...props} />}
