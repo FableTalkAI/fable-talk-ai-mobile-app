@@ -22,12 +22,12 @@ export const Tooltip = ({ children, content, style }: TooltipProps) => {
   const triggerCenterY = triggerLayout.y + triggerLayout.h / 2;
   const isOpenedDown = triggerCenterY <= SCREEN_HEIGHT / 2;
 
-  const exactTop = triggerLayout.y + triggerLayout.h + 8;
-  const exactBottom = SCREEN_HEIGHT - triggerLayout.y + 8;
+  const exactTop = triggerLayout.y + triggerLayout.h + SPACING.xs;
+  const exactBottom = SCREEN_HEIGHT - triggerLayout.y + SPACING.xs;
 
   const calculatedMaxHeight = isOpenedDown
-    ? SCREEN_HEIGHT - exactTop - (insets.bottom || 12)
-    : triggerLayout.y - (insets.top || 12);
+    ? SCREEN_HEIGHT - exactTop - (insets.bottom || SPACING.s)
+    : triggerLayout.y - (insets.top || SPACING.s);
 
   const isScrollEnabled = realHeight >= calculatedMaxHeight;
 
