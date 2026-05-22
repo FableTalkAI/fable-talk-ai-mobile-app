@@ -285,7 +285,7 @@ const en: Translations = {
       },
       addYourAgents: {
         header: 'Add Your Agents',
-        tooltipText: 'Create and add your own custom agents',
+        tooltipText: 'Create and add your own custom Agents',
       },
       customization: {
         header: 'Customization',
