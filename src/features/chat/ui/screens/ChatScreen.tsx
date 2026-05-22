@@ -12,6 +12,7 @@ import AdBanner from '@/features/ads/ui/AdBanner';
 import { AgentAccessLevel } from '@/features/agents/store/agents/types.ts';
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
 import { MAX_FREE_USER_ACTIVE_CHAT_COUNT } from '@/features/chat/model/constants.ts';
+import { getChatPadding } from '@/features/chat/services/getChatPadding.ts';
 import { loadMoreMessages } from '@/features/chat/store/chat/thunks.ts';
 import DeleteChatBottomWindow from '@/features/chat/ui/DeleteChatBottomWindow';
 import EmptyChatStub from '@/features/chat/ui/EmptyChatStub';
@@ -39,7 +40,7 @@ const ChatScreen = () => {
   const { colors } = useTheme();
   const { t, i18n } = useTranslation();
   const { navigation } = useNavigationRoutes();
-  const { top, bottom } = useSafeAreaInsets();
+  const { top } = useSafeAreaInsets();
 
   const { params } = useRoute<RouteProp<RootNavigatorParamList, 'Chat'>>();
   const dispatch = useAppDispatch();
@@ -71,15 +72,11 @@ const ChatScreen = () => {
     loadMoreButtonStyle: selectedChat?.isLoadingMore ? { display: 'flex' } : { display: `none` },
     textTimeBubblesLeft: { color: colors.textPrimary },
     textTimeBubblesRight: { color: colors.textPrimary },
-    imageBackground: {
-      marginBottom: -bottom,
-      paddingBottom: bottom,
-    },
     header: {
       borderBottomColor: colors.textSecondary,
     },
     messagesContainer: {
-      paddingBottom: selectedChat?.isSending ? 104 : 86,
+      paddingTop: getChatPadding(selectedChat?.isSending, !!selectedChat?.suggestions),
     },
   });
 
@@ -183,8 +180,11 @@ const ChatScreen = () => {
 
           <AdBanner />
 
-          <ImageBackground style={[styles.flex1, computedStyles.imageBackground]} source={{ uri: chatBackground }}>
+          <ImageBackground style={styles.flex1} source={{ uri: chatBackground }}>
             <GiftedChat
+              listProps={{
+                contentContainerStyle: computedStyles.messagesContainer,
+              }}
               loadEarlierMessagesProps={{
                 isAvailable: !!selectedChat?.hasMore,
                 isLoading: !!selectedChat?.isLoadingMore,
@@ -199,7 +199,6 @@ const ChatScreen = () => {
               messages={selectedChat.messageHistory as IMessage[]}
               onSend={chatMessages => onSend(chatMessages)}
               renderAvatar={props => <ChatAvatar {...props} />}
-              messagesContainerStyle={computedStyles.messagesContainer}
               timeTextStyle={{ left: computedStyles.textTimeBubblesLeft, right: computedStyles.textTimeBubblesRight }}
               locale={i18n.resolvedLanguage}
               isDayAnimationEnabled={false}

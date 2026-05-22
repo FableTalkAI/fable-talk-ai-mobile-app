@@ -5,17 +5,19 @@ import { InputToolbar as GiftedChatInputToolBar } from 'react-native-gifted-chat
 import Animated, { FadeIn } from 'react-native-reanimated';
 
 import useChatStore from '@/features/chat/hooks/useChatStore.ts';
+import { getChatPadding } from '@/features/chat/services/getChatPadding.ts';
 import useTheme from '@/shared/hooks/useTheme';
-import { UseThemeParams } from '@/shared/hooks/useTheme/types.ts';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
+import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import AutoImage from '@/shared/ui/AutoImage';
+import ComponentLoader from '@/shared/ui/ComponentLoader';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
 import { CustomInputToolbarProps } from './types.ts';
 
-const InputToolbar = ({ themeMode, ...props }: CustomInputToolbarProps & UseThemeParams) => {
+const InputToolbar = ({ themeMode, withSuggestions = true, ...props }: CustomInputToolbarProps) => {
   const { colors } = useTheme({ themeMode });
   const { selectedChat } = useChatStore();
 
@@ -26,19 +28,21 @@ const InputToolbar = ({ themeMode, ...props }: CustomInputToolbarProps & UseThem
     suggestionContainer: {
       backgroundColor: colors.userBubble,
     },
+    loadingWrapper: {
+      paddingBottom: getChatPadding(selectedChat?.isSending, !!selectedChat?.suggestions),
+      marginTop: -getChatPadding(selectedChat?.isSending, !!selectedChat?.suggestions),
+    },
   });
 
   const handleSuggestionPress = (text: string) => {
-    if (props.onSend) {
-      props.onSend(
-        [
-          {
-            text: text,
-          },
-        ] as any,
-        true,
-      );
-    }
+    props.onSend?.(
+      [
+        {
+          text: text,
+        },
+      ] as any,
+      true,
+    );
   };
 
   const avatarSource = useMemo(() => selectedChat && selectedChat.chat?.agentInfo.avatarUrl, [selectedChat]);
@@ -46,7 +50,7 @@ const InputToolbar = ({ themeMode, ...props }: CustomInputToolbarProps & UseThem
   return (
     <View>
       {selectedChat?.isSending && (
-        <Animated.View entering={FadeIn} style={styles.loadingWrapper}>
+        <Animated.View entering={FadeIn} style={[styles.loadingWrapper, computedStyles.loadingWrapper]}>
           {avatarSource && <AutoImage source={avatarSource} style={styles.agentAvatar} resizeMode="cover" />}
 
           <View style={[styles.loadingContainer, computedStyles.loadingContainer]}>
@@ -55,24 +59,30 @@ const InputToolbar = ({ themeMode, ...props }: CustomInputToolbarProps & UseThem
         </Animated.View>
       )}
 
-      {selectedChat?.suggestions && !selectedChat.isSending && (
+      {selectedChat?.suggestions && withSuggestions && (
         <FlatList
           data={selectedChat.suggestions}
           style={styles.suggestionsWrapper}
           contentContainerStyle={styles.suggestionsContentContainer}
           keyExtractor={item => item}
           renderItem={({ item }) => (
-            <PressableCustom
-              containerStyle={[styles.suggestionContainer, computedStyles.suggestionContainer]}
-              onPress={() => handleSuggestionPress(item)}
-            >
-              <TextCustom mode={TextModes.Secondary}>{item}</TextCustom>
-            </PressableCustom>
+            <View style={styles.suggestionButtonWrapper}>
+              <PressableCustom
+                disabled={selectedChat?.isSending}
+                containerStyle={[styles.suggestionContainer, computedStyles.suggestionContainer]}
+                onPress={() => handleSuggestionPress(item)}
+              >
+                <TextCustom mode={TextModes.Secondary}>{item}</TextCustom>
+              </PressableCustom>
+
+              <ComponentLoader isVisible={selectedChat?.isSending} />
+            </View>
           )}
           horizontal
           showsHorizontalScrollIndicator={false}
         />
       )}
+
       <GiftedChatInputToolBar {...props} containerStyle={styles.inputToolbar} />
     </View>
   );
@@ -86,8 +96,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginLeft: SPACING.xs,
     gap: SPACING.xs,
-    paddingBottom: 104,
-    marginTop: -104,
   },
   loadingContainer: {
     paddingHorizontal: SPACING.m,
@@ -96,18 +104,22 @@ const styles = StyleSheet.create({
     width: 68,
   },
   suggestionsWrapper: {
+    marginTop: -110,
     paddingBottom: 74,
-    marginTop: -104,
-    paddingVertical: SPACING.s,
+    zIndex: 1,
   },
   suggestionsContentContainer: {
     gap: SPACING.xs,
-    marginLeft: SPACING.lg,
+    paddingHorizontal: SPACING.m,
+  },
+  suggestionButtonWrapper: {
+    overflow: 'hidden',
+    borderRadius: RADIUS.medium,
   },
   suggestionContainer: {
     borderRadius: RADIUS.medium,
-    borderWidth: 1,
     padding: SPACING.xs,
+    boxShadow: BOX_SHADOW.base,
   },
   agentAvatar: {
     width: 36,

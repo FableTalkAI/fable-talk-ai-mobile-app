@@ -84,7 +84,7 @@ const ChatCustomize = () => {
               timeTextStyle={{ left: computedStyles.textTimeBubblesLeft, right: computedStyles.textTimeBubblesRight }}
               renderBubble={props => <Bubble {...props} themeMode={themeMode} />}
               renderMessage={props => <Message {...props} />}
-              renderInputToolbar={props => <InputToolbar {...props} themeMode={themeMode} />}
+              renderInputToolbar={props => <InputToolbar withSuggestions={false} {...props} themeMode={themeMode} />}
               renderComposer={props => <Composer {...props} themeMode={themeMode} />}
               renderSend={props => <Send {...props} themeMode={themeMode} />}
             />
