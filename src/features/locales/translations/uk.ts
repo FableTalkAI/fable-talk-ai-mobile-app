@@ -265,12 +265,30 @@ const uk: Translations = {
     successfullyRestored: 'Покупки успішно відновлено',
     failedRestored: 'Не вдалося відновити покупки',
     benefits: {
-      messaging: 'Чатінг',
-      chats: 'Чати',
-      premiumAgents: 'Преміум Агенти',
-      advertisement: 'Без Реклами',
-      customization: 'Кастомізація',
-      addYourAgents: 'Додавання Власних Агентів',
+      messaging: {
+        header: 'Повідомлення',
+        tooltipText: 'Безкоштовно: 20 повідомлень/день\nPremium: Безліч повідомлень',
+      },
+      chats: {
+        header: 'Чати',
+        tooltipText: 'Безкоштовно: до 10 активних чатів\nPremium: Необмежено',
+      },
+      advertisement: {
+        header: 'Без реклами',
+        tooltipText: 'Насолоджуйтеся інтерфейсом без реклами з підпискою Premium',
+      },
+      premiumAgents: {
+        header: 'Преміум Агенти',
+        tooltipText: 'Відкрийте ексклюзивний доступ до Преміум Агентів',
+      },
+      addYourAgents: {
+        header: 'Додавання власних Агентів',
+        tooltipText: 'Створюйте та додавайте своїх власних Агентів',
+      },
+      customization: {
+        header: 'Кастомізація',
+        tooltipText: 'Premium відкриває кастомні фони чатів та рамки для аватарів',
+      },
     },
   },
 

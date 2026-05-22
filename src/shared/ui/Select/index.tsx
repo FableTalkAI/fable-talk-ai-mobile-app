@@ -56,7 +56,7 @@ const Select = <T,>({ defaultValue, options, width = 110, onChange }: SelectProp
       <View ref={triggerRef}>
         <PressableCustom onPress={openHandler} style={[styles.pressable, computedStyles.pressable]}>
           <TextCustom style={styles.flex1} numberOfLines={1} mode={TextModes.Secondary} text={selectedOption.title} />
-          <TriangleIcon />
+          <TriangleIcon fill={colors.iconPrimary} />
         </PressableCustom>
       </View>
 

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 
+import InfoTooltip from '@/features/overlay/ui/InfoTooltip';
 import useSubscription from '@/features/subscriptions/hooks/useSubscription';
 import { SubscriptionButton } from '@/features/subscriptions/ui/SubscriptionButton';
 import { CheckmarkRoundedIcon } from '@/shared/assets/icons';
@@ -81,7 +82,14 @@ const SubscriptionScreen = () => {
                       <ResizeIcon icon={item.leftIcon} cloneElementProps={resizeIconOptions.leftIcon} />
                     </View>
 
-                    <TextCustom text={t(item.text)} style={styles.benefitsText} />
+                    <TextCustom
+                      numberOfLines={1}
+                      adjustsFontSizeToFit
+                      text={t(item.text)}
+                      style={styles.benefitsText}
+                    />
+
+                    <InfoTooltip style={styles.infoTooltipContainer} text={t(item.tooltipText)} />
                   </View>
 
                   <View style={styles.markContainer}>
@@ -182,6 +190,10 @@ const styles = StyleSheet.create({
   benefitsText: {
     paddingLeft: SPACING.xs,
     flexShrink: 1,
+  },
+  infoTooltipContainer: {
+    marginLeft: SPACING.xxs,
+    marginTop: -SPACING.xs,
   },
   subscriptionButtonsContainer: {
     flexDirection: 'row',

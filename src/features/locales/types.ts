@@ -8,6 +8,11 @@ export type Empty = {
   subtitle?: string;
 };
 
+export type SubscriptionBenefit = {
+  header: string;
+  tooltipText: string;
+};
+
 export type Input = {
   label?: string;
   placeholder?: string;
@@ -243,12 +248,12 @@ export type Translations = {
     successfullyRestored: string;
     failedRestored: string;
     benefits: {
-      messaging: string;
-      chats: string;
-      premiumAgents: string;
-      advertisement: string;
-      customization: string;
-      addYourAgents: string;
+      messaging: SubscriptionBenefit;
+      chats: SubscriptionBenefit;
+      premiumAgents: SubscriptionBenefit;
+      advertisement: SubscriptionBenefit;
+      customization: SubscriptionBenefit;
+      addYourAgents: SubscriptionBenefit;
     };
   };
 
