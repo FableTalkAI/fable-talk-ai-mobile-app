@@ -90,6 +90,7 @@ const chatSlice = createSlice({
             isLoading: true,
             isLoadingMore: false,
             isSending: false,
+            suggestions: null,
             error: null,
             nextCursor: null,
             hasMore: true,
@@ -142,7 +143,7 @@ const chatSlice = createSlice({
       })
       .addCase(sendMessage.fulfilled, (state, action) => {
         const { agentId: id, isPremium } = action.meta.arg;
-        const { limits, ...answer } = action.payload;
+        const { limits, message, suggestions } = action.payload;
 
         if (limits && !isPremium) {
           const remainingMessages = limits?.limit - limits?.count;
@@ -158,8 +159,9 @@ const chatSlice = createSlice({
 
         if (state.chatsEntities[id]) {
           state.chatsEntities[id].isSending = false;
+          state.chatsEntities[id].suggestions = suggestions;
           if (state.chatsEntities[id].messageHistory.length > 2) {
-            state.chatsEntities[id].messageHistory.unshift(answer);
+            state.chatsEntities[id].messageHistory.unshift(message);
           }
         }
       })

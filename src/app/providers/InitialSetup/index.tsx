@@ -30,7 +30,7 @@ const InitialSetup = ({ children }: InitialSetupProps) => {
     (async () => {
       const appVersion = await checkUpdate();
 
-      if (appVersion.needsUpdate) {
+      if (appVersion.needsUpdate && !__DEV__) {
         navigate('AppUpdateStub', { url: appVersion.url }, 'replace');
       }
     })();

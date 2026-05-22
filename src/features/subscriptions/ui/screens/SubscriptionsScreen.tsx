@@ -89,14 +89,7 @@ const SubscriptionScreen = () => {
                       style={styles.benefitsText}
                     />
 
-                    <InfoTooltip
-                      style={{ marginLeft: SPACING.xxs, marginTop: -8 }}
-                      text={
-                        index === 2
-                          ? t('subscription.benefit2')
-                          : 'k mewk fmewk fmewk fmewkmf kewmf kewm fkewm fkewm fkewmf kewm fkewmf kewmf kewf kwemfewkm fwek mfekw '
-                      }
-                    />
+                    <InfoTooltip style={styles.infoTooltipContainer} text={t(item.tooltipText)} />
                   </View>
 
                   <View style={styles.markContainer}>
@@ -197,6 +190,10 @@ const styles = StyleSheet.create({
   benefitsText: {
     paddingLeft: SPACING.xs,
     flexShrink: 1,
+  },
+  infoTooltipContainer: {
+    marginLeft: SPACING.xxs,
+    marginTop: -SPACING.xs,
   },
   subscriptionButtonsContainer: {
     flexDirection: 'row',

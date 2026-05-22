@@ -90,8 +90,10 @@ export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessag
         },
       );
 
-      if (response.data.limits) {
-        dispatch(setLimits(response.data.limits));
+      const { message: agentMessage, limits: newLimits } = response.data;
+
+      if (newLimits) {
+        dispatch(setLimits(newLimits));
       }
 
       if (!chatData.chatId) {
@@ -100,7 +102,7 @@ export const sendMessage = createAxiosAsyncThunk<SendMessageResponse, SendMessag
         dispatch(addNewChatToList(newChat.chat as Required<Chat>));
       }
 
-      dispatch(updateChatListLastMessage({ agentId: chatData.agentInfo.id, message: response.data }));
+      dispatch(updateChatListLastMessage({ agentId: chatData.agentInfo.id, message: agentMessage }));
 
       return response.data;
     } catch (e: any) {

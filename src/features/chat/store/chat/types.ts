@@ -17,6 +17,7 @@ export type ChatDetails = {
   isLoading: boolean;
   isLoadingMore: boolean;
   isSending: boolean;
+  suggestions: DialogueSuggestions | null;
   error: string | null;
   nextCursor: string | null;
   hasMore: boolean;
@@ -63,9 +64,13 @@ export type Message = {
   };
 };
 
+export type DialogueSuggestions = string[];
+
 export type SendMessageResponse = {
+  message: Message;
+  suggestions: DialogueSuggestions | null;
   limits?: UserLimits;
-} & Message;
+};
 
 export type SendMessageRequest = {
   message: string;

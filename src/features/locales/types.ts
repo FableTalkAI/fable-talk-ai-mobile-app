@@ -243,12 +243,30 @@ export type Translations = {
     successfullyRestored: string;
     failedRestored: string;
     benefits: {
-      messaging: string;
-      chats: string;
-      premiumAgents: string;
-      advertisement: string;
-      customization: string;
-      addYourAgents: string;
+      messaging: {
+        header: string;
+        tooltipText: string;
+      };
+      chats: {
+        header: string;
+        tooltipText: string;
+      };
+      premiumAgents: {
+        header: string;
+        tooltipText: string;
+      };
+      advertisement: {
+        header: string;
+        tooltipText: string;
+      };
+      customization: {
+        header: string;
+        tooltipText: string;
+      };
+      addYourAgents: {
+        header: string;
+        tooltipText: string;
+      };
     };
   };
 

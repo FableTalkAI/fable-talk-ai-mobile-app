@@ -267,12 +267,30 @@ const en: Translations = {
     successfullyRestored: 'Purchases successfully restored',
     failedRestored: 'Failed to restore purchases',
     benefits: {
-      messaging: 'Messaging',
-      chats: 'Chats',
-      premiumAgents: 'Premium Agents',
-      advertisement: 'No Advertisement',
-      customization: 'Customization',
-      addYourAgents: 'Add Your Agents',
+      messaging: {
+        header: 'Messaging',
+        tooltipText: 'Free: 20 messages/day\nPremium: Unlimited messaging',
+      },
+      chats: {
+        header: 'Chats',
+        tooltipText: 'Free: Up to 10 active chats\nPremium: Unlimited active chats',
+      },
+      advertisement: {
+        header: 'No Advertisement',
+        tooltipText: 'Enjoy a clean, ad-free experience with Premium',
+      },
+      premiumAgents: {
+        header: 'Premium Agents',
+        tooltipText: 'Unlock exclusive access to Premium Agents',
+      },
+      addYourAgents: {
+        header: 'Add Your Agents',
+        tooltipText: 'Create and add your own custom agents',
+      },
+      customization: {
+        header: 'Customization',
+        tooltipText: 'Premium unlocks chat backgrounds and unique avatar frames',
+      },
     },
   },
 
