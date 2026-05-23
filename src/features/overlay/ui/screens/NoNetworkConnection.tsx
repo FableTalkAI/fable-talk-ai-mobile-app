@@ -1,6 +1,7 @@
-import { RouteProp, useRoute } from '@react-navigation/native';
+import NetInfo from '@react-native-community/netinfo';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Linking, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   FadeIn,
@@ -9,47 +10,40 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withRepeat,
-  withSpring,
   withTiming,
 } from 'react-native-reanimated';
 
-import { RootNavigatorParamList } from '@/features/navigation/ui/RootNavigator/types.ts';
-import { RocketIcon } from '@/shared/assets/icons';
+import { NoWifiIcon } from '@/shared/assets/icons';
 import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
+import { BOX_SHADOW } from '@/shared/model/styles.ts';
 import Button from '@/shared/ui/Button';
 import { ButtonModes } from '@/shared/ui/Button/types.ts';
 import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
 import TextCustom from '@/shared/ui/TextCustom';
 import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
-const AppUpdateStub = () => {
+const NoNetworkConnection = () => {
   const { t } = useTranslation();
   const { colors, theme, setColorOpacity } = useTheme();
-  const route = useRoute<RouteProp<RootNavigatorParamList, 'AppUpdateStub'>>();
+  const [isChecking, setIsChecking] = useState(false);
 
-  const updateUrl = route.params?.url;
-
-  const floatValue = useSharedValue(0);
-  const pulseValue = useSharedValue(1);
+  const radarValue = useSharedValue(0);
   const rotateValue = useSharedValue(0);
 
-  floatValue.value = withRepeat(withTiming(1, { duration: 2000 }), -1, true);
-  pulseValue.value = withRepeat(withSpring(1.1, { damping: 20, stiffness: 80 }), -1, true);
-  rotateValue.value = withRepeat(withTiming(360, { duration: 20000 }), -1, false);
+  useEffect(() => {
+    radarValue.value = withRepeat(withTiming(1, { duration: 2500 }), -1, false);
+    rotateValue.value = withRepeat(withTiming(360, { duration: 25000 }), -1, false);
+  }, [radarValue, rotateValue]);
 
   const gradientColors =
     theme === 'dark'
       ? [colors.primary100, colors.primary80, colors.theme]
       : [colors.primary30, colors.primary60, colors.theme];
 
-  const floatStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: interpolate(floatValue.value, [0, 1], [0, -12]) }],
-  }));
-
-  const pulseStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: pulseValue.value }],
-    opacity: interpolate(pulseValue.value, [1, 1.1], [0.6, 0.3]),
+  const radarStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: interpolate(radarValue.value, [0, 1], [0.8, 1.5]) }],
+    opacity: interpolate(radarValue.value, [0, 0.8, 1], [0.8, 0.4, 0]),
   }));
 
   const slowRotateStyle = useAnimatedStyle(() => ({
@@ -69,18 +63,19 @@ const AppUpdateStub = () => {
     iconWrapper: {
       backgroundColor: colors.backgroundQuaternary,
     },
-    sparkleDot: {
-      backgroundColor: colors.primary10,
-    },
     subtitleWrapper: {
       backgroundColor: setColorOpacity(colors.gray90, 0.3),
     },
   });
 
-  const handleUpdate = () => {
-    if (updateUrl) {
-      Linking.openURL(updateUrl);
-    }
+  const handleRetry = async () => {
+    if (isChecking) return;
+    setIsChecking(true);
+
+    setTimeout(async () => {
+      await NetInfo.refresh();
+      setIsChecking(false);
+    }, 800);
   };
 
   return (
@@ -104,34 +99,37 @@ const AppUpdateStub = () => {
               <View style={[styles.circleInner, computedStyles.circleInner]} />
             </View>
 
-            <Animated.View style={[styles.pulseRing, pulseStyle]}>
+            <Animated.View style={[styles.pulseRing, radarStyle]}>
               <View style={[styles.pulseRingInner, computedStyles.pulseRingInner]} />
             </Animated.View>
 
-            <Animated.View style={[styles.iconWrapper, computedStyles.iconWrapper, floatStyle]}>
-              <RocketIcon style={styles.icon} />
-              <View style={[styles.sparkleDot, computedStyles.sparkleDot]} />
+            <Animated.View style={[styles.iconWrapper, computedStyles.iconWrapper]}>
+              <NoWifiIcon width={64} height={64} fill={colors.iconPrimary} />
             </Animated.View>
           </Animated.View>
 
           <Animated.View entering={FadeInUp.delay(400).duration(600)} style={styles.textContainer}>
             <TextCustom
-              text={t('update.title')}
+              text={t('noConnection.title')}
               mode={TextModes.Xl}
               textColor={colors.textLight}
-              style={styles.title}
               numberOfLines={1}
               adjustsFontSizeToFit
             />
 
             <View style={[styles.subtitleWrapper, computedStyles.subtitleWrapper]}>
-              <TextCustom text={t('update.description')} textColor={colors.textLight} style={styles.subtitle} />
+              <TextCustom
+                text={t('noConnection.description')}
+                textColor={colors.textLight}
+                mode={TextModes.Secondary}
+                style={styles.subtitleText}
+              />
             </View>
           </Animated.View>
         </View>
 
         <Animated.View entering={FadeInUp.delay(600).duration(600)}>
-          <Button title={t('actions.update')} mode={ButtonModes.Primary} onPress={handleUpdate} />
+          <Button title={t('actions.retry')} mode={ButtonModes.Primary} onPress={handleRetry} isLoading={isChecking} />
         </Animated.View>
       </Animated.View>
     </SafeAreaViewCustom>
@@ -142,6 +140,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     position: 'relative',
+    paddingHorizontal: SPACING.xl,
+    paddingBottom: SPACING.xl,
   },
   decorativeContainer: {
     position: 'absolute',
@@ -182,8 +182,8 @@ const styles = StyleSheet.create({
   },
   pulseRing: {
     position: 'absolute',
-    width: 180,
-    height: 180,
+    width: 160,
+    height: 160,
     borderRadius: RADIUS.circle,
     alignItems: 'center',
     justifyContent: 'center',
@@ -199,34 +199,21 @@ const styles = StyleSheet.create({
     borderRadius: RADIUS.circle,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  icon: {
-    width: 70,
-    height: 70,
-  },
-  sparkleDot: {
-    position: 'absolute',
-    top: 12,
-    right: 12,
-    width: 12,
-    height: 12,
-    borderRadius: RADIUS.circle,
+    boxShadow: BOX_SHADOW.medium,
   },
   textContainer: {
     alignItems: 'center',
     gap: SPACING.m,
-  },
-  title: {
-    textAlign: 'center',
+    paddingHorizontal: SPACING.m,
   },
   subtitleWrapper: {
     paddingHorizontal: SPACING.lg,
-    paddingVertical: SPACING.s,
+    paddingVertical: SPACING.m,
     borderRadius: RADIUS.large,
   },
-  subtitle: {
+  subtitleText: {
     textAlign: 'center',
   },
 });
 
-export default AppUpdateStub;
+export default NoNetworkConnection;

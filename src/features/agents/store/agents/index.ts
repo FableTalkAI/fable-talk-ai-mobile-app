@@ -9,6 +9,7 @@ import {
   getAllUniqueTags,
   getFilteredAgents,
   getMyAgents,
+  getPopularAgents,
   getResultsOfSearch,
   updateAgent,
 } from './thunks.ts';
@@ -18,6 +19,7 @@ const initialState: AgentsState = {
   tags: [],
   agents: [],
   myAgents: [],
+  popularAgents: [],
   hasModerationLimit: false,
   pagination: {
     agents: {
@@ -56,6 +58,11 @@ const agentsSlice = createSlice({
       })
       .addCase(getAllUniqueTags.rejected, state => {
         state.loading.tags = false;
+      })
+
+      //getPopularAgents
+      .addCase(getPopularAgents.fulfilled, (state, action) => {
+        state.popularAgents = action.payload;
       })
 
       //getMyAgents

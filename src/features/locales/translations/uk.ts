@@ -83,6 +83,7 @@ const uk: Translations = {
     create: 'Створити',
     update: 'Оновити',
     share: 'Поділитися',
+    retry: 'Повторити спробу',
   },
 
   share: {
@@ -320,7 +321,11 @@ const uk: Translations = {
   update: {
     title: 'Доступна Нова Версія',
     description: 'Доступна нова версія додатка. Оновіть зараз, щоб отримати останні функції та покращення',
-    button: 'Оновити Зараз',
+  },
+
+  noConnection: {
+    title: 'З’єднання втрачено',
+    description: 'Будь ласка, перевірте підключення до Інтернету та спробуйте ще раз',
   },
 
   serverResponses: {

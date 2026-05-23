@@ -84,6 +84,7 @@ const en: Translations = {
     create: 'Create',
     update: 'Update',
     share: 'Share',
+    retry: 'Retry',
   },
 
   share: {
@@ -323,7 +324,11 @@ const en: Translations = {
   update: {
     title: 'New Version Available',
     description: 'A new version of the app is available. Update now to get the latest features and improvements',
-    button: 'Update Now',
+  },
+
+  noConnection: {
+    title: 'Connection Lost',
+    description: 'Please check your internet connection and try again',
   },
 
   serverResponses: {

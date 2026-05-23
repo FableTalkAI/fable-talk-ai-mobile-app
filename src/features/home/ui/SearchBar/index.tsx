@@ -1,6 +1,8 @@
+import { useMemo } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { ArrowLinkIcon, SearchIcon } from '@/shared/assets/icons';
+import { ArrowLinkIcon, PremiumAgentIcon, RedFireIcon, SearchIcon } from '@/shared/assets/icons';
+import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import TextCustom from '@/shared/ui/TextCustom';
@@ -8,15 +10,29 @@ import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
 import { SearchBarProps } from './types.ts';
 
-const SearchBar = ({ title, onPress }: SearchBarProps) => {
+const SearchBar = ({ title, onPress, isPremiumAgent, isTrending }: SearchBarProps) => {
+  const { colors } = useTheme();
+
+  const renderIcon = useMemo(() => {
+    if (isTrending) return <RedFireIcon />;
+    if (isPremiumAgent) return <PremiumAgentIcon fill={colors.premium} width={16} height={16} />;
+    return <SearchIcon width={16} height={16} />;
+  }, [colors.premium, isPremiumAgent, isTrending]);
+
   return (
     <PressableCustom hitSlop={5} style={styles.wrapper} onPress={onPress}>
       <View style={styles.container}>
-        <SearchIcon width={12} height={12} />
-        <TextCustom mode={TextModes.Secondary} style={styles.text} numberOfLines={1} text={title} />
+        {renderIcon}
+
+        <TextCustom style={styles.text} numberOfLines={1} text={title} />
       </View>
 
-      <ArrowLinkIcon style={styles.arrowIcon} />
+      <ArrowLinkIcon
+        fill={isPremiumAgent ? colors.premium : colors.textSecondary}
+        style={styles.arrowIcon}
+        width={10}
+        height={10}
+      />
     </PressableCustom>
   );
 };

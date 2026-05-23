@@ -25,6 +25,7 @@ import MailIcon from './mail.svg';
 import MailDotIcon from './mail-dot.svg';
 import MessageIcon from './message.svg';
 import MoreIcon from './more.svg';
+import NoWifiIcon from './no-wifi.svg';
 import OnboardingRobotIcon from './onboarding-robot.svg';
 import PaletteIcon from './palette.svg';
 import PaperInfoIcon from './paper-info.svg';
@@ -35,6 +36,7 @@ import PinIconPinned from './pin-icon-pinned.svg';
 import PlusIcon from './plus.svg';
 import PremiumAgentIcon from './premium-agent.svg';
 import ProfileIcon from './profile.svg';
+import RedFireIcon from './red-fire.svg';
 import RobotIcon from './robot.svg';
 import RobotFilledIcon from './robot-filled.svg';
 import RocketIcon from './rocket.svg';
@@ -90,6 +92,7 @@ export {
   MessageIcon,
   MoreIcon,
   NotificationBellIcon,
+  NoWifiIcon,
   OnboardingRobotIcon,
   PaletteIcon,
   PaperInfoIcon,
@@ -100,6 +103,7 @@ export {
   PlusIcon,
   PremiumAgentIcon,
   ProfileIcon,
+  RedFireIcon,
   RobotFilledIcon,
   RobotIcon,
   RocketIcon,
