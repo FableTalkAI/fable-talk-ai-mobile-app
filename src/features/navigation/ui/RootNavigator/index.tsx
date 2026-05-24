@@ -13,7 +13,6 @@ import SettingsStack from '@/features/navigation/ui/SettingsStack';
 import TabBarNavigator from '@/features/navigation/ui/TabBarNavigator';
 import OnboardingScreen from '@/features/onboarding/ui/screens/OnboardingScreen';
 import AppUpdateStub from '@/features/overlay/ui/screens/AppUpdateStub.tsx';
-import NoNetworkConnection from '@/features/overlay/ui/screens/NoNetworkConnection.tsx';
 import useProfileStore from '@/features/profile/hooks/useProfileStore.ts';
 import { Theme } from '@/features/profile/store/user/types.ts';
 import SubscriptionsScreen from '@/features/subscriptions/ui/screens/SubscriptionsScreen';
@@ -42,7 +41,6 @@ const RootNavigator = () => {
         screenOptions={{ headerShown: false, animation: IS_IOS ? 'default' : 'fade' }}
       >
         <Stack.Screen name="AuthStack" component={AuthStack} />
-        <Stack.Screen name="NoNetworkConnection" component={NoNetworkConnection} />
         <Stack.Screen name="AppUpdateStub" component={AppUpdateStub} />
         <Stack.Screen name="Onboarding" component={OnboardingScreen} />
         <Stack.Screen name="TabBarNavigator" component={TabBarNavigator} />

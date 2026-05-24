@@ -7,7 +7,6 @@ import { TabBarNavigatorParamList } from '@/features/navigation/ui/TabBarNavigat
 export type RootNavigatorParamList = {
   AuthStack: NavigatorScreenParams<AuthStackParamList>;
   AppUpdateStub?: { url?: string };
-  NoNetworkConnection: undefined;
   Onboarding: undefined;
   TabBarNavigator: NavigatorScreenParams<TabBarNavigatorParamList>;
   SearchScreen: undefined;

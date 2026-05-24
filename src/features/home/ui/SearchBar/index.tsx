@@ -6,7 +6,6 @@ import useTheme from '@/shared/hooks/useTheme';
 import { SPACING } from '@/shared/model/sizes.ts';
 import PressableCustom from '@/shared/ui/PressableCustom';
 import TextCustom from '@/shared/ui/TextCustom';
-import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
 import { SearchBarProps } from './types.ts';
 

@@ -6,6 +6,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import Animated, {
   FadeIn,
   FadeInUp,
+  FadeOut,
   interpolate,
   useAnimatedStyle,
   useSharedValue,
@@ -14,18 +15,23 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { NoWifiIcon } from '@/shared/assets/icons';
+import useNetworkStatus from '@/shared/hooks/useNetworkStatus';
+import { NetworkStatus } from '@/shared/hooks/useNetworkStatus/types.ts';
 import useTheme from '@/shared/hooks/useTheme';
 import { RADIUS, SPACING } from '@/shared/model/sizes.ts';
 import { BOX_SHADOW } from '@/shared/model/styles.ts';
-import Button from '@/shared/ui/Button';
-import { ButtonModes } from '@/shared/ui/Button/types.ts';
-import SafeAreaViewCustom from '@/shared/ui/SafeAreaViewCustom';
-import TextCustom from '@/shared/ui/TextCustom';
-import { TextModes } from '@/shared/ui/TextCustom/types.ts';
 
-const NoNetworkConnection = () => {
+import Button from './Button';
+import { ButtonModes } from './Button/types.ts';
+import SafeAreaViewCustom from './SafeAreaViewCustom';
+import TextCustom from './TextCustom';
+import { TextModes } from './TextCustom/types.ts';
+
+const NoNetworkConnectionStub = () => {
   const { t } = useTranslation();
   const { colors, theme, setColorOpacity } = useTheme();
+
+  const { networkStatus } = useNetworkStatus();
   const [isChecking, setIsChecking] = useState(false);
 
   const radarValue = useSharedValue(0);
@@ -78,61 +84,70 @@ const NoNetworkConnection = () => {
     }, 800);
   };
 
-  return (
-    <SafeAreaViewCustom>
-      <LinearGradient
-        colors={gradientColors}
-        locations={[0, 0.4, 1]}
-        start={{ x: 0.5, y: 0 }}
-        end={{ x: 0.5, y: 1 }}
-        style={StyleSheet.absoluteFillObject}
-      />
+  if (networkStatus !== NetworkStatus.Disconnected) return null;
 
-      <Animated.View entering={FadeIn.duration(600)} style={styles.content}>
-        <View style={styles.topSection}>
-          <Animated.View entering={FadeInUp.delay(200).duration(600)} style={styles.iconSection}>
-            <View style={styles.decorativeContainer}>
-              <Animated.View style={[styles.circleOuter, slowRotateStyle]}>
-                <View style={[styles.circleOuterRing, computedStyles.circleOuterRing]} />
+  return (
+    <Animated.View exiting={FadeOut} style={StyleSheet.absoluteFillObject}>
+      <SafeAreaViewCustom>
+        <LinearGradient
+          colors={gradientColors}
+          locations={[0, 0.4, 1]}
+          start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 1 }}
+          style={StyleSheet.absoluteFillObject}
+        />
+
+        <Animated.View entering={FadeIn.duration(600)} style={styles.content}>
+          <View style={styles.topSection}>
+            <Animated.View entering={FadeInUp.delay(200).duration(600)} style={styles.iconSection}>
+              <View style={styles.decorativeContainer}>
+                <Animated.View style={[styles.circleOuter, slowRotateStyle]}>
+                  <View style={[styles.circleOuterRing, computedStyles.circleOuterRing]} />
+                </Animated.View>
+
+                <View style={[styles.circleInner, computedStyles.circleInner]} />
+              </View>
+
+              <Animated.View style={[styles.pulseRing, radarStyle]}>
+                <View style={[styles.pulseRingInner, computedStyles.pulseRingInner]} />
               </Animated.View>
 
-              <View style={[styles.circleInner, computedStyles.circleInner]} />
-            </View>
-
-            <Animated.View style={[styles.pulseRing, radarStyle]}>
-              <View style={[styles.pulseRingInner, computedStyles.pulseRingInner]} />
+              <Animated.View style={[styles.iconWrapper, computedStyles.iconWrapper]}>
+                <NoWifiIcon width={64} height={64} fill={colors.iconPrimary} />
+              </Animated.View>
             </Animated.View>
 
-            <Animated.View style={[styles.iconWrapper, computedStyles.iconWrapper]}>
-              <NoWifiIcon width={64} height={64} fill={colors.iconPrimary} />
-            </Animated.View>
-          </Animated.View>
-
-          <Animated.View entering={FadeInUp.delay(400).duration(600)} style={styles.textContainer}>
-            <TextCustom
-              text={t('noConnection.title')}
-              mode={TextModes.Xl}
-              textColor={colors.textLight}
-              numberOfLines={1}
-              adjustsFontSizeToFit
-            />
-
-            <View style={[styles.subtitleWrapper, computedStyles.subtitleWrapper]}>
+            <Animated.View entering={FadeInUp.delay(400).duration(600)} style={styles.textContainer}>
               <TextCustom
-                text={t('noConnection.description')}
+                text={t('noConnection.title')}
+                mode={TextModes.Xl}
                 textColor={colors.textLight}
-                mode={TextModes.Secondary}
-                style={styles.subtitleText}
+                numberOfLines={1}
+                adjustsFontSizeToFit
               />
-            </View>
-          </Animated.View>
-        </View>
 
-        <Animated.View entering={FadeInUp.delay(600).duration(600)}>
-          <Button title={t('actions.retry')} mode={ButtonModes.Primary} onPress={handleRetry} isLoading={isChecking} />
+              <View style={[styles.subtitleWrapper, computedStyles.subtitleWrapper]}>
+                <TextCustom
+                  text={t('noConnection.description')}
+                  textColor={colors.textLight}
+                  mode={TextModes.Secondary}
+                  style={styles.subtitleText}
+                />
+              </View>
+            </Animated.View>
+          </View>
+
+          <Animated.View entering={FadeInUp.delay(600).duration(600)}>
+            <Button
+              title={t('actions.retry')}
+              mode={ButtonModes.Primary}
+              onPress={handleRetry}
+              isLoading={isChecking}
+            />
+          </Animated.View>
         </Animated.View>
-      </Animated.View>
-    </SafeAreaViewCustom>
+      </SafeAreaViewCustom>
+    </Animated.View>
   );
 };
 
@@ -216,4 +231,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NoNetworkConnection;
+export default NoNetworkConnectionStub;
