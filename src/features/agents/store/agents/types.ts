@@ -48,7 +48,7 @@ export type Agent = {
   avatarUrl: string;
   description: string;
   name: string;
-  nameLower: string;
+  searchTokens: string[];
   tags: Tag[];
   popularity: number;
   prompt: string;
