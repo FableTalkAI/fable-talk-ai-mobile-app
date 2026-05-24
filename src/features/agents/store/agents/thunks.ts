@@ -38,6 +38,14 @@ export const getAllUniqueTags = createAxiosAsyncThunk<Tag[], void>(`${agentsSlic
   return response.data;
 });
 
+export const getPopularAgents = createAxiosAsyncThunk<Agent[], void>(
+  `${agentsSliceName}/getPopularAgents`,
+  async () => {
+    const response = await http.get(`${AGENTS_ROUTE}/popular-agents`);
+    return response.data;
+  },
+);
+
 export const getFilteredAgents = createAxiosAsyncThunk<GetFilteredAgentsResponse, boolean>(
   `${agentsSliceName}/getFilteredAgents`,
   async (loadMore, { getState }) => {

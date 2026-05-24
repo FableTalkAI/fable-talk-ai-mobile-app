@@ -23,6 +23,7 @@ export enum TagCategory {
 export type AgentsState = {
   tags: Tag[];
   agents: Agent[];
+  popularAgents: Agent[];
   myAgents: Agent[];
   searchResults: Agent[];
   hasModerationLimit: boolean;
@@ -47,7 +48,7 @@ export type Agent = {
   avatarUrl: string;
   description: string;
   name: string;
-  nameLower: string;
+  searchTokens: string[];
   tags: Tag[];
   popularity: number;
   prompt: string;

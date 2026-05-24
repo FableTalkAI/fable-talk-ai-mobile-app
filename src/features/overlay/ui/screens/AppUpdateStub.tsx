@@ -131,7 +131,7 @@ const AppUpdateStub = () => {
         </View>
 
         <Animated.View entering={FadeInUp.delay(600).duration(600)}>
-          <Button title={t('update.button')} mode={ButtonModes.Primary} onPress={handleUpdate} />
+          <Button title={t('actions.update')} mode={ButtonModes.Primary} onPress={handleUpdate} />
         </Animated.View>
       </Animated.View>
     </SafeAreaViewCustom>

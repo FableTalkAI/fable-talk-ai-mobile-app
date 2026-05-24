@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     marginTop: SPACING.m,
   },
   skeleton: {
-    maxHeight: 22,
+    maxHeight: 26,
     flex: 1,
     boxShadow: BOX_SHADOW.medium,
   },

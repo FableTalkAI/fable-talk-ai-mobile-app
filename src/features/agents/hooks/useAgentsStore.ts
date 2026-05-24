@@ -7,6 +7,7 @@ import {
   isLoadingSelector,
   myAgentsSelector,
   paginationSelector,
+  popularAgentsSelector,
   searchResultsSelector,
   tagsSelector,
 } from '@/features/agents/store/agents/selectors.ts';
@@ -15,6 +16,7 @@ import {
   getAllUniqueTags,
   getFilteredAgents,
   getMyAgents,
+  getPopularAgents,
   getResultsOfSearch,
   updateAgent,
 } from '@/features/agents/store/agents/thunks.ts';
@@ -28,6 +30,7 @@ const useAgentsStore = () => {
   const agents = useAppSelector(agentsSelector);
   const myAgents = useAppSelector(myAgentsSelector);
   const searchResults = useAppSelector(searchResultsSelector);
+  const popularAgents = useAppSelector(popularAgentsSelector);
   const hasModerationLimit = useAppSelector(hasModerationLimitSelector);
 
   const isLoading = useAppSelector(isLoadingSelector);
@@ -87,6 +90,10 @@ const useAgentsStore = () => {
     await dispatch(getAllUniqueTags()).unwrap();
   }, [dispatch]);
 
+  const getPopularAgentsHandler = useCallback(async () => {
+    await dispatch(getPopularAgents()).unwrap();
+  }, [dispatch]);
+
   const clearSearchResultsHandler = useCallback(() => {
     dispatch(clearSearchResults());
   }, [dispatch]);
@@ -94,6 +101,7 @@ const useAgentsStore = () => {
   return {
     tags,
     agents,
+    popularAgents,
     myAgents,
     isLoading,
     searchResults,
@@ -110,6 +118,7 @@ const useAgentsStore = () => {
     getMyAgentsHandler,
     getTagsHandler,
     updateAgentHandler,
+    getPopularAgentsHandler,
   };
 };
 

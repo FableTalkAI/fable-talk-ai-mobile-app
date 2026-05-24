@@ -17,6 +17,25 @@ export function navigate<RouteName extends keyof AllNavigationParamList>(
   } else {
     console.log(`Navigation not ready. Queuing: ${name}`);
     pendingActions.push({ name, params, method });
+
+    let retries = 0;
+
+    const interval = setInterval(() => {
+      if (navigationRef.isReady()) {
+        clearInterval(interval);
+        flushPendingNavigation();
+        return;
+      }
+
+      retries++;
+
+      if (retries >= 10) {
+        clearInterval(interval);
+        console.warn('Navigation retry exceeded max limit');
+
+        pendingActions = [];
+      }
+    }, 300);
   }
 }
 

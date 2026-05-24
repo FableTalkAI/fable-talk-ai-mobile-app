@@ -86,6 +86,7 @@ export type Translations = {
     create: string;
     update: string;
     share: string;
+    retry: string;
   };
 
   share: {
@@ -285,7 +286,11 @@ export type Translations = {
   update: {
     title: string;
     description: string;
-    button: string;
+  };
+
+  noConnection: {
+    title: string;
+    description: string;
   };
 
   serverResponses: {
