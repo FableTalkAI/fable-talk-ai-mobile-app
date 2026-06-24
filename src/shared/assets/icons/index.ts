@@ -49,9 +49,6 @@ import SignUpIcon from './sign-up.svg';
 import SortAscendingIcon from './sort-ascending.svg';
 import SortDescendingIcon from './sort-descending.svg';
 import SplashRobotIcon from './splash-robot.svg';
-import SubscriptionBasicIcon from './subscription-basic.svg';
-import SubscriptionFreeIcon from './subscription-free.svg';
-import SubscriptionPremiumIcon from './subscription-premium.svg';
 import TagSelectedIcon from './tag-selected.svg';
 import ToggleFalseIcon from './toggle-false.svg';
 import ToggleTrueIcon from './toggle-true.svg';
@@ -116,9 +113,6 @@ export {
   SortAscendingIcon,
   SortDescendingIcon,
   SplashRobotIcon,
-  SubscriptionBasicIcon,
-  SubscriptionFreeIcon,
-  SubscriptionPremiumIcon,
   TagSelectedIcon,
   ToggleFalseIcon,
   ToggleTrueIcon,
