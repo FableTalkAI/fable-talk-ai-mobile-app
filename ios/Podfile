@@ -16,7 +16,8 @@ prepare_react_native_project!
 
 setup_permissions([
   'PhotoLibrary',
-  'Notifications'
+  'Notifications',
+  'AppTrackingTransparency'
 ])
 
 linkage = ENV['USE_FRAMEWORKS']
