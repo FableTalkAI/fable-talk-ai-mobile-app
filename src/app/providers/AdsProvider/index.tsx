@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import mobileAds, { AdsConsent, AdsConsentStatus } from 'react-native-google-mobile-ads';
-import { check, PERMISSIONS, request, RESULTS } from 'react-native-permissions';
+import { PERMISSIONS, request } from 'react-native-permissions';
+
+import { IS_IOS } from '@/shared/model/device.ts';
 
 import { AdsProviderProps } from './types.ts';
 
@@ -16,20 +18,25 @@ const AdsProvider = ({ children }: AdsProviderProps) => {
 
         if (consentInfo.isConsentFormAvailable && consentInfo.status === AdsConsentStatus.REQUIRED) {
           await AdsConsent.showForm();
-        } else {
-          const result = await check(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
-          if (result === RESULTS.DENIED) {
-            await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
-          }
+        }
+
+        if (IS_IOS) {
+          const result = await request(PERMISSIONS.IOS.APP_TRACKING_TRANSPARENCY);
+          console.log('ATT Permission Status:', result);
         }
 
         await mobileAds().initialize();
       } catch (error) {
         console.error('Initialize Ads failed:', error);
+        await mobileAds().initialize();
       }
     };
 
-    initAds().catch(console.error);
+    const timer = setTimeout(() => {
+      initAds().catch(console.error);
+    }, 2000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return <>{children}</>;
