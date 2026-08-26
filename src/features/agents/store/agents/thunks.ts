@@ -49,10 +49,18 @@ export const getPopularAgents = createAxiosAsyncThunk<Agent[], void>(
 export const getFilteredAgents = createAxiosAsyncThunk<GetFilteredAgentsResponse, boolean>(
   `${agentsSliceName}/getFilteredAgents`,
   async (loadMore, { getState }) => {
-    const filter = { ...getState().user.filter, moderationStatus: 'approved' };
+    const state = getState();
+    const filter = state.user.filter;
     const cursor = loadMore ? getState().agents.pagination.agents.nextCursor : undefined;
 
-    const response = await http.post(`${AGENTS_ROUTE}/agents`, { ...filter, cursor });
+    const payload = {
+      ...filter,
+      tags: filter.tags?.map(tag => tag.id),
+      moderationStatus: 'approved',
+      cursor,
+    };
+
+    const response = await http.post(`${AGENTS_ROUTE}/agents`, payload);
     return response.data;
   },
 );
@@ -60,10 +68,18 @@ export const getFilteredAgents = createAxiosAsyncThunk<GetFilteredAgentsResponse
 export const getMyAgents = createAxiosAsyncThunk<GetFilteredAgentsResponse, boolean>(
   `${agentsSliceName}/getMyAgents`,
   async (loadMore, { getState }) => {
-    const filter = { ...getState().user.filter, isPersonal: true };
+    const state = getState();
+    const filter = state.user.filter;
     const cursor = loadMore ? getState().agents.pagination.myAgents.nextCursor : undefined;
 
-    const response = await http.post(`${AGENTS_ROUTE}/agents`, { ...filter, cursor });
+    const payload = {
+      ...filter,
+      tags: filter.tags?.map(tag => tag.id),
+      isPersonal: true,
+      cursor,
+    };
+
+    const response = await http.post(`${AGENTS_ROUTE}/agents`, payload);
     return response.data;
   },
 );
