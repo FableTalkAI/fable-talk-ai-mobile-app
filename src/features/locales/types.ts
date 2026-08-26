@@ -1,6 +1,8 @@
 export enum Languages {
   UK = 'uk',
   EN = 'en',
+  JA = 'ja',
+  KO = 'ko',
 }
 
 export type Empty = {
@@ -67,6 +69,8 @@ export type Translations = {
   languages: {
     uk: string;
     en: string;
+    ja: string;
+    ko: string;
   };
 
   image: {
@@ -266,6 +270,7 @@ export type Translations = {
 
   search: {
     placeholder: string;
+    trendingAgents: string;
   };
 
   chat: {

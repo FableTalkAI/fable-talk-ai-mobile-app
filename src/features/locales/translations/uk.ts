@@ -64,6 +64,8 @@ const uk: Translations = {
   languages: {
     uk: 'Українська',
     en: 'Англійська',
+    ja: 'Японська',
+    ko: 'Корейська',
   },
 
   image: {
@@ -301,6 +303,7 @@ const uk: Translations = {
 
   search: {
     placeholder: "Пошук Агентів за ім'ям...",
+    trendingAgents: 'Популярні агенти',
   },
 
   chat: {

@@ -103,7 +103,7 @@ const AgentList = ({
           })}
           name={item.name}
           description={item.description}
-          tags={item.tags}
+          tagIds={item.tagIds}
           avatarSource={item.avatarUrl}
           onPress={onChatOpenHandler(item.id, item.moderationStatus, item.accessLevel === AgentAccessLevel.Premium)}
           wrapperStyle={[styles.agentBarWrapper, computedStyles.agentBarWrapper, getAgentBarAlignSelf(index)]}

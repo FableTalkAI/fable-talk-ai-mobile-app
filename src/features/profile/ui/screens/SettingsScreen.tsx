@@ -143,6 +143,7 @@ const SettingsScreen = () => {
                 onChange={setThemeHandler}
                 options={selectThemeOptions}
                 defaultValue={theme}
+                width={120}
               />
             }
           />
@@ -158,6 +159,7 @@ const SettingsScreen = () => {
                 onChange={setAppLanguage}
                 options={selectLanguageOptions}
                 defaultValue={i18n.resolvedLanguage as Languages}
+                width={120}
               />
             }
           />
