@@ -49,7 +49,7 @@ export type Agent = {
   description: string;
   name: string;
   searchTokens: string[];
-  tags: Tag[];
+  tagIds: string[];
   popularity: number;
   prompt: string;
   moderationComment?: string;
@@ -62,7 +62,7 @@ export type GetResultsOfSearchRequest = {
 export type CreateAgentRequest = {
   description: string;
   name: string;
-  tags: Tag[];
+  tagIds: string[];
   prompt: string;
   avatarBase64: string | null;
 };

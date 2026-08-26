@@ -31,7 +31,7 @@ const AgentBar = memo(
   ({
     name,
     description,
-    tags: agentTags,
+    tagIds: agentTagIds,
     avatarSource,
     style,
     wrapperStyle,
@@ -47,7 +47,7 @@ const AgentBar = memo(
     const { getAgentsHandler, getMyAgentsHandler, tags: allTags } = useAgentsStore();
     const { setFilterTagsHandler } = useUserStore();
 
-    const tags = allTags.filter(i => agentTags.find(t => t.id === i.id));
+    const tags = allTags.filter(i => agentTagIds.find(tagId => tagId === i.id));
     const isPremiumAgent = mode === AgentBarModes.Premium;
     const gradientColors = useMemo(
       () => (isPremiumAgent ? [colors.backgroundBase, colors.premium] : [colors.backgroundBase, colors.backgroundBase]),

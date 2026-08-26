@@ -23,7 +23,7 @@ const useCreateAgent = ({ agentId }: UseCreateAgentParams) => {
   const { t } = useTranslation();
 
   const { profile, getUserProfileHandler } = useProfileStore();
-  const { createAgentHandler, getMyAgentsHandler, myAgents, updateAgentHandler } = useAgentsStore();
+  const { createAgentHandler, getMyAgentsHandler, myAgents, updateAgentHandler, tags: allTags } = useAgentsStore();
   const { navigation } = useNavigationRoutes();
 
   const isEdit = !!agentId;
@@ -37,9 +37,9 @@ const useCreateAgent = ({ agentId }: UseCreateAgentParams) => {
       name: selectedAgent.name,
       subtitle: selectedAgent.description,
       description: selectedAgent.prompt,
-      tags: selectedAgent.tags,
+      tags: allTags.filter(tag => selectedAgent.tagIds.includes(tag.id)),
     };
-  }, [selectedAgent]);
+  }, [selectedAgent, allTags]);
 
   const {
     control,
@@ -76,7 +76,8 @@ const useCreateAgent = ({ agentId }: UseCreateAgentParams) => {
     const payload = {
       description: subtitle,
       prompt: description,
-      ...data,
+      tagIds: data.tags.map(tag => tag.id),
+      name: data.name,
     };
 
     if (isEdit) {
