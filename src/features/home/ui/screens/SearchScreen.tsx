@@ -63,7 +63,7 @@ const SearchScreen = () => {
         ListHeaderComponent={
           searchValueLength ? null : (
             <View>
-              <TextCustom mode={TextModes.Subtitle} text={'Trending Agents'} />
+              <TextCustom mode={TextModes.Subtitle} text={t('search.trendingAgents')} />
             </View>
           )
         }

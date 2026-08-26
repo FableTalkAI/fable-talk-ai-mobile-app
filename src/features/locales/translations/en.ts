@@ -65,6 +65,8 @@ const en: Translations = {
   languages: {
     uk: 'Ukrainian',
     en: 'English',
+    ja: 'Japanese',
+    ko: 'Korean',
   },
 
   image: {
@@ -304,6 +306,7 @@ const en: Translations = {
 
   search: {
     placeholder: 'Search agents by name...',
+    trendingAgents: 'Trending Agents',
   },
 
   chat: {

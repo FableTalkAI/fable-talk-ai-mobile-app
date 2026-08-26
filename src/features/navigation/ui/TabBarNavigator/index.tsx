@@ -73,8 +73,8 @@ const Index = () => {
 
 const styles = StyleSheet.create({
   tabBarItem: {
-    paddingTop: 20,
-    height: 80,
+    paddingTop: 10,
+    height: 90,
   },
   tabBarIndicator: {
     backgroundColor: 'transparent',
